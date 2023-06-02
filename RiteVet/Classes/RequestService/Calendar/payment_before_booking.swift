@@ -297,19 +297,19 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
     
     @objc func add_booking_wb(stripe_token:String) {
         
-//        var strServiceList:String!
-//        var :String!
-//        var :String!
-//        var :String!
-//        var :String!
-//        var :String!
+        //        var strServiceList:String!
+        //        var :String!
+        //        var :String!
+        //        var :String!
+        //        var :String!
+        //        var :String!
         
-//        Utils.RiteVetIndicatorShow()
-               
+        //        Utils.RiteVetIndicatorShow()
+        
         let urlString = BASE_URL_KREASE
-                   
+        
         var parameters:Dictionary<AnyHashable, Any>!
-               
+        
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
@@ -324,7 +324,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
             var strCountryNameAndPrice:String!
             
             if (self.strTypeOfBusiness == "3") {
-            
+                
                 if (self.strGetCountryName == "United States") {
                     strCountryNameAndPrice = "195"
                 } else {
@@ -333,7 +333,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 
             } else if (self.strTypeOfBusiness == "2") {
                 
-
+                
                 if (self.strGetAmericanBoardCertificate) == "" {
                     
                     if (self.strGetCountryName == "United States") {
@@ -360,75 +360,75 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
             }
             
             
-                parameters = [
-                    "action"    : "addbooking",
-                    "userId"    : String(myString),
-                    "vendorId"   : String(self.strVendorId),
-                    "typeOfServices" : String(self.strServiceList),
-                    "bookingDate" : String(resultString),
-                    "slotTime" : String(self.strSlotTime),
-                    "typeofbusinessId" : String(self.strTypeOfBusiness),
-                    "UTYPE" : String(self.strUType),
-                    "transactionId" : String(stripe_token),
-                    "payment_mode"  : "Card",
-                    "amount"    : String(strCountryNameAndPrice),
-                ]
-//            }
+            parameters = [
+                "action"    : "addbooking",
+                "userId"    : String(myString),
+                "vendorId"   : String(self.strVendorId),
+                "typeOfServices" : String(self.strServiceList),
+                "bookingDate" : String(resultString),
+                "slotTime" : String(self.strSlotTime),
+                "typeofbusinessId" : String(self.strTypeOfBusiness),
+                "UTYPE" : String(self.strUType),
+                "transactionId" : String(stripe_token),
+                "payment_mode"  : "Card",
+                "amount"    : String(strCountryNameAndPrice),
+            ]
+            //            }
         }
         
         print("parameters-------\(String(describing: parameters))")
-                       
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
         {
             response in
-                   
+            
             switch(response.result) {
             case .success(_):
                 if let data = response.value {
-
+                    
                     let JSON = data as! NSDictionary
                     print(JSON)
-                                    
+                    
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                                   
+                    
                     if strSuccess == "Success" {
                         ERProgressHud.sharedInstance.hide()
-                                    
-                                    //var strGetBookingDate:String!
-                                    //var strGetBookingTime:String!
-                                    
+                        
+                        //var strGetBookingDate:String!
+                        //var strGetBookingTime:String!
+                        
                         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
                         push!.strGetBookingDate = String(self.strBookingDate)
                         push!.strGetBookingTime = String(self.strSlotTime)
                         self.navigationController?.pushViewController(push!, animated: true)
-                                    
+                        
                     }
                     else {
                         ERProgressHud.sharedInstance.hide()
                     }
-                                   
+                    
                 }
-
-                               case .failure(_):
-                                   print("Error message:\(String(describing: response.error))")
-                                   
-                                   Utils.RiteVetIndicatorHide()
-                                   
-                                   let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                   
-                                   let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                           UIAlertAction in
-                                           NSLog("OK Pressed")
-                                       }
-                                   
-                                   alertController.addAction(okAction)
-                                   
-                                   self.present(alertController, animated: true, completion: nil)
-                                   
-                                   break
-                                }
-                           }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
         
     }
     

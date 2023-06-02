@@ -303,6 +303,8 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                         
                         self.dictPetRegistration = dict as NSDictionary
                         
+                        self.strSavedSpecializationIds = (self.dictPetRegistration["american_board_certified_option"] as! String)
+                        
                         // create screen
                         // self.makeInitialScreenFirstThreeIndex(dictFromServer: dict as NSDictionary)
                         
@@ -486,6 +488,8 @@ class VRTwo: UIViewController, UITextFieldDelegate {
             if (cell.txt_do_you_have.text == "Yes") {
                 
                 self.strSpecialized = "1"
+                // self.strSavedSpecializationIds =
+                
             } else {
                 self.strSpecialized = "0"
                 self.strSavedSpecializationIds = ""

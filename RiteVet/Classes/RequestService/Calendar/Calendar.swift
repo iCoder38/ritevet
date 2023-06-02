@@ -15,6 +15,8 @@ import BottomPopup
 
 class Calendar: UIViewController {
     
+    var str_set_payment:String!
+    
     var dictGetVendorDetails:NSDictionary!
     
     var strCountryName:String!
@@ -130,6 +132,8 @@ class Calendar: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // print(self.str_set_payment)
+        
         /****** VIEW BG IMAGE *********/
 //        self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
@@ -214,11 +218,191 @@ class Calendar: UIViewController {
         }
         else
         {
-            self.submitRequestServiceToServer()
+            
+            
+            //
+            if (self.str_set_payment == "no") {
+                self.submit_request_without_payment()
+            } else {
+                self.submitRequestServiceToServer()
+            }
+            
         }
         
         
     }
+    @objc func submit_request_without_payment() {
+        Utils.RiteVetIndicatorShow()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MMM-yyyy"
+        let date = dateFormatter.date(from: String(dateLabel.text!))
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let resultString = dateFormatter.string(from: date!)
+        print(resultString)
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            
+            
+            
+            
+            /*if (self.strTypeOfBusiness == "3") {
+                
+                if (self.strGetCountryName == "United States") {
+                    strCountryNameAndPrice = "195"
+                } else {
+                    strCountryNameAndPrice = "25"
+                }
+                
+            } else if (self.strTypeOfBusiness == "2") {
+                
+                
+                if (self.strGetAmericanBoardCertificate) == "" {
+                    
+                    if (self.strGetCountryName == "United States") {
+                        strCountryNameAndPrice = "55"
+                    } else {
+                        strCountryNameAndPrice = "20"
+                    }
+                    
+                } else if (self.strGetAmericanBoardCertificate) == "0" {
+                    
+                    if (self.strGetCountryName == "United States") {
+                        strCountryNameAndPrice = "55"
+                    } else {
+                        strCountryNameAndPrice = "20"
+                    }
+                    
+                } else {
+                    
+                    strCountryNameAndPrice = "75"
+                }
+                
+            } else {
+                strCountryNameAndPrice = "0"
+             
+             push!.dictShowFullDetails = self.dictGetVendorDetails
+             push!.strServiceList = String(productIDString)
+             push!.strVendorId = String(strGetVendorIdForCalendar)
+             push!.strBookingDate = String(dateLabel.text!);
+             push!.strSlotTime = self.btnTime.titleLabel?.text;
+             push!.strTypeOfBusiness = String(myString22);
+             push!.strUType = String(getUtypeForCalendar)
+             push!.strGetCountryName = String(self.strCountryName)
+             push!.strGetAmericanBoardCertificate = String(self.strAmericanBoardOption)
+            }*/
+            
+            var type_of_services:String!
+            var myString222:String!
+            
+            let arrMut:NSMutableArray! = []
+            for i in 0..<self.arrGetDetailsAndService.count {
+                
+                let item = self.arrGetDetailsAndService[i] as! [String:Any]
+                
+                arrMut.add("\(item["id"]!)")
+                
+            }
+            
+            // print(arrMut)
+            
+            let defaults = UserDefaults.standard
+            if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+                
+                myString222 = myString22
+                
+                if let array = arrMut as? [String] {
+                    print(array)
+                    
+                    let productIDString = array.joined(separator: ",")
+                    print(productIDString)
+                    type_of_services = String(productIDString)
+                }
+            }
+                
+                parameters = [
+                    "action"        : "addbooking",
+                    "userId"        : String(myString),
+                    "vendorId"      : String(strGetVendorIdForCalendar),
+                    "typeOfServices" : String(type_of_services),
+                    "bookingDate"   : String(resultString),
+                    "slotTime"      : String((self.btnTime.titleLabel?.text)!),
+                    "typeofbusinessId" : String(myString222),
+                    "UTYPE"         : String(getUtypeForCalendar),
+                    "transactionId" : "123456",
+                    "payment_mode"  : "Card",
+                    "amount"        : "0",
+                ]
+                //            }
+            }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "Success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        //var strGetBookingDate:String!
+                        //var strGetBookingTime:String!
+                        
+                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
+                        push!.strGetBookingDate = String(self.dateLabel.text!)
+                        push!.strGetBookingTime = String((self.btnTime.titleLabel?.text)!)
+                        self.navigationController?.pushViewController(push!, animated: true)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+    }
+    
+    
+    
+    
+    
     func submitRequestServiceToServer() {
         
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "payment_before_booking_id") as? payment_before_booking

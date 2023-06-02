@@ -12,7 +12,7 @@ class RequestServiceHomeTableCell: UITableViewCell {
 
     @IBOutlet weak var imgProfile:UIImageView! {
         didSet {
-            imgProfile.layer.cornerRadius = 50
+            imgProfile.layer.cornerRadius = 40
             imgProfile.clipsToBounds = true
         }
     }

@@ -146,14 +146,9 @@ class cashout_pay: UIViewController {
                     strSuccess = JSON["status"]as Any as? String
                                
                     if strSuccess == "success" {
-                                   
-//                        var ar : NSArray!
-//                        ar = (JSON["data"] as! Array<Any>) as NSArray
                         
                         Utils.RiteVetIndicatorHide()
                         self.navigationController?.popViewController(animated: true)
-                        
-                        
                         
                     }
                     else {
@@ -164,13 +159,13 @@ class cashout_pay: UIViewController {
                                
                 }
 
-                           case .failure(_):
-                               print("Error message:\(String(describing: response.error))")
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
                                //self.indicator.stopAnimating()
                                //self.enableService()
-                               Utils.RiteVetIndicatorHide()
+                Utils.RiteVetIndicatorHide()
                                
-                               let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
                                
                                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                                        UIAlertAction in

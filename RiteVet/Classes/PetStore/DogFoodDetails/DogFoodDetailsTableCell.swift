@@ -85,6 +85,7 @@ class DogFoodDetailsTableCell: UITableViewCell {
             txtViewMessage.layer.borderColor = UIColor.lightGray.cgColor
             txtViewMessage.layer.borderWidth = 0.8
             txtViewMessage.isEditable = true
+            txtViewMessage.isUserInteractionEnabled = false
         }
     }
     

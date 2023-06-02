@@ -15,40 +15,43 @@ class MenuControllerVC: UIViewController {
     var bgImage: UIImageView?
     
     var arrMenuItemList = ["Dashboard",
-                           "Edit Profile",
-                           "Chat",
-                           "Call Logs",
-                           "My Posts",
-                           "Submit New Post",
-                           "Request Services",
-                           "Pet Store",
-                           "My Products",
-                           "My Orders",
-                           "My Cart",
-                           "Cashout",
-                           "Appointments",
-                           "My Bookings ( Client )",
-                           "Change Password",
-                           "Help",
-                           "Signout"]
+    "Edit Profile",
+    "My Posts",
+    "Submit New Post",
+    "Request Services",
+    "Pet Store",
+    "My Products",
+    "Missed Call",
+    "Chat",
+    "My Orders",
+    "Order Received",
+    "My Cart",
+    "Appointments",
+    "My Bookings",
+    "Wallet",
+    "Change Password",
+    "Help",
+    "Sign out",
+    ]
     
-    var arrMenuItemImage = ["home",
-                            "edit",
-                            "edit",
-                            "edit",
-                            "post",
-                            "submit",
-                            "request",
-                            "store",
-                            "store",
-                            "store",
-                            "store",
-                            "appointment",
-                            "appointment",
-                            "appointment",
-                            "changePassword",
-                            "help",
-                            "logout"]
+    var arrMenuItemImage = ["m_dashboard",
+                            "m_edit_profile",
+                            "m_my_posts",
+                            "m_submit_new_post",
+                            "m_request_services",
+                            "m_pet_store",
+                            "m_my_products",
+                            "m_missed_call",
+                            "m_chat",
+                            "m_my_orders",
+                            "m_order_received",
+                            "m_my_cart",
+                            "m_appointments",
+                            "m_my_bookings",
+                            "m_wallet",
+                            "m_change_password",
+                            "m_help",
+                                "m_sign_out"]
     
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
@@ -434,7 +437,7 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Appointments" {
             pushPageNumber(strMyPageNumber: "11")
         }
-        if String(arrMenuItemList[indexPath.row]) == "My Bookings ( Client )" {
+        if String(arrMenuItemList[indexPath.row]) == "My Bookings" {
             pushPageNumber(strMyPageNumber: "12")
         }
         if String(arrMenuItemList[indexPath.row]) == "Change Password" {
@@ -446,7 +449,7 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Logout" {
             pushPageNumber(strMyPageNumber: "13")
         }
-        if String(arrMenuItemList[indexPath.row]) == "Signout" {
+        if String(arrMenuItemList[indexPath.row]) == "Sign out" {
             pushPageNumber(strMyPageNumber: "13")
         }
         if String(arrMenuItemList[indexPath.row]) == "My Products" {
@@ -462,13 +465,28 @@ extension MenuControllerVC: UITableViewDataSource {
             pushPageNumber(strMyPageNumber: "17")
         }
         
-        if String(arrMenuItemList[indexPath.row]) == "Cashout" {
+        if String(arrMenuItemList[indexPath.row]) == "Wallet" {
             pushPageNumber(strMyPageNumber: "18")
+        }
+        
+        if String(arrMenuItemList[indexPath.row]) == "Order Received" {
+            pushPageNumber(strMyPageNumber: "19")
         }
         
         
     }
     @objc func pushPageNumber(strMyPageNumber:String) {
+        
+        if strMyPageNumber == "19" {
+            
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "order_received_id") as! order_received
+            let navController = UINavigationController(rootViewController: obj)
+            navController.setViewControllers([obj], animated:true)
+            self.revealViewController().setFront(navController, animated: true)
+            self.revealViewController().setFrontViewPosition(FrontViewPosition.left, animated: true)
+            
+        }
+        
         if strMyPageNumber == "18" {
             
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "cashout_id") as! cashout
@@ -675,7 +693,7 @@ extension MenuControllerVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 44
         
     }
     

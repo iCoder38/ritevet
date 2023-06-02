@@ -27,7 +27,7 @@ class Appointment: UIViewController {
     
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "MY APPOINTMENTS"
+            lblNavigationTitle.text = "APPOINTMENTS"
             lblNavigationTitle.textColor = .white
         }
     }
@@ -49,99 +49,100 @@ class Appointment: UIViewController {
         
         
     }
+    
+    
     @objc func sideBarMenu() {
-            if revealViewController() != nil {
+        
+        if revealViewController() != nil {
             btnBack.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
             
-                revealViewController().rearViewRevealWidth = 300
-                view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-              }
+            revealViewController().rearViewRevealWidth = 300
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-     navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         
-        /*if strBookingOrAppointment == "bookingIs" {
-            lblNavigationTitle.text = "MY BOOKING"
-            booking()
-        }
-        else  if strBookingOrAppointment == "appointmentIs" {
-            lblNavigationTitle.text = "APPOINTMENT"*/
         self.appointment()
-        // }
         
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     @objc func backClick() {
         self.navigationController?.popViewController(animated: true)
     }
-    @objc func appointment(){
     
-         Utils.RiteVetIndicatorShow()
+    @objc func appointment() {
         
-         let urlString = BASE_URL_KREASE
-     
-     var parameters:Dictionary<AnyHashable, Any>!
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
-               
+            
             parameters = [
                 "action"       :   "bookinglist",
                 "userId"       :   myString
-//                    "pageNo"       :   "",
+                //                    "pageNo"       :   "",
             ]
         }
         print("parameters-------\(String(describing: parameters))")
-                
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
             
             switch(response.result) {
             case .success(_):
                 if let data = response.value {
-
+                    
                     let JSON = data as! NSDictionary
                     print(JSON)
-                             
+                    
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                            
+                    
                     if strSuccess == "Success" {
                         Utils.RiteVetIndicatorHide()
-                                
+                        
                         var ar : NSArray!
                         ar = (JSON["historyList"] as! Array<Any>) as NSArray
                         self.arrListOfAppointment = (ar as! Array<Any>)
-                                
+                        
                         self.tbleView.delegate = self
                         self.tbleView.dataSource = self
                         self.tbleView.reloadData()
-                             
+                        
                     }
                     else {
                         Utils.RiteVetIndicatorHide()
                     }
                     
                 }
-
+                
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
                 Utils.RiteVetIndicatorHide()
-                            
+                
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                            
+                
                 let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                    UIAlertAction in
+                    UIAlertAction in
                     NSLog("OK Pressed")
                 }
-                            
+                
                 alertController.addAction(okAction)
-                            
+                
                 self.present(alertController, animated: true, completion: nil)
-                            
+                
                 break
             }
         }
@@ -281,7 +282,10 @@ extension Appointment: UITableViewDataSource
         cell.lblPhoneNumber.text = (item!["contactNumber"] as! String)
         cell.lblPhoneNumber.textColor = NAVIGATION_BACKGROUND_COLOR
         
-        let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
+        // cell.btnVideo.isHidden = true
+        cell.lblFunction.text = (item!["typeofbusinessName"] as! String)
+        
+        /*let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
         
         if livingArea2 == 1 {
             cell.lblFunction.text = "Near By Clinic "
@@ -301,7 +305,7 @@ extension Appointment: UITableViewDataSource
         } else {
             cell.lblFunction.text = "Come To Home "
             cell.btnVideo.isHidden = true
-        }
+        }*/
         
         return cell
     }
@@ -310,8 +314,15 @@ extension Appointment: UITableViewDataSource
         tableView .deselectRow(at: indexPath, animated: true)
         
         let item = arrListOfAppointment[indexPath.row] as? [String:Any]
+        // print(item )
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "appointment_details_id") as? appointment_details
         
-        let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
+        push!.str_get_booking_id = "\(item!["bookingID"]!)"
+        push!.dictBookingDetails = (item! as NSDictionary)
+        // push!.vendorId = String(livingArea2)
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+        /*let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
         
         if livingArea2 == 3 {
             let livingArea2 = item!["vendorID"] as? Int ?? 0
@@ -319,7 +330,7 @@ extension Appointment: UITableViewDataSource
             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoCallId") as? VideoCall
             push!.vendorId = String(livingArea2)
             self.navigationController?.pushViewController(push!, animated: true)
-        }
+        }*/
         
     }
     

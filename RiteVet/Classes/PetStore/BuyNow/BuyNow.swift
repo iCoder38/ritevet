@@ -42,62 +42,38 @@ class BuyNow: UIViewController {
         }
     }
     
-    @IBOutlet weak var btnCheckOut:UIButton!
+    @IBOutlet weak var btnCheckOut:UIButton! {
+        didSet {
+            btnCheckOut.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+            btnCheckOut.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+            btnCheckOut.layer.shadowOpacity = 1.0
+            btnCheckOut.layer.shadowRadius = 15.0
+            btnCheckOut.layer.masksToBounds = false
+            btnCheckOut.layer.cornerRadius = 14
+            btnCheckOut.backgroundColor = .systemGreen
+            btnCheckOut.setTitleColor(.white, for: .normal)
+        }
+    }
     
     @IBOutlet weak var lblSubTotal:UILabel!
     @IBOutlet weak var lblShipingCharge:UILabel!
     @IBOutlet weak var lblTotalPrice:UILabel!
-    
-    
-     override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
-         
-        btnBack.addTarget(self, action: #selector(backClick), for: .touchUpInside)
-           
-           // btnAddToCartList.addTarget(self, action: #selector(addToCartListClickMethod), for: .touchUpInside)
-           
-        //  print(buyNowItemFullQuery as Any)
         
-           // 255 , 202 , 70
-        btnCheckOut.backgroundColor = UIColor.init(red: 255.0/255.0, green: 202.0/255.0, blue: 70.0/255.0, alpha: 1)
-        btnCheckOut.layer.cornerRadius = 4
-        btnCheckOut.clipsToBounds = true
-        btnCheckOut.setTitle("CHECKOUT", for: .normal)
+        self.btnBack.addTarget(self, action: #selector(backClick), for: .touchUpInside)
         
-        btnCheckOut.addTarget(self, action: #selector(checkOutClickMethod), for: .touchUpInside)
-           
-           // let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(AddToCart.longPress(longPressGestureRecognizer:)))
-           // self.tbleView.addGestureRecognizer(longPressRecognizer)
-           
-           // self.savedCartList()
+        self.btnCheckOut.addTarget(self, action: #selector(checkOutClickMethod), for: .touchUpInside)
         
-        // print(buyNowItemFullQuery as Any)
-        /*
-         SKU = "yhgbgf by ";
-         categoryId = 38;
-         categoryName = "Large Animal";
-         description = q;
-         image = "http://demo2.evirtualservices.com/ritevet/site/img/uploads/products/1582787900riteVetImage.jpg";
-         price = 1;
-         productId = 109;
-         productName = q;
-         productUserId = 105;
-         quantity = 1;
-         shippingAmount = 1;
-         specialPrice = 1;
-         subcategoryId = 39;
-         subcategoryName = "large animal 1";
-         */
-        
-        
-        
-       }
-       override var preferredStatusBarStyle: UIStatusBarStyle {
-           return .lightContent
-       }
-       @objc func backClick() {
-           self.navigationController?.popViewController(animated: true)
-       }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    @objc func backClick() {
+        self.navigationController?.popViewController(animated: true)
+    }
 
     @objc func checkOutClickMethod() {
         
@@ -107,17 +83,11 @@ class BuyNow: UIViewController {
     @objc func push_to_payment_page() {
         
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "CSelectPaymetScreenId") as? CSelectPaymetScreen
+        
         push!.finalPrice = self.str_total_price
         push!.dict_get_selected_product_Details = buyNowItemFullQuery
-        self.navigationController?.pushViewController(push!, animated: true)
         
-        /*let alert = UIAlertController(title: "Alert!", message: "Successfully purchase",preferredStyle: UIAlertController.Style.alert)
-
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId") as? Dashboard
-            self.navigationController?.pushViewController(push!, animated: true)
-        }))
-        self.present(alert, animated: true, completion: nil)*/
+        self.navigationController?.pushViewController(push!, animated: true)
         
     }
 }

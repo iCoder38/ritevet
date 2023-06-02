@@ -24,7 +24,7 @@ class cashout: UIViewController {
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "Cashout"
+            lblNavigationTitle.text = "Wallet"
             lblNavigationTitle.textColor = .white
         }
     }

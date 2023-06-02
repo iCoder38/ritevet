@@ -13,6 +13,8 @@ import BottomPopup
 
 class RequestServiceHome: UIViewController,UITextFieldDelegate {
 
+    var str_took_payment:String!
+    
     var page : Int! = 1
     var loadMore : Int! = 1;
     
@@ -705,13 +707,16 @@ extension RequestServiceHome: UITableViewDataSource {
         
         //print(item as Any)
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "RequestServiceDetailsId") as? RequestServiceDetails
+        
         push!.getDictRequestServiceHome = item as NSDictionary?
         push!.getUtypeInDetailsPage = strGetRequestServiceHome
+        push!.str_set_price_or_not = String(self.str_took_payment)
+        
         self.navigationController?.pushViewController(push!, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 96
     }
     
 }

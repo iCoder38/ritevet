@@ -118,6 +118,16 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+        print(person) //
+            
+            self.btnCountry.isUserInteractionEnabled = false
+            self.txtCountry.text = (person["countryName"] as! String)
+            self.txtCountry.isUserInteractionEnabled = false
+            
+        }
+        
         self.UIdesignOfBusinessAddress()
     }
     

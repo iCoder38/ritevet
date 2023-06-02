@@ -17,6 +17,8 @@ import CoreLocation
 
 class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate {
     
+    // var str_shipping_amount:String!
+    
     let cellReuseIdentifier = "cSelectPaymentScreenTableCell"
     
     let locationManager = CLLocationManager()
@@ -64,11 +66,12 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
             lblNavigationTitle.text = "PAYMENT"
+            lblNavigationTitle.textColor = .white
         }
     }
     @IBOutlet weak var btnBack:UIButton! {
         didSet {
-            btnBack.tintColor = .black
+            btnBack.tintColor = .white
             // btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
         }
     }
@@ -131,6 +134,7 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
+        // print(self.dict_get_selected_product_Details)
         
         // MARK:- DISMISS KEYBOARD WHEN CLICK OUTSIDE -
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -144,7 +148,7 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         
         self.btnmakePayment.addTarget(self, action: #selector(firstCheckValidation), for: .touchUpInside)
         
-        self.lblPayableAmount.text = "$"+String(self.finalPrice)
+        self.lblPayableAmount.text = "You have to pay $"+String(self.finalPrice)
         
         print(self.memberShipPlan as Any)
         if self.memberShipPlan == "Membership : PREMIUM" {
@@ -506,7 +510,7 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 
                 "action"            :   "order",
                 "userId"            :   String(myString),
-                "shippingAmount"    :   String(""), // empty
+                "shippingAmount"    :   "\(self.dict_get_selected_product_Details["shippingAmount"]!)",
                 "TotalAmount"       :   String(pass_special_price), // empty
                 "shippingAddress"   :   (person["address"] as! String),
                 "ShippingCity"      :   (person["city"] as! String),
@@ -579,16 +583,6 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     // MARK:- FETCH STRIPE TOKEN -
     @objc func fetchStripeToken() {
         ERProgressHud.sharedInstance.showDarkBackgroundView(withTitle: "Please wait...")
@@ -600,9 +594,6 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         
         let expMonth    = fullNameArr[0]
         let expYear = fullNameArr[1]
-        
-        // print(expMonth as Any)
-        // print(expYear as Any)
         
         let cardParams = STPCardParams()
         
@@ -625,59 +616,15 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 
                 self.present(alert, animated: true, completion: nil)
                 
-                
-                
                 return
             }
             
             let tokenID = token.tokenId
             print(tokenID)
             
-            // self.rechargeMyMembershipAccount(strStripeTokenIs: tokenID)
-            
-            self.updateMmbersipInFirebaseXMPPserver(strTokenId: tokenID)
-            
             self.update_payment_webservice(str_token_id: tokenID)
         }
         
-        
-    }
-    
-    @objc func updateMmbersipInFirebaseXMPPserver(strTokenId:String) {
-        
-        /*if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            
-            
-            
-            let ref = Database.database().reference()
-            ref.child("ChatCapRegistration")
-                .child(person["QuickBlox"] as! String)
-                .child("Settings")
-                .child("details")
-                .updateChildValues(
-                    
-                    ["Subscription" : String(self.memberShipPlan),
-                     "HowManyDaysLeftForSubscription" : String(self.finalDaysLeft)]
-                )
-            
-        }*/
-        
-        
-        /*let alert = UIAlertController(title: "Success", message: nil, preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "Ok", style: .default , handler:{ (UIAlertAction)in
-         print("User click Delete button")
-         
-         // self.getProfileLoginNewData()
-         
-         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "TabbarControllerId") as? TabbarController
-         push!.selectedIndex = 3
-         self.navigationController?.pushViewController(push!, animated: true)
-         
-         }))
-         
-         self.present(alert, animated: true)*/
-        
-        // self.updatePaymentOnFirebaseXMPP(strSubscriptionId: String(self.memberShipPlan), strTransactionId: String(strTokenId))
     }
     
     @objc func update_payment_webservice(str_token_id:String) {
@@ -686,13 +633,6 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         let urlString = "CHARGER_AMOUNT"
         
         var parameters:Dictionary<AnyHashable, Any>!
-        
-        /*
-         action: chargeramount
-         userId:
-         amount:
-         tokenID:
-         */
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = person["userId"] as! Int
@@ -745,12 +685,7 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                         }
                         else {
                             print("no")
-                            // ERProgressHud.sharedInstance.hide()
                             
-                            // login via evs
-                            // self.evsRegistrationWebservice(strEmail: strEmailFirebase, strName: strNameFirebase, strType: strSocialTypeFirebase, strPhoto: strSocialPicFirebase, strSocialId: strSocialIdFirebase, strFirebaseId: strSocialIdFirebase)
-                            
-                            // self.signUpViaFirebase(strEmail: strEmailFirebase)
                         }
                     }
                     
@@ -782,13 +717,6 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         let urlString = "BASE_URL_CHAT_CAP"
         
         var parameters:Dictionary<AnyHashable, Any>!
-        
-        /*
-         action: chargeramount
-         userId:
-         amount:
-         tokenID:
-         */
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = person["userId"] as! Int

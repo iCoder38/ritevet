@@ -60,10 +60,7 @@ class Registration: UIViewController,UITextFieldDelegate {
         strStateId = "0"
         strCountryId = "0"
         
-         
-        self.countryListWb()
-        // self.registrationClickAgterMapLocation()
-        
+        self.countryListWb()        
         
     }
     

@@ -189,10 +189,13 @@
 		A4AA88E3240E773700F60291 /* RRGoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AA88E1240E773600F60291 /* RRGoogleLogin.swift */; };
 		A4AA88E4240E773700F60291 /* RRFBLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AA88E2240E773700F60291 /* RRFBLogin.swift */; };
 		B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */ = {isa = PBXBuildFile; fileRef = B975E2542A1F490800A82F38 /* specialization_options.swift */; };
+		B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97EE8D02A2871F4008770EC /* appointment_details.swift */; };
 		B995FEE72A27366E00ACEF67 /* cashout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995FEE62A27366E00ACEF67 /* cashout.swift */; };
 		B9BADBD32A208B62007EB7D8 /* payment_before_booking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BADBD22A208B62007EB7D8 /* payment_before_booking.swift */; };
 		B9CB54D72A275E26003B586B /* cashout_listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D62A275E26003B586B /* cashout_listing.swift */; };
 		B9CB54DA2A2776A4003B586B /* cashout_pay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D92A2776A4003B586B /* cashout_pay.swift */; };
+		B9E074802A29B1750009BE04 /* order_received.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E0747F2A29B1750009BE04 /* order_received.swift */; };
+		B9E074832A29B45A0009BE04 /* order_received_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E074822A29B45A0009BE04 /* order_received_details.swift */; };
 		B9EA84322A20C2E5003C25BF /* booking_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EA84312A20C2E5003C25BF /* booking_details.swift */; };
 		D499AA7B3F7F2FCF92D1AEE4 /* Pods_RiteVet_RiteVetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA70CFE187C8FAF55F6FEB /* Pods_RiteVet_RiteVetUITests.framework */; };
 		FD864645EDFBA601565DD331 /* Pods_RiteVet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A37DEC51369D700089B6D951 /* Pods_RiteVet.framework */; };
@@ -411,10 +414,13 @@
 		A4AA88E1240E773600F60291 /* RRGoogleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRGoogleLogin.swift; sourceTree = "<group>"; };
 		A4AA88E2240E773700F60291 /* RRFBLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRFBLogin.swift; sourceTree = "<group>"; };
 		B975E2542A1F490800A82F38 /* specialization_options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = specialization_options.swift; sourceTree = "<group>"; };
+		B97EE8D02A2871F4008770EC /* appointment_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointment_details.swift; sourceTree = "<group>"; };
 		B995FEE62A27366E00ACEF67 /* cashout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout.swift; sourceTree = "<group>"; };
 		B9BADBD22A208B62007EB7D8 /* payment_before_booking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = payment_before_booking.swift; sourceTree = "<group>"; };
 		B9CB54D62A275E26003B586B /* cashout_listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_listing.swift; sourceTree = "<group>"; };
 		B9CB54D92A2776A4003B586B /* cashout_pay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_pay.swift; sourceTree = "<group>"; };
+		B9E0747F2A29B1750009BE04 /* order_received.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received.swift; sourceTree = "<group>"; };
+		B9E074822A29B45A0009BE04 /* order_received_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received_details.swift; sourceTree = "<group>"; };
 		B9EA84312A20C2E5003C25BF /* booking_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = booking_details.swift; sourceTree = "<group>"; };
 		BE9C3E0BAC918BA1482ABDFF /* Pods-RiteVet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiteVet.release.xcconfig"; path = "Target Support Files/Pods-RiteVet/Pods-RiteVet.release.xcconfig"; sourceTree = "<group>"; };
 		F44AFDE6BE5801AE36E560C7 /* Pods-RiteVet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiteVet.debug.xcconfig"; path = "Target Support Files/Pods-RiteVet/Pods-RiteVet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -745,6 +751,8 @@
 		1861AA30238D1F6C00C3C986 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B9E074812A29B3B60009BE04 /* order_received_details */,
+				B9E0747E2A29B1470009BE04 /* order_received */,
 				B9CB54D82A27767B003B586B /* cashout_pay */,
 				B9CB54D52A275E0C003B586B /* cashout_listing */,
 				B995FEE52A27365E00ACEF67 /* cashout */,
@@ -1214,6 +1222,7 @@
 		A4870C3823C85927008328D2 /* Appointment */ = {
 			isa = PBXGroup;
 			children = (
+				B97EE8CF2A2871DF008770EC /* Appointment_details */,
 				A4870C3B23C85949008328D2 /* Appointment.swift */,
 				A4870C3923C8593A008328D2 /* AppointmentTableCell.swift */,
 			);
@@ -1388,6 +1397,14 @@
 			path = SocialLogin;
 			sourceTree = "<group>";
 		};
+		B97EE8CF2A2871DF008770EC /* Appointment_details */ = {
+			isa = PBXGroup;
+			children = (
+				B97EE8D02A2871F4008770EC /* appointment_details.swift */,
+			);
+			path = Appointment_details;
+			sourceTree = "<group>";
+		};
 		B995FEE52A27365E00ACEF67 /* cashout */ = {
 			isa = PBXGroup;
 			children = (
@@ -1410,6 +1427,22 @@
 				B9CB54D92A2776A4003B586B /* cashout_pay.swift */,
 			);
 			path = cashout_pay;
+			sourceTree = "<group>";
+		};
+		B9E0747E2A29B1470009BE04 /* order_received */ = {
+			isa = PBXGroup;
+			children = (
+				B9E0747F2A29B1750009BE04 /* order_received.swift */,
+			);
+			path = order_received;
+			sourceTree = "<group>";
+		};
+		B9E074812A29B3B60009BE04 /* order_received_details */ = {
+			isa = PBXGroup;
+			children = (
+				B9E074822A29B45A0009BE04 /* order_received_details.swift */,
+			);
+			path = order_received_details;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1704,6 +1737,7 @@
 				A46F092E23BDC376006066C9 /* YBTextPicker.swift in Sources */,
 				B9CB54D72A275E26003B586B /* cashout_listing.swift in Sources */,
 				1861AA2C238D1CCC00C3C986 /* Utils.swift in Sources */,
+				B9E074802A29B1750009BE04 /* order_received.swift in Sources */,
 				1857AEDF238E7CC600E2147F /* Subscription.swift in Sources */,
 				A46F093E23BDD0DC006066C9 /* SambagTimePickerViewController.swift in Sources */,
 				1851D4A125E397570058053B /* RPicker.swift in Sources */,
@@ -1712,6 +1746,7 @@
 				A46F092F23BDC376006066C9 /* YBTextPickerDataModel.swift in Sources */,
 				1846D30F238D38D6003E2C02 /* Registration.swift in Sources */,
 				A49F35E023B090D70012C67D /* FreeStuffPageTableCell.swift in Sources */,
+				B9E074832A29B45A0009BE04 /* order_received_details.swift in Sources */,
 				A48F589723C75401000DBA74 /* MyPostDetailsCollectionCell.swift in Sources */,
 				1857AEF0238FB4CE00E2147F /* VeterinarianBiographyTableCell.swift in Sources */,
 				A49F35E723B090E80012C67D /* SubmitPostTableCell.swift in Sources */,
@@ -1779,6 +1814,7 @@
 				A49F35F223B091520012C67D /* RequestVeterianaryService.swift in Sources */,
 				A4AA88E4240E773700F60291 /* RRFBLogin.swift in Sources */,
 				B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */,
+				B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */,
 				1861A6F525D3B90100730F34 /* VRTwoTableCell.swift in Sources */,
 				A44CCCB523B1FAE200A49261 /* BrowsePetStoreSubCategory.swift in Sources */,
 				A49F360B23B0F91D0012C67D /* ShimmeringMaskLayer.swift in Sources */,

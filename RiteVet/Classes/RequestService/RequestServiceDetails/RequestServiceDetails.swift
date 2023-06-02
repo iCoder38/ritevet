@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class RequestServiceDetails: UIViewController {
 
+    var str_set_price_or_not:String!
+    
     let cellReuseIdentifier = "requestServiceDetailsTableCell"
     
     var getDictRequestServiceHome:NSDictionary!
@@ -133,6 +135,26 @@ class RequestServiceDetails: UIViewController {
         }
     }
     
+    @IBOutlet weak var lbl_busy_status:UILabel! {
+        didSet {
+            lbl_busy_status.text = "please wait..."
+            lbl_busy_status.textColor = .white
+        }
+    }
+    
+    @IBOutlet weak var view_busy:UIView! {
+        didSet {
+            view_busy.isHidden = true
+            view_busy.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+            view_busy.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+            view_busy.layer.shadowOpacity = 1.0
+            view_busy.layer.shadowRadius = 15.0
+            view_busy.layer.masksToBounds = false
+            view_busy.layer.cornerRadius = 15
+            view_busy.backgroundColor = .white
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -246,7 +268,7 @@ class RequestServiceDetails: UIViewController {
         
         //indicator.startAnimating()
         //self.disableService()
-        //Utils.RiteVetIndicatorShow()
+        Utils.RiteVetIndicatorShow()
         
         let urlString = BASE_URL_KREASE
         
@@ -346,8 +368,23 @@ class RequestServiceDetails: UIViewController {
                         self.tbleView.dataSource = self
                         
                         
-                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        self.dict = JSON["data"] as! Dictionary<AnyHashable, Any>
                         print(dict as Any)
+                        
+                        self.view_busy.isHidden = false
+                        
+                        if (self.dict["currentAvailable"] as! String) == "No" {
+                            
+                            self.view_busy.backgroundColor = .systemRed
+                            self.lbl_busy_status.text = "Unavailaible"
+                            
+                        } else {
+                            
+                            self.view_busy.backgroundColor = .systemGreen
+                            self.lbl_busy_status.text = "Availaible"
+                            
+                        }
+                        
                         
                         var ar : NSArray!
                         ar = (dict["typeOfSpecilizationList"] as! Array<Any>) as NSArray
@@ -469,9 +506,12 @@ class RequestServiceDetails: UIViewController {
                         }
                         
                         
-                        self.btnChatShow.addTarget(self, action: #selector(chatClickMethod), for: .touchUpInside)
-                        self.btnVideoShow.addTarget(self, action: #selector(videoClickMethod), for: .touchUpInside)
-                        self.btnAudioShow.addTarget(self, action: #selector(audioClickMethod), for: .touchUpInside)
+                            
+                            self.btnChatShow.addTarget(self, action: #selector(chatClickMethod), for: .touchUpInside)
+                            self.btnVideoShow.addTarget(self, action: #selector(videoClickMethod), for: .touchUpInside)
+                            self.btnAudioShow.addTarget(self, action: #selector(audioClickMethod), for: .touchUpInside)
+                            
+                         
                         
                         
                         Utils.RiteVetIndicatorHide()
@@ -509,67 +549,135 @@ class RequestServiceDetails: UIViewController {
     // MARK:- CHAT -
     @objc func chatClickMethod() {
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
-        push!.receiverData = dict as NSDictionary?
-        push!.fromDialog = "no"
-        self.navigationController?.pushViewController(push!, animated: true)
-        
+        if (self.dict["currentAvailable"] as! String) == "No" {
+            
+            if "\(self.dict["UTYPE"]!)" == "2" {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Veterinarian is busy now. Please check and schedule appointment.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Pet service provider is busy now. Please check and schedule appointment.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+            
+        } else {
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
+            push!.receiverData = dict as NSDictionary?
+            push!.fromDialog = "no"
+            self.navigationController?.pushViewController(push!, animated: true)
+        }
     }
     
     // MARK:- VIDEO -
     @objc func videoClickMethod() {
         
-        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+        
+        if (self.dict["currentAvailable"] as! String) == "No" {
             
-            let x : Int = (person["userId"] as! Int)
-            let myString = String(x)
+            if "\(self.dict["UTYPE"]!)" == "2" {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Veterinarian is busy now. Please check and schedule appointment.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Pet service provider is busy now. Please check and schedule appointment.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            }
             
-            let x2 : Int = (dict["userId"] as! Int)
-            let myString2 = String(x2)
+        } else {
             
-            let channelNameIs = String(myString)+"+"+String(myString2)
-            
-            print(channelNameIs as Any)
-            
-            // self.sendNotification(strChannelName: channelNameIs, strType: "videocall", strBody: "Incoming Video call")
-            
-            self.sendNotificationForSingleUser(strChannelName: channelNameIs, strType: "videocall", strBody: "Incoming Video call")
-            
-            /*let push  = storyboard?.instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
-            push!.roomName = channelNameIs
-            push!.setSteps = "2"
-            push!.strIamCallingTo = "\(dict["VFirstName"] as! String)"
-            
-            push!.callerName = "\(dict["VFirstName"] as! String)"
-            push!.callerImage = "\(dict["ownPicture"] as! String)"
-            
-            self.navigationController?.pushViewController(push!, animated:true)*/
+            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+                
+                let x : Int = (person["userId"] as! Int)
+                let myString = String(x)
+                
+                let x2 : Int = (dict["userId"] as! Int)
+                let myString2 = String(x2)
+                
+                let channelNameIs = String(myString)+"+"+String(myString2)
+                
+                print(channelNameIs as Any)
+                 
+                self.sendNotificationForSingleUser(strChannelName: channelNameIs, strType: "videocall", strBody: "Incoming Video call")
+                
+            }
             
         }
+    
+       
         
     }
     
     // MARK:- AUDIO -
     @objc func audioClickMethod() {
         
-        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+        
+        if (self.dict["currentAvailable"] as! String) == "No" {
             
-            let x : Int = (person["userId"] as! Int)
-            let myString = String(x)
+            if "\(self.dict["UTYPE"]!)" == "2" {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Veterinarian is busy now. Please check and schedule appointment.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Pet service provider is busy now. Please check and schedule appointment.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            }
             
-            let x2 : Int = (dict["userId"] as! Int)
-            let myString2 = String(x2)
-            
-            let channelNameIs = String(myString)+"+"+String(myString2)
-            
-            // let channelNameIs = String(myString)+"\(dict["userId"] as! Int)"
-            
-            // self.sendNotification(strChannelName: channelNameIs, strType: "audiocall", strBody: "Incoming Audio call")
-            
-            self.sendNotificationForSingleUser(strChannelName: channelNameIs, strType: "audiocall", strBody: "Incoming Audio call")
+        } else {
             
             
+            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+                
+                let x : Int = (person["userId"] as! Int)
+                let myString = String(x)
+                
+                let x2 : Int = (dict["userId"] as! Int)
+                let myString2 = String(x2)
+                
+                let channelNameIs = String(myString)+"+"+String(myString2)
+                
+                self.sendNotificationForSingleUser(strChannelName: channelNameIs, strType: "audiocall", strBody: "Incoming Audio call")
+                
+                
+            }
         }
+        
+        
+        
+        
     }
     
     @objc func sendNotificationForSingleUser(strChannelName:String,strType:String,strBody:String) {
@@ -814,6 +922,7 @@ class RequestServiceDetails: UIViewController {
         // print(getDictRequestServiceHome as Any)strCountryName
         push!.strCountryName = (self.getDictRequestServiceHome["Country"] as! String)
         push!.strAmericanBoardOption = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
+        push!.str_set_payment = String(self.str_set_price_or_not)
         
         self.navigationController?.pushViewController(push!, animated: true)
     }

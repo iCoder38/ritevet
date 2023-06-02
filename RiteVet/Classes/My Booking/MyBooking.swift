@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class MyBooking: UIViewController {
     
+    
+    
     let cellReuseIdentifier = "myBookingTableCell"
     
     var arrListOfAppointment:Array<Any>!
@@ -287,7 +289,10 @@ extension MyBooking: UITableViewDataSource
         cell.lblPhoneNumber.text = (item!["contactNumber"] as! String)
         cell.lblPhoneNumber.textColor = NAVIGATION_BACKGROUND_COLOR
         
-        let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
+        
+        cell.lblFunction.text = (item!["typeofbusinessName"] as! String)
+        
+        /*let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
         
         if livingArea2 == 1 {
             cell.lblFunction.text = "Near By Clinic "
@@ -307,7 +312,7 @@ extension MyBooking: UITableViewDataSource
         } else {
             cell.lblFunction.text = "Come To Home "
             cell.btnVideo.isHidden = true
-        }
+        }*/
         
         // cell.btnVideo.isHidden = true
         
@@ -318,6 +323,16 @@ extension MyBooking: UITableViewDataSource
         tableView .deselectRow(at: indexPath, animated: true)
         
         let item = arrListOfAppointment[indexPath.row] as? [String:Any]
+        // print(item )
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "appointment_details_id") as? appointment_details
+        
+        push!.str_from_booking = "yes"
+        push!.str_get_booking_id = "\(item!["bookingID"]!)"
+        push!.dictBookingDetails = (item! as NSDictionary)
+        // push!.vendorId = String(livingArea2)
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+        /*let item = arrListOfAppointment[indexPath.row] as? [String:Any]
         print(item as Any)
         
         let livingArea2 = item!["typeofbusinessId"] as? Int ?? 0
@@ -335,7 +350,7 @@ extension MyBooking: UITableViewDataSource
             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoCallId") as? VideoCall
             push!.vendorId = String(livingArea2)
             self.navigationController?.pushViewController(push!, animated: true)
-        }
+        }*/
         
     }
     

@@ -131,10 +131,16 @@ extension RequestVeterianaryService: UITableViewDataSource {
             
             if indexPath.row == 0 {
                 push!.str_type_of_business = "1"
+                push!.str_took_payment = "no"
+                
             } else if indexPath.row == 1 {
                 push!.str_type_of_business = "2"
+                push!.str_took_payment = "yes"
+                
             } else {
                 push!.str_type_of_business = "3"
+                push!.str_took_payment = "yes"
+                
             }
             self.navigationController?.pushViewController(push!, animated: true)
             
@@ -150,6 +156,7 @@ extension RequestVeterianaryService: UITableViewDataSource {
                 push!.strSubCategoryId = "3.1"
                 
                 push!.str_type_of_business = "4"
+                push!.str_took_payment = "no"
                 
                 self.navigationController?.pushViewController(push!, animated: true)
                 
@@ -163,6 +170,7 @@ extension RequestVeterianaryService: UITableViewDataSource {
                 push!.strSubCategoryId = "3.2"
                 
                 push!.str_type_of_business = "5"
+                push!.str_took_payment = "no"
                 
                 self.navigationController?.pushViewController(push!, animated: true)
                 
@@ -176,6 +184,7 @@ extension RequestVeterianaryService: UITableViewDataSource {
                 push!.strSubCategoryId = "3.3"
                 
                 push!.str_type_of_business = "6"
+                push!.str_took_payment = "no"
                 
                 self.navigationController?.pushViewController(push!, animated: true)
                 

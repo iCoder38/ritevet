@@ -51,18 +51,19 @@ class MyOrders: UIViewController {
     }
     
     @objc func sideBarMenu() {
-            if revealViewController() != nil {
+        if revealViewController() != nil {
             btnBack.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
             
-                revealViewController().rearViewRevealWidth = 300
-                view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-              }
+            revealViewController().rearViewRevealWidth = 300
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         
+        self.arrListOfMyOrders.removeAllObjects()
         self.myOrders(page_number: 1)
         
     }
@@ -86,9 +87,7 @@ class MyOrders: UIViewController {
                     page += 1
                     print(page as Any)
                     
-   
                     self.myOrders(page_number: page)
-                     
                     
                 }
             }
@@ -96,78 +95,76 @@ class MyOrders: UIViewController {
     }
     
     @objc func myOrders(page_number:Int) {
-    
+        
         Utils.RiteVetIndicatorShow()
         
         let urlString = BASE_URL_KREASE
-     
+        
         var parameters:Dictionary<AnyHashable, Any>!
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
-               
-                 
+            
+            
             parameters = [
-                "action"       :   "orderlist",
-                "userId"       :   myString,
-                "pageNo"        :   page_number
+                "action"    :   "orderlist",
+                "userId"    :   myString,
+                "pageNo"    :   page_number
             ]
         }
         print("parameters-------\(String(describing: parameters))")
-                
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
             
-                        switch(response.result) {
-                        case .success(_):
-                           if let data = response.value {
-
-                            let JSON = data as! NSDictionary
-                             // print(JSON)
-                             
-                            var strSuccess : String!
-                            strSuccess = JSON["status"]as Any as? String
-                            
-                            if strSuccess == "success" //true
-                            {
-                             Utils.RiteVetIndicatorHide()
-                                
-                            var ar : NSArray!
-                            ar = (JSON["data"] as! Array<Any>) as NSArray
-                            // self.arrListOfMyOrders = (ar as! Array<Any>)
-                                self.arrListOfMyOrders.addObjects(from: ar as! [Any])
-                                
-                             self.tbleView.delegate = self
-                             self.tbleView.dataSource = self
-                             self.tbleView.reloadData()
-                                self.loadMore = 1
-                                
-                            }
-                            else
-                            {
-                             Utils.RiteVetIndicatorHide()
-                            }
-                            
-                        }
-
-                        case .failure(_):
-                            print("Error message:\(String(describing: response.error))")
-                            Utils.RiteVetIndicatorHide()
-                            
-                            let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                            
-                            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                    UIAlertAction in
-                                    NSLog("OK Pressed")
-                                }
-                            
-                            alertController.addAction(okAction)
-                            
-                            self.present(alertController, animated: true, completion: nil)
-                            
-                            break
-                         }
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    // print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        var ar : NSArray!
+                        ar = (JSON["data"] as! Array<Any>) as NSArray
+                        // self.arrListOfMyOrders = (ar as! Array<Any>)
+                        self.arrListOfMyOrders.addObjects(from: ar as! [Any])
+                        
+                        self.tbleView.delegate = self
+                        self.tbleView.dataSource = self
+                        self.tbleView.reloadData()
+                        self.loadMore = 1
+                        
                     }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
     }
 }
 
