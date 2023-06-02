@@ -115,6 +115,8 @@ extension RequestVeterianaryService: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath, animated: true)
         
+        print(self.getBusinessType as Any)
+        
         if self.getBusinessType == "2" {
         
             // print(indexPath.row as Any)
@@ -126,6 +128,7 @@ extension RequestVeterianaryService: UITableViewDataSource {
             defaults.set(myString, forKey: "selectedBusinessIdIs")
             
             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "RequestServiceHomeId") as? RequestServiceHome
+            
             push!.strGetRequestServiceHome = String(self.getBusinessType)
             push!.selectServiceType = String(myString)
             

@@ -247,6 +247,99 @@ class appointment_details: UIViewController {
         }
     }
     
+    
+    @objc func cancel_click_method() {
+        
+        let alert = UIAlertController(title: "Alert : Cancel", message: "Are you sure you want to cancel ?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes, cancel", style: .destructive, handler: { action in
+            
+            self.cancel_this_product()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { action in
+            
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func cancel_this_product() {
+        
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+
+            parameters = [
+                "action"    : "bookingcomplete",
+                "userId"    : myString,
+                "bookingId" : String(self.str_get_booking_id),
+                "status"    : "3"
+                
+            ]
+        }
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "Success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        let alert = UIAlertController(title: "Alert", message: JSON["msg"] as? String, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            
+                            self.navigationController?.popViewController(animated: true)
+                            
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+    }
+    
 }
 
 extension appointment_details: UITableViewDataSource , UITableViewDelegate {
@@ -288,12 +381,235 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             let productIDString = array.joined(separator: ",")
 //            print(productIDString)
             
-            cell.lbl_services.text = productIDString
+            var myString = productIDString
+            myString = myString.replacingOccurrences(of: ",", with: ",\n")
+            
+            cell.lbl_services.text = String(myString)
         }
         
-        cell.lbl_appointment_date.text = (self.dictBookingDetails["bookingDate"] as! String)
+        let server_booking_date = String((self.dictBookingDetails["bookingDate"] as! String).prefix(10))
+        cell.lbl_appointment_date.text = String(server_booking_date)
+        
         cell.lbl_appointment_time.text = (self.dictBookingDetails["slotTime"] as! String)
         cell.lbl_type_of_services.text = (self.dictBookingDetails["typeofbusinessName"] as! String)
+        
+        
+        // current date
+        let dateformatter2 = DateFormatter()
+        dateformatter2.dateFormat = "yyyy-MM-dd"
+        let current_date = dateformatter2.string(from: Date())
+        print("Date Selected \(current_date)")
+        
+        
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let today_current_date = formatter.date(from: "\(current_date)")
+        let booking_date = formatter.date(from: String(server_booking_date))
+
+        // print(today_current_date)
+        // print(booking_date)
+        
+        // same
+        if today_current_date?.compare(booking_date!) == .orderedSame {
+            print("Both dates are same")
+            
+            
+            
+            
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+            let current_date = dateFormatter.string(from: date)
+            print("current time-->",current_date)
+            
+            let prefix_time = String((self.dictBookingDetails["slotTime"] as! String).prefix(05))
+            print("server time-->",prefix_time)
+            
+            let prefix_one = String(current_date.prefix(02))
+            let prefix_two = String(prefix_time.prefix(02))
+            print(prefix_one)
+            print(prefix_two)
+            
+            let double_c_t = Double(prefix_one)
+            let double_s_t = Double(prefix_two)
+            
+            // print(double_c_t)
+            // print(double_s_t)
+            
+            let deduct_time = double_s_t! - double_c_t!
+            print(deduct_time," hours left")
+            
+            cell.btn_cancel.isHidden = false
+            
+            if deduct_time == 0.0 || deduct_time == 1.0 || deduct_time == 2.0  {
+                print(" HIDE CANCEL BUTTON : ")
+                
+                cell.btn_cancel.isHidden = true
+            }
+            
+            var str_check = String("\(deduct_time.toString())".prefix(01))
+            // print(str_check)
+            
+            if (str_check) == "-" {
+                cell.btn_cancel.isHidden = true
+            }
+            
+            
+            
+            
+            
+            
+        }
+        
+        // "Today's Date is greater then second date"
+        if (today_current_date?.compare(booking_date!)) == .orderedDescending {
+            print("Today's date is greater then Booking date")
+            
+            cell.btn_cancel.isHidden = true
+            
+        }
+        
+        // "Today's Date is lower then second date"
+        if (today_current_date?.compare(booking_date!)) == .orderedAscending {
+            print("Today's date is lower then Booking date")
+            
+            cell.btn_cancel.isHidden = false
+            
+        }
+        
+        // activate cancel button
+        cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+         
+        
+        /*let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        if let date = dateFormatter.date(from: String(server_booking_date)) {
+            print(date)
+            
+            if date == Date() {
+                print(" EQUAL ")
+                
+                cell.btn_cancel.isHidden = true
+                
+            } else if date < Date() {
+                print("Before now")
+                
+                cell.btn_cancel.isHidden = true
+                
+            } else {
+                
+                print("After now : WORK HERE FOR TIME")
+                
+                
+                
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
+                let current_date = dateFormatter.string(from: date)
+                print("current time-->",current_date)
+                
+                let prefix_time = String((self.dictBookingDetails["slotTime"] as! String).prefix(05))
+                print("server time-->",prefix_time)
+                
+                let prefix_one = String(current_date.prefix(02))
+                let prefix_two = String(prefix_time.prefix(02))
+                print(prefix_one)
+                print(prefix_two)
+                
+                let double_c_t = Double(prefix_one)
+                let double_s_t = Double(prefix_two)
+                
+                // print(double_c_t)
+                // print(double_s_t)
+                
+                let deduct_time = double_s_t! - double_c_t!
+                 print(deduct_time)
+                
+                cell.btn_cancel.isHidden = false
+                
+                if deduct_time == 0.0 || deduct_time == 1.0 || deduct_time == 2.0  {
+                    print(" HIDE CANCEL BUTTON : ")
+                    
+                    cell.btn_cancel.isHidden = true
+                    
+                }
+                
+                print("output: \(deduct_time.toString())")
+                
+                var str_check = String("\(deduct_time.toString())".prefix(01))
+                print(str_check)
+                
+                if (str_check) == "-" {
+                    cell.btn_cancel.isHidden = true
+                }
+                
+                
+                // print("OUT")
+                
+                
+                
+                
+                
+                
+                //
+                
+//
+//                let myString1 = prefix_one
+//                let myInt1 = Int(myString1)
+//                print(myInt1)
+//
+//                let myString2 = prefix_two
+//                let myInt2 = Int(myString2)
+//                print(myInt2)
+                
+                
+                
+                
+//                let current_time = String(current_date)
+//                let booking_time = String(prefix_time)
+//                let f = DateFormatter()
+//                f.dateFormat = "HH:mm"
+
+                
+                
+                
+                
+                
+                
+                
+                /*f.date(from: current_time)! //"Jan 1, 2000 at 10:31 PM"
+                f.date(from: booking_time)! //"Jan 1, 2000 at 2:31 PM"
+                f.date(from: current_time)! > f.date(from: booking_time)!  // true*/
+                
+            }
+        }*/
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         if "\(self.dictBookingDetails["status"]!)" == "1" {
             
@@ -309,7 +625,13 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             cell.btn_next.setTitle("Completed", for: .normal)
             cell.btn_next.backgroundColor = .systemGreen
+            cell.btn_cancel.isHidden = true
             
+        }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
+            
+            cell.btn_next.setTitle("Cancelled", for: .normal)
+            cell.btn_next.backgroundColor = .systemRed
+            cell.btn_cancel.isHidden = true
         }
         
         if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
@@ -346,6 +668,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         return UITableView.automaticDimension
         
     }
+    
 }
 
 
@@ -399,6 +722,21 @@ class appointment_details_table_cell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var btn_cancel:UIButton! {
+        didSet {
+            btn_cancel.isHidden = false
+            btn_cancel.setTitle("Cancel", for: .normal)
+            btn_cancel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+            btn_cancel.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+            btn_cancel.layer.shadowOpacity = 1.0
+            btn_cancel.layer.shadowRadius = 14.0
+            btn_cancel.layer.masksToBounds = false
+            btn_cancel.layer.cornerRadius = 14
+            btn_cancel.backgroundColor = .systemRed
+            btn_cancel.setTitleColor(.white, for: .normal)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -411,3 +749,18 @@ class appointment_details_table_cell: UITableViewCell {
     }
 
 }
+
+
+extension Double {
+    func toString() -> String {
+        return String(format: "%.1f",self)
+    }
+}
+
+//extension Date {
+//    static var noon: Date { Date().noon }
+//    var noon: Date { Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)! }
+//    var isInToday: Bool { Calendar.current.isDateInToday(self) }
+//    var isInThePast: Bool { noon < .noon }
+//    var isInTheFuture: Bool { noon > .noon }
+//}

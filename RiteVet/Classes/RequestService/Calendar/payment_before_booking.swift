@@ -23,6 +23,8 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
 //    "typeofbusinessId" : String(myString22),
 //    "UTYPE" : String(getUtypeForCalendar)
     
+    var str_get_business_type_for_payment:String!
+    
     var dictShowFullDetails:NSDictionary!
     
     var strGetPrice:String!
@@ -92,8 +94,10 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+         
+        print(str_get_business_type_for_payment as Any)
         
-        
+        // print(strUType)
         
         self.txtCVV.delegate = self
 //        self.txtExpYear.delegate = self
@@ -121,7 +125,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
         
         var strCountryNameAndPrice:String!
         
-        if (self.strTypeOfBusiness == "3") {
+        if (self.str_get_business_type_for_payment == "2") {
         
             if (self.strGetCountryName == "United States") {
                 strCountryNameAndPrice = "195"
@@ -129,8 +133,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 strCountryNameAndPrice = "25"
             }
             
-        } else if (self.strTypeOfBusiness == "2") {
-            
+        } else if (self.str_get_business_type_for_payment == "3") {
 
             if (self.strGetAmericanBoardCertificate) == "" {
                 
@@ -323,7 +326,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
             
             var strCountryNameAndPrice:String!
             
-            if (self.strTypeOfBusiness == "3") {
+            if (self.str_get_business_type_for_payment == "2") {
                 
                 if (self.strGetCountryName == "United States") {
                     strCountryNameAndPrice = "195"
@@ -331,7 +334,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                     strCountryNameAndPrice = "25"
                 }
                 
-            } else if (self.strTypeOfBusiness == "2") {
+            } else if (self.str_get_business_type_for_payment == "3") {
                 
                 
                 if (self.strGetAmericanBoardCertificate) == "" {

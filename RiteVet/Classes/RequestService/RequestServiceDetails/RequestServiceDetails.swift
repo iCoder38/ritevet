@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class RequestServiceDetails: UIViewController {
 
+    var str_business_type_is:String!
+    
     var str_set_price_or_not:String!
     
     let cellReuseIdentifier = "requestServiceDetailsTableCell"
@@ -171,7 +173,7 @@ class RequestServiceDetails: UIViewController {
         
         self.btnBookAnAppointment.isUserInteractionEnabled = false
         // print(getUtypeInDetailsPage as Any)
-        print(getDictRequestServiceHome as Any)
+        print(str_business_type_is as Any)
         /*
          Optional({
              VAstate = UP;
@@ -923,6 +925,7 @@ class RequestServiceDetails: UIViewController {
         push!.strCountryName = (self.getDictRequestServiceHome["Country"] as! String)
         push!.strAmericanBoardOption = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
         push!.str_set_payment = String(self.str_set_price_or_not)
+        push!.str_get_business_type_for_calendar = String(self.str_business_type_is)
         
         self.navigationController?.pushViewController(push!, animated: true)
     }

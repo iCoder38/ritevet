@@ -15,6 +15,8 @@ import BottomPopup
 
 class Calendar: UIViewController {
     
+    var str_get_business_type_for_calendar:String!
+    
     var str_set_payment:String!
     
     var dictGetVendorDetails:NSDictionary!
@@ -156,7 +158,7 @@ class Calendar: UIViewController {
         calendar.isScrollEnabled = false
         
         print(strGetVendorIdForCalendar as Any)
-        print(arrGetDetailsAndService as Any)
+        print(str_get_business_type_for_calendar as Any)
         
         /*
          Optional(95)
@@ -439,6 +441,7 @@ class Calendar: UIViewController {
                 push!.strUType = String(getUtypeForCalendar)
                 push!.strGetCountryName = String(self.strCountryName)
                 push!.strGetAmericanBoardCertificate = String(self.strAmericanBoardOption)
+                push!.str_get_business_type_for_payment = String(self.str_get_business_type_for_calendar)
             }
         }
         

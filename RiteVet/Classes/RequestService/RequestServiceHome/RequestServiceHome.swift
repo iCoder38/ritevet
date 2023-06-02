@@ -77,7 +77,7 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
         
         // SUB CATEGORY ID
         print(strSubCategoryId as Any)
-        
+        print(self.str_type_of_business as Any)
         
         
         
@@ -711,6 +711,7 @@ extension RequestServiceHome: UITableViewDataSource {
         push!.getDictRequestServiceHome = item as NSDictionary?
         push!.getUtypeInDetailsPage = strGetRequestServiceHome
         push!.str_set_price_or_not = String(self.str_took_payment)
+        push!.str_business_type_is = String(self.str_type_of_business)
         
         self.navigationController?.pushViewController(push!, animated: true)
     }
