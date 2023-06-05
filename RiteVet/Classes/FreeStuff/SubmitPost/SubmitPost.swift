@@ -630,7 +630,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                                 print("Success!")
                                 print(dictionary)
                                 
-                                let JSON = dictionary as! NSDictionary
+                                let JSON = dictionary
                                 print(JSON)
                                 
                                 //var dict: Dictionary<AnyHashable, Any>
@@ -817,9 +817,9 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             //Set Your Parameter
             let parameterDict = [
-               "action"          : "editstaff",
-               "staffId"       : String(staffId),
-               "userId"         : String(myString)
+               "action"     : "editstaff",
+               "staffId"    : String(staffId),
+               "userId"     : String(myString)
                
                
            ]

@@ -388,6 +388,7 @@ extension Dashboard: UICollectionViewDataSource {
                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PetStoreTermsAndConditionsId") as? PetStoreTermsAndConditions
                 self.navigationController?.pushViewController(push!, animated: true)
             }*/
+            
         }
     }
 }

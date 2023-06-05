@@ -213,6 +213,7 @@ class send_review: UIViewController {
                 "reviewTo"      :  "\(self.dict_send_review_details["vendorID"]!)",
                 "star"          :  String(self.str_number),
                 "message"       :  String(self.txt_view.text!),
+                "bookingId"     : "\(self.dict_send_review_details["bookingID"]!)",
             ]
         }
         print("parameters-------\(String(describing: parameters))")

@@ -189,6 +189,7 @@
 		A4AA88E3240E773700F60291 /* RRGoogleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AA88E1240E773600F60291 /* RRGoogleLogin.swift */; };
 		A4AA88E4240E773700F60291 /* RRFBLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AA88E2240E773700F60291 /* RRFBLogin.swift */; };
 		B95D22E92A2DF78F001222A8 /* send_review.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D22E82A2DF78F001222A8 /* send_review.swift */; };
+		B95D22EC2A2E0D67001222A8 /* all_reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D22EB2A2E0D67001222A8 /* all_reviews.swift */; };
 		B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */ = {isa = PBXBuildFile; fileRef = B975E2542A1F490800A82F38 /* specialization_options.swift */; };
 		B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97EE8D02A2871F4008770EC /* appointment_details.swift */; };
 		B995FEE72A27366E00ACEF67 /* cashout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995FEE62A27366E00ACEF67 /* cashout.swift */; };
@@ -415,6 +416,7 @@
 		A4AA88E1240E773600F60291 /* RRGoogleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRGoogleLogin.swift; sourceTree = "<group>"; };
 		A4AA88E2240E773700F60291 /* RRFBLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRFBLogin.swift; sourceTree = "<group>"; };
 		B95D22E82A2DF78F001222A8 /* send_review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = send_review.swift; sourceTree = "<group>"; };
+		B95D22EB2A2E0D67001222A8 /* all_reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = all_reviews.swift; sourceTree = "<group>"; };
 		B975E2542A1F490800A82F38 /* specialization_options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = specialization_options.swift; sourceTree = "<group>"; };
 		B97EE8D02A2871F4008770EC /* appointment_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointment_details.swift; sourceTree = "<group>"; };
 		B995FEE62A27366E00ACEF67 /* cashout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout.swift; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 		1861AA30238D1F6C00C3C986 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B95D22EA2A2E0D55001222A8 /* all_reviews */,
 				B95D22E72A2DF777001222A8 /* reviews */,
 				B9E074812A29B3B60009BE04 /* order_received_details */,
 				B9E0747E2A29B1470009BE04 /* order_received */,
@@ -1408,6 +1411,14 @@
 			path = reviews;
 			sourceTree = "<group>";
 		};
+		B95D22EA2A2E0D55001222A8 /* all_reviews */ = {
+			isa = PBXGroup;
+			children = (
+				B95D22EB2A2E0D67001222A8 /* all_reviews.swift */,
+			);
+			path = all_reviews;
+			sourceTree = "<group>";
+		};
 		B97EE8CF2A2871DF008770EC /* Appointment_details */ = {
 			isa = PBXGroup;
 			children = (
@@ -1760,6 +1771,7 @@
 				B9E074832A29B45A0009BE04 /* order_received_details.swift in Sources */,
 				A48F589723C75401000DBA74 /* MyPostDetailsCollectionCell.swift in Sources */,
 				1857AEF0238FB4CE00E2147F /* VeterinarianBiographyTableCell.swift in Sources */,
+				B95D22EC2A2E0D67001222A8 /* all_reviews.swift in Sources */,
 				A49F35E723B090E80012C67D /* SubmitPostTableCell.swift in Sources */,
 				187F4F6A25D7B3A700F0C51F /* AddVeterinarianBankInfoTwoTableCell.swift in Sources */,
 				A46F094123BDD0DC006066C9 /* SambagDatePickerViewController.swift in Sources */,

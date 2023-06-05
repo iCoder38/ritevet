@@ -15,23 +15,24 @@ class MenuControllerVC: UIViewController {
     var bgImage: UIImageView?
     
     var arrMenuItemList = ["Dashboard",
-    "Edit Profile",
-    "My Posts",
-    "Submit New Post",
-    "Request Services",
-    "Pet Store",
-    "My Products",
-    "Missed Call",
-    "Chat",
-    "My Orders",
-    "Order Received",
-    "My Cart",
-    "Appointments",
-    "My Bookings",
-    "Wallet",
-    "Change Password",
-    "Help",
-    "Sign out",
+                           "Edit Profile",
+                           "My Posts",
+                           "Submit New Post",
+                           "Request Services",
+                           "Pet Store",
+                           "My Products",
+                           "Missed Call",
+                           "Chat",
+                           "My Reviews",
+                           "My Orders",
+                           "Order Received",
+                           "My Cart",
+                           "Appointments",
+                           "My Bookings",
+                           "Wallet",
+                           "Change Password",
+                           "Help",
+                           "Sign out",
     ]
     
     var arrMenuItemImage = ["m_dashboard",
@@ -43,6 +44,7 @@ class MenuControllerVC: UIViewController {
                             "m_my_products",
                             "m_missed_call",
                             "m_chat",
+                            "m_my_orders",
                             "m_my_orders",
                             "m_order_received",
                             "m_my_cart",
@@ -473,9 +475,24 @@ extension MenuControllerVC: UITableViewDataSource {
             pushPageNumber(strMyPageNumber: "19")
         }
         
+        if String(arrMenuItemList[indexPath.row]) == "My Reviews" {
+            pushPageNumber(strMyPageNumber: "20")
+        }
+        
         
     }
+    
     @objc func pushPageNumber(strMyPageNumber:String) {
+       
+        if strMyPageNumber == "20" {
+            
+            let obj = self.storyboard?.instantiateViewController(withIdentifier: "all_reviews_id") as! all_reviews
+            let navController = UINavigationController(rootViewController: obj)
+            navController.setViewControllers([obj], animated:true)
+            self.revealViewController().setFront(navController, animated: true)
+            self.revealViewController().setFrontViewPosition(FrontViewPosition.left, animated: true)
+            
+        }
         
         if strMyPageNumber == "19" {
             
