@@ -337,6 +337,7 @@ extension Appointment: UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
 }
 
 extension Appointment: UITableViewDelegate

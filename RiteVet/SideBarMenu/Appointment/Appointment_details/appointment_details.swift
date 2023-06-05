@@ -63,9 +63,15 @@ class appointment_details: UIViewController {
         self.btnBack.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         self.btnBack.tintColor = .white
         
-        self.appointment()
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.appointment()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -75,78 +81,79 @@ class appointment_details: UIViewController {
     }
     
     @objc func appointment() {
-    
-         Utils.RiteVetIndicatorShow()
         
-         let urlString = BASE_URL_KREASE
-     
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
         var parameters:Dictionary<AnyHashable, Any>!
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
-             
+            
             parameters = [
                 "action"        :  "bookingdetail",
                 "userId"        :  myString,
                 "bookingId"     :  String(self.str_get_booking_id),
             ]
         }
+        
         print("parameters-------\(String(describing: parameters))")
-                
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
             
             switch(response.result) {
             case .success(_):
                 if let data = response.value {
-
+                    
                     let JSON = data as! NSDictionary
                     print(JSON)
-                             
+                    
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                            
+                    
                     if strSuccess == "Success" {
                         Utils.RiteVetIndicatorHide()
-                                
-//                            var ar : NSArray!
-//                            ar = (JSON["historyList"] as! Array<Any>) as NSArray
-//                            self.arrListOfAppointment = (ar as! Array<Any>)
-                                
+                        
+                        //                            var ar : NSArray!
+                        //                            ar = (JSON["historyList"] as! Array<Any>) as NSArray
+                        //                            self.arrListOfAppointment = (ar as! Array<Any>)
+                        
                         self.dictBookingDetails = (JSON["data"] as! NSDictionary)
                         
                         self.tbleView.delegate = self
                         self.tbleView.dataSource = self
                         self.tbleView.reloadData()
-                             
+                        
                     }
                     else {
-                                
-                             Utils.RiteVetIndicatorHide()
-                                
-                            }
-                            
-                        }
-
-                        case .failure(_):
-                            print("Error message:\(String(describing: response.error))")
-                            Utils.RiteVetIndicatorHide()
-                            
-                            let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                            
-                            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                    UIAlertAction in
-                                    NSLog("OK Pressed")
-                                }
-                            
-                            alertController.addAction(okAction)
-                            
-                            self.present(alertController, animated: true, completion: nil)
-                            
-                            break
-                         }
+                        
+                        Utils.RiteVetIndicatorHide()
+                        
                     }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
     }
     
     
@@ -340,6 +347,17 @@ class appointment_details: UIViewController {
         }
     }
     
+    @objc func delivered_click_method() {
+        
+        //
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "send_review_id") as? send_review
+         
+        push!.dict_send_review_details = self.dictBookingDetails
+        
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+    }
+    
 }
 
 extension appointment_details: UITableViewDataSource , UITableViewDelegate {
@@ -364,6 +382,8 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             self.lbl_email.text = (self.dictBookingDetails["vendorEmail"] as! String)
             self.lbl_address.text = (self.dictBookingDetails["vendorAddress"] as! String)
             self.imgProfile.sd_setImage(with: URL(string: (self.dictBookingDetails["vendorImage"] as! String)), placeholderImage: UIImage(named: "logo-500"))
+            
+            // cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
             
         } else {
             
@@ -455,11 +475,6 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 cell.btn_cancel.isHidden = true
             }
             
-            
-            
-            
-            
-            
         }
         
         // "Today's Date is greater then second date"
@@ -482,135 +497,6 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
         
         
-        
-        
-        
-        
-        
-        
-        
-         
-        
-        /*let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-
-        if let date = dateFormatter.date(from: String(server_booking_date)) {
-            print(date)
-            
-            if date == Date() {
-                print(" EQUAL ")
-                
-                cell.btn_cancel.isHidden = true
-                
-            } else if date < Date() {
-                print("Before now")
-                
-                cell.btn_cancel.isHidden = true
-                
-            } else {
-                
-                print("After now : WORK HERE FOR TIME")
-                
-                
-                
-                let date = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
-                let current_date = dateFormatter.string(from: date)
-                print("current time-->",current_date)
-                
-                let prefix_time = String((self.dictBookingDetails["slotTime"] as! String).prefix(05))
-                print("server time-->",prefix_time)
-                
-                let prefix_one = String(current_date.prefix(02))
-                let prefix_two = String(prefix_time.prefix(02))
-                print(prefix_one)
-                print(prefix_two)
-                
-                let double_c_t = Double(prefix_one)
-                let double_s_t = Double(prefix_two)
-                
-                // print(double_c_t)
-                // print(double_s_t)
-                
-                let deduct_time = double_s_t! - double_c_t!
-                 print(deduct_time)
-                
-                cell.btn_cancel.isHidden = false
-                
-                if deduct_time == 0.0 || deduct_time == 1.0 || deduct_time == 2.0  {
-                    print(" HIDE CANCEL BUTTON : ")
-                    
-                    cell.btn_cancel.isHidden = true
-                    
-                }
-                
-                print("output: \(deduct_time.toString())")
-                
-                var str_check = String("\(deduct_time.toString())".prefix(01))
-                print(str_check)
-                
-                if (str_check) == "-" {
-                    cell.btn_cancel.isHidden = true
-                }
-                
-                
-                // print("OUT")
-                
-                
-                
-                
-                
-                
-                //
-                
-//
-//                let myString1 = prefix_one
-//                let myInt1 = Int(myString1)
-//                print(myInt1)
-//
-//                let myString2 = prefix_two
-//                let myInt2 = Int(myString2)
-//                print(myInt2)
-                
-                
-                
-                
-//                let current_time = String(current_date)
-//                let booking_time = String(prefix_time)
-//                let f = DateFormatter()
-//                f.dateFormat = "HH:mm"
-
-                
-                
-                
-                
-                
-                
-                
-                /*f.date(from: current_time)! //"Jan 1, 2000 at 10:31 PM"
-                f.date(from: booking_time)! //"Jan 1, 2000 at 2:31 PM"
-                f.date(from: current_time)! > f.date(from: booking_time)!  // true*/
-                
-            }
-        }*/
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         if "\(self.dictBookingDetails["status"]!)" == "1" {
             
             cell.btn_next.setTitle("Pending", for: .normal)
@@ -626,6 +512,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             cell.btn_next.setTitle("Completed", for: .normal)
             cell.btn_next.backgroundColor = .systemGreen
             cell.btn_cancel.isHidden = true
+            
+            if (self.str_from_booking == "yes") {
+                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+            }
             
         }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
             

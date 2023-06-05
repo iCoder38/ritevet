@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class order_received_details: UIViewController {
     
@@ -131,6 +132,8 @@ class order_received_details: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Yes, delivered", style: .default, handler: { action in
             
+            self.delivered_click_method()
+            
         }))
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: { action in
@@ -141,8 +144,79 @@ class order_received_details: UIViewController {
         
     }
     
-    
-    
+    @objc func delivered_click_method() {
+        
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            
+            parameters = [
+                "action"    :   "orderdelivered",
+                "userId"    :   myString,
+                "orderId"   :   "\(self.dictGetOrderDetails["orderID"]!)",
+                
+            ]
+        }
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        let alert = UIAlertController(title: JSON["status"] as? String, message: JSON["msg"] as? String, preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                            
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+        
+    }
 }
 
 extension order_received_details: UITableViewDataSource , UITableViewDelegate
@@ -240,7 +314,7 @@ extension order_received_details: UITableViewDataSource , UITableViewDelegate
             
             self.lblInTransit.text = "In-Transit"
             cell.btn_update_status.setTitleColor(.white, for: .normal)
-            cell.btn_update_status.setTitle("In-Transit", for: .normal)
+            cell.btn_update_status.setTitle("Mark as Delivered", for: .normal)
             cell.btn_update_status.backgroundColor = .systemOrange
             cell.btn_update_status.addTarget(self, action: #selector(update_status_click_method), for: .touchUpInside)
         }

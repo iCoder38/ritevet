@@ -349,7 +349,7 @@ class Login: UIViewController,UITextFieldDelegate {
         
         // Create UserDefaults
         let defaults = UserDefaults.standard
-        if let myString = defaults.string(forKey: "deviceFirebaseToken") {
+        if let myString = defaults.string(forKey: "key_my_device_token") {
             self.myDeviceTokenIs = myString
 
         }
@@ -463,7 +463,7 @@ class Login: UIViewController,UITextFieldDelegate {
         var parameters:Dictionary<AnyHashable, Any>!
            
         let defaults = UserDefaults.standard
-        if let myString = defaults.string(forKey: "deviceFirebaseToken") {
+        if let myString = defaults.string(forKey: "key_my_device_token") {
             self.myDeviceTokenIs = myString
 
         }

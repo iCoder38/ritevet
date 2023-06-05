@@ -232,19 +232,17 @@ class RequestServiceDetails: UIViewController {
         if let loadedString = UserDefaults.standard.string(forKey: "key_instant_calling") {
             print(loadedString)
             
-            
-            
+            // call this VET
+            if (loadedString == "yes_audio") {
+                self.send_notification_to_doctor(str_get_type: "audiocall")
+            } else if (loadedString == "yes_video") {
+                self.send_notification_to_doctor(str_get_type: "videocall")
+            }
             
             
             
         }
-        
-        
-        
-        
-        
-        
-        
+
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -657,7 +655,7 @@ class RequestServiceDetails: UIViewController {
                 
                 print(channelNameIs as Any)
                  
-                self.sendNotificationForSingleUser(strChannelName: channelNameIs, strType: "videocall", strBody: "Incoming Video call")
+                self.sendNotificationForSingleUser(str_type: "yes_video")
                 
             }
             
@@ -706,18 +704,14 @@ class RequestServiceDetails: UIViewController {
                 
                 let channelNameIs = String(myString)+"+"+String(myString2)
                 
-                self.sendNotificationForSingleUser(strChannelName: channelNameIs, strType: "audiocall", strBody: "Incoming Audio call")
+                self.sendNotificationForSingleUser(str_type: "yes_audio")
                 
                 
             }
         }
-        
-        
-        
-        
     }
     
-    @objc func sendNotificationForSingleUser(strChannelName:String,strType:String,strBody:String) {
+    @objc func sendNotificationForSingleUser(str_type:String) {
         
         
         print(self.str_business_type_is as Any)
@@ -725,22 +719,9 @@ class RequestServiceDetails: UIViewController {
         
         print(self.getDictRequestServiceHome as Any)
         
-        // print(self.dict as Any)
-        
-        
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "payment_before_booking_id") as? payment_before_booking
-        //        print(self.arrListOfServicesInCalendar);
         
         let arrMut:NSMutableArray! = []
-        /*/for i in 0..<self.arrGetDetailsAndService.count {
-            
-            let item = self.arrGetDetailsAndService[i] as! [String:Any]
-            
-            arrMut.add("\(item["id"]!)")
-            
-        }*/
-        
-        // print(arrMut)
         
         let defaults = UserDefaults.standard
         if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
@@ -750,18 +731,6 @@ class RequestServiceDetails: UIViewController {
                 
                 let productIDString = array.joined(separator: ",")
                 print(productIDString)
-                
-                /*
-                 push!.dictGetVendorDetails = self.getDictRequestServiceHome
-                 push!.strGetVendorIdForCalendar = (getDictRequestServiceHome!["userId"] as! Int)
-                 push!.arrGetDetailsAndService = arrListOfServices
-                 push!.getUtypeForCalendar = getUtypeInDetailsPage
-                 // print(getDictRequestServiceHome as Any)strCountryName
-                 push!.strCountryName = (self.getDictRequestServiceHome["Country"] as! String)
-                 push!.strAmericanBoardOption = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
-                 push!.str_set_payment = String(self.str_set_price_or_not)
-                 push!.str_get_business_type_for_calendar = String(self.str_business_type_is)
-                 */
                 
                 // current date
                 let dateformatter2 = DateFormatter()
@@ -775,46 +744,39 @@ class RequestServiceDetails: UIViewController {
                 let current_time = dateformatter3.string(from: Date())
                 print("Time Selected \(current_time)")
                 
+                //adding 5 miniuts
+                let addminutes = Date().addingTimeInterval(30*60)
+                dateformatter3.dateFormat = "HH:mm"
+                let after_add_time = dateformatter3.string(from: addminutes)
+                print("after add time-->",after_add_time)
+                
+                var str_send_time_slot:String!
+                str_send_time_slot = "\(current_time)-\(after_add_time)"
+                
                 push!.dictShowFullDetails = self.getDictRequestServiceHome
                 push!.strServiceList = "1"//String(productIDString)
                 push!.strVendorId = "\(self.getDictRequestServiceHome!["userId"]!)"
                 push!.strBookingDate = "\(current_date)";
-                push!.strSlotTime = "\(current_time)"
+                push!.strSlotTime = str_send_time_slot
                 push!.strTypeOfBusiness = String(myString22);
                 push!.strUType = getUtypeInDetailsPage
                 push!.strGetCountryName = (self.getDictRequestServiceHome["Country"] as! String)
                 push!.strGetAmericanBoardCertificate = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
                 push!.str_get_business_type_for_payment = String(self.str_business_type_is)
-                push!.str_instant_payment = "yes"
+                push!.str_instant_payment = String(str_type)
             }
         }
         
         self.navigationController?.pushViewController(push!, animated: true)
         
-        
-        
-        
-        /*
-         json.put("action", "sendnotification");
-         json.put("message", message);
-         json.put("type", type);
-         json.put("userId", SessionManager.get_user_id(prefs));
-         json.put("todevice", device);
-         json.put("device", "IOS"); // android
-         json.put("channel", channel);
-         json.put("name", SessionManager.get_name(prefs));
-         json.put("image", SessionManager.get_image(prefs));
-         json.put("Token", token);
-         json.put("deviceToken", SessionManager.get_device_token(prefs));
-         json.put("mobileNumber", SessionManager.get_mobile(prefs));
-         */
-        
-        /**/
     }
     
     
     
-    @objc func send_notification_to_doctor() {
+    @objc func send_notification_to_doctor(str_get_type:String) {
+        
+        UserDefaults.standard.set("", forKey: "key_instant_calling")
+        UserDefaults.standard.set(nil, forKey: "key_instant_calling")
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             print()
@@ -830,11 +792,11 @@ class RequestServiceDetails: UIViewController {
             parameters = [
                 "action"        : "sendnotification",
                 "message"       : (person["fullName"] as! String)+" calling",
-                "type"          : String("audiocall"),
+                "type"          : String(str_get_type),
                 "userId"        : String(myString),
                 "todevice"      : "\(dict["device"] as! String)",
                 "device"        : "iOS",
-                "channel"       : "\(dict["userId"] as! String)+\(String(myString))",
+                "channel"       : "\(dict["userId"]!)+\(String(myString))",
                 "name"          : (person["fullName"] as! String),
                 "image"         : "\(dict["ownPicture"] as! String)",
                 "Token"         : "\(dict["deviceToken"] as! String)",
@@ -846,6 +808,7 @@ class RequestServiceDetails: UIViewController {
             print("parameters-------\(String(describing: parameters))")
             
             AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+                [self]
                 response in
                 
                 switch(response.result) {
@@ -863,11 +826,11 @@ class RequestServiceDetails: UIViewController {
                             
                             Utils.RiteVetIndicatorHide()
                             
-                            /*if strType == "audiocall" {
+                            if str_get_type == "audiocall" {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
                                 
-                                push!.roomName = "\(dict["userId"] as! String)+\(String(myString))"
+                                push!.roomName = "\(dict["userId"]!)+\(String(myString))"
                                 push!.setSteps = "2"
                                 push!.strIamCallingTo = "\(self.dict["VFirstName"] as! String)"
                                 
@@ -888,7 +851,7 @@ class RequestServiceDetails: UIViewController {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
                                 
-                                push!.roomName = "\(dict["userId"] as! String)+\(String(myString))"
+                                push!.roomName = "\(dict["userId"]!)+\(String(myString))"
                                 push!.setSteps = "2"
                                 push!.strIamCallingTo = "\(self.dict["VFirstName"] as! String)"
                                 
@@ -897,7 +860,7 @@ class RequestServiceDetails: UIViewController {
                                 
                                 self.navigationController?.pushViewController(push!, animated:true)
                                 
-                            }*/
+                            }
                             
                             
                             

@@ -16,7 +16,7 @@ import FBSDKCoreKit
 import Stripe
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate , MessagingDelegate {
 
     public static let myNotificationKey = Notification.Name(rawValue: "myNotificationKey")
     
@@ -32,166 +32,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         StripeAPI.defaultPublishableKey = "pk_test_51HPptWKjKY5Kxs7I3kWutaPDTOcXabFEq6bBU54GsUH6h1SJPdZrdjOl7D6AD71wRohVdKoarDOKtWBoQPVlPdAH00tX6AJv7c"
         
-        // google
-        // GIDSignIn.sharedInstance().clientID = "995626688633-npat1k40q8mrroia4b3vg5rs4t22pf4o.apps.googleusercontent.com"
-        
-        
-        /*//MARK:- REGISTER FOR PUSH NOTIFICATION -
-        //register fot push notification
-          if #available(iOS 10, *) {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
-
-                    guard error == nil else {
-                        //Display Error.. Handle Error.. etc..
-                        return
-                    }
-
-                    if granted {
-                        //Do stuff here..
-
-                        //Register for RemoteNotifications. Your Remote Notifications can display alerts now :)
-                        DispatchQueue.main.async {
-                            application.registerForRemoteNotifications()
-                        }
-                    }
-                    else {
-                        //Handle user denying permissions..
-                    }
-                }
-
-                //Register for remote notifications.. If permission above is NOT granted, all notifications are delivered silently to AppDelegate.
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
             
-                application.registerForRemoteNotifications()
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: { _, _ in }
+            )
+        } else {
+            let settings: UIUserNotificationSettings =
+            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
         }
-        else {
-               let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-               application.registerUserNotificationSettings(settings)
-               application.registerForRemoteNotifications()
-           }
         
+        application.registerForRemoteNotifications()
         
-        UNUserNotificationCenter.current().delegate = self
-        
-        if let option = launchOptions {
-            let info = option[UIApplication.LaunchOptionsKey.remoteNotification]
-            if (info != nil) {
-                 //goAnotherVC()
-                let alertController = UIAlertController(title: "Title", message: "Message", preferredStyle: .actionSheet)
-                           let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                   UIAlertAction in
-                                   NSLog("OK Pressed")
-                               }
-                           let cancelAction = UIAlertAction(title: "CANCEL", style: UIAlertAction.Style.cancel) {
-                                   UIAlertAction in
-                                   NSLog("Cancel Pressed")
-                               }
-                           alertController.addAction(okAction)
-                           alertController.addAction(cancelAction)
-                           self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-                           
-        }}*/
-         
-        // firebase notification
-        self.registerForRemoteNotifications(application)
-        
-        // get firebase token
-        self.firebaseTokenIs()
+        Messaging.messaging().delegate = self
+        self.fetchDeviceToken()
         
         return true
     }
-
-    @objc func registerForRemoteNotifications(_ application: UIApplication) {
-        
-        if #available(iOS 10.0, *) {
-            
-          // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-
-          let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-          UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: {_, _ in })
-            
-        } else {
-            
-          let settings: UIUserNotificationSettings =
-          UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-          application.registerUserNotificationSettings(settings)
-            
-        }
-
-        application.registerForRemoteNotifications()
-
-    }
     
-    @objc func firebaseTokenIs() {
-        /*InstanceID.instanceID().instanceID { (result, error) in
-          if let error = error {
-            print("Error fetching remote instance ID: \(error)")
-          } else if let result = result {
-            print("Remote instance ID token: \(result.token)")
-            
-            let defaults = UserDefaults.standard
-            defaults.set("\(result.token)", forKey: "deviceFirebaseToken")
-            // self.instanceIDTokenMessage.text  = "Remote InstanceID token: \(result.token)"
-          }
-        }*/
+    // MARK:- FIREBASE NOTIFICATION -
+    @objc func fetchDeviceToken() {
+        
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                print("FCM registration token: \(token)")
+                // self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
+                
+                let defaults = UserDefaults.standard
+                defaults.set("\(token)", forKey: "key_my_device_token")
+                
+                
+            }
+        }
+        
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Error = ",error.localizedDescription)
     }
     
-    // MARK: UISceneSession Lifecycle
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        print(userInfo)
+    }
 
-    /*func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-
-         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-         print(deviceTokenString)
-
-        UserDefaults.standard.set(deviceTokenString, forKey: "keyMyDeviceTokenId")
-     }*/
-     
-    
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        switch UIApplication.shared.applicationState {
-        case .active:
-            //app is currently active, can update badges count here
-            
-            print("=========>AppIsActive<========")
-            
-            break
-        case .inactive:
-            //app is transitioning from background to foreground (user taps notification), do what you need when user taps here
-            
-            print("=========>AppIsInActive<========")
-            
-            break
-        case .background:
-            //app is in background, if content-available key of your notification is set to 1, poll to your backend to retrieve data and update your interface here
-            
-            print("=========>AppIsBackground<========")
-            
-            break
-        default:
-            break
-        }
+        print(userInfo)
         
+        completionHandler(UIBackgroundFetchResult.newData)
     }
     
-    func handlePushNotification(userInfo: NSDictionary) {
+    func registerForRemoteNotification() {
+        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
+        UIApplication.shared.registerForRemoteNotifications()
+    }
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
+        let dataDict:[String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         
-        guard UIApplication.shared.applicationState == .active else {
-            showAlertForPushNotification(userInfoGet: userInfo)
-            return
-        }
+        let defaults = UserDefaults.standard
+        // deviceToken
+//                defaults.set("\(token)", forKey: "deviceToken")
+        defaults.set("\(fcmToken!)", forKey: "key_my_device_token")
+        
+         print("\(fcmToken!)")
+        
         
     }
-    
-    @objc func showAlertForPushNotification(userInfoGet:NSDictionary) {
-        
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
     }
     
     // MARK:- WHEN APP IS IN FOREGROUND - ( after click popup ) -

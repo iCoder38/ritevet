@@ -321,7 +321,9 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
             
             var strDate :String!
             
-            if (self.str_instant_payment == "yes") {
+            if (self.str_instant_payment == "yes_audio") {
+                strDate = "yyyy-MM-dd"
+            } else if (self.str_instant_payment == "yes_video") {
                 strDate = "yyyy-MM-dd"
             } else {
                 strDate = "dd-MMM-yyyy"
@@ -379,7 +381,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 "vendorId"   : String(self.strVendorId),
                 "typeOfServices" : String(self.strServiceList),
                 "bookingDate" : String(resultString),
-                "slotTime" : "14:07-14:47",//String(self.strSlotTime),
+                "slotTime" : String(self.strSlotTime),
                 "typeofbusinessId" : String(self.strTypeOfBusiness),
                 "UTYPE" : String(self.strUType),
                 "transactionId" : String(stripe_token),
@@ -411,10 +413,15 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                         //var strGetBookingDate:String!
                         //var strGetBookingTime:String!
                         
-                        if (self.str_instant_payment == "yes") {
+                        if (self.str_instant_payment == "yes_audio") {
                             
                             self.navigationController?.popViewController(animated: true)
-                            UserDefaults.standard.set("yes", forKey: "key_instant_calling")
+                            UserDefaults.standard.set("yes_audio", forKey: "key_instant_calling")
+                            
+                        } else if (self.str_instant_payment == "yes_video") {
+                            
+                            self.navigationController?.popViewController(animated: true)
+                            UserDefaults.standard.set("yes_video", forKey: "key_instant_calling")
                             
                         } else {
                         
