@@ -174,6 +174,7 @@ class RequestServiceDetails: UIViewController {
         self.btnBookAnAppointment.isUserInteractionEnabled = false
         // print(getUtypeInDetailsPage as Any)
         print(str_business_type_is as Any)
+        
         /*
          Optional({
              VAstate = UP;
@@ -217,13 +218,33 @@ class RequestServiceDetails: UIViewController {
         btnBookAnAppointment.addTarget(self, action: #selector(bookAnAppoitmentClickMethod), for: .touchUpInside)
         
         
-        self.requestServiceData()
+        
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-     navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        self.requestServiceData()
+        
+        
+        if let loadedString = UserDefaults.standard.string(forKey: "key_instant_calling") {
+            print(loadedString)
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -276,9 +297,23 @@ class RequestServiceDetails: UIViewController {
         
         var parameters:Dictionary<AnyHashable, Any>!
         
+        // current date
+        let dateformatter2 = DateFormatter()
+        dateformatter2.dateFormat = "yyyy-MM-dd"
+        let current_date = dateformatter2.string(from: Date())
+        print("Date Selected \(current_date)")
+        
+        // current date
+        let dateformatter3 = DateFormatter()
+        dateformatter3.dateFormat = "HH:mm"
+        let current_time = dateformatter3.string(from: Date())
+        print("Time Selected \(current_time)")
+        
         parameters = [
             "action"                : "requestservicedetails",
-            "userInformationId"     : (getDictRequestServiceHome!["userInformationId"] as! Int)
+            "userInformationId"     : (self.getDictRequestServiceHome!["userInformationId"] as! Int),
+            "date"                  : "\(current_date)",
+            "time"                  : "\(current_time)"
         ]
         
         print("parameters-------\(String(describing: parameters))")
@@ -684,6 +719,81 @@ class RequestServiceDetails: UIViewController {
     
     @objc func sendNotificationForSingleUser(strChannelName:String,strType:String,strBody:String) {
         
+        
+        print(self.str_business_type_is as Any)
+        print(self.getUtypeInDetailsPage as Any)
+        
+        print(self.getDictRequestServiceHome as Any)
+        
+        // print(self.dict as Any)
+        
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "payment_before_booking_id") as? payment_before_booking
+        //        print(self.arrListOfServicesInCalendar);
+        
+        let arrMut:NSMutableArray! = []
+        /*/for i in 0..<self.arrGetDetailsAndService.count {
+            
+            let item = self.arrGetDetailsAndService[i] as! [String:Any]
+            
+            arrMut.add("\(item["id"]!)")
+            
+        }*/
+        
+        // print(arrMut)
+        
+        let defaults = UserDefaults.standard
+        if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+            
+            if let array = arrMut as? [String] {
+                print(array)
+                
+                let productIDString = array.joined(separator: ",")
+                print(productIDString)
+                
+                /*
+                 push!.dictGetVendorDetails = self.getDictRequestServiceHome
+                 push!.strGetVendorIdForCalendar = (getDictRequestServiceHome!["userId"] as! Int)
+                 push!.arrGetDetailsAndService = arrListOfServices
+                 push!.getUtypeForCalendar = getUtypeInDetailsPage
+                 // print(getDictRequestServiceHome as Any)strCountryName
+                 push!.strCountryName = (self.getDictRequestServiceHome["Country"] as! String)
+                 push!.strAmericanBoardOption = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
+                 push!.str_set_payment = String(self.str_set_price_or_not)
+                 push!.str_get_business_type_for_calendar = String(self.str_business_type_is)
+                 */
+                
+                // current date
+                let dateformatter2 = DateFormatter()
+                dateformatter2.dateFormat = "yyyy-MM-dd"
+                let current_date = dateformatter2.string(from: Date())
+                print("Date Selected \(current_date)")
+                
+                // current date
+                let dateformatter3 = DateFormatter()
+                dateformatter3.dateFormat = "HH:mm"
+                let current_time = dateformatter3.string(from: Date())
+                print("Time Selected \(current_time)")
+                
+                push!.dictShowFullDetails = self.getDictRequestServiceHome
+                push!.strServiceList = "1"//String(productIDString)
+                push!.strVendorId = "\(self.getDictRequestServiceHome!["userId"]!)"
+                push!.strBookingDate = "\(current_date)";
+                push!.strSlotTime = "\(current_time)"
+                push!.strTypeOfBusiness = String(myString22);
+                push!.strUType = getUtypeInDetailsPage
+                push!.strGetCountryName = (self.getDictRequestServiceHome["Country"] as! String)
+                push!.strGetAmericanBoardCertificate = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
+                push!.str_get_business_type_for_payment = String(self.str_business_type_is)
+                push!.str_instant_payment = "yes"
+            }
+        }
+        
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+        
+        
+        
         /*
          json.put("action", "sendnotification");
          json.put("message", message);
@@ -699,8 +809,15 @@ class RequestServiceDetails: UIViewController {
          json.put("mobileNumber", SessionManager.get_mobile(prefs));
          */
         
+        /**/
+    }
+    
+    
+    
+    @objc func send_notification_to_doctor() {
+        
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            
+            print()
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
@@ -712,12 +829,12 @@ class RequestServiceDetails: UIViewController {
             
             parameters = [
                 "action"        : "sendnotification",
-                "message"       : String(strBody),
-                "type"          : String(strType),
+                "message"       : (person["fullName"] as! String)+" calling",
+                "type"          : String("audiocall"),
                 "userId"        : String(myString),
                 "todevice"      : "\(dict["device"] as! String)",
                 "device"        : "iOS",
-                "channel"       : String(strChannelName),
+                "channel"       : "\(dict["userId"] as! String)+\(String(myString))",
                 "name"          : (person["fullName"] as! String),
                 "image"         : "\(dict["ownPicture"] as! String)",
                 "Token"         : "\(dict["deviceToken"] as! String)",
@@ -744,36 +861,13 @@ class RequestServiceDetails: UIViewController {
                         
                         if strSuccess == "success" {
                             
-                            /*var ar : NSArray!
-                             ar = (JSON["data"] as! Array<Any>) as NSArray
-                             //print(ar as Any)
-                             
-                             //var arServices : NSArray!
-                             var itemCountarServices:Int!
-                             var newString1arServices = ""
-                             var ssarServices:String!
-                             
-                             itemCountarServices = ar.count-1
-                             
-                             for i in 0 ... itemCountarServices {
-                             let itemarServices = ar[i] as? [String:Any]
-                             ssarServices = (itemarServices!["name"] as! String)
-                             newString1arServices += "\(ssarServices!)+"
-                             }
-                             
-                             //print(newString1arServices as Any)
-                             //self.strSaveFullValueOfServiceInOneString = newString1arServices
-                             
-                             let defaults = UserDefaults.standard
-                             defaults.set((newString1arServices), forKey: "keyRequestServiceDropDown")
-                             */
-                            
                             Utils.RiteVetIndicatorHide()
                             
-                            if strType == "audiocall" {
+                            /*if strType == "audiocall" {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
-                                push!.roomName = String(strChannelName)
+                                
+                                push!.roomName = "\(dict["userId"] as! String)+\(String(myString))"
                                 push!.setSteps = "2"
                                 push!.strIamCallingTo = "\(self.dict["VFirstName"] as! String)"
                                 
@@ -793,7 +887,8 @@ class RequestServiceDetails: UIViewController {
                             } else {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
-                                push!.roomName = String(strChannelName)
+                                
+                                push!.roomName = "\(dict["userId"] as! String)+\(String(myString))"
                                 push!.setSteps = "2"
                                 push!.strIamCallingTo = "\(self.dict["VFirstName"] as! String)"
                                 
@@ -802,7 +897,7 @@ class RequestServiceDetails: UIViewController {
                                 
                                 self.navigationController?.pushViewController(push!, animated:true)
                                 
-                            }
+                            }*/
                             
                             
                             
@@ -834,8 +929,8 @@ class RequestServiceDetails: UIViewController {
             }
             
         }
+        
     }
-    
     
     
     

@@ -12,7 +12,7 @@ import Alamofire
 
 class payment_before_booking: UIViewController ,UITextFieldDelegate {
 
-    
+    var str_instant_payment:String!
     
 //    "action"    : "addbooking",
 //    "userId"    : String(myString),
@@ -317,8 +317,18 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
+            // print(self.strBookingDate)
+            
+            var strDate :String!
+            
+            if (self.str_instant_payment == "yes") {
+                strDate = "yyyy-MM-dd"
+            } else {
+                strDate = "dd-MMM-yyyy"
+            }
+            
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MMM-yyyy"
+            dateFormatter.dateFormat = String(strDate)
             let date = dateFormatter.date(from: String(self.strBookingDate))
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let resultString = dateFormatter.string(from: date!)
@@ -369,14 +379,14 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 "vendorId"   : String(self.strVendorId),
                 "typeOfServices" : String(self.strServiceList),
                 "bookingDate" : String(resultString),
-                "slotTime" : String(self.strSlotTime),
+                "slotTime" : "14:07-14:47",//String(self.strSlotTime),
                 "typeofbusinessId" : String(self.strTypeOfBusiness),
                 "UTYPE" : String(self.strUType),
                 "transactionId" : String(stripe_token),
                 "payment_mode"  : "Card",
                 "amount"    : String(strCountryNameAndPrice),
             ]
-            //            }
+             
         }
         
         print("parameters-------\(String(describing: parameters))")
@@ -401,10 +411,20 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                         //var strGetBookingDate:String!
                         //var strGetBookingTime:String!
                         
-                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
-                        push!.strGetBookingDate = String(self.strBookingDate)
-                        push!.strGetBookingTime = String(self.strSlotTime)
-                        self.navigationController?.pushViewController(push!, animated: true)
+                        if (self.str_instant_payment == "yes") {
+                            
+                            self.navigationController?.popViewController(animated: true)
+                            UserDefaults.standard.set("yes", forKey: "key_instant_calling")
+                            
+                        } else {
+                        
+                            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
+                            push!.strGetBookingDate = String(self.strBookingDate)
+                            push!.strGetBookingTime = String(self.strSlotTime)
+                            self.navigationController?.pushViewController(push!, animated: true)
+                            
+                        }
+                        
                         
                     }
                     else {
@@ -415,7 +435,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
-                
+                ERProgressHud.sharedInstance.hide()
                 Utils.RiteVetIndicatorHide()
                 
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)

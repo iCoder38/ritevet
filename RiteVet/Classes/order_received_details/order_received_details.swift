@@ -100,6 +100,7 @@ class order_received_details: UIViewController {
          transactionID = "";
          */
     }
+    
     @objc func sideBarMenu() {
         if revealViewController() != nil {
             btnBack.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)

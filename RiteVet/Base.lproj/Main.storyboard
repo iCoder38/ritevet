@@ -15829,10 +15829,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ox-Pa-CYT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0p-su-cm0">
-                                        <rect key="frame" x="8" y="42" width="30" height="30"/>
+                                        <rect key="frame" x="8" y="54" width="30" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="8bg-pN-nHq"/>
@@ -15843,7 +15843,7 @@
                                         </state>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to your account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="00n-BG-OFn">
-                                        <rect key="frame" x="46" y="42" width="360" height="30"/>
+                                        <rect key="frame" x="46" y="54" width="330" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="yTy-cE-1uS"/>
                                         </constraints>
@@ -15856,14 +15856,14 @@
                                 <constraints>
                                     <constraint firstItem="P0p-su-cm0" firstAttribute="leading" secondItem="1ox-Pa-CYT" secondAttribute="leading" constant="8" id="AHR-5b-12S"/>
                                     <constraint firstItem="00n-BG-OFn" firstAttribute="leading" secondItem="P0p-su-cm0" secondAttribute="trailing" constant="8" id="DMT-au-8kv"/>
-                                    <constraint firstAttribute="trailing" secondItem="00n-BG-OFn" secondAttribute="trailing" constant="8" id="EJB-sZ-xjw"/>
-                                    <constraint firstAttribute="bottom" secondItem="00n-BG-OFn" secondAttribute="bottom" constant="8" id="UEu-W8-6PH"/>
-                                    <constraint firstAttribute="height" constant="80" id="Y8N-qf-Tyx"/>
-                                    <constraint firstAttribute="bottom" secondItem="P0p-su-cm0" secondAttribute="bottom" constant="8" id="tUP-gC-OgM"/>
+                                    <constraint firstAttribute="trailing" secondItem="00n-BG-OFn" secondAttribute="trailing" constant="38" id="EJB-sZ-xjw"/>
+                                    <constraint firstAttribute="bottom" secondItem="00n-BG-OFn" secondAttribute="bottom" constant="4" id="UEu-W8-6PH"/>
+                                    <constraint firstAttribute="height" constant="88" id="Y8N-qf-Tyx"/>
+                                    <constraint firstAttribute="bottom" secondItem="P0p-su-cm0" secondAttribute="bottom" constant="4" id="tUP-gC-OgM"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please fill about the credit card informaiton" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KA3-mT-P55">
-                                <rect key="frame" x="13" y="88" width="389" height="30"/>
+                                <rect key="frame" x="13" y="96" width="389" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="XHM-hV-r1R"/>
                                 </constraints>
@@ -15872,7 +15872,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hEh-cf-NHf">
-                                <rect key="frame" x="23" y="126" width="368" height="50"/>
+                                <rect key="frame" x="23" y="134" width="368" height="50"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Oeu-Oo-5Xn"/>
@@ -15881,7 +15881,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3yX-oZ-kcf">
-                                <rect key="frame" x="210.5" y="184" width="180" height="50"/>
+                                <rect key="frame" x="210.5" y="192" width="180" height="50"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="aHq-rL-MKZ"/>
@@ -15890,7 +15890,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BMW-3z-rwx">
-                                <rect key="frame" x="23" y="184" width="180" height="50"/>
+                                <rect key="frame" x="23" y="192" width="180" height="50"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="F7K-li-e1h"/>
@@ -15906,7 +15906,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSn-aO-wTH">
-                                <rect key="frame" x="24" y="242" width="368" height="50"/>
+                                <rect key="frame" x="24" y="250" width="368" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ZWx-Yu-Osm"/>
                                 </constraints>
@@ -15949,7 +15949,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="swh-4l-b05" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7620" y="181"/>
+            <point key="canvasLocation" x="7618.8405797101459" y="180.80357142857142"/>
         </scene>
         <!--Booking details-->
         <scene sceneID="Nfd-1z-jei">
