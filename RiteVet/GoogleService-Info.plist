@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>66106563303-e005m3sm952n2i1g30iipqrr32cd3jb1.apps.googleusercontent.com</string>
+	<string>1043988277261-skbtslb71u4k91q5ct74mcqfsk21dljb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.66106563303-e005m3sm952n2i1g30iipqrr32cd3jb1</string>
+	<string>com.googleusercontent.apps.1043988277261-skbtslb71u4k91q5ct74mcqfsk21dljb</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>66106563303-andu52rsa4tkt75du0c7sq1566msisgi.apps.googleusercontent.com</string>
+	<string>1043988277261-3f4tsgs7ioog88dslo90f5tch9midi1s.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAG2i-lxL_hCDbZoaWXVTr4p8Wv18CnGAE</string>
+	<string>AIzaSyBj5Vxh1O98s7JkcqC9YuYSvZQfBEVxnKU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>66106563303</string>
+	<string>1043988277261</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.evs.ritevet</string>
+	<string>com.evs.ritevet.prod</string>
 	<key>PROJECT_ID</key>
-	<string>ritevet</string>
+	<string>ritevet-af819</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ritevet.appspot.com</string>
+	<string>ritevet-af819.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:66106563303:ios:5da2dac4910be1b82ce042</string>
+	<string>1:1043988277261:ios:f4973e84c6883a500c4d44</string>
 	<key>DATABASE_URL</key>
-	<string>https://ritevet.firebaseio.com</string>
+	<string>https://ritevet-af819-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
