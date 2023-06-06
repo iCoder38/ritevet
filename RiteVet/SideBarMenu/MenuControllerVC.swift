@@ -421,7 +421,7 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Edit Profile" {
             pushPageNumber(strMyPageNumber: "2")
         }
-        if String(arrMenuItemList[indexPath.row]) == "My Post" {
+        if String(arrMenuItemList[indexPath.row]) == "My Posts" {
             pushPageNumber(strMyPageNumber: "4")
         }
         if String(arrMenuItemList[indexPath.row]) == "Submit New Post" {

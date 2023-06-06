@@ -164,9 +164,9 @@ class appointment_details: UIViewController {
     
     @objc func pending_click_method() {
         
-        let alert = UIAlertController(title: "Alert : Delivered", message: "Delivered this product ?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Alert : Completed", message: "Complete this product ?", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes, delivered", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Yes, completed", style: .default, handler: { action in
             
             self.mark_as_delivered()
             
@@ -512,9 +512,24 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             cell.btn_next.setTitle("Completed", for: .normal)
             cell.btn_next.backgroundColor = .systemGreen
             cell.btn_cancel.isHidden = true
+            cell.btn_next.isUserInteractionEnabled = false
             
             if (self.str_from_booking == "yes") {
-                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+
+                if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                    
+                    cell.btn_next.isUserInteractionEnabled = true
+                    cell.btn_next.backgroundColor = .systemYellow
+                    cell.btn_next.setTitle("Send Review", for: .normal)
+                    cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                    
+                } else {
+                    
+                    cell.btn_next.setTitle("Completed", for: .normal)
+                    cell.btn_next.isUserInteractionEnabled = false
+                    
+                }
+                
             }
             
         }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
@@ -646,11 +661,3 @@ extension Double {
         return String(format: "%.1f",self)
     }
 }
-
-//extension Date {
-//    static var noon: Date { Date().noon }
-//    var noon: Date { Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)! }
-//    var isInToday: Bool { Calendar.current.isDateInToday(self) }
-//    var isInThePast: Bool { noon < .noon }
-//    var isInTheFuture: Bool { noon > .noon }
-//}

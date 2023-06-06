@@ -761,58 +761,122 @@
             filePath = "RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "634"
-            endingLineNumber = "634"
+            startingLineNumber = "646"
+            endingLineNumber = "646"
             landmarkName = "uploadImageWB()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "36EA53F5-6668-468F-983F-8F2E88928DB0 - 705a5d5ad7a4c66c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageWB() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "653"
+                  endingLineNumber = "653"
+                  offsetFromSymbolStart = "1228">
+               </Location>
+               <Location
+                  uuid = "36EA53F5-6668-468F-983F-8F2E88928DB0 - 705a5d5ad7a4c66c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageWB() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "653"
+                  endingLineNumber = "653"
+                  offsetFromSymbolStart = "1476">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1E587BD7-EAB9-46A8-913B-B74C86077CCB"
+            uuid = "B3E0EA9F-90DB-45C8-BD67-600418683045"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "594"
-            endingLineNumber = "594"
-            landmarkName = "uploadImageWB()"
+            startingLineNumber = "886"
+            endingLineNumber = "886"
+            landmarkName = "uploadImageSecondImage(staffId:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1E587BD7-EAB9-46A8-913B-B74C86077CCB - 3e4d161e14e0b886"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.SubmitPost.uploadImageWB() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "594"
-                  endingLineNumber = "594"
-                  offsetFromSymbolStart = "7360">
-               </Location>
-               <Location
-                  uuid = "1E587BD7-EAB9-46A8-913B-B74C86077CCB - bb9eadca951ef8a6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #5 (Alamofire.MultipartFormData) -&gt; () in RiteVet.SubmitPost.uploadImageWB() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "595"
-                  endingLineNumber = "595"
-                  offsetFromSymbolStart = "292">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D307CF8-ECFA-4F6F-8A05-3989281BF561"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1069"
+            endingLineNumber = "1069"
+            landmarkName = "uploadImageThirdImage(staffId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D949F19-1184-4064-94DC-1C148C5F52ED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1569"
+            endingLineNumber = "1569"
+            landmarkName = "uploadVideoToServer(staffId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CEFF7B78-AA1C-4153-A2EF-6D08608E5C1F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1404"
+            endingLineNumber = "1404"
+            landmarkName = "uploadImageFifthImage(staffId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C4BFF0D-8945-478F-AA2C-B84FC072F71C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1238"
+            endingLineNumber = "1238"
+            landmarkName = "uploadImageFourthImage(staffId:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

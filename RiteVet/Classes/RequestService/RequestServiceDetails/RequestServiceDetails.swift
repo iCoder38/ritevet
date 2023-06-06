@@ -909,8 +909,8 @@ class RequestServiceDetails: UIViewController {
             
             let token = "\(dict["deviceToken"] as! String)"
             print(token as Any)
-            
-            let serverKey = "AAAAD2RCGuc:APA91bEef_TONrwvdJT6Rg027PmANBlwCHmAM8qPtQW7kRTtoTlOJwTDXnAxw3fYa-OcJGWxZoJJciaLSjN7xSiYvbQ7_QAeHXR96IcLLGo_mBT4mvA7qMLMmcYNBiXIgoxEtIbpkGU-"
+        
+            let serverKey = "AAAA8xKM6A0:APA91bEuiTguqid8Y7ctzyDwRoD7r1yD_mbEUi_qh14xBdBou13UJFtpSsCH5M9n6TAPlh0RE6sKjUuXbXCYVINqcwzdoxPPwy0nEuTC6u85ROPFGB_phd2qHv3bPl6P5769srF2DDUr"
             let partnerToken = token
             // let topic = "/topics/<Dishant Rajput>"  // replace it with partnerToken if you want to send a topic
             let url = NSURL(string: "https://fcm.googleapis.com/fcm/send")

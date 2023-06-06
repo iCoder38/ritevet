@@ -12,7 +12,10 @@ import SDWebImage
 
 class all_reviews: UIViewController {
     
-    var arr_review_list:Array<Any>!
+    var page : Int! = 1
+    var loadMore : Int! = 1;
+    
+    var arr_review_list:NSMutableArray! = []
     
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
@@ -48,7 +51,7 @@ class all_reviews: UIViewController {
         
         self.sideBarMenu()
         
-        self.booking()
+        self.booking(page_number: 1)
     }
     
     @objc func sideBarMenu() {
@@ -64,9 +67,30 @@ class all_reviews: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func booking() {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        Utils.RiteVetIndicatorShow()
+        if scrollView == self.tbleView {
+            let isReachingEnd = scrollView.contentOffset.y >= 0
+            && scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)
+            if(isReachingEnd) {
+                if(loadMore == 1) {
+                    loadMore = 0
+                    page += 1
+                    print(page as Any)
+                    
+                     self.booking(page_number: page)
+                    
+                }
+            }
+        }
+    }
+    
+    @objc func booking(page_number:Int) {
+        
+        if page_number == 1 {
+            Utils.RiteVetIndicatorShow()
+        }
         
         let urlString = BASE_URL_KREASE
         
@@ -78,7 +102,7 @@ class all_reviews: UIViewController {
             parameters = [
                 "action"    :   "reviewlist",
                 "userId"    :   myString,
-                "pageNo"    :   "0",
+                "pageNo"    :   page_number,
             ]
         }
         print("parameters-------\(String(describing: parameters))")
@@ -101,12 +125,32 @@ class all_reviews: UIViewController {
                         
                         var ar : NSArray!
                         ar = (JSON["data"] as! Array<Any>) as NSArray
-                        self.arr_review_list = (ar as! Array<Any>)
+                        // self.arr_review_list = (ar as! Array<Any>)
+                        self.arr_review_list.addObjects(from: ar as! [Any])
                         
-                        self.tbleView.isHidden = false
-                        self.tbleView.delegate = self
-                        self.tbleView.dataSource = self
-                        self.tbleView.reloadData()
+                        if self.arr_review_list.count == 0 {
+                            
+                            self.tbleView.isHidden = true
+                            
+                            var noDataLbl : UILabel!
+                            noDataLbl = UILabel(frame: CGRect(x: 0, y: self.view.center.y, width: 290, height: 70))
+                            noDataLbl?.textAlignment = .center
+                            noDataLbl?.font = UIFont(name: "Poppins-Semibold", size: 18.0)
+                            noDataLbl?.numberOfLines = 0
+                            noDataLbl?.text = "No data found."
+                            noDataLbl?.lineBreakMode = .byTruncatingTail
+                            noDataLbl?.center = self.view.center
+                            self.view.addSubview(noDataLbl!)
+                            
+                        } else {
+                            
+                            self.tbleView.isHidden = false
+                            self.tbleView.delegate = self
+                            self.tbleView.dataSource = self
+                            self.tbleView.reloadData()
+                            self.loadMore = 1
+                            
+                        }
                         
                     }
                     else {
@@ -155,10 +199,10 @@ extension all_reviews: UITableViewDataSource , UITableViewDelegate {
         
         let item = self.arr_review_list[indexPath.row] as? [String:Any]
         
-        cell.lbl_to_name.text = (item!["To_userName"] as! String)
+        cell.lbl_to_name.text = (item!["From_userName"] as! String)
         cell.lbl_message.text = (item!["message"] as! String)
         
-        cell.img_profile.sd_setImage(with: URL(string: (item!["To_profile_picture"] as! String)), placeholderImage: UIImage(named: "logo-500"))
+        cell.img_profile.sd_setImage(with: URL(string: (item!["From_profile_picture"] as! String)), placeholderImage: UIImage(named: "logo-500"))
         
         if "\(item!["star"]!)" == "1" {
             

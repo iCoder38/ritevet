@@ -88,7 +88,6 @@ class order_received: UIViewController {
                     print(page as Any)
                     
                     self.myOrders(page_number: page)
-                    
                 }
             }
         }
@@ -96,7 +95,9 @@ class order_received: UIViewController {
     
     @objc func myOrders(page_number:Int) {
         
-        Utils.RiteVetIndicatorShow()
+        if (page_number == 1) {
+            Utils.RiteVetIndicatorShow()
+        }
         
         let urlString = BASE_URL_KREASE
         
@@ -105,14 +106,14 @@ class order_received: UIViewController {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
-            
             parameters = [
-                "action"    :   "orderlist",
-                "userId"    :   myString,
-                "type"      :   "OWNER",
-                "pageNo"    :   page_number
+                "action"    : "orderlist",
+                "userId"    : myString,
+                "type"      : "OWNER",
+                "pageNo"    : page_number
             ]
         }
+        
         print("parameters-------\(String(describing: parameters))")
         
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
@@ -128,13 +129,11 @@ class order_received: UIViewController {
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
                     
-                    if strSuccess == "success" //true
-                    {
+                    if strSuccess == "success" {
                         Utils.RiteVetIndicatorHide()
                         
                         var ar : NSArray!
                         ar = (JSON["data"] as! Array<Any>) as NSArray
-                        // self.arrListOfMyOrders = (ar as! Array<Any>)
                         self.arrListOfMyOrders.addObjects(from: ar as! [Any])
                         
                         self.tbleView.delegate = self
@@ -143,9 +142,10 @@ class order_received: UIViewController {
                         self.loadMore = 1
                         
                     }
-                    else
-                    {
+                    else {
+                        
                         Utils.RiteVetIndicatorHide()
+                        
                     }
                     
                 }
@@ -172,8 +172,7 @@ class order_received: UIViewController {
 }
 
 
-extension order_received: UITableViewDataSource , UITableViewDelegate
-{
+extension order_received: UITableViewDataSource , UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1

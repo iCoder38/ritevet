@@ -10,8 +10,13 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class Registration: UIViewController,UITextFieldDelegate {
+import FBSDKLoginKit
+import GoogleSignIn
 
+class Registration: UIViewController,UITextFieldDelegate {
+    
+    var myDeviceTokenIs:String!
+    
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
             viewNavigation.backgroundColor = NAVIGATION_BACKGROUND_COLOR
@@ -60,7 +65,9 @@ class Registration: UIViewController,UITextFieldDelegate {
         strStateId = "0"
         strCountryId = "0"
         
-        self.countryListWb()        
+        
+        
+        self.countryListWb()
         
     }
     
@@ -128,7 +135,7 @@ class Registration: UIViewController,UITextFieldDelegate {
         Utils.textFieldDR(text: cell.txtZipcode, placeHolder: "Zip Code", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtPassword, placeHolder: "Password", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtConfirmPassword, placeHolder: "Confirm Password", cornerRadius: 20, color: .white)
- 
+        
         cell.txtName.delegate = self
         cell.txtEmail.delegate = self
         cell.txtPhone.delegate = self
@@ -149,16 +156,16 @@ class Registration: UIViewController,UITextFieldDelegate {
         /****** CHECK UNCHECK BUTTON *********/
         cell.btnCheckUncheck.addTarget(self, action: #selector(checkUncheckClickMethod), for: .touchUpInside)
         cell.btnCheckUncheck.tag = 0
-    
-    /****** FACEBOOK *********/
+        
+        /****** FACEBOOK *********/
         cell.btnFB.backgroundColor = UIColor.init(red: 46.0/255.0, green: 79.0/255.0, blue: 183.0/255.0, alpha: 1)
         cell.btnFB.layer.cornerRadius = 20
         cell.btnFB.clipsToBounds = true
         // cell.btnFB.setTitle("f", for: .normal)
         cell.btnFB.setTitleColor(.white, for: .normal)
-        cell.btnFB.addTarget(self, action: #selector(fbClickMethod), for: .touchUpInside)
+        cell.btnFB.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
         
-    /****** G+ *********/
+        /****** G+ *********/
         cell.btnGooglePlus.backgroundColor = UIColor.init(red: 193.0/255.0, green: 47.0/255.0, blue: 38.0/255.0, alpha: 1)
         cell.btnGooglePlus.layer.cornerRadius = 20
         cell.btnGooglePlus.clipsToBounds = true
@@ -220,7 +227,7 @@ class Registration: UIViewController,UITextFieldDelegate {
     @objc  func agreeOurTermsAndConditions() {
         
         let alert = UIAlertController(title: "Alert!", message: "Please agree our Terms and Conditions",preferredStyle: UIAlertController.Style.alert)
-
+        
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
             //Cancel Action
         }))
@@ -235,84 +242,84 @@ class Registration: UIViewController,UITextFieldDelegate {
         Utils.RiteVetIndicatorShow()
         
         let urlString = BASE_URL_KREASE
-
+        
         var parameters:Dictionary<AnyHashable, Any>!
         
-            parameters = [
-                "action"        :   String(strPrivacyOrTerms)//"termAndConditions",
- 
-            ]
-       
-         
-            print("parameters-------\(String(describing: parameters))")
+        parameters = [
+            "action"        :   String(strPrivacyOrTerms)//"termAndConditions",
             
-            AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
-                    response in
+        ]
         
-                    switch(response.result) {
-                    case .success(_):
-                       if let data = response.value {
-
-                        
-                        let JSON = data as! NSDictionary
-                        print(JSON)
-                        
-                        var strSuccess : String!
-                        strSuccess = JSON["status"]as Any as? String
-                        
-                        var strSuccess2 : String!
-                        strSuccess2 = JSON["msg"]as Any as? String
-                        
-                        if strSuccess == "success" {
-                            // var dict: Dictionary<AnyHashable, Any>
-                            //dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                            Utils.RiteVetIndicatorHide()
-                            let htmlString = "<span style=\"font-family: Avenier-Next; font-size: 16.0\">\(strSuccess2 ?? "test")</span>"
-                            let data = htmlString.data(using: String.Encoding.unicode)! // mind "!"
-                            let attrStr = try? NSAttributedString( // do catch
-                                data: data,
-                                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
-                                documentAttributes: nil)
-                            // suppose we have an UILabel, but any element with NSAttributedString will do
-                            // cell2.lblProductDescription.attributedText = attrStr
-                            
-                            
-                            let s = attrStr!.string as NSString
-                            
-                            let alert = UIAlertController(title: "Terms!", message: String(s),preferredStyle: UIAlertController.Style.alert)
-
-                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-                                //Cancel Action
-                            }))
-                            self.present(alert, animated: true, completion: nil)
-                            
- 
-                        } else {
-                            Utils.RiteVetIndicatorHide()
-
-                        }
-                        
-                         }
-
-                    case .failure(_):
-                        print("Error message:\(String(describing: response.error))")
-                        //self.whileLoadingEnable()
-                        Utils.RiteVetIndicatorHide()
-                        let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                        
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                UIAlertAction in
-                                NSLog("OK Pressed")
-                            }
-                        
-                        alertController.addAction(okAction)
-                        
-                        self.present(alertController, animated: true, completion: nil)
-                        
-                        break
-                     }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
             
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    var strSuccess2 : String!
+                    strSuccess2 = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        // var dict: Dictionary<AnyHashable, Any>
+                        //dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        Utils.RiteVetIndicatorHide()
+                        let htmlString = "<span style=\"font-family: Avenier-Next; font-size: 16.0\">\(strSuccess2 ?? "test")</span>"
+                        let data = htmlString.data(using: String.Encoding.unicode)! // mind "!"
+                        let attrStr = try? NSAttributedString( // do catch
+                            data: data,
+                            options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+                            documentAttributes: nil)
+                        // suppose we have an UILabel, but any element with NSAttributedString will do
+                        // cell2.lblProductDescription.attributedText = attrStr
+                        
+                        
+                        let s = attrStr!.string as NSString
+                        
+                        let alert = UIAlertController(title: "Terms!", message: String(s),preferredStyle: UIAlertController.Style.alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                            //Cancel Action
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
+                    } else {
+                        Utils.RiteVetIndicatorHide()
+                        
+                    }
+                    
                 }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                //self.whileLoadingEnable()
+                Utils.RiteVetIndicatorHide()
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+            
+        }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -329,7 +336,7 @@ class Registration: UIViewController,UITextFieldDelegate {
             
             cell.btnSignUp.isUserInteractionEnabled = true
             
-              /****** SIGN UP BUTTON *********/
+            /****** SIGN UP BUTTON *********/
             Utils.buttonDR(button: cell.btnSignUp, text: "SIGN UP", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 20)
         }
         else if cell.btnCheckUncheck.tag == 1 {
@@ -387,9 +394,9 @@ class Registration: UIViewController,UITextFieldDelegate {
     }
     
     @objc func fieldShouldNotBeEmptyPopup() {
-    
+        
         let alert = UIAlertController(title: "Error!", message: "Field should not be Empty.",preferredStyle: UIAlertController.Style.alert)
-
+        
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
             
         }))
@@ -404,7 +411,7 @@ class Registration: UIViewController,UITextFieldDelegate {
         Utils.RiteVetIndicatorShow()
         
         let urlString = BASE_URL_KREASE
-
+        
         /*
          action:registration
          email:abc@gmail.com
@@ -421,7 +428,7 @@ class Registration: UIViewController,UITextFieldDelegate {
          stateId:
          city:
          zipCode
-
+         
          UTYPE:   //action Welcome Type
          lat:
          longs:
@@ -432,86 +439,86 @@ class Registration: UIViewController,UITextFieldDelegate {
         
         var parameters:Dictionary<AnyHashable, Any>!
         
-            parameters = [
-                "action"        :   "registration",
-                "email"         :   String(cell.txtEmail.text!),
-                "fullName"      :   String(cell.txtName.text!),
-                "contactNumber" :   String(cell.txtPhone.text!),
-                "password"      :   String(cell.txtPassword.text!),
-                "address"       :   String(cell.txtAddress.text!),
-                "city"          :   String(cell.txtCity.text!),
-                "stateId"       :   String(self.strStateId),
-                "countryId"     :   String(self.strCountryId),
-                "device"        :   "iOS",
-                "deviceToken"   :   String(""),
-                "role"          :   "Member",
-                "zipCode"       :   String(cell.txtZipcode.text!),
- 
-            ]
-       
-         
-            print("parameters-------\(String(describing: parameters))")
+        parameters = [
+            "action"        :   "registration",
+            "email"         :   String(cell.txtEmail.text!),
+            "fullName"      :   String(cell.txtName.text!),
+            "contactNumber" :   String(cell.txtPhone.text!),
+            "password"      :   String(cell.txtPassword.text!),
+            "address"       :   String(cell.txtAddress.text!),
+            "city"          :   String(cell.txtCity.text!),
+            "stateId"       :   String(self.strStateId),
+            "countryId"     :   String(self.strCountryId),
+            "device"        :   "iOS",
+            "deviceToken"   :   String(""),
+            "role"          :   "Member",
+            "zipCode"       :   String(cell.txtZipcode.text!),
             
-            AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                {
-                    response in
+        ]
         
-                    switch(response.result) {
-                    case .success(_):
-                       if let data = response.value {
-
-                        
-                        let JSON = data as! NSDictionary
-                        print(JSON)
-                        
-                        var strSuccess : String!
-                        strSuccess = JSON["status"]as Any as? String
-                        
-                        var strSuccess2 : String!
-                        strSuccess2 = JSON["msg"]as Any as? String
-                        
-                        if strSuccess == "success" {
-                            
-                            var dict: Dictionary<AnyHashable, Any>
-                            dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                            
-                            let defaults = UserDefaults.standard
-                            defaults.setValue(dict, forKey: "keyLoginFullData")
-                                 
-                            let alert = UIAlertController(title: strSuccess, message: String(strSuccess2),preferredStyle: UIAlertController.Style.alert)
-
-                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-                                self.pushFromLoginPage()
-                            }))
-                            self.present(alert, animated: true, completion: nil)
-                            
-                            
- 
-                        } else {
-                           
-
-                        }
-                        
-                         }
-
-                    case .failure(_):
-                        print("Error message:\(String(describing: response.error))")
-                        //self.whileLoadingEnable()
-                        let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                        
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                UIAlertAction in
-                                NSLog("OK Pressed")
-                            }
-                        
-                        alertController.addAction(okAction)
-                        
-                        self.present(alertController, animated: true, completion: nil)
-                        
-                        break
-                     }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
             
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    var strSuccess2 : String!
+                    strSuccess2 = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.setValue(dict, forKey: "keyLoginFullData")
+                        
+                        let alert = UIAlertController(title: strSuccess, message: String(strSuccess2),preferredStyle: UIAlertController.Style.alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                            self.pushFromLoginPage()
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
+                        
+                    } else {
+                        
+                        
+                    }
+                    
                 }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                //self.whileLoadingEnable()
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+            
+        }
     }
     
     @objc func pushFromLoginPage() {
@@ -523,38 +530,38 @@ class Registration: UIViewController,UITextFieldDelegate {
     @objc func countryListWb() {
         // indicator.startAnimating()
         Utils.RiteVetIndicatorShow()
-           
-        let urlString = BASE_URL_KREASE
-               
-        var parameters:Dictionary<AnyHashable, Any>!
-           
-        // if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            // print(person as Any)
-            
-            // let x : Int = (person["userId"] as! Int)
-            // let myString = String(x)
-            
-            parameters = [
-                "action"    : "countrylist",
-                
-            ]
         
-                
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        // if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+        // print(person as Any)
+        
+        // let x : Int = (person["userId"] as! Int)
+        // let myString = String(x)
+        
+        parameters = [
+            "action"    : "countrylist",
+            
+        ]
+        
+        
         print("parameters-------\(String(describing: parameters))")
-                   
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
-               
+            
             switch(response.result) {
             case .success(_):
                 if let data = response.value {
-
+                    
                     let JSON = data as! NSDictionary
                     // print(JSON)
                     
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                              
+                    
                     if strSuccess == "success" {
                         Utils.RiteVetIndicatorHide()
                         
@@ -573,36 +580,36 @@ class Registration: UIViewController,UITextFieldDelegate {
                         //  self.enableService()
                     }
                 }
-
+                
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
                 Utils.RiteVetIndicatorHide()
                 
-//                               self.indicator.stopAnimating()
-//                               self.enableService()
+                //                               self.indicator.stopAnimating()
+                //                               self.enableService()
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
+                
                 let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                     UIAlertAction in
                     NSLog("OK Pressed")
                 }
-                               
+                
                 alertController.addAction(okAction)
-                               
+                
                 self.present(alertController, animated: true, completion: nil)
                 break
             }
-         }
+        }
     }
     
     @objc func stateListWb() {
         // indicator.startAnimating()
         // Utils.RiteVetIndicatorShow()
-           
+        
         if strCountryId == "0" {
             
             let alert = UIAlertController(title: "Alert!", message: "Please select your Country.",preferredStyle: UIAlertController.Style.alert)
-
+            
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
                 //Cancel Action
             }))
@@ -612,36 +619,36 @@ class Registration: UIViewController,UITextFieldDelegate {
             
             self.arrStateList.removeAllObjects()
             let urlString = BASE_URL_KREASE
-                   
+            
             var parameters:Dictionary<AnyHashable, Any>!
-               
+            
             // if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-                // print(person as Any)
-                
-                // let x : Int = (person["userId"] as! Int)
-                // let myString = String(x)
-                
-                parameters = [
-                    "action"    : "statelist",
-                    "counttyId" : String(strCountryId)
-                ]
+            // print(person as Any)
+            
+            // let x : Int = (person["userId"] as! Int)
+            // let myString = String(x)
+            
+            parameters = [
+                "action"    : "statelist",
+                "counttyId" : String(strCountryId)
+            ]
             // }
-                    
+            
             print("parameters-------\(String(describing: parameters))")
-                       
+            
             AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
                 response in
-                   
+                
                 switch(response.result) {
                 case .success(_):
                     if let data = response.value {
-
+                        
                         let JSON = data as! NSDictionary
                         // print(JSON)
                         
                         var strSuccess : String!
                         strSuccess = JSON["status"]as Any as? String
-                                  
+                        
                         if strSuccess == "success" {
                             Utils.RiteVetIndicatorHide()
                             
@@ -661,26 +668,26 @@ class Registration: UIViewController,UITextFieldDelegate {
                             //  self.enableService()
                         }
                     }
-
+                    
                 case .failure(_):
                     print("Error message:\(String(describing: response.error))")
                     Utils.RiteVetIndicatorHide()
                     
-    //                               self.indicator.stopAnimating()
-    //                               self.enableService()
+                    //                               self.indicator.stopAnimating()
+                    //                               self.enableService()
                     let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                   
+                    
                     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                         UIAlertAction in
                         NSLog("OK Pressed")
                     }
-                                   
+                    
                     alertController.addAction(okAction)
-                                   
+                    
                     self.present(alertController, animated: true, completion: nil)
                     break
                 }
-             }
+            }
             
         }
         
@@ -698,7 +705,7 @@ class Registration: UIViewController,UITextFieldDelegate {
         print(self.arrCountryList as Any)
         
         for index in 0..<self.arrCountryList.count {
-                
+            
             // convert int quantity to string then save to nutable array
             // let x : Int = qList
             // let myString = String(x)
@@ -719,9 +726,9 @@ class Registration: UIViewController,UITextFieldDelegate {
             // arrStateListToShow
             
         }
-            
+        
         print(self.arrCountryListToShow as Any)
-            
+        
         let redAppearance = YBTextPickerAppearanceManager.init(
             pickerTitle         : "Select Country",
             titleFont           : boldFont,
@@ -741,57 +748,57 @@ class Registration: UIViewController,UITextFieldDelegate {
             itemColor           : .black,
             itemFont            : regularFont
         )
-             
-            // MARK:- CONVERT MUTABLE ARRAY TO ARRAY -
-            let array: [String] = arrCountryListToShow.copy() as! [String]
-            
-            let arrGender = array
-            let picker = YBTextPicker.init(with: arrGender, appearance: redAppearance,
-                                           onCompletion: { (selectedIndexes, selectedValues) in
-                                            if let selectedValue = selectedValues.first{
-                                                if selectedValue == arrGender.last!{
-                                                     
-                                                    let fullNameArr = selectedValue.components(separatedBy: ".")
-
-                                                    let expMonth2    = fullNameArr[0]
-                                                    let expMonth    = fullNameArr[1]
-                                                
-                                                    cell.txtCountry.text = "\(expMonth)"
-                                                    cell.txtState.text = ""
-                                                    
-                                                    // self.selectedStateName = selectedValue
-                                                    self.strCountryId = String(expMonth2)
-                                                    print(self.strCountryId as Any)
-                                                    self.strStateId = "0"
-                                                 } else {
-                                                     
-                                                    let fullNameArr = selectedValue.components(separatedBy: ".")
-
-                                                    let expMonth2    = fullNameArr[0]
-                                                    let expMonth    = fullNameArr[1]
-                                                    
-                                                    cell.txtCountry.text = "\(expMonth)"
-                                                    self.strCountryId = String(expMonth2)
-                                                    print(self.strCountryId as Any)
-                                                    
-                                                    cell.txtState.text = ""
-                                                    self.strStateId = "0"
-                                                    // self.selectedStateName = selectedValue
-                                                    
-                                                 }
-                                             } else {
-                                                 // self.btnGenderPicker.setTitle("What's your gender?", for: .normal)
-                                                 // cell.txtSelectGender.text = "What's your gender?"
-                                                
-                                                print()
-                                                
-                                             }
-             },
-                                            onCancel: {
-                                                print("Cancelled")
-             })
-             
-            picker.show(withAnimation: .FromBottom)
+        
+        // MARK:- CONVERT MUTABLE ARRAY TO ARRAY -
+        let array: [String] = arrCountryListToShow.copy() as! [String]
+        
+        let arrGender = array
+        let picker = YBTextPicker.init(with: arrGender, appearance: redAppearance,
+                                       onCompletion: { (selectedIndexes, selectedValues) in
+            if let selectedValue = selectedValues.first{
+                if selectedValue == arrGender.last!{
+                    
+                    let fullNameArr = selectedValue.components(separatedBy: ".")
+                    
+                    let expMonth2    = fullNameArr[0]
+                    let expMonth    = fullNameArr[1]
+                    
+                    cell.txtCountry.text = "\(expMonth)"
+                    cell.txtState.text = ""
+                    
+                    // self.selectedStateName = selectedValue
+                    self.strCountryId = String(expMonth2)
+                    print(self.strCountryId as Any)
+                    self.strStateId = "0"
+                } else {
+                    
+                    let fullNameArr = selectedValue.components(separatedBy: ".")
+                    
+                    let expMonth2    = fullNameArr[0]
+                    let expMonth    = fullNameArr[1]
+                    
+                    cell.txtCountry.text = "\(expMonth)"
+                    self.strCountryId = String(expMonth2)
+                    print(self.strCountryId as Any)
+                    
+                    cell.txtState.text = ""
+                    self.strStateId = "0"
+                    // self.selectedStateName = selectedValue
+                    
+                }
+            } else {
+                // self.btnGenderPicker.setTitle("What's your gender?", for: .normal)
+                // cell.txtSelectGender.text = "What's your gender?"
+                
+                print()
+                
+            }
+        },
+                                       onCancel: {
+            print("Cancelled")
+        })
+        
+        picker.show(withAnimation: .FromBottom)
         
         
     }
@@ -807,7 +814,7 @@ class Registration: UIViewController,UITextFieldDelegate {
         print(self.arrStateList as Any)
         
         for index in 0..<self.arrStateList.count {
-                
+            
             // convert int quantity to string then save to nutable array
             // let x : Int = qList
             // let myString = String(x)
@@ -828,9 +835,9 @@ class Registration: UIViewController,UITextFieldDelegate {
             // arrStateListToShow
             
         }
-            
+        
         print(self.arrStateListToShow as Any)
-            
+        
         let redAppearance = YBTextPickerAppearanceManager.init(
             pickerTitle         : "Select State",
             titleFont           : boldFont,
@@ -850,54 +857,216 @@ class Registration: UIViewController,UITextFieldDelegate {
             itemColor           : .black,
             itemFont            : regularFont
         )
-             
-            // MARK:- CONVERT MUTABLE ARRAY TO ARRAY -
-            let array: [String] = arrStateListToShow.copy() as! [String]
+        
+        // MARK:- CONVERT MUTABLE ARRAY TO ARRAY -
+        let array: [String] = arrStateListToShow.copy() as! [String]
+        
+        let arrGender = array
+        let picker = YBTextPicker.init(with: arrGender, appearance: redAppearance,
+                                       onCompletion: { (selectedIndexes, selectedValues) in
+            if let selectedValue = selectedValues.first{
+                if selectedValue == arrGender.last!{
+                    
+                    let fullNameArr = selectedValue.components(separatedBy: ".")
+                    
+                    let expMonth2    = fullNameArr[0]
+                    let expMonth    = fullNameArr[1]
+                    
+                    cell.txtState.text = "\(expMonth)"
+                    
+                    // self.selectedStateName = selectedValue
+                    self.strStateId = String(expMonth2)
+                    
+                } else {
+                    
+                    let fullNameArr = selectedValue.components(separatedBy: ".")
+                    
+                    let expMonth2    = fullNameArr[0]
+                    let expMonth    = fullNameArr[1]
+                    
+                    cell.txtState.text = "\(expMonth)"
+                    self.strStateId = String(expMonth2)
+                    
+                    // self.selectedStateName = selectedValue
+                    
+                }
+            } else {
+                // self.btnGenderPicker.setTitle("What's your gender?", for: .normal)
+                // cell.txtSelectGender.text = "What's your gender?"
+                
+                print()
+                
+            }
+        },
+                                       onCancel: {
+            print("Cancelled")
+        })
+        
+        picker.show(withAnimation: .FromBottom)
+        
+        
+    }
+    
+    
+    
+    @objc func loginButtonClicked() {
+        let loginManager = LoginManager()
+        loginManager.logIn(permissions: ["public_profile","email"], from: self) { [self] result, error in
+            if let error = error {
+                print("Encountered Erorr: \(error)")
+            } else if let result = result, result.isCancelled {
+                print("Cancelled")
+            } else {
+                print("Logged In")
+                print("result \(result!)")
+
+                showEmail()
+                    
+            }
+        }
+    }
+    
+    func showEmail()
+    {
+        GraphRequest(graphPath: "/me", parameters: ["fields": "email, id, name, picture.width(480).height(480)"]).start {
+            (connection, result, err) in
             
-            let arrGender = array
-            let picker = YBTextPicker.init(with: arrGender, appearance: redAppearance,
-                                           onCompletion: { (selectedIndexes, selectedValues) in
-                                            if let selectedValue = selectedValues.first{
-                                                if selectedValue == arrGender.last!{
-                                                     
-                                                    let fullNameArr = selectedValue.components(separatedBy: ".")
-
-                                                    let expMonth2    = fullNameArr[0]
-                                                    let expMonth    = fullNameArr[1]
-                                                
-                                                    cell.txtState.text = "\(expMonth)"
-                                                
-                                                    // self.selectedStateName = selectedValue
-                                                    self.strStateId = String(expMonth2)
-                                                    
-                                                 } else {
-                                                     
-                                                    let fullNameArr = selectedValue.components(separatedBy: ".")
-
-                                                    let expMonth2    = fullNameArr[0]
-                                                    let expMonth    = fullNameArr[1]
-                                                    
-                                                    cell.txtState.text = "\(expMonth)"
-                                                    self.strStateId = String(expMonth2)
-                                                    
-                                                    // self.selectedStateName = selectedValue
-                                                    
-                                                 }
-                                             } else {
-                                                 // self.btnGenderPicker.setTitle("What's your gender?", for: .normal)
-                                                 // cell.txtSelectGender.text = "What's your gender?"
-                                                
-                                                print()
-                                                
-                                             }
-             },
-                                            onCancel: {
-                                                print("Cancelled")
-             })
-             
-            picker.show(withAnimation: .FromBottom)
+            if(err == nil) {
+                //                  print(result[""] as! String)
+                
+                if let res = result {
+                    if let response = res as? [String: Any] {
+                        let username = response["name"]
+                        let email = response["email"]
+                        let id = response["id"]
+                        let image = response["picture"]
+                        
+                        print(username as Any)
+                        print(email as Any)
+                        print(id as Any)
+                        print(image as Any)
+                        
+                        let indexPath = IndexPath.init(row: 0, section: 0)
+                        let cell = self.tbleView.cellForRow(at: indexPath) as! RegistrationCell
+                        
+                        cell.txtName.text = "\(username!)"
+                        cell.txtEmail.text = "\(email!)"
+                        
+                        
+                         // ERProgressHud.sharedInstance.showDarkBackgroundView(withTitle: "Please wait...")
+                        
+                        /*self.social_login_in_vedanta_WB(str_email: (email as! String),
+                                                        str_full_name: (username as! String),
+                                                        str_image: "",
+                                                        str_social_id: (id as! String),
+                                                        type: "F"
+                                                        
+                        )*/
+                        
+                    }
+                }
+                
+            }
+            else {
+                print("error \(err!)")
+            }
+        }
         
+    }
+    
+    
+    @objc func social_login_in_vedanta_WB(
+        str_email:String,
+        str_full_name:String,
+        str_image:String,
+        str_social_id:String,
+        type:String) {
+            
+        self.view.endEditing(true)
         
+            let defaults = UserDefaults.standard
+            if let myString = defaults.string(forKey: "key_my_device_token") {
+                self.myDeviceTokenIs = myString
+
+            }
+            else {
+                self.myDeviceTokenIs = "111111111111111111111"
+            }
+            
+        let parameters = [
+            "action"        : "socialLoginAction",
+            "email"         : String(str_email),
+            "fullName"      : String(str_full_name),
+            "image"         : String(str_image),
+            "socialId"      : String(str_social_id),
+            "socialType"    : String(type),
+            "device"        : "iOS",
+            "deviceToken"   : String(self.myDeviceTokenIs),
+            
+        ]
+        
+        print(parameters as Any)
+        
+        AF.request(BASE_URL_KREASE, method: .post, parameters: parameters)
+        
+            .response { response in
+                
+                do {
+                    if response.error != nil{
+                        print(response.error as Any, terminator: "")
+                    }
+                    
+                    if let jsonDict = try JSONSerialization.jsonObject(with: (response.data as Data?)!, options: []) as? [String: AnyObject]{
+                        
+                        print(jsonDict as Any, terminator: "")
+                        
+                        // for status alert
+                        var status_alert : String!
+                        status_alert = (jsonDict["status"] as? String)
+                        
+                        // for message alert
+                        var str_data_message : String!
+                        str_data_message = jsonDict["msg"] as? String
+                        
+                        if status_alert.lowercased() == "success" {
+                            
+                            print("=====> yes")
+                            ERProgressHud.sharedInstance.hide()
+                            
+//                            var dict: Dictionary<AnyHashable, Any>
+//                            dict = jsonDict["data"] as! Dictionary<AnyHashable, Any>
+                            
+                            var dict: Dictionary<AnyHashable, Any>
+                            dict = jsonDict["data"] as! Dictionary<AnyHashable, Any>
+                            
+                            let defaults = UserDefaults.standard
+                            defaults.setValue(dict, forKey: "keyLoginFullData")
+                            
+                            self.navigationController?.popViewController(animated: true)
+                            
+                        } else {
+                            
+                            print("=====> no")
+                            ERProgressHud.sharedInstance.hide()
+                            
+//                            let alert = NewYorkAlertController(title: String(status_alert), message: String(str_data_message), style: .alert)
+//                            let cancel = NewYorkButton(title: "Dismiss", style: .cancel)
+//                            alert.addButtons([cancel])
+//                            self.present(alert, animated: true)
+                            
+                        }
+                        
+                    } else {
+                        
+                        // self.please_check_your_internet_connection()
+                        
+                        return
+                    }
+                    
+                } catch _ {
+                    print("Exception!")
+                }
+            }
     }
     
 }

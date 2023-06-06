@@ -559,6 +559,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
         {
         
         
+            Utils.RiteVetIndicatorShow()
+            
             if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any]
                 {
                  let x : Int = (person["userId"] as! Int)
@@ -580,16 +582,26 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                 // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
                 
                 //Set Your Parameter
-                let parameterDict = [
-                    "action"          : String(strEditOrAdd),
-                    "userId"          : String(myString),
-                    "categoryId"       : String(myCatIdIs),
-                    "postTitle"        : String(cell.txtPostTitle.text!),
-                    "description"      : String(cell.txtDescription.text!),
-                    // "videolink"         : String(cell.txtUploadVideoLink.text!),
-                ]
+//                let parameterDict = [
+//                    "action"          : String(strEditOrAdd),
+//                    "userId"          : String(myString),
+//                    "categoryId"       : String(myCatIdIs),
+//                    "postTitle"        : String(cell.txtPostTitle.text!),
+//                    "description"      : String(cell.txtDescription.text!),
+//                    // "videolink"         : String(cell.txtUploadVideoLink.text!),
+//                ]
                 
- 
+                let parameterDict = NSMutableDictionary()
+                
+                parameterDict.setValue(String(strEditOrAdd), forKey: "action")
+                
+                parameterDict.setValue(String(myString), forKey: "userId")
+                parameterDict.setValue(String(myCatIdIs), forKey: "categoryId")
+                parameterDict.setValue(String(cell.txtPostTitle.text!), forKey: "postTitle")
+                parameterDict.setValue(String(cell.txtDescription.text!), forKey: "description")
+                
+                print(parameterDict)
+                
                 // Now Execute
                 AF.upload(multipartFormData: { multiPart in
                     for (key, value) in parameterDict {
@@ -612,7 +624,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                             })
                         }
                     }
-                    multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+                    multiPart.append(self.imgData, withName: "image_1", fileName: "submit_post_image_1.jpg", mimeType: "image/png")
                 }, with: urlRequest)
                     .uploadProgress(queue: .main, closure: { progress in
                         //Current upload progress of file
@@ -816,13 +828,22 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
             
             //Set Your Parameter
-            let parameterDict = [
-               "action"     : "editstaff",
-               "staffId"    : String(staffId),
-               "userId"     : String(myString)
-               
-               
-           ]
+//            let parameterDict = [
+//               "action"     : "editstaff",
+//               "staffId"    : String(staffId),
+//               "userId"     : String(myString)
+//
+//
+//           ]
+            
+            let parameterDict = NSMutableDictionary()
+            
+            parameterDict.setValue(String("editstaff"), forKey: "action")
+            
+            parameterDict.setValue(String(myString), forKey: "userId")
+            parameterDict.setValue(String(staffId), forKey: "staffId")
+            
+            print(parameterDict)
             
 
             // Now Execute
@@ -847,7 +868,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                         })
                     }
                 }
-                multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+                multiPart.append(self.imgData2, withName: "image_2", fileName: "submit_post_image_2.png", mimeType: "image/png")
             }, with: urlRequest)
                 .uploadProgress(queue: .main, closure: { progress in
                     //Current upload progress of file
@@ -988,13 +1009,23 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
         // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
         
         //Set Your Parameter
-        let parameterDict = [
-           "action"          : "editstaff",
-           "staffId"       : String(staffId),
-           "userId"         : String(myString)
-           
-           
-       ]
+//        let parameterDict = [
+//           "action"          : "editstaff",
+//           "staffId"       : String(staffId),
+//           "userId"         : String(myString)
+//
+//
+//       ]
+        
+        
+        let parameterDict = NSMutableDictionary()
+        
+        parameterDict.setValue(String("editstaff"), forKey: "action")
+        
+        parameterDict.setValue(String(myString), forKey: "userId")
+        parameterDict.setValue(String(staffId), forKey: "staffId")
+        
+        print(parameterDict)
         
 
         // Now Execute
@@ -1019,7 +1050,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                     })
                 }
             }
-            multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+            multiPart.append(self.imgData3, withName: "image_3", fileName: "submit_post_image_3.png", mimeType: "image/png")
         }, with: urlRequest)
             .uploadProgress(queue: .main, closure: { progress in
                 //Current upload progress of file
@@ -1156,13 +1187,14 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
         // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
         
         //Set Your Parameter
-        let parameterDict = [
-           "action"          : "editstaff",
-           "staffId"       : String(staffId),
-           "userId"         : String(myString)
-           
-           
-       ]
+        let parameterDict = NSMutableDictionary()
+        
+        parameterDict.setValue(String("editstaff"), forKey: "action")
+        
+        parameterDict.setValue(String(myString), forKey: "userId")
+        parameterDict.setValue(String(staffId), forKey: "staffId")
+        
+        print(parameterDict)
         
 
         // Now Execute
@@ -1187,7 +1219,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                     })
                 }
             }
-            multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+            multiPart.append(self.imgData4, withName: "image_4", fileName: "submit_post_image_4.png", mimeType: "image/png")
         }, with: urlRequest)
             .uploadProgress(queue: .main, closure: { progress in
                 //Current upload progress of file
@@ -1321,13 +1353,14 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
         // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
         
         //Set Your Parameter
-        let parameterDict = [
-           "action"          : "editstaff",
-           "staffId"       : String(staffId),
-           "userId"         : String(myString)
-           
-           
-       ]
+        let parameterDict = NSMutableDictionary()
+        
+        parameterDict.setValue(String("editstaff"), forKey: "action")
+        
+        parameterDict.setValue(String(myString), forKey: "userId")
+        parameterDict.setValue(String(staffId), forKey: "staffId")
+        
+        print(parameterDict)
         
 
         // Now Execute
@@ -1352,7 +1385,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                     })
                 }
             }
-            multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+            multiPart.append(self.imgData5, withName: "image_5", fileName: "submit_post_image_5.png", mimeType: "image/png")
         }, with: urlRequest)
             .uploadProgress(queue: .main, closure: { progress in
                 //Current upload progress of file
@@ -1485,13 +1518,14 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
             
             //Set Your Parameter
-            let parameterDict = [
-               "action"          : "editstaff",
-               "staffId"       : String(staffId),
-               "userId"         : String(myString)
-               
-               
-           ]
+            let parameterDict = NSMutableDictionary()
+            
+            parameterDict.setValue(String("editstaff"), forKey: "action")
+            
+            parameterDict.setValue(String(myString), forKey: "userId")
+            parameterDict.setValue(String(staffId), forKey: "staffId")
+            
+            print(parameterDict)
             
 
             // Now Execute
@@ -1516,7 +1550,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                         })
                     }
                 }
-                multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+                multiPart.append(self.saveSelectedVideoURLforServer, withName: "video", fileName: "submit_post_video.png", mimeType: "image/png")
             }, with: urlRequest)
                 .uploadProgress(queue: .main, closure: { progress in
                     //Current upload progress of file
@@ -1656,6 +1690,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
     
     
     @objc func pushToFreeStuff() {
+        Utils.RiteVetIndicatorHide()
+        
          let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "FreeStuffId") as? FreeStuff
          self.navigationController?.pushViewController(push!, animated: true)
     }
@@ -1665,43 +1701,43 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
 
 
 extension SubmitPost: UITableViewDataSource
+{
+    func numberOfSections(in tableView: UITableView) -> Int
     {
-        func numberOfSections(in tableView: UITableView) -> Int
-        {
-            return 1
-        }
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell:SubmitPostTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! SubmitPostTableCell
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-        {
-            return 1
-        }
+        cell.backgroundColor = .clear
         
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-        {
-            let cell:SubmitPostTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! SubmitPostTableCell
-            
-            cell.backgroundColor = .clear
+        Utils.textFieldDR(text: cell.txtPostTitle, placeHolder: "Post Title", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtSelectCategory, placeHolder: "Select category", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtDescription, placeHolder: "Description", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtUploadImage, placeHolder: "Upload Image", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtUploadVideo, placeHolder: "Upload Video", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtUploadVideoLink, placeHolder: "Upload Video Link", cornerRadius: 20, color: .white)
         
-            Utils.textFieldDR(text: cell.txtPostTitle, placeHolder: "Post Title", cornerRadius: 20, color: .white)
-            Utils.textFieldDR(text: cell.txtSelectCategory, placeHolder: "Select category", cornerRadius: 20, color: .white)
-            Utils.textFieldDR(text: cell.txtDescription, placeHolder: "Description", cornerRadius: 20, color: .white)
-            Utils.textFieldDR(text: cell.txtUploadImage, placeHolder: "Upload Image", cornerRadius: 20, color: .white)
-            Utils.textFieldDR(text: cell.txtUploadVideo, placeHolder: "Upload Video", cornerRadius: 20, color: .white)
-            Utils.textFieldDR(text: cell.txtUploadVideoLink, placeHolder: "Upload Video Link", cornerRadius: 20, color: .white)
-            
-            //
-            Utils.buttonDR(button: cell.btnSubmit, text: "SUBMIT NOW", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 20)
-            
-            cell.btnUploadNow.addTarget(self, action: #selector(openActionSheet), for: .touchUpInside)
-            cell.btnCategory.addTarget(self, action: #selector(op), for: .touchUpInside)
-            cell.btnSubmit.addTarget(self, action: #selector(uploadImageWB), for: .touchUpInside)
-            
-            // video button
-            cell.btnUploadVideo.addTarget(self, action: #selector(openVideoFromGallery), for: .touchUpInside)
-            
-            return cell
-        }
+        //
+        Utils.buttonDR(button: cell.btnSubmit, text: "SUBMIT NOW", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 20)
         
+        cell.btnUploadNow.addTarget(self, action: #selector(openActionSheet), for: .touchUpInside)
+        cell.btnCategory.addTarget(self, action: #selector(op), for: .touchUpInside)
+        cell.btnSubmit.addTarget(self, action: #selector(uploadImageWB), for: .touchUpInside)
+        
+        // video button
+        cell.btnUploadVideo.addTarget(self, action: #selector(openVideoFromGallery), for: .touchUpInside)
+        
+        return cell
+    }
+    
     @objc func op() {
         guard let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "secondVC") as? ExamplePopupViewController else { return }
         popupVC.height = self.height
@@ -1712,21 +1748,21 @@ extension SubmitPost: UITableViewDataSource
         popupVC.popupDelegate = self
         popupVC.strGetDetails = "categorySection"
         popupVC.getArrListOfCategory = self.arrListOfCategory
-                                    
+        
         self.present(popupVC, animated: true, completion: nil)
     }
     
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView .deselectRow(at: indexPath, animated: true)
-            
-//            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "FreeStuffPageId") as? FreeStuffPage
-            //self.navigationController?.pushViewController(push!, animated: true)
-        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView .deselectRow(at: indexPath, animated: true)
         
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 850
-        }
+        //            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "FreeStuffPageId") as? FreeStuffPage
+        //self.navigationController?.pushViewController(push!, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 850
+    }
+}
 
 extension SubmitPost: UITableViewDelegate
     {

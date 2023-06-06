@@ -21,7 +21,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb959470598518230</string>
+				<string>fb782522049912837</string>
 			</array>
 		</dict>
 		<dict>
@@ -36,11 +36,11 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>959470598518230</string>
+	<string>782522049912837</string>
+	<key>FacebookClientToken</key>
+	<string>1c49c6edd78f078661d497e917d77d70</string>
 	<key>FacebookDisplayName</key>
 	<string>RiteVet</string>
-	<key>FacebookClientToken</key>
-	<string>c4878c46ede0b046b4f5779bcf1adbc3</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
