@@ -159,7 +159,7 @@ class order_received_details: UIViewController {
             parameters = [
                 "action"    :   "orderdelivered",
                 "userId"    :   myString,
-                "orderId"   :   "\(self.dictGetOrderDetails["orderID"]!)",
+                "orderId"   :   "\(self.dictGetOrderDetails["id"]!)",
                 
             ]
         }
@@ -300,7 +300,7 @@ extension order_received_details: UITableViewDataSource , UITableViewDelegate
         
         
         cell.lblPaymentDetails.text = "Payment Details" //(item!["productName"] as! String)
-        cell.lblInvoiceDate.text = "Invoice Date : "+"02-11-2019"
+        cell.lblInvoiceDate.text = "Invoice Date : "+(self.dictGetOrderDetails!["created"] as! String)
         cell.lblRefId.text = "Ref ID : "+"e4t64r222" //(item!["productName"] as! String)
         
         if "\(self.dictGetOrderDetails["orderStatus"]!)" == "3" {
@@ -333,7 +333,7 @@ extension order_received_details: UITableViewDataSource , UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 720
+        return 680
     }
 }
  

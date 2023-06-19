@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class RequestServiceDetails: UIViewController {
 
+    var str_get_Star:String!
+    
     var str_business_type_is:String!
     
     var str_set_price_or_not:String!
@@ -48,11 +50,35 @@ class RequestServiceDetails: UIViewController {
     
     @IBOutlet weak var btnAddress:UIButton!
     
-    @IBOutlet weak var imgStarOne:UIImageView!
-    @IBOutlet weak var imgStarTwo:UIImageView!
-    @IBOutlet weak var imgStarThree:UIImageView!
-    @IBOutlet weak var imgStarFour:UIImageView!
-    @IBOutlet weak var imgStarFive:UIImageView!
+    @IBOutlet weak var imgStarOne:UIImageView! {
+        didSet {
+            imgStarOne.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarTwo:UIImageView! {
+        didSet {
+            imgStarTwo.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarThree:UIImageView! {
+        didSet {
+            imgStarThree.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarFour:UIImageView! {
+        didSet {
+            imgStarFour.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarFive:UIImageView! {
+        didSet {
+            imgStarFive.tintColor = .systemOrange
+        }
+    }
     
     @IBOutlet weak var tbleView: UITableView! {
         didSet {
@@ -218,7 +244,7 @@ class RequestServiceDetails: UIViewController {
         btnBookAnAppointment.addTarget(self, action: #selector(bookAnAppoitmentClickMethod), for: .touchUpInside)
         
         
-        
+        self.star_function()
         
     }
     
@@ -245,6 +271,97 @@ class RequestServiceDetails: UIViewController {
 
     }
     
+    @objc func star_function() {
+        
+        // if String(self.str_get_Star) == "0" {
+        if String(self.str_get_Star) == "0" {
+            
+            self.imgStarOne.image = UIImage(systemName: "star")
+            self.imgStarTwo.image = UIImage(systemName: "star")
+            self.imgStarThree.image = UIImage(systemName: "star")
+            self.imgStarFour.image = UIImage(systemName: "star")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        }
+        else if String(self.str_get_Star) == "1" {
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star")
+            self.imgStarThree.image = UIImage(systemName: "star")
+            self.imgStarFour.image = UIImage(systemName: "star")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if String(self.str_get_Star) == "2" {
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star")
+            self.imgStarFour.image = UIImage(systemName: "star")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if String(self.str_get_Star) == "3" {
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star.fill")
+            self.imgStarFour.image = UIImage(systemName: "star")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if String(self.str_get_Star) == "4" {
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star.fill")
+            self.imgStarFour.image = UIImage(systemName: "star.fill")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double(String(self.str_get_Star))! > 1.0 && Double(String(self.str_get_Star))! < 2.0 {
+            print("Greater then 1 but less than 2")
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.leadinghalf.filled")
+            self.imgStarThree.image = UIImage(systemName: "star.fill")
+            self.imgStarFour.image = UIImage(systemName: "star.fill")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double(String(self.str_get_Star))! > 2.0 && Double(String(self.str_get_Star))! < 3.0 {
+            print("Greater then 2 but less than 3")
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star.leadinghalf.filled")
+            self.imgStarFour.image = UIImage(systemName: "star")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double(String(self.str_get_Star))! > 3.0 && Double(String(self.str_get_Star))! < 4.0 {
+            print("Greater then 3 but less than 4")
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star.fill")
+            self.imgStarFour.image = UIImage(systemName: "star.leadinghalf.filled")
+            self.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double(String(self.str_get_Star))! > 4.0 && Double(String(self.str_get_Star))! < 5.0 {
+            print("Greater then 4 but less than 5")
+            
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star.fill")
+            self.imgStarFour.image = UIImage(systemName: "star.fill")
+            self.imgStarFive.image = UIImage(systemName: "star.leadinghalf.filled")
+            
+        } else { // 5 star
+
+            self.imgStarOne.image = UIImage(systemName: "star.fill")
+            self.imgStarTwo.image = UIImage(systemName: "star.fill")
+            self.imgStarThree.image = UIImage(systemName: "star.fill")
+            self.imgStarFour.image = UIImage(systemName: "star.fill")
+            self.imgStarFive.image = UIImage(systemName: "star.fill")
+
+        }
+        
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -494,15 +611,13 @@ class RequestServiceDetails: UIViewController {
                         self.btnService.setTitle(String(arServices.count), for: .normal)
                         self.btnBookAnAppointment.isUserInteractionEnabled = true
                         
-                        let livingArea2 = dict["TotalReview"] as? Int ?? 0
-                        self.btnReview.setTitle(String(livingArea2), for: .normal)
                         
                         
-                        /*
-                         AudioChat = 1;
-                         MessageChat = 2;
-                         videoChat = 2;
-                         */
+                        
+                        self.btnReview.setTitle("\(self.dict["TotalReview"]!)", for: .normal)
+                        self.btnReview.addTarget(self, action: #selector(review_click_method), for: .touchUpInside)
+                        
+                        
                         
                         
                         if "\(dict["MessageChat"] as! Int)" == "1" {
@@ -542,13 +657,10 @@ class RequestServiceDetails: UIViewController {
                         
                         
                             
-                            self.btnChatShow.addTarget(self, action: #selector(chatClickMethod), for: .touchUpInside)
-                            self.btnVideoShow.addTarget(self, action: #selector(videoClickMethod), for: .touchUpInside)
-                            self.btnAudioShow.addTarget(self, action: #selector(audioClickMethod), for: .touchUpInside)
-                            
-                         
-                        
-                        
+                        self.btnChatShow.addTarget(self, action: #selector(chatClickMethod), for: .touchUpInside)
+                        self.btnVideoShow.addTarget(self, action: #selector(videoClickMethod), for: .touchUpInside)
+                        self.btnAudioShow.addTarget(self, action: #selector(audioClickMethod), for: .touchUpInside)
+
                         Utils.RiteVetIndicatorHide()
                         self.tbleView.reloadData()
                         
@@ -987,6 +1099,19 @@ class RequestServiceDetails: UIViewController {
         
         self.navigationController?.pushViewController(push!, animated: true)
     }
+    
+    
+    @objc func review_click_method() {
+    
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "all_reviews_id") as? all_reviews
+        
+        push!.str_back = "back"
+        push!.str_review_user_id = "\(self.getDictRequestServiceHome["userId"]!)"
+        
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+    }
+    
 }
 
 extension RequestServiceDetails: UITableViewDataSource
@@ -1000,7 +1125,13 @@ extension RequestServiceDetails: UITableViewDataSource
     {
         if strDetailsDownSet == "0" {
             print("details count")
-            return 4 // arrSetDetailsAndService.count
+            
+            if "\(self.getDictRequestServiceHome["american_board_certified_option"]!)" == "" {
+                return 4
+            } else {
+                return 5 // arrSetDetailsAndService.count
+            }
+            
         }
         else if strServiceDownSet == "0" {
             print("service count")
@@ -1024,7 +1155,7 @@ extension RequestServiceDetails: UITableViewDataSource
         if strDetailsDownSet == "0" {
             print("details count cell for row")
             cell.lblStaticTitle.isHidden = false
-            
+             
             if indexPath.row == 0 {
                 
                 cell.lblStaticTitle.text = "EMAIL ADDRESS"
@@ -1056,7 +1187,12 @@ extension RequestServiceDetails: UITableViewDataSource
             }
             else
             if indexPath.row == 3 {
+                
+                
                 cell.lblStaticTitle.text = "TYPE OF SERVICES"
+                 
+                
+                // print(self.getDictRequestServiceHome)
                 
                 if strSaveFullValueOfServiceInOneString == "0" {
                     cell.lblDynamicTitle.text = String("Please wait...")
@@ -1068,6 +1204,30 @@ extension RequestServiceDetails: UITableViewDataSource
                 else
                 {
                     cell.lblDynamicTitle.text = String(strSaveFullValueOfServiceInOneString)
+                }
+            }
+            else
+            if indexPath.row == 4 {
+                
+                
+                cell.lblStaticTitle.text = "AMERICAN BOARD CERTIFIED SPECIALIZATION"
+                
+                // print(self.getDictRequestServiceHome)
+                
+                if strSaveFullValueOfServiceInOneString == "0" {
+                    cell.lblDynamicTitle.text = String("Please wait...")
+                }
+                else
+                if strSaveFullValueOfServiceInOneString == nil {
+                    cell.lblDynamicTitle.text = String("Please wait...")
+                }
+                else {
+                    
+                    var myString = "\(self.getDictRequestServiceHome["american_board_certified_option_name"]!)"
+                    myString = myString.replacingOccurrences(of: ",", with: ",\n")
+                    
+                    cell.lblDynamicTitle.text = String(myString)
+                    
                 }
             }
         

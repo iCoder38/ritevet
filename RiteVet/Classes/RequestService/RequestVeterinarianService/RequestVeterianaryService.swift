@@ -48,7 +48,15 @@ class RequestVeterianaryService: UIViewController {
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
         btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
+        
+        
+        if (self.getBusinessType == "2") {
+            self.lblNavigationTitle.text = "REQUEST VETERINARY SERVICES"
+        } else {
+            self.lblNavigationTitle.text = "REQUEST OTHER PET SERVICES"
+        }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
      navigationController?.setNavigationBarHidden(true, animated: animated)

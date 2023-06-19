@@ -164,7 +164,7 @@ class appointment_details: UIViewController {
     
     @objc func pending_click_method() {
         
-        let alert = UIAlertController(title: "Alert : Completed", message: "Complete this product ?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Alert : Completed", message: "Are you sure the appointment has been completed?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes, completed", style: .default, handler: { action in
             

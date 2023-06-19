@@ -122,7 +122,7 @@ class MyOrders: UIViewController {
                 if let data = response.value {
                     
                     let JSON = data as! NSDictionary
-                    // print(JSON)
+                     print(JSON)
                     
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
@@ -270,6 +270,14 @@ extension MyOrders: UITableViewDataSource
         cell.lblPrice.text = " Price: $"+pass_special_price
         
         cell.accessoryType = .disclosureIndicator
+        
+        if "\(item!["orderStatus"]!)" == "3" {
+            cell.img_profile.isHidden = false
+            cell.img_profile.image = UIImage(named: "delivered")
+        } else {
+            cell.img_profile.isHidden = true
+        }
+        //
         
         return cell
     }

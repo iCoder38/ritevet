@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import AVFAudio
 
 class Dashboard: UIViewController {
     
@@ -104,7 +105,21 @@ class Dashboard: UIViewController {
         
         // self.welcomeWB()
         
+        self.askPermissionIfNeeded()
         self.updateLoginUserDeviceToken()
+    }
+    
+    func askPermissionIfNeeded() {
+        let session = AVAudioSession.sharedInstance()
+        if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
+            AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
+                if granted {
+                    print("granted")
+                } else {
+                    print("not granted")
+                }
+            })
+        }
     }
     
     @objc func updateLoginUserDeviceToken() {

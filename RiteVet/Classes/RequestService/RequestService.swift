@@ -26,7 +26,7 @@ class RequestService: UIViewController {
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "WELCOME"
+            lblNavigationTitle.text = "REQUEST SERVICES"
             lblNavigationTitle.textColor = .white
         }
     }

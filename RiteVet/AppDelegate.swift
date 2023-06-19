@@ -126,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         
         
-        if (dict["message"] as! String) == "Incoming Audio call" {
+        if (dict["type"] as! String) == "audiocall" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
   
@@ -152,7 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             window?.makeKeyAndVisible()
             
-        } else if (dict["message"] as! String) == "Incoming Video call" {
+        } else if (dict["type"] as! String) == "videocall" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 

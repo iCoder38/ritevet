@@ -13,6 +13,8 @@ import BottomPopup
 
 class RequestServiceHome: UIViewController,UITextFieldDelegate {
 
+    var str_star:String!
+    
     var str_took_payment:String!
     
     var page : Int! = 1
@@ -51,7 +53,7 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "REQUEST SERVICE HOME"
+            lblNavigationTitle.text = "REQUEST SERVICE"
             lblNavigationTitle.textColor = .white
         }
     }
@@ -625,6 +627,14 @@ extension RequestServiceHome: UITableViewDataSource {
         cell.imgStarFour.image = UIImage(named:"unselectStar")
         cell.imgStarFive.image = UIImage(named:"unselectStar")
         
+        
+        
+//        cell.lblName.attributedText = NSMutableAttributedString().starWithRating(rating: 3.5, outOfTotal: 5, withFontSize: 20.0)
+        
+        
+        
+        
+        
         /*
          let livingArea = dictServerValue?["totalView"] as? Int ?? 0
          
@@ -684,7 +694,101 @@ extension RequestServiceHome: UITableViewDataSource {
             //cell.lblAddress.text = stringValue
         }
         */
+        
+        
+        // star.leadinghalf.filled
+        
+        
+        
+        cell.lbl_rating_count.text = " \(item!["AVGRating"]!) / 5 "
+        
+        if "\(item!["AVGRating"]!)" == "0" {
             
+            cell.imgStarOne.image = UIImage(systemName: "star")
+            cell.imgStarTwo.image = UIImage(systemName: "star")
+            cell.imgStarThree.image = UIImage(systemName: "star")
+            cell.imgStarFour.image = UIImage(systemName: "star")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        }
+        else if "\(item!["AVGRating"]!)" == "1" {
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star")
+            cell.imgStarThree.image = UIImage(systemName: "star")
+            cell.imgStarFour.image = UIImage(systemName: "star")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if "\(item!["AVGRating"]!)" == "2" {
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star")
+            cell.imgStarFour.image = UIImage(systemName: "star")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if "\(item!["AVGRating"]!)" == "3" {
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star.fill")
+            cell.imgStarFour.image = UIImage(systemName: "star")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if "\(item!["AVGRating"]!)" == "4" {
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star.fill")
+            cell.imgStarFour.image = UIImage(systemName: "star.fill")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double("\(item!["AVGRating"]!)")! > 1.0 && Double("\(item!["AVGRating"]!)")! < 2.0 {
+            print("Greater then 1 but less than 2")
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.leadinghalf.filled")
+            cell.imgStarThree.image = UIImage(systemName: "star.fill")
+            cell.imgStarFour.image = UIImage(systemName: "star.fill")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double("\(item!["AVGRating"]!)")! > 2.0 && Double("\(item!["AVGRating"]!)")! < 3.0 {
+            print("Greater then 2 but less than 3")
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star.leadinghalf.filled")
+            cell.imgStarFour.image = UIImage(systemName: "star")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double("\(item!["AVGRating"]!)")! > 3.0 && Double("\(item!["AVGRating"]!)")! < 4.0 {
+            print("Greater then 3 but less than 4")
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star.fill")
+            cell.imgStarFour.image = UIImage(systemName: "star.leadinghalf.filled")
+            cell.imgStarFive.image = UIImage(systemName: "star")
+            
+        } else if Double("\(item!["AVGRating"]!)")! > 4.0 && Double("\(item!["AVGRating"]!)")! < 5.0 {
+            print("Greater then 4 but less than 5")
+            
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star.fill")
+            cell.imgStarFour.image = UIImage(systemName: "star.fill")
+            cell.imgStarFive.image = UIImage(systemName: "star.leadinghalf.filled")
+            
+        } else { // 5 star
+
+            cell.imgStarOne.image = UIImage(systemName: "star.fill")
+            cell.imgStarTwo.image = UIImage(systemName: "star.fill")
+            cell.imgStarThree.image = UIImage(systemName: "star.fill")
+            cell.imgStarFour.image = UIImage(systemName: "star.fill")
+            cell.imgStarFive.image = UIImage(systemName: "star.fill")
+
+        }
+
         cell.lblDoctorType.isHidden = false
         
         return cell
@@ -697,10 +801,6 @@ extension RequestServiceHome: UITableViewDataSource {
         
         let item = arr_mut_request_service_list[indexPath.row] as? [String:Any]
         
-        /*
-         if let myString = defaults.string(forKey: "keySelectedTimeIs")
-         {
-         */
         let defaults = UserDefaults.standard
         defaults.set((item!["ownPicture"] as! String), forKey: "keySaveVendorImage")
         defaults.set((item!["VBusinessName"] as! String), forKey: "keySaveVendorBName")
@@ -712,6 +812,7 @@ extension RequestServiceHome: UITableViewDataSource {
         push!.getUtypeInDetailsPage = strGetRequestServiceHome
         push!.str_set_price_or_not = String(self.str_took_payment)
         push!.str_business_type_is = String(self.str_type_of_business)
+        push!.str_get_Star = "\(item!["AVGRating"]!)"
         
         self.navigationController?.pushViewController(push!, animated: true)
     }
@@ -725,7 +826,6 @@ extension RequestServiceHome: UITableViewDataSource {
 extension RequestServiceHome: UITableViewDelegate {
     
 }
-
 
 extension RequestServiceHome: BottomPopupDelegate {
     
@@ -750,23 +850,26 @@ extension RequestServiceHome: BottomPopupDelegate {
         print("bottomPopupDidDismiss")
         
         let defaults = UserDefaults.standard
-        if let myString = defaults.string(forKey: "keySelectedRequestServiceIs")
-        {
+        if let myString = defaults.string(forKey: "keySelectedRequestServiceIs") {
+            
             print(myString)
             //btnTime.setTitle(myString, for: .normal)
             self.txtCategory.text = myString
             
             defaults.set("", forKey: "keySelectedRequestServiceIs")
             defaults.set(nil, forKey: "keySelectedRequestServiceIs")
+            
         }
-        else
-        {
+        else {
             print("never went to that page")
         }
         
     }
+    // key id :
+    // 
     
     func bottomPopupDismissInteractionPercentChanged(from oldValue: CGFloat, to newValue: CGFloat) {
         print("bottomPopupDismissInteractionPercentChanged fromValue: \(oldValue) to: \(newValue)")
     }
+    
 }

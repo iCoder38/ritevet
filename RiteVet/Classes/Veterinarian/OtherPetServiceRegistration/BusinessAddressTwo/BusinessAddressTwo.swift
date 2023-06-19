@@ -116,6 +116,17 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+        print(person) //
+            
+            self.btnCountry.isUserInteractionEnabled = false
+            self.txtCountry.text = (person["countryName"] as! String)
+            self.txtCountry.isUserInteractionEnabled = false
+            
+            self.strCountryId = "\(person["countryId"]!)"
+            
+        }
+        
         self.UIdesignOfBusinessAddress()
         
         
@@ -425,14 +436,14 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
                         self.txtCity.text           = (dict["Vcity"] as! String)
                         self.txtState.text          = (dict["VState"] as! String)
                         self.txtZipcode.text        = (dict["VZipcode"] as! String)
-                        self.txtCountry.text        = (dict["countryName"] as! String)
+                        // self.txtCountry.text        = (dict["countryName"] as! String)
                         
                         // let x : Int = (dict["countryId"] as! Int)
                         // let myString = String(x)
                         // self.strCountryId = myString
                         
                         // country
-                        if dict["countryId"] is String {
+                        /*if dict["countryId"] is String {
                             print("Yes, it's a String")
 
                             self.strCountryId = (dict["countryId"] as! String)
@@ -449,7 +460,7 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
                             let temp:NSNumber = dict["countryId"] as! NSNumber
                             let tempString = temp.stringValue
                             self.strCountryId = tempString
-                        }
+                        }*/
                         
                         
                         // state
@@ -831,7 +842,7 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
                 
                 parameters = [
                     "action"    : "statelist",
-                    "counttyId" : String(strCountryId)
+                    "counttyId" : String(self.strCountryId)
                 ]
             // }
                     

@@ -192,10 +192,11 @@
 		B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */ = {isa = PBXBuildFile; fileRef = B975E2542A1F490800A82F38 /* specialization_options.swift */; };
 		B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97EE8D02A2871F4008770EC /* appointment_details.swift */; };
 		B995FEE72A27366E00ACEF67 /* cashout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995FEE62A27366E00ACEF67 /* cashout.swift */; };
-		B99B71B12A2F08CE00BE9C62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B99B71B02A2F08CE00BE9C62 /* GoogleService-Info.plist */; };
+		B9B1A09C2A4076E00006D151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9B1A09B2A4076E00006D151 /* GoogleService-Info.plist */; };
 		B9BADBD32A208B62007EB7D8 /* payment_before_booking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BADBD22A208B62007EB7D8 /* payment_before_booking.swift */; };
 		B9CB54D72A275E26003B586B /* cashout_listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D62A275E26003B586B /* cashout_listing.swift */; };
 		B9CB54DA2A2776A4003B586B /* cashout_pay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D92A2776A4003B586B /* cashout_pay.swift */; };
+		B9D20B3B2A403BD300BB12A0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */; };
 		B9E074802A29B1750009BE04 /* order_received.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E0747F2A29B1750009BE04 /* order_received.swift */; };
 		B9E074832A29B45A0009BE04 /* order_received_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E074822A29B45A0009BE04 /* order_received_details.swift */; };
 		B9EA84322A20C2E5003C25BF /* booking_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EA84312A20C2E5003C25BF /* booking_details.swift */; };
@@ -419,10 +420,11 @@
 		B975E2542A1F490800A82F38 /* specialization_options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = specialization_options.swift; sourceTree = "<group>"; };
 		B97EE8D02A2871F4008770EC /* appointment_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointment_details.swift; sourceTree = "<group>"; };
 		B995FEE62A27366E00ACEF67 /* cashout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout.swift; sourceTree = "<group>"; };
-		B99B71B02A2F08CE00BE9C62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B9B1A09B2A4076E00006D151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9BADBD22A208B62007EB7D8 /* payment_before_booking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = payment_before_booking.swift; sourceTree = "<group>"; };
 		B9CB54D62A275E26003B586B /* cashout_listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_listing.swift; sourceTree = "<group>"; };
 		B9CB54D92A2776A4003B586B /* cashout_pay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_pay.swift; sourceTree = "<group>"; };
+		B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B9E0747F2A29B1750009BE04 /* order_received.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received.swift; sourceTree = "<group>"; };
 		B9E074822A29B45A0009BE04 /* order_received_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received_details.swift; sourceTree = "<group>"; };
 		B9EA84312A20C2E5003C25BF /* booking_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = booking_details.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD864645EDFBA601565DD331 /* Pods_RiteVet.framework in Frameworks */,
+				B9D20B3B2A403BD300BB12A0 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,7 +706,7 @@
 				1861A9F6238D170800C3C986 /* Assets.xcassets */,
 				1861A9F8238D170800C3C986 /* LaunchScreen.storyboard */,
 				1861A9FB238D170800C3C986 /* Info.plist */,
-				B99B71B02A2F08CE00BE9C62 /* GoogleService-Info.plist */,
+				B9B1A09B2A4076E00006D151 /* GoogleService-Info.plist */,
 			);
 			path = RiteVet;
 			sourceTree = "<group>";
@@ -994,6 +997,7 @@
 		83547D08A35D8CE701C732DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */,
 				A37DEC51369D700089B6D951 /* Pods_RiteVet.framework */,
 				F6DA70CFE187C8FAF55F6FEB /* Pods_RiteVet_RiteVetUITests.framework */,
 				FFC07702B3550F646AF53438 /* Pods_RiteVetTests.framework */,
@@ -1594,7 +1598,7 @@
 				A46F091D23BDC337006066C9 /* red_ic_unchecked.png in Resources */,
 				1861AA48238D21EA00C3C986 /* OpenSans-Light.ttf in Resources */,
 				1861AA44238D21EA00C3C986 /* Apache License.txt in Resources */,
-				B99B71B12A2F08CE00BE9C62 /* GoogleService-Info.plist in Resources */,
+				B9B1A09C2A4076E00006D151 /* GoogleService-Info.plist in Resources */,
 				1861AA42238D21EA00C3C986 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				A46F092523BDC359006066C9 /* YBTextPickerCell.xib in Resources */,
 				1861AA4A238D21EA00C3C986 /* OpenSans-Regular.ttf in Resources */,
@@ -2068,19 +2072,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RiteVet/RiteVet.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
-				DEVELOPMENT_TEAM = NHVZESNL9B;
+				DEVELOPMENT_TEAM = 8LW9RF96D4;
 				INFOPLIST_FILE = RiteVet/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ritevet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod;
+				MARKETING_VERSION = 0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2098,19 +2105,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RiteVet/RiteVet.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
-				DEVELOPMENT_TEAM = NHVZESNL9B;
+				DEVELOPMENT_TEAM = 8LW9RF96D4;
 				INFOPLIST_FILE = RiteVet/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ritevet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod;
+				MARKETING_VERSION = 0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

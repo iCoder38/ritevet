@@ -196,7 +196,7 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
          var strReceiverDeviceToken:String! = "0"
          */
         
-        print(self.receiverData as Any)
+        // print(self.receiverData as Any)
         
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
@@ -228,6 +228,7 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
         self.strReceiptId = String(self.receiverIdFromDialog)
         
         self.receiverNameIs = String(self.receiverNameFromDialog)
+        self.lblNavigationTitle.text = String(self.receiverNameFromDialog)
         
         self.strReceiptImage = String(self.receiverImageFromDialog)
         
@@ -511,9 +512,9 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
                  "ReceiverImage"         : (self.strReceiptImage!),
                  "lastMessage"           : (self.textView.text!),
             
-            "lastMessageType"       : "Image",
+                 "lastMessageType"       : "Image",
             
-            "TimeStamp"             : myTimeStamp,
+                 "TimeStamp"             : myTimeStamp,
             
                  "SenderDeviceToken"     : (self.strSenderDeviceToken!),
                  "SenderDevice"          : (self.strSenderDevice!),
@@ -526,16 +527,6 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
         self.textView.text = ""
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     // MARK:- SEND IMAGE WITHOUT ATTACHMENT -
     @objc func sendMessageWithoutAttachment() {

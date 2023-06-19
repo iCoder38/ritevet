@@ -427,7 +427,7 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Submit New Post" {
             pushPageNumber(strMyPageNumber: "5")
         }
-        if String(arrMenuItemList[indexPath.row]) == "Request Service" {
+        if String(arrMenuItemList[indexPath.row]) == "Request Services" {
             pushPageNumber(strMyPageNumber: "6")
         }
         if String(arrMenuItemList[indexPath.row]) == "Pet Store" {
@@ -463,7 +463,7 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Chat" {
             pushPageNumber(strMyPageNumber: "16")
         }
-        if String(arrMenuItemList[indexPath.row]) == "Call Logs" {
+        if String(arrMenuItemList[indexPath.row]) == "Missed Call" {
             pushPageNumber(strMyPageNumber: "17")
         }
         

@@ -92,9 +92,7 @@ class VRThree: UIViewController, UITextFieldDelegate {
     
     @objc func plusClickMethod() {
         
-        self.btnPlus.tag+=1
-        
-        
+        self.btnPlus.tag += 1
         
         // print(self.btnPlus.tag as Any)
         
@@ -518,77 +516,86 @@ class VRThree: UIViewController, UITextFieldDelegate {
     
     @objc func stateListWB() {
         
+        var str_country_id:String!
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            print(person) //
+            
+            str_country_id = "\(person["countryId"]!)"
+            
+        }
+        
         // Utils.RiteVetIndicatorShow()
         let urlString = BASE_URL_KREASE
         var parameters:Dictionary<AnyHashable, Any>!
         
         let defaults = UserDefaults.standard
         // if let myString = defaults.string(forKey: "keyDoneSelectingCountryId") {
-
-            parameters = [
-                        "action"        :   "statelist",
-                        "counttyId"      :   String("101")
-                        ]
-            defaults.set("", forKey: "keyDoneSelectingCountryId")
-            defaults.set(nil, forKey: "keyDoneSelectingCountryId")
+        
+        parameters = [
+            "action"        : "statelist",
+            "counttyId"     : String(str_country_id)
+        ]
+        defaults.set("", forKey: "keyDoneSelectingCountryId")
+        defaults.set(nil, forKey: "keyDoneSelectingCountryId")
         // }
-                        print("parameters-------\(String(describing: parameters))")
-                        
-                        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
-                                response in
-                    
-                                switch(response.result) {
-                                case .success(_):
-                                   if let data = response.value {
-
-                                    
-                                    let JSON = data as! NSDictionary
-                                      //print(JSON)
-                                     
-                                    var strSuccess : String!
-                                    strSuccess = JSON["status"]as Any as? String
-                                    
-                                    if strSuccess == "success" {
-                                     let ar : NSArray!
-                                     ar = (JSON["data"] as! Array<Any>) as NSArray
-                                     
-                                     let defaults = UserDefaults.standard
-                                     defaults.set(ar, forKey: "keyStateListForEditProfile")
-                                     
-                                     
-                                     // self.bottomPopuPviewForState()
-     
-                                     
-                                     Utils.RiteVetIndicatorHide()
-                                    }
-                                    else {
-                                        Utils.RiteVetIndicatorHide()
-                                    }
-                                    
-                                }
-
-                                case .failure(_):
-                                    print("Error message:\(String(describing: response.error))")
-                                    Utils.RiteVetIndicatorHide()
-                                    
-                                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                    
-                                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                            UIAlertAction in
-                                            NSLog("OK Pressed")
-                                        }
-                                    
-                                    alertController.addAction(okAction)
-                                    
-                                    self.present(alertController, animated: true, completion: nil)
-                                    
-                                    break
-                                 }
-                            }
-         
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
             
-         
-     }
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        let ar : NSArray!
+                        ar = (JSON["data"] as! Array<Any>) as NSArray
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set(ar, forKey: "keyStateListForEditProfile")
+                        
+                        
+                        // self.bottomPopuPviewForState()
+                        
+                        
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+        
+        
+    }
     
     @objc func bottomPopuPviewForState(_ sender:UIButton) {
         let btn:UIButton = sender

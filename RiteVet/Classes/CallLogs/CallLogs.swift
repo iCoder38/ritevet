@@ -25,7 +25,7 @@ class CallLogs: UIViewController {
     
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "Call Logs"
+            lblNavigationTitle.text = "Missed Call"
             lblNavigationTitle.textColor = .white
         }
     }

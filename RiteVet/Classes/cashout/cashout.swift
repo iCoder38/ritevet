@@ -176,8 +176,8 @@ extension cashout: UITableViewDataSource , UITableViewDelegate {
         
         cell.backgroundColor = .clear
         
-        cell.lbl_current_product_price.text = "Current in wallet : $"+String(self.str_product_wallet)
-        cell.lbl_current_veterinary_price.text = "Current in wallet : $"+String(self.str_vaterian_wallet)
+        cell.lbl_current_product_price.text = "Current balance in wallet : $"+String(self.str_product_wallet)
+        cell.lbl_current_veterinary_price.text = "Current balance in wallet : $"+String(self.str_vaterian_wallet)
         
         cell.btn_withdraw_product_wallet.addTarget(self, action: #selector(withdraw_click_method), for: .touchUpInside)
         

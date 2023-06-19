@@ -74,7 +74,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>RiteVet would like toh access your location only when you register in this app.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>RiteVet would like toh access your Mic for Video Chat.</string>
+	<string>RiteVet would like toh access your Mic for Audio / Video Chat.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -96,8 +96,6 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

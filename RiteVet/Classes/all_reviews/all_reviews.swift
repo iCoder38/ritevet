@@ -12,6 +12,9 @@ import SDWebImage
 
 class all_reviews: UIViewController {
     
+    var str_back:String!
+    var str_review_user_id:String!
+    
     var page : Int! = 1
     var loadMore : Int! = 1;
     
@@ -45,13 +48,32 @@ class all_reviews: UIViewController {
         
         self.tbleView.separatorColor = .black
         
-//        self.btnBack.addTarget(self, action: #selector(backClick_method), for: .touchUpInside)
+        // str_review_user_id
+        
+        if (self.str_back == "back") {
+          
+            self.booking(page_number: 1,
+                         str_user_id: String(self.str_review_user_id))
+            
+            self.btnBack.addTarget(self, action: #selector(backClick_method), for: .touchUpInside)
+            
+        } else {
+            
+            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+                let x : Int = (person["userId"] as! Int)
+                let myString = String(x)
+                
+                self.booking(page_number: 1,
+                             str_user_id: String(myString))
+                
+            }
+            
+            self.sideBarMenu()
+            
+        }
         
         self.view.backgroundColor = UIColor.init(red: 7.0/255.0, green: 30.0/255.0, blue: 86.0/255.0, alpha: 1)
-        
-        self.sideBarMenu()
-        
-        self.booking(page_number: 1)
+
     }
     
     @objc func sideBarMenu() {
@@ -79,14 +101,35 @@ class all_reviews: UIViewController {
                     page += 1
                     print(page as Any)
                     
-                     self.booking(page_number: page)
-                    
+                    if (self.str_back == "back") {
+                      
+                        self.booking(page_number: page,
+                                     str_user_id: String(self.str_review_user_id))
+                        
+                        self.btnBack.addTarget(self, action: #selector(backClick_method), for: .touchUpInside)
+                        
+                    } else {
+                        
+                        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+                            let x : Int = (person["userId"] as! Int)
+                            let myString = String(x)
+                            
+                            self.booking(page_number: page,
+                                         str_user_id: String(myString))
+                            
+                        }
+                        
+                        self.sideBarMenu()
+                        
+                    }
+
                 }
             }
         }
     }
     
-    @objc func booking(page_number:Int) {
+    @objc func booking(page_number:Int,
+                       str_user_id:String) {
         
         if page_number == 1 {
             Utils.RiteVetIndicatorShow()
@@ -95,16 +138,14 @@ class all_reviews: UIViewController {
         let urlString = BASE_URL_KREASE
         
         var parameters:Dictionary<AnyHashable, Any>!
-        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            let x : Int = (person["userId"] as! Int)
-            let myString = String(x)
+         
             
             parameters = [
                 "action"    :   "reviewlist",
-                "userId"    :   myString,
+                "userId"    :   String(str_user_id),
                 "pageNo"    :   page_number,
             ]
-        }
+        
         print("parameters-------\(String(describing: parameters))")
         
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {

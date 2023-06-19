@@ -42,6 +42,8 @@ class RoomViewController: UIViewController {
     let regularFont = UIFont.systemFont(ofSize: 16)
     let boldFont = UIFont.boldSystemFont(ofSize: 16)
     
+    
+    
     @IBOutlet weak var roomNameLabel: UILabel!
     /*@IBOutlet weak var logTableView: UITableView! {
         didSet {
@@ -118,6 +120,8 @@ class RoomViewController: UIViewController {
     // create a reference for the Agora RTC engine
     fileprivate var agoraKit: AgoraRtcEngineKit!
     fileprivate var logs = [String]()
+    
+    var userRole: AgoraClientRole = .broadcaster
     
     // create a property for the Audio Muted state
     fileprivate var audioMuted = false {
@@ -196,7 +200,7 @@ class RoomViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()     {
         super.viewDidLoad()
        
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -245,6 +249,9 @@ class RoomViewController: UIViewController {
                 
             } else if "\(setSteps!)" == "2" { // who start the call
                 
+                agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+                agoraKit.delegate = self
+                
                 self.roomNameLabel.text = "\(callerName!)"
                 
                 self.fullIncomingCallView.isHidden = true
@@ -275,13 +282,17 @@ class RoomViewController: UIViewController {
         }
     }
     
-    @objc func incomingAcceptClickMethod() {
+    @objc func view_did_load() async {
+        await self.loadAgoraKit()
+    }
+    
+    @objc func incomingAcceptClickMethod()     {
         audioPlayer.stop()
         if "\(setSteps!)" == "1" { // call is incoming and you decline
             
             self.fullIncomingCallView.isHidden = true
             self.receiverImageIs.isHidden = false
-            self.loadAgoraKit()
+              self.loadAgoraKit()
             
             self.roomNameLabel.text = "\(callerName!)"
              
@@ -348,6 +359,7 @@ class RoomViewController: UIViewController {
     @IBAction func doClosePressed(_ sender: UIButton) {
         leaveChannel()
     }
+    
     
     
 }
@@ -430,9 +442,40 @@ extension RoomViewController: UITableViewDelegate {
 //MARK: - agora engine -
 private extension RoomViewController {
     
-    func loadAgoraKit() {
+
+    func loadAgoraKit()   {
         
-        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+//        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+//        agoraKit.delegate = self
+        
+        let option = AgoraRtcChannelMediaOptions()
+
+            // Set the client role option as broadcaster or audience.
+//            if self.userRole == .broadcaster {
+        option.clientRoleType = .broadcaster
+//            } else {
+//                option.clientRoleType = .audience
+//            }
+
+        
+            // For an audio call scenario, set the channel profile as communication.
+        option.channelProfile = .communication
+
+            // Join the channel with a temp token and channel name
+        let result = agoraKit.joinChannel(
+            byToken: "", channelId: String(roomName), uid: 0, mediaOptions: option,
+                joinSuccess: { (channel, uid, elapsed) in }
+            )
+
+        
+            // Check if joining the channel was successful and set joined Bool accordingly
+        if (result == 0) {
+            // joined = true
+            // showMessage(title: "Success", text: "Successfully joined the channel as \(self.userRole)")
+            print("Successfully joined the channel as \(self.userRole)")
+        }
+        
+        /*agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
         
         // Assign delegate later
         agoraKit.delegate = self
@@ -445,23 +488,10 @@ private extension RoomViewController {
         
         let registerResponse: Int32 = agoraKit.registerLocalUserAccount(String(self.loginUserNameIs), appId: KeyCenter.AppId)
         
-        
-        let result = agoraKit.joinChannel(
-                byToken: "", channelId: String(roomName), uid: 0, mediaOptions: option,
-                joinSuccess: { (channel, uid, elapsed) in }
-            )
-
-            // Check if joining the channel was successful and set joined Bool accordingly
-            if (result == 0) {
-                // joined = true
-                // showMessage(title: "Success", text: "Successfully joined the channel as \(self.userRole)")
-            }
-        
-        
-        /*if registerResponse == 0 {
+        if registerResponse == 0 {
             print("Successfully registered")
-            
-            agoraKit.joinChannel(byToken: "", byUserAccount: String(self.loginUserNameIs), token: nil, channelId: String(roomName)) { (channel, uid, elapsed) in
+            // byUserAccount: String(self.loginUserNameIs)
+            agoraKit.joinChannel(byToken: "", channelId: String(roomName), info: String(self.loginUserNameIs), uid: 0) { (channel, uid, elapsed) in
                 print("User joined channel \(channel) with \(uid). Elapsed time is \(elapsed)ms.")
             }
             
@@ -516,18 +546,19 @@ private extension RoomViewController {
             
                 .updateChildValues(
                     
-                    ["callType"         : String("Audio"),
-                     "caller_id"        : String(myString),
-                     "caller_image"     : String(self.callerImage),
-                     "caller_name"      : String(self.loginUserNameIs),
-                     "caller_token"     : (person["deviceToken"] as! String),
-                     "receiver_id"      : String(self.receiver_id_for_missed_call),
-                     "receiver_image"   : String(self.receiver_image_for_missed_call),
-                     "receiver_name"    : String(self.receiver_name_for_missed_call),
-                     "receiver_token_id": String(self.receiver_token_for_missed_call),
-                     "room_id"          : "\(roomName!)",
-                     "time_stamp"       : myTimeStamp,
-                     "type"             : "type",
+                    [
+                        "callType"         : String("Audio"),
+                        "caller_id"        : String(myString),
+                        "caller_image"     : String(self.callerImage),
+                        "caller_name"      : String(self.loginUserNameIs),
+                        "caller_token"     : (person["deviceToken"] as! String),
+                        "receiver_id"      : String(self.receiver_id_for_missed_call),
+                        "receiver_image"   : String(self.receiver_image_for_missed_call),
+                        "receiver_name"    : String(self.receiver_name_for_missed_call),
+                        "receiver_token_id": String(self.receiver_token_for_missed_call),
+                        "room_id"          : "\(roomName!)",
+                        "time_stamp"       : myTimeStamp,
+                        "type"             : "type",
                     ]
                     
                 )

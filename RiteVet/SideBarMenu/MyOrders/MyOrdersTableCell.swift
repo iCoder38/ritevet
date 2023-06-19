@@ -28,6 +28,11 @@ class MyOrdersTableCell: UITableViewCell {
     }
     @IBOutlet weak var lblDate:UILabel!
     
+    @IBOutlet weak var img_profile:UIImageView! {
+        didSet {
+            img_profile.isHidden = true
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

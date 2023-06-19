@@ -192,7 +192,7 @@ extension MyOrdersDetails: UITableViewDataSource
         // fullName = purnima;
         // shipping details
          if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            cell.lblUsername.text = (person["fullName"] as! String)+"\n"+(dictGetOrderDetails["shippingAddress"] as! String)+"\n"+(dictGetOrderDetails["ShippingCity"] as! String)+"\n"+(dictGetOrderDetails["ShippingState"] as! String)+"\nPhone Number : "+(dictGetOrderDetails["ShippingMobile"] as! String)
+            cell.lblUsername.text = (self.dictGetOrderDetails["SellerCompanyName"] as! String)+"\n"+(dictGetOrderDetails["shippingAddress"] as! String)+"\n"+(dictGetOrderDetails["ShippingCity"] as! String)+"\n"+(dictGetOrderDetails["ShippingState"] as! String)+"\nPhone Number : "+(dictGetOrderDetails["ShippingMobile"] as! String)
             
          }
         
@@ -218,8 +218,16 @@ extension MyOrdersDetails: UITableViewDataSource
          @IBOutlet weak var lblInvoiceDate:UILabel!
          @IBOutlet weak var lblRefId:UILabel!
          */ // created
+        
+        if "\(self.dictGetOrderDetails!["orderStatus"]!)" == "3" {
+            self.lblInTransit.text = "Delivered"
+        } else {
+            self.lblInTransit.text = "In-Transit"
+        }
+        
+        
         cell.lblPaymentDetails.text = "Payment Details" //(item!["productName"] as! String)
-        cell.lblInvoiceDate.text = "Invoice Date : "+"02-11-2019"
+        cell.lblInvoiceDate.text = "Invoice Date : "+(self.dictGetOrderDetails!["created"] as! String)
         cell.lblRefId.text = "Ref ID : "+"e4t64r222" //(item!["productName"] as! String)
         
         return cell
@@ -236,7 +244,7 @@ extension MyOrdersDetails: UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 600
+        return 522
     }
 }
 

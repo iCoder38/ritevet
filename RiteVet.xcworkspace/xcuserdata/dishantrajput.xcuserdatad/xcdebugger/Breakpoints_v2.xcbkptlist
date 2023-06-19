@@ -7,54 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7AA03C21-72D4-4147-A347-5FDCD5A5F923"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
-            landmarkName = "collectionView(_:didSelectItemAt:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "7AA03C21-72D4-4147-A347-5FDCD5A5F923 - aa19b6d709b7ed17"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.Dashboard.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Dashboard/Dashboard.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "329"
-                  endingLineNumber = "329"
-                  offsetFromSymbolStart = "264">
-               </Location>
-               <Location
-                  uuid = "7AA03C21-72D4-4147-A347-5FDCD5A5F923 - aa19b6d709b7ed17"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.Dashboard.collectionView(_: __C.UICollectionView, didSelectItemAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Dashboard/Dashboard.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "329"
-                  endingLineNumber = "329"
-                  offsetFromSymbolStart = "284">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AF88B492-B21F-4FB2-94D3-2600404D3B83"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -62,8 +14,8 @@
             filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
             <Locations>
@@ -110,8 +62,8 @@
             filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +78,8 @@
             filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -136,7 +88,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3962A4FB-6C23-4C87-9905-FB7692B4DDE0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/cashout_pay/cashout_pay.swift"
@@ -214,7 +166,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A14EDD8B-9FEC-468A-82D2-32F01232C53E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/cashout_pay/cashout_pay.swift"
@@ -269,102 +221,6 @@
                   startingLineNumber = "143"
                   endingLineNumber = "143"
                   offsetFromSymbolStart = "600">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AD13219C-8979-4AFF-930C-0E43ECD9C623"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/RequestService/RequestService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "AD13219C-8979-4AFF-930C-0E43ECD9C623 - 84b9d81c7e008f0b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.RequestService.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "254"
-                  endingLineNumber = "254"
-                  offsetFromSymbolStart = "1304">
-               </Location>
-               <Location
-                  uuid = "AD13219C-8979-4AFF-930C-0E43ECD9C623 - 84b9d81c7e008f0b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.RequestService.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "254"
-                  endingLineNumber = "254"
-                  offsetFromSymbolStart = "1352">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "90B7EA73-40B5-40A1-850B-A4EA09E5F985"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/RequestService/RequestService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "90B7EA73-40B5-40A1-850B-A4EA09E5F985 - 84b9d81c7e008010"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.RequestService.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "247"
-                  endingLineNumber = "247"
-                  offsetFromSymbolStart = "288">
-               </Location>
-               <Location
-                  uuid = "90B7EA73-40B5-40A1-850B-A4EA09E5F985 - 84b9d81c7e008010"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.RequestService.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "247"
-                  endingLineNumber = "247"
-                  offsetFromSymbolStart = "268">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -464,7 +320,22 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "5EEC8149-7F62-439D-B423-E5AC65A9A893 - b2e351b647fe04ba"
+                  uuid = "5EEC8149-7F62-439D-B423-E5AC65A9A893 - 824fc3b14482abc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.appointment_details.cancel_this_product() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "2208">
+               </Location>
+               <Location
+                  uuid = "5EEC8149-7F62-439D-B423-E5AC65A9A893 - b2e351b647fe051f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -474,9 +345,9 @@
                   urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "295"
-                  endingLineNumber = "295"
-                  offsetFromSymbolStart = "344">
+                  startingLineNumber = "300"
+                  endingLineNumber = "300"
+                  offsetFromSymbolStart = "324">
                </Location>
                <Location
                   uuid = "5EEC8149-7F62-439D-B423-E5AC65A9A893 - 824fc3b14482b7e"
@@ -506,8 +377,8 @@
             filePath = "RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "717"
-            endingLineNumber = "717"
+            startingLineNumber = "829"
+            endingLineNumber = "829"
             landmarkName = "sendNotificationForSingleUser(str_type:)"
             landmarkType = "7">
             <Locations>
@@ -569,13 +440,28 @@
             filePath = "RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "808"
-            endingLineNumber = "808"
+            startingLineNumber = "920"
+            endingLineNumber = "920"
             landmarkName = "send_notification_to_doctor(str_get_type:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - 4259918201a87364"
+                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - f9c0866f0d269171"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.RequestServiceDetails.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "923"
+                  endingLineNumber = "923"
+                  offsetFromSymbolStart = "7488">
+               </Location>
+               <Location
+                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - 4259918201a805bb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -585,12 +471,27 @@
                   urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "808"
-                  endingLineNumber = "808"
+                  startingLineNumber = "923"
+                  endingLineNumber = "923"
+                  offsetFromSymbolStart = "6332">
+               </Location>
+               <Location
+                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - 4259918201a805bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.RequestServiceDetails.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "923"
+                  endingLineNumber = "923"
                   offsetFromSymbolStart = "6352">
                </Location>
                <Location
-                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - 4259918201a87364"
+                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - 4259918201a80514"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -600,8 +501,23 @@
                   urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "808"
-                  endingLineNumber = "808"
+                  startingLineNumber = "920"
+                  endingLineNumber = "920"
+                  offsetFromSymbolStart = "6352">
+               </Location>
+               <Location
+                  uuid = "585E3C80-8163-46BD-9BD5-A2A39A2D19AD - 4259918201a80514"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.RequestServiceDetails.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "920"
+                  endingLineNumber = "920"
                   offsetFromSymbolStart = "6332">
                </Location>
             </Locations>
@@ -617,8 +533,8 @@
             filePath = "RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "requestServiceDetailsWB()"
             landmarkType = "7">
          </BreakpointContent>
@@ -633,13 +549,13 @@
             filePath = "RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "820"
-            endingLineNumber = "820"
+            startingLineNumber = "932"
+            endingLineNumber = "932"
             landmarkName = "send_notification_to_doctor(str_get_type:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d26e43a"
+                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d2697cd"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -649,12 +565,57 @@
                   urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "820"
-                  endingLineNumber = "820"
+                  startingLineNumber = "935"
+                  endingLineNumber = "935"
+                  offsetFromSymbolStart = "10592">
+               </Location>
+               <Location
+                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d2697cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.RequestServiceDetails.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "935"
+                  endingLineNumber = "935"
+                  offsetFromSymbolStart = "804">
+               </Location>
+               <Location
+                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d2697ec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.RequestServiceDetails.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "934"
+                  endingLineNumber = "934"
+                  offsetFromSymbolStart = "832">
+               </Location>
+               <Location
+                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d2697aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.RequestServiceDetails.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "932"
+                  endingLineNumber = "932"
                   offsetFromSymbolStart = "900">
                </Location>
                <Location
-                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d26e43a"
+                  uuid = "ADA5D221-B30D-43BE-AA38-9E23F0A7AF5A - f9c0866f0d2697aa"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -664,8 +625,8 @@
                   urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/RequestService/RequestServiceDetails/RequestServiceDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "820"
-                  endingLineNumber = "820"
+                  startingLineNumber = "932"
+                  endingLineNumber = "932"
                   offsetFromSymbolStart = "804">
                </Location>
             </Locations>
@@ -690,54 +651,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A1DD86A7-46CB-4E85-955F-6428C7AD85DA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/order_received_details/order_received_details.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "delivered_click_method()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A1DD86A7-46CB-4E85-955F-6428C7AD85DA - dfa68adc884a3b8d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.order_received_details.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/order_received_details/order_received_details.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "194"
-                  endingLineNumber = "194"
-                  offsetFromSymbolStart = "656">
-               </Location>
-               <Location
-                  uuid = "A1DD86A7-46CB-4E85-955F-6428C7AD85DA - 781c390f17cfb303"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.order_received_details.delivered_click_method() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/order_received_details/order_received_details.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "166"
-                  endingLineNumber = "166"
-                  offsetFromSymbolStart = "2288">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "993CB1AA-4109-43A1-8339-1049D8B68990"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -749,6 +662,38 @@
             endingLineNumber = "219"
             landmarkName = "submit_review_click_method()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "993CB1AA-4109-43A1-8339-1049D8B68990 - fffddf36dca5fa02"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.send_review.submit_review_click_method() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/reviews/send_review.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "219"
+                  endingLineNumber = "219"
+                  offsetFromSymbolStart = "4144">
+               </Location>
+               <Location
+                  uuid = "993CB1AA-4109-43A1-8339-1049D8B68990 - fffddf36dca5fa02"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.send_review.submit_review_click_method() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/reviews/send_review.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "219"
+                  endingLineNumber = "219"
+                  offsetFromSymbolStart = "4184">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -796,6 +741,36 @@
                   endingLineNumber = "653"
                   offsetFromSymbolStart = "1476">
                </Location>
+               <Location
+                  uuid = "36EA53F5-6668-468F-983F-8F2E88928DB0 - 705a5d5ad7a4c585"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageWB() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "646"
+                  endingLineNumber = "646"
+                  offsetFromSymbolStart = "1080">
+               </Location>
+               <Location
+                  uuid = "36EA53F5-6668-468F-983F-8F2E88928DB0 - 705a5d5ad7a4c585"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageWB() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "646"
+                  endingLineNumber = "646"
+                  offsetFromSymbolStart = "1100">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -813,6 +788,38 @@
             endingLineNumber = "886"
             landmarkName = "uploadImageSecondImage(staffId:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B3E0EA9F-90DB-45C8-BD67-600418683045 - f3bae810a16aa7d2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageSecondImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "886"
+                  endingLineNumber = "886"
+                  offsetFromSymbolStart = "920">
+               </Location>
+               <Location
+                  uuid = "B3E0EA9F-90DB-45C8-BD67-600418683045 - f3bae810a16aa7d2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageSecondImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "886"
+                  endingLineNumber = "886"
+                  offsetFromSymbolStart = "948">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -829,6 +836,38 @@
             endingLineNumber = "1069"
             landmarkName = "uploadImageThirdImage(staffId:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8D307CF8-ECFA-4F6F-8A05-3989281BF561 - f36d08363df9f4a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageThirdImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1069"
+                  endingLineNumber = "1069"
+                  offsetFromSymbolStart = "1160">
+               </Location>
+               <Location
+                  uuid = "8D307CF8-ECFA-4F6F-8A05-3989281BF561 - f36d08363df9f4a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageThirdImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1069"
+                  endingLineNumber = "1069"
+                  offsetFromSymbolStart = "1188">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -845,6 +884,38 @@
             endingLineNumber = "1569"
             landmarkName = "uploadVideoToServer(staffId:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8D949F19-1184-4064-94DC-1C148C5F52ED - 6d6fb1d3227996ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadVideoToServer(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1569"
+                  endingLineNumber = "1569"
+                  offsetFromSymbolStart = "1160">
+               </Location>
+               <Location
+                  uuid = "8D949F19-1184-4064-94DC-1C148C5F52ED - 6d6fb1d3227996ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadVideoToServer(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1569"
+                  endingLineNumber = "1569"
+                  offsetFromSymbolStart = "1188">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -861,6 +932,38 @@
             endingLineNumber = "1404"
             landmarkName = "uploadImageFifthImage(staffId:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CEFF7B78-AA1C-4153-A2EF-6D08608E5C1F - f36d08363dfc419"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageFifthImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1404"
+                  endingLineNumber = "1404"
+                  offsetFromSymbolStart = "1012">
+               </Location>
+               <Location
+                  uuid = "CEFF7B78-AA1C-4153-A2EF-6D08608E5C1F - f36d08363dfc419"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageFifthImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1404"
+                  endingLineNumber = "1404"
+                  offsetFromSymbolStart = "1044">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -877,6 +980,292 @@
             endingLineNumber = "1238"
             landmarkName = "uploadImageFourthImage(staffId:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7C4BFF0D-8945-478F-AA2C-B84FC072F71C - f3bae810a16a8ab2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageFourthImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1238"
+                  endingLineNumber = "1238"
+                  offsetFromSymbolStart = "1160">
+               </Location>
+               <Location
+                  uuid = "7C4BFF0D-8945-478F-AA2C-B84FC072F71C - f3bae810a16a8ab2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.SubmitPost.uploadImageFourthImage(staffId: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/FreeStuff/SubmitPost/SubmitPost.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1238"
+                  endingLineNumber = "1238"
+                  offsetFromSymbolStart = "1188">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B3D8269-D143-4F1F-BA5C-51AD72918DFA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/CallLogs/CallLogs.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "send_notification_and_call(dict_call_Data:strChannelName:strType:strBody:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5B3D8269-D143-4F1F-BA5C-51AD72918DFA - 912dec10fb3a23e6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.CallLogs.send_notification_and_call(dict_call_Data: __C.NSDictionary, strChannelName: Swift.String, strType: Swift.String, strBody: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/CallLogs/CallLogs.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "236"
+                  endingLineNumber = "236"
+                  offsetFromSymbolStart = "4728">
+               </Location>
+               <Location
+                  uuid = "5B3D8269-D143-4F1F-BA5C-51AD72918DFA - 912dec10fb3a23e6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.CallLogs.send_notification_and_call(dict_call_Data: __C.NSDictionary, strChannelName: Swift.String, strType: Swift.String, strBody: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/CallLogs/CallLogs.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "236"
+                  endingLineNumber = "236"
+                  offsetFromSymbolStart = "4668">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "72C53C7B-DC30-49E4-984C-F0DCEA50FD7E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/Veterinarian/OtherPetServiceRegistration/VRThree/VRThree.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "submitDataToServer()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "212078AA-7164-409A-8ED8-953A39054D9F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/Veterinarian/OtherPetServiceRegistration/BusinessAddressTwo/BusinessAddressTwo.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "849"
+            endingLineNumber = "849"
+            landmarkName = "stateListWb()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8128C83-A340-48A1-B5D3-7A356BCEA420"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "veterianrianRegistration()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A8128C83-A340-48A1-B5D3-7A356BCEA420 - 2769786fdd1789ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.Subscription.veterianrianRegistration() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "692">
+               </Location>
+               <Location
+                  uuid = "A8128C83-A340-48A1-B5D3-7A356BCEA420 - 2769786fdd1789ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.Subscription.veterianrianRegistration() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "564">
+               </Location>
+               <Location
+                  uuid = "A8128C83-A340-48A1-B5D3-7A356BCEA420 - 2769786fdd1789ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.Subscription.veterianrianRegistration() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "596">
+               </Location>
+               <Location
+                  uuid = "A8128C83-A340-48A1-B5D3-7A356BCEA420 - 2769786fdd1789ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.Subscription.veterianrianRegistration() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "120"
+                  endingLineNumber = "120"
+                  offsetFromSymbolStart = "676">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0B8DCD86-B2A1-49A9-B331-B3A148CF327A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
+            landmarkName = "update_payment_after_apple()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0B8DCD86-B2A1-49A9-B331-B3A148CF327A - 227dc81e59f553b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.Subscription.update_payment_after_apple() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "2160">
+               </Location>
+               <Location
+                  uuid = "0B8DCD86-B2A1-49A9-B331-B3A148CF327A - 227dc81e59f553b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.Subscription.update_payment_after_apple() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "2180">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EC81EAE2-3CA2-4397-BCF3-8C42A0C74293"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/SingleChat/BooCheckChat.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
+            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EC81EAE2-3CA2-4397-BCF3-8C42A0C74293 - ced62cd71e753011"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.BooCheckChat.imagePickerController(_: __C.UIImagePickerController, didFinishPickingMediaWithInfo: Swift.Dictionary&lt;__C.UIImagePickerControllerInfoKey, Any&gt;) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/SingleChat/BooCheckChat.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "421"
+                  endingLineNumber = "421"
+                  offsetFromSymbolStart = "388">
+               </Location>
+               <Location
+                  uuid = "EC81EAE2-3CA2-4397-BCF3-8C42A0C74293 - ced62cd71e753011"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.BooCheckChat.imagePickerController(_: __C.UIImagePickerController, didFinishPickingMediaWithInfo: Swift.Dictionary&lt;__C.UIImagePickerControllerInfoKey, Any&gt;) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Downloads/RiteVet/RiteVet/Classes/SingleChat/BooCheckChat.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "421"
+                  endingLineNumber = "421"
+                  offsetFromSymbolStart = "200">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

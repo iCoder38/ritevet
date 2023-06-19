@@ -17,11 +17,37 @@ class RequestServiceHomeTableCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var imgStarOne:UIImageView!
-    @IBOutlet weak var imgStarTwo:UIImageView!
-    @IBOutlet weak var imgStarThree:UIImageView!
-    @IBOutlet weak var imgStarFour:UIImageView!
-    @IBOutlet weak var imgStarFive:UIImageView!
+    @IBOutlet weak var imgStarOne:UIImageView! {
+        didSet {
+            imgStarOne.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarTwo:UIImageView! {
+        didSet {
+            imgStarTwo.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarThree:UIImageView! {
+        didSet {
+            imgStarThree.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarFour:UIImageView! {
+        didSet {
+            imgStarFour.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var imgStarFive:UIImageView! {
+        didSet {
+            imgStarFive.tintColor = .systemOrange
+        }
+    }
+    
+    @IBOutlet weak var lbl_rating_count:UILabel!
     
     @IBOutlet weak var lblName:UILabel!
     @IBOutlet weak var lblAddress:UILabel!

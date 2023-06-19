@@ -142,10 +142,10 @@ class cashout_listing: UIViewController {
                         ar = (JSON["data"] as! Array<Any>) as NSArray
                         
                         if ar.count == 0 {
-                            let alert = UIAlertController(title: "Alert", message: "No data found.", preferredStyle: UIAlertController.Style.alert)
-                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                            let alert = UIAlertController(title: "Alert", message: "No cashout request yet.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 
-                                self.navigationController?.popViewController(animated: true)
+                                // self.navigationController?.popViewController(animated: true)
                                 
                             }))
                             

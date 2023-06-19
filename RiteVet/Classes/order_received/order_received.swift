@@ -296,6 +296,7 @@ extension order_received: UITableViewDataSource , UITableViewDelegate {
         // getFreeStuffDict
         
         let item = arrListOfMyOrders[indexPath.row] as? [String:Any]
+        print(item as Any)
         
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "order_received_details_id") as? order_received_details
         push!.dictGetOrderDetails = item as NSDictionary?
