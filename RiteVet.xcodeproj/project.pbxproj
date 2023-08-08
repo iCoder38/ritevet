@@ -189,17 +189,21 @@
 		A4AA88E4240E773700F60291 /* RRFBLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AA88E2240E773700F60291 /* RRFBLogin.swift */; };
 		B95D22E92A2DF78F001222A8 /* send_review.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D22E82A2DF78F001222A8 /* send_review.swift */; };
 		B95D22EC2A2E0D67001222A8 /* all_reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D22EB2A2E0D67001222A8 /* all_reviews.swift */; };
+		B96932762A820E7700E395E1 /* add_images_in_vet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96932752A820E7700E395E1 /* add_images_in_vet.swift */; };
 		B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */ = {isa = PBXBuildFile; fileRef = B975E2542A1F490800A82F38 /* specialization_options.swift */; };
 		B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97EE8D02A2871F4008770EC /* appointment_details.swift */; };
 		B995FEE72A27366E00ACEF67 /* cashout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B995FEE62A27366E00ACEF67 /* cashout.swift */; };
 		B9B1A09C2A4076E00006D151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9B1A09B2A4076E00006D151 /* GoogleService-Info.plist */; };
 		B9BADBD32A208B62007EB7D8 /* payment_before_booking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BADBD22A208B62007EB7D8 /* payment_before_booking.swift */; };
+		B9C514102A7CD2A90070781E /* add_to_cart_payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C5140F2A7CD2A90070781E /* add_to_cart_payment.swift */; };
+		B9C6011A2A44843900F071E0 /* delete_account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C601192A44843900F071E0 /* delete_account.swift */; };
 		B9CB54D72A275E26003B586B /* cashout_listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D62A275E26003B586B /* cashout_listing.swift */; };
 		B9CB54DA2A2776A4003B586B /* cashout_pay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D92A2776A4003B586B /* cashout_pay.swift */; };
 		B9D20B3B2A403BD300BB12A0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */; };
 		B9E074802A29B1750009BE04 /* order_received.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E0747F2A29B1750009BE04 /* order_received.swift */; };
 		B9E074832A29B45A0009BE04 /* order_received_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E074822A29B45A0009BE04 /* order_received_details.swift */; };
 		B9EA84322A20C2E5003C25BF /* booking_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EA84312A20C2E5003C25BF /* booking_details.swift */; };
+		B9F06DBF2A7B72CA0054C90A /* pet_store_id_proof.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F06DBE2A7B72CA0054C90A /* pet_store_id_proof.swift */; };
 		D499AA7B3F7F2FCF92D1AEE4 /* Pods_RiteVet_RiteVetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DA70CFE187C8FAF55F6FEB /* Pods_RiteVet_RiteVetUITests.framework */; };
 		FD864645EDFBA601565DD331 /* Pods_RiteVet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A37DEC51369D700089B6D951 /* Pods_RiteVet.framework */; };
 /* End PBXBuildFile section */
@@ -417,17 +421,21 @@
 		A4AA88E2240E773700F60291 /* RRFBLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRFBLogin.swift; sourceTree = "<group>"; };
 		B95D22E82A2DF78F001222A8 /* send_review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = send_review.swift; sourceTree = "<group>"; };
 		B95D22EB2A2E0D67001222A8 /* all_reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = all_reviews.swift; sourceTree = "<group>"; };
+		B96932752A820E7700E395E1 /* add_images_in_vet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = add_images_in_vet.swift; sourceTree = "<group>"; };
 		B975E2542A1F490800A82F38 /* specialization_options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = specialization_options.swift; sourceTree = "<group>"; };
 		B97EE8D02A2871F4008770EC /* appointment_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointment_details.swift; sourceTree = "<group>"; };
 		B995FEE62A27366E00ACEF67 /* cashout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout.swift; sourceTree = "<group>"; };
 		B9B1A09B2A4076E00006D151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B9BADBD22A208B62007EB7D8 /* payment_before_booking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = payment_before_booking.swift; sourceTree = "<group>"; };
+		B9C5140F2A7CD2A90070781E /* add_to_cart_payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = add_to_cart_payment.swift; sourceTree = "<group>"; };
+		B9C601192A44843900F071E0 /* delete_account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = delete_account.swift; sourceTree = "<group>"; };
 		B9CB54D62A275E26003B586B /* cashout_listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_listing.swift; sourceTree = "<group>"; };
 		B9CB54D92A2776A4003B586B /* cashout_pay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_pay.swift; sourceTree = "<group>"; };
 		B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B9E0747F2A29B1750009BE04 /* order_received.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received.swift; sourceTree = "<group>"; };
 		B9E074822A29B45A0009BE04 /* order_received_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received_details.swift; sourceTree = "<group>"; };
 		B9EA84312A20C2E5003C25BF /* booking_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = booking_details.swift; sourceTree = "<group>"; };
+		B9F06DBE2A7B72CA0054C90A /* pet_store_id_proof.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pet_store_id_proof.swift; sourceTree = "<group>"; };
 		BE9C3E0BAC918BA1482ABDFF /* Pods-RiteVet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiteVet.release.xcconfig"; path = "Target Support Files/Pods-RiteVet/Pods-RiteVet.release.xcconfig"; sourceTree = "<group>"; };
 		F44AFDE6BE5801AE36E560C7 /* Pods-RiteVet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiteVet.debug.xcconfig"; path = "Target Support Files/Pods-RiteVet/Pods-RiteVet.debug.xcconfig"; sourceTree = "<group>"; };
 		F6DA70CFE187C8FAF55F6FEB /* Pods_RiteVet_RiteVetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiteVet_RiteVetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -633,6 +641,7 @@
 				1857AEE9238E967600E2147F /* VeterinarianTypes.swift */,
 				1857AEEB238EA03900E2147F /* VeterinarianTableCell.swift */,
 				1857AEED238FB4AF00E2147F /* VeterinarianBiography.swift */,
+				B96932742A820E6100E395E1 /* add_images_in_vet */,
 				1857AEEF238FB4CE00E2147F /* VeterinarianBiographyTableCell.swift */,
 				1839C64F238FC07F004FA9D3 /* AddVaterinarianBankInfo */,
 			);
@@ -758,6 +767,7 @@
 		1861AA30238D1F6C00C3C986 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B9C601182A44842700F071E0 /* delete_account */,
 				B95D22EA2A2E0D55001222A8 /* all_reviews */,
 				B95D22E72A2DF777001222A8 /* reviews */,
 				B9E074812A29B3B60009BE04 /* order_received_details */,
@@ -1026,6 +1036,7 @@
 		A40AE2CD23B24F83001176CE /* AddToCart */ = {
 			isa = PBXGroup;
 			children = (
+				B9C5140E2A7CD2960070781E /* add_to_cart_payment */,
 				A40AE2CE23B24F9F001176CE /* AddToCart.swift */,
 				A40AE2D023B24FB7001176CE /* AddToCartTableCell.swift */,
 			);
@@ -1046,6 +1057,7 @@
 		A44CCCAA23B1E79700A49261 /* PetStore */ = {
 			isa = PBXGroup;
 			children = (
+				B9F06DBD2A7B72B10054C90A /* pet_store_id_proof */,
 				186CD09925CEA74700E33113 /* PetStoreHome */,
 				A47344842407F2A80044400F /* BuyNow */,
 				A44CCCAD23B1E7B300A49261 /* TermsAndConditions */,
@@ -1423,6 +1435,14 @@
 			path = all_reviews;
 			sourceTree = "<group>";
 		};
+		B96932742A820E6100E395E1 /* add_images_in_vet */ = {
+			isa = PBXGroup;
+			children = (
+				B96932752A820E7700E395E1 /* add_images_in_vet.swift */,
+			);
+			path = add_images_in_vet;
+			sourceTree = "<group>";
+		};
 		B97EE8CF2A2871DF008770EC /* Appointment_details */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1457,22 @@
 				B995FEE62A27366E00ACEF67 /* cashout.swift */,
 			);
 			path = cashout;
+			sourceTree = "<group>";
+		};
+		B9C5140E2A7CD2960070781E /* add_to_cart_payment */ = {
+			isa = PBXGroup;
+			children = (
+				B9C5140F2A7CD2A90070781E /* add_to_cart_payment.swift */,
+			);
+			path = add_to_cart_payment;
+			sourceTree = "<group>";
+		};
+		B9C601182A44842700F071E0 /* delete_account */ = {
+			isa = PBXGroup;
+			children = (
+				B9C601192A44843900F071E0 /* delete_account.swift */,
+			);
+			path = delete_account;
 			sourceTree = "<group>";
 		};
 		B9CB54D52A275E0C003B586B /* cashout_listing */ = {
@@ -1469,6 +1505,14 @@
 				B9E074822A29B45A0009BE04 /* order_received_details.swift */,
 			);
 			path = order_received_details;
+			sourceTree = "<group>";
+		};
+		B9F06DBD2A7B72B10054C90A /* pet_store_id_proof */ = {
+			isa = PBXGroup;
+			children = (
+				B9F06DBE2A7B72CA0054C90A /* pet_store_id_proof.swift */,
+			);
+			path = pet_store_id_proof;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1755,6 +1799,7 @@
 				A47344882407F2CE0044400F /* BuyNowTableCell.swift in Sources */,
 				A49F35E423B090E00012C67D /* FreeStuffDetailsTableCell.swift in Sources */,
 				A40AE2CC23B2242A001176CE /* DogFoodDetailsTableCell.swift in Sources */,
+				B96932762A820E7700E395E1 /* add_images_in_vet.swift in Sources */,
 				1861A9EE238D170600C3C986 /* AppDelegate.swift in Sources */,
 				A49F35EC23B091370012C67D /* RequestServiceTableCell.swift in Sources */,
 				1839C655238FCF4C004FA9D3 /* AddVeterinarianBankInfo.swift in Sources */,
@@ -1795,6 +1840,7 @@
 				A498CB4923C6031C00623C0B /* EditProfileTableCell.swift in Sources */,
 				A48F589023C74C0F000DBA74 /* MyPostTableCell.swift in Sources */,
 				A48F589523C753D9000DBA74 /* MyPostDetailsTableCell.swift in Sources */,
+				B9C514102A7CD2A90070781E /* add_to_cart_payment.swift in Sources */,
 				187F4F6F25D7B45600F0C51F /* AddVeterinarianBankInfoTwo.swift in Sources */,
 				182A93C3238E6840007FDDA4 /* ChangePassword.swift in Sources */,
 				A40AE2C723B204E4001176CE /* DogFoodCollectionCell.swift in Sources */,
@@ -1839,6 +1885,7 @@
 				187F4F4F25D7A6CB00F0C51F /* VeterinarianTypesTableCell.swift in Sources */,
 				A48F589C23C76D13000DBA74 /* MyAppointmentTableCell.swift in Sources */,
 				A49F35F223B091520012C67D /* RequestVeterianaryService.swift in Sources */,
+				B9F06DBF2A7B72CA0054C90A /* pet_store_id_proof.swift in Sources */,
 				A4AA88E4240E773700F60291 /* RRFBLogin.swift in Sources */,
 				B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */,
 				B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */,
@@ -1880,6 +1927,7 @@
 				A44CCCB723B1FB3500A49261 /* BrowsePetStoreSubCategoryTableCell.swift in Sources */,
 				A48F589A23C76D01000DBA74 /* MyAppointment.swift in Sources */,
 				A49F35DB23B090CE0012C67D /* FreeStuffTableCell.swift in Sources */,
+				B9C6011A2A44843900F071E0 /* delete_account.swift in Sources */,
 				A447D86B23B4E241002B1913 /* AddNewProductTableCell.swift in Sources */,
 				A46F093B23BDD0DC006066C9 /* SambagDatePickerResult.swift in Sources */,
 				1861A6FA25D3BC9600730F34 /* VRTwoCollectionCell.swift in Sources */,
@@ -2084,7 +2132,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2117,7 +2165,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

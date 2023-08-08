@@ -63,7 +63,6 @@ class appointment_details: UIViewController {
         self.btnBack.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         self.btnBack.tintColor = .white
         
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -549,7 +548,263 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
         }
         
+        cell.btn_chat.addTarget(self, action: #selector(one_to_one_chat_click_method), for: .touchUpInside)
+        cell.btn_audio.addTarget(self, action: #selector(audio_call_click_method), for: .touchUpInside)
+        cell.btn_video.addTarget(self, action: #selector(video_chat_click_method), for: .touchUpInside)
+        
         return cell
+    }
+    
+    @objc func one_to_one_chat_click_method() {
+             
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
+        push!.receiverData = self.dictBookingDetails as NSDictionary?
+        push!.fromDialog = "no"
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+    }
+    
+    @objc func audio_call_click_method() {
+        
+        // print(self.dictBookingDetails as Any)
+        /*
+         UTYPE = 2;
+         bookingDate = "2023-08-31T00:00:00+0530";
+         bookingID = 236;
+         created = "Aug 3rd, 2023, 1:24 pm";
+         reviewByYou = 0;
+         serviceArray =     (
+         "General / Internal Medicine",
+         Dental,
+         Imaging,
+         Boarding
+         );
+         slotTime = "10:40-11:10";
+         status = 1;
+         totalAmount = 70;
+         transactionId = "tok_1NawMTKjKY5Kxs7I8QbbZGrx";
+         typeofbusinessId = 3;
+         typeofbusinessName = "Virtual Veterinarian (Video Chat)";
+         userAddress = "park street 205 D";
+         userEmail = "kaya@mailinator.com";
+         userID = 123;
+         userImage = "https://ritevet.com/img/uploads/users/1691043532add_id_prrof.png";
+         userName = "Kaya pan";
+         userNumber = 9632356235;
+         userdevice = iOS;
+         userdeviceToken = "fKSF_tCJTUWws2Y0IIWMmu:APA91bG8A-6loQ9m4caVNutfUwxtsGds1vShEFIXrN928C7R6A6YPytjqenpZSmffCvJRAQjfYEfmsOb9nEGZ1fmtTJgE1VCwdbilrlZjk55aDlXOn3PlyeIcDzSjWr-iRSUgj5PhQih";
+         userfirebaseId = "";
+         vendorAddress = "C Block, Ramprastha";
+         vendorEmail = "purnima.pandey@evirtualservices.com";
+         vendorID = 48;
+         vendorImage = "";
+         vendorName = "Purnima Pandey";
+         vendorNumber = 9898765432;
+         vendordevice = iOS;
+         vendordeviceToken = "f5dizwL4_EZigrARymKJIz:APA91bHF8JPWscULfC7jMlyBNaKmSyKZiY9HnHHNsiqob2zDleJ63d1R3DB9h4UCh_yN2_o-MxUd0zTBleBtvkHpCokac5hAcTg_w582Kfq6wnfKTHD4gNxmBrYHpbHb0-6E_Qu-PhWg";
+         vendorfirebaseId = "";
+         */
+        
+        self.send_notification_to_doctor(str_get_type: "audiocall")
+        
+        /*if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
+            
+            push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(String(myString))"
+            push!.setSteps = "2"
+            push!.strIamCallingTo = "\(self.dictBookingDetails["userName"] as! String)"
+            
+            push!.callerName = "\(self.dictBookingDetails["userName"] as! String)"
+            push!.callerImage = "\(self.dictBookingDetails["userImage"] as! String)"
+            
+            let x22 : Int = (self.dictBookingDetails["userID"] as! Int)
+            let myString22 = String(x22)
+            
+            push!.receiver_id_for_missed_call = myString22
+            push!.receiver_name_for_missed_call = "\(self.dictBookingDetails["userName"] as! String)"
+            push!.receiver_image_for_missed_call = "\(self.dictBookingDetails["userImage"] as! String)"
+            push!.receiver_token_for_missed_call = "\(self.dictBookingDetails["userdevice"] as! String)"
+            
+            self.navigationController?.pushViewController(push!, animated:true)
+        }*/
+    }
+    
+    @objc func video_chat_click_method() {
+        
+        self.send_notification_to_doctor(str_get_type: "videocall")
+        
+        /*if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
+            
+            push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(String(myString))"
+            push!.setSteps = "2"
+            push!.strIamCallingTo = "\(self.dictBookingDetails["userName"] as! String)"
+            
+            push!.callerName = "\(self.dictBookingDetails["userName"] as! String)"
+            push!.callerImage = "\(self.dictBookingDetails["userImage"] as! String)"
+            
+            self.navigationController?.pushViewController(push!, animated:true)
+        }*/
+    }
+    
+    
+    @objc func send_notification_to_doctor(str_get_type:String) {
+        
+        UserDefaults.standard.set("", forKey: "key_instant_calling")
+        UserDefaults.standard.set(nil, forKey: "key_instant_calling")
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            print()
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            Utils.RiteVetIndicatorShow()
+            
+            let urlString = BASE_URL_KREASE
+            
+            var parameters:Dictionary<AnyHashable, Any>!
+            
+            parameters = [
+                "action"        : "sendnotification",
+                "message"       : (person["fullName"] as! String)+" calling",
+                "type"          : String(str_get_type),
+                "userId"        : String(myString),
+                "todevice"      : "\(self.dictBookingDetails["userdevice"] as! String)",
+                "device"        : "iOS",
+                "channel"       : "\(self.dictBookingDetails["userID"]!)+\(String(myString))",
+                "name"          : (person["fullName"] as! String),
+                "image"         : "\(self.dictBookingDetails["userImage"] as! String)",
+                "Token"         : "\(self.dictBookingDetails["userdeviceToken"] as! String)",
+                "deviceToken"   : (person["deviceToken"] as! String),
+                "mobileNumber"  : ""
+            ]
+            
+            print("parameters-------\(String(describing: parameters))")
+            
+            AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+                [self]
+                response in
+                
+                switch(response.result) {
+                case .success(_):
+                    if let data = response.value {
+                        
+                        
+                        let JSON = data as! NSDictionary
+                        print(JSON)
+                        
+                        var strSuccess : String!
+                        strSuccess = JSON["status"]as Any as? String
+                        
+                        if strSuccess == "success" {
+                            
+                            Utils.RiteVetIndicatorHide()
+                            
+                            if str_get_type == "audiocall" {
+                                
+                                /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
+                                
+                                push!.roomName = "\(dict["userId"]!)+\(String(myString))"
+                                push!.setSteps = "2"
+                                push!.strIamCallingTo = "\(self.dict["VFirstName"] as! String)"
+                                
+                                push!.callerName = "\(self.dict["VFirstName"] as! String)"
+                                push!.callerImage = "\(self.dict["ownPicture"] as! String)"
+                                
+                                let x22 : Int = (self.dict["userId"] as! Int)
+                                let myString22 = String(x22)
+                                
+                                push!.receiver_id_for_missed_call = myString22
+                                push!.receiver_name_for_missed_call = "\(self.dict["VFirstName"] as! String)"
+                                push!.receiver_image_for_missed_call = "\(self.dict["ownPicture"] as! String)"
+                                push!.receiver_token_for_missed_call = "\(self.dict["device"] as! String)"
+                                
+                                self.navigationController?.pushViewController(push!, animated:true)*/
+                                
+                                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
+                                
+                                push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(String(myString))"
+                                push!.setSteps = "2"
+                                push!.strIamCallingTo = "\(self.dictBookingDetails["userName"] as! String)"
+                                
+                                push!.callerName = "\(self.dictBookingDetails["userName"] as! String)"
+                                push!.callerImage = "\(self.dictBookingDetails["userImage"] as! String)"
+                                
+                                let x22 : Int = (self.dictBookingDetails["userID"] as! Int)
+                                let myString22 = String(x22)
+                                
+                                push!.receiver_id_for_missed_call = myString22
+                                push!.receiver_name_for_missed_call = "\(self.dictBookingDetails["userName"] as! String)"
+                                push!.receiver_image_for_missed_call = "\(self.dictBookingDetails["userImage"] as! String)"
+                                push!.receiver_token_for_missed_call = "\(self.dictBookingDetails["userdevice"] as! String)"
+                                
+                                self.navigationController?.pushViewController(push!, animated:true)
+                                
+                            } else {
+                                
+                                /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
+                                
+                                push!.roomName = "\(dict["userId"]!)+\(String(myString))"
+                                push!.setSteps = "2"
+                                push!.strIamCallingTo = "\(self.dict["VFirstName"] as! String)"
+                                
+                                push!.callerName = "\(self.dict["VFirstName"] as! String)"
+                                push!.callerImage = "\(self.dict["ownPicture"] as! String)"
+                                
+                                self.navigationController?.pushViewController(push!, animated:true)*/
+                                
+                                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
+                                
+                                push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(String(myString))"
+                                push!.setSteps = "2"
+                                push!.strIamCallingTo = "\(self.dictBookingDetails["userName"] as! String)"
+                                
+                                push!.callerName = "\(self.dictBookingDetails["userName"] as! String)"
+                                push!.callerImage = "\(self.dictBookingDetails["userImage"] as! String)"
+                                
+                                self.navigationController?.pushViewController(push!, animated:true)
+                                
+                            }
+                            
+                            
+                            
+                        }
+                        else {
+                            Utils.RiteVetIndicatorHide()
+                        }
+                        
+                    }
+                    
+                case .failure(_):
+                    print("Error message:\(String(describing: response.error))")
+                    
+                    Utils.RiteVetIndicatorHide()
+                    
+                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                    }
+                    
+                    alertController.addAction(okAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    break
+                }
+            }
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -579,6 +834,19 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
 
 class appointment_details_table_cell: UITableViewCell {
 
+    @IBOutlet weak var btn_chat:UIButton! {
+        didSet {
+            btn_chat.setImage(UIImage(systemName: "message.fill"), for: .normal)
+        }
+    }
+    
+    @IBOutlet weak var btn_audio:UIButton! {
+        didSet {
+            btn_audio.setImage(UIImage(systemName: "phone.fill"), for: .normal)
+        }
+    }
+    
+    
     @IBOutlet weak var lbl_type_of_services:UILabel! {
         didSet {
             lbl_type_of_services.textColor = .black

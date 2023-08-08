@@ -111,7 +111,7 @@ class VeterinarianTypes: UIViewController {
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "VETERINARIAN REGISTRATION"
+            lblNavigationTitle.text = "VETERINARIAN SERVICES"
             lblNavigationTitle.textColor = .white
         }
     }
@@ -130,6 +130,7 @@ class VeterinarianTypes: UIViewController {
         super.viewDidLoad()
         
         /****** VIEW BG IMAGE *********/
+
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
         btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
@@ -138,7 +139,7 @@ class VeterinarianTypes: UIViewController {
         
         /*
         if let dog = UserDefaults.standard.string(forKey: "VRdog")
-         {
+         { njmn
              if dog == "0"
              {
                 print("dog 0")
@@ -1701,7 +1702,7 @@ extension VeterinarianTypes: UITableViewDataSource {
             return 340
         }*/
         
-        return 1000
+        return 1200
         
     }
 }

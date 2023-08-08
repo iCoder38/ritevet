@@ -13,6 +13,7 @@ class EditProfileTableCell: UITableViewCell {
     @IBOutlet weak var imgUploadPhoto:UIImageView!
     
     @IBOutlet weak var txtUsername:UITextField!
+    @IBOutlet weak var txtLastUsername:UITextField!
     @IBOutlet weak var txtEmail:UITextField!
     @IBOutlet weak var txtPhone:UITextField!
     @IBOutlet weak var txtAddress:UITextField!
@@ -34,6 +35,16 @@ class EditProfileTableCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var btn_id_proof:UIButton! {
+        didSet {
+            btn_id_proof.setTitle("Update ID Proof", for: .normal)
+            btn_id_proof.setTitleColor(.white, for: .normal)
+            btn_id_proof.layer.cornerRadius = 4
+            btn_id_proof.clipsToBounds = true
+            btn_id_proof.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+        }
+    }
+    
     @IBOutlet weak var btnSubmit:UIButton! {
         didSet {
             btnSubmit.setTitle("Update Profile", for: .normal)
@@ -41,6 +52,36 @@ class EditProfileTableCell: UITableViewCell {
             btnSubmit.layer.cornerRadius = 4
             btnSubmit.clipsToBounds = true
             btnSubmit.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+        }
+    }
+    
+    @IBOutlet weak var btn_vet_profile:UIButton! {
+        didSet {
+            btn_vet_profile.setTitle("Update veterinarian profile", for: .normal)
+            btn_vet_profile.setTitleColor(.white, for: .normal)
+            btn_vet_profile.layer.cornerRadius = 4
+            btn_vet_profile.clipsToBounds = true
+            btn_vet_profile.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+        }
+    }
+    
+    @IBOutlet weak var btn_other_pet_Service_provider:UIButton! {
+        didSet {
+            btn_other_pet_Service_provider.setTitle("Update other pet service providers", for: .normal)
+            btn_other_pet_Service_provider.setTitleColor(.white, for: .normal)
+            btn_other_pet_Service_provider.layer.cornerRadius = 4
+            btn_other_pet_Service_provider.clipsToBounds = true
+            btn_other_pet_Service_provider.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+        }
+    }
+    
+    @IBOutlet weak var btn_update_pet_parent:UIButton! {
+        didSet {
+            btn_update_pet_parent.setTitle("Update pet parent", for: .normal)
+            btn_update_pet_parent.setTitleColor(.white, for: .normal)
+            btn_update_pet_parent.layer.cornerRadius = 4
+            btn_update_pet_parent.clipsToBounds = true
+            btn_update_pet_parent.backgroundColor = NAVIGATION_BACKGROUND_COLOR
         }
     }
     

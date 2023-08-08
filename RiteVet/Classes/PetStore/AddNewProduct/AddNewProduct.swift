@@ -761,6 +761,8 @@ class AddNewProduct: UIViewController,UINavigationControllerDelegate,UIImagePick
             {
                 // let str:String = person["role"] as! String
                 
+            Utils.RiteVetIndicatorShow()
+            
                 let x : Int = person["userId"] as! Int
                 let myString = String(x)
                 
@@ -771,24 +773,23 @@ class AddNewProduct: UIViewController,UINavigationControllerDelegate,UIImagePick
                 // let indexPath = IndexPath.init(row: 0, section: 0)
                 // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
                 
-                //Set Your Parameter
-                let parameterDict = [
-                                "action"        :   "addproduct",
-                                "SKU"            :   cell.txtSKU.text!,
-                                "userId"       :   myString,
-                                "categoryId"    :   String(strStoreCategoryId),
-                                "subCategory"   :   String(strSubStoreCategoryId),
-                                "productName"   :   cell.txtProductName.text!,
-                                "quantity"      :  cell.txtQuantity.text!,
-                                "price"        :   cell.txtPrice.text!,
-                                "description"   :   cell.txtProductDescription.text!,
-                                "shippingAmount"   :   cell.txtShippingFee.text!,
-                                "specialPrice"   :   cell.txtSpecialPrice.text!,
-                                "sellerName"      :  cell.txt_seller_name.text!,
-                                "sellerEmail"      :  cell.txt_Seller_email.text!,
-                                "sellerPhone"      :  cell.txt_Seller_phone.text!,
-                                "SellerCompanyName"      :  cell.txt_seller_company_name.text!,
-                            ]
+            let parameterDict = NSMutableDictionary()
+            parameterDict.setValue("addproduct", forKey: "action")
+            parameterDict.setValue(cell.txtSKU.text!, forKey: "SKU")
+            parameterDict.setValue(String(myString), forKey: "userId")
+            parameterDict.setValue(String(strStoreCategoryId), forKey: "categoryId")
+            parameterDict.setValue(String(strSubStoreCategoryId), forKey: "subCategory")
+            parameterDict.setValue(cell.txtProductName.text!, forKey: "productName")
+            parameterDict.setValue(cell.txtQuantity.text!, forKey: "quantity")
+            parameterDict.setValue(cell.txtPrice.text!, forKey: "price")
+            parameterDict.setValue(cell.txtProductDescription.text!, forKey: "description")
+            parameterDict.setValue(cell.txtShippingFee.text!, forKey: "shippingAmount")
+            parameterDict.setValue(cell.txtSpecialPrice.text!, forKey: "specialPrice")
+            parameterDict.setValue(cell.txt_seller_name.text!, forKey: "sellerName")
+            parameterDict.setValue(cell.txt_Seller_email.text!, forKey: "sellerEmail")
+            parameterDict.setValue(cell.txt_Seller_phone.text!, forKey: "sellerPhone")
+            parameterDict.setValue(cell.txt_seller_company_name.text!, forKey: "SellerCompanyName")
+             
                 
                 
                 // Now Execute
@@ -831,19 +832,40 @@ class AddNewProduct: UIViewController,UINavigationControllerDelegate,UIImagePick
                                 print("Success!")
                                 print(dictionary)
                                 
-                                ERProgressHud.sharedInstance.hide()
+                                Utils.RiteVetIndicatorHide()
                                 
                                 var strSuccess : String!
-                                    strSuccess = dictionary["status"]as Any as? String
+                                strSuccess = dictionary["status"]as Any as? String
                                 
-//                                var strSuccessAlert : String!
-//                                strSuccessAlert = dictionary["msg"]as Any as? String
+                                var strSuccessAlert : String!
+                                strSuccessAlert = dictionary["msg"]as Any as? String
                                 
                                 if strSuccess == "success" {
+                                    let alert = UIAlertController(title: "Success", message: strSuccessAlert, preferredStyle: UIAlertController.Style.alert)
+                                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                                        
+                                        self.navigationController?.popViewController(animated: true)
+                                        
+                                    }))
+                                    
+                                    self.present(alert, animated: true, completion: nil)
+                                    
+                                     
                                     /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BrowsePetStoreId") as? BrowsePetStore
                                      self.navigationController?.pushViewController(push!, animated: true)*/
                                     
-                                    self.navigationController?.popViewController(animated: true)
+                                    
+                                } else {
+                                    var strSuccessAlert : String!
+                                    strSuccessAlert = dictionary["msg"]as Any as? String
+                                    
+                                    let alert = UIAlertController(title: "Alert", message: strSuccessAlert, preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                         
+                                        
+                                    }))
+                                    
+                                    self.present(alert, animated: true, completion: nil)
                                 }
                                 
                             }
@@ -1075,90 +1097,90 @@ class AddNewProduct: UIViewController,UINavigationControllerDelegate,UIImagePick
     @objc func showViewControllerTapped(_ sender: UIButton) {
         
         
-               Utils.RiteVetIndicatorShow()
-               
-                   let urlString = BASE_URL_KREASE
-                   
-                   var parameters:Dictionary<AnyHashable, Any>!
-               
-                       parameters = [
-                           "action"        :   "category"
-                       ]
-                  
-                    
-                       print("parameters-------\(String(describing: parameters))")
-                       
-                       AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                           {
-                               response in
-                   
-                               switch(response.result) {
-                               case .success(_):
-                                  if let data = response.value {
-
-                                   
-                                   let JSON = data as! NSDictionary
-                                   //print(JSON)
-                                    
-                                   var strSuccess : String!
-                                   strSuccess = JSON["status"]as Any as? String
-                                   
-                                   if strSuccess == "success" //true
-                                   {
-                                    // arrBrowsePetStore
-                                    
-                                    self.tbleView!.dataSource = self
-                                    self.tbleView!.delegate = self
-                                    
-                                    let ar : NSArray!
-                                    ar = (JSON["response"] as! Array<Any>) as NSArray
-                                    //self.arrListOfCategory = (ar as! Array<Any>)
-                                    
-                                    
-                                    
-        guard let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "secondVC") as? ExamplePopupViewController else { return }
-        popupVC.height = self.height
-        popupVC.topCornerRadius = self.topCornerRadius
-        popupVC.presentDuration = self.presentDuration
-        popupVC.dismissDuration = self.dismissDuration
-        //popupVC.shouldDismissInteractivelty = dismissInteractivelySwitch.isOn
-        popupVC.popupDelegate = self
-        popupVC.strGetDetails = "categorySection"
-        popupVC.getArrListOfCategory = ((JSON["response"] as! Array<Any>) as NSArray as! Array<Any>)
-                                    
-        self.present(popupVC, animated: true, completion: nil)
-                                    
-                                    self.tbleView!.reloadData()
-                                    
-                                    Utils.RiteVetIndicatorHide()
-                                   }
-                                   else
-                                   {
-                                       Utils.RiteVetIndicatorHide()
-                                   }
-                                   
-                               }
-
-                               case .failure(_):
-                                   print("Error message:\(String(describing: response.error))")
-                                   Utils.RiteVetIndicatorHide()
-                                   
-                                   let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                   
-                                   let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                           UIAlertAction in
-                                           NSLog("OK Pressed")
-                                       }
-                                   
-                                   alertController.addAction(okAction)
-                                   
-                                   self.present(alertController, animated: true, completion: nil)
-                                   
-                                   break
-                                }
-                           }
+        Utils.RiteVetIndicatorShow()
         
-
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        parameters = [
+            "action"        :   "category"
+        ]
+        
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" //true
+                    {
+                        // arrBrowsePetStore
+                        
+                        self.tbleView!.dataSource = self
+                        self.tbleView!.delegate = self
+                        
+                        let ar : NSArray!
+                        ar = (JSON["response"] as! Array<Any>) as NSArray
+                        //self.arrListOfCategory = (ar as! Array<Any>)
+                        
+                        
+                        
+                        guard let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "secondVC") as? ExamplePopupViewController else { return }
+                        popupVC.height = self.height
+                        popupVC.topCornerRadius = self.topCornerRadius
+                        popupVC.presentDuration = self.presentDuration
+                        popupVC.dismissDuration = self.dismissDuration
+                        //popupVC.shouldDismissInteractivelty = dismissInteractivelySwitch.isOn
+                        popupVC.popupDelegate = self
+                        popupVC.strGetDetails = "categorySection"
+                        popupVC.getArrListOfCategory = ((JSON["response"] as! Array<Any>) as NSArray as! Array<Any>)
+                        
+                        self.present(popupVC, animated: true, completion: nil)
+                        
+                        self.tbleView!.reloadData()
+                        
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else
+                    {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+        
     }
     
     
@@ -1185,21 +1207,49 @@ extension AddNewProduct: UITableViewDataSource
         
         cell.backgroundColor = .clear
         
-        Utils.textFieldDR(text: cell.txtSelectCategory, placeHolder: "Select Category", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtSelectSubCategory, placeHolder: "Select Sub Category", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtProductName, placeHolder: "Product Name", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtSKU, placeHolder: "SKU", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtShippingFee, placeHolder: "Shipping Fee", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtProductDescription, placeHolder: "Product Description", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtPrice, placeHolder: "Price", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtSpecialPrice, placeHolder: "Special Price", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtUploadImage, placeHolder: "Upload Image", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtQuantity, placeHolder: "Product Quantity", cornerRadius: 20, color: .white)
+       
         
-        Utils.textFieldDR(text: cell.txt_seller_name, placeHolder: "Seller name", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txt_Seller_email, placeHolder: "Seller emil", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txt_Seller_phone, placeHolder: "Seller phone", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txt_seller_company_name, placeHolder: "Seller company name", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtSelectCategory, placeHolder: "Select Category*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtSelectSubCategory, placeHolder: "Select Sub Category*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtProductName, placeHolder: "Product Name*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtSKU, placeHolder: "SKU / Product Number*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtShippingFee, placeHolder: "Shipping Fee*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtProductDescription, placeHolder: "Product Description*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtPrice, placeHolder: "Price*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtSpecialPrice, placeHolder: "Special Price*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtUploadImage, placeHolder: "Upload Image*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtQuantity, placeHolder: "Product Quantity*", cornerRadius: 20, color: .white)
+        
+        
+        Utils.textFieldDR(text: cell.txt_Seller_email, placeHolder: "Seller emil*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txt_Seller_phone, placeHolder: "Seller phone*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txt_seller_company_name, placeHolder: "Seller company name*", cornerRadius: 20, color: .white)
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            
+            Utils.textFieldDR(text: cell.txt_seller_name, placeHolder: "Seller first name*", cornerRadius: 20, color: .white)
+            Utils.textFieldDR(text: cell.txt_seller_last_name, placeHolder: "Seller last name*", cornerRadius: 20, color: .white)
+            
+            cell.txt_seller_name.text = (person["fullName"] as! String)
+            cell.txt_seller_last_name.text = (person["lastName"] as! String)
+            cell.txt_Seller_email.text = (person["email"] as! String)
+            cell.txt_Seller_phone.text = (person["contactNumber"] as! String)
+            
+            cell.txt_seller_name.backgroundColor = .lightGray
+            cell.txt_seller_last_name.backgroundColor = .lightGray
+            cell.txt_Seller_email.backgroundColor = .lightGray
+            cell.txt_Seller_phone.backgroundColor = .lightGray
+            
+            cell.txt_seller_name.textColor = .white
+            cell.txt_seller_last_name.textColor = .white
+            cell.txt_Seller_email.textColor = .white
+            cell.txt_Seller_phone.textColor = .white
+            
+            cell.txt_seller_name.isUserInteractionEnabled = false
+            cell.txt_seller_last_name.isUserInteractionEnabled = false
+            cell.txt_Seller_email.isUserInteractionEnabled = false
+            cell.txt_Seller_phone.isUserInteractionEnabled = false
+        }
         
         cell.txtSelectCategory.delegate = self
         
@@ -1359,13 +1409,25 @@ extension AddNewProduct: UITableViewDataSource
                                    let JSON = data as! NSDictionary
                                    print(JSON)
                                     
-                                   var strSuccess : String!
-                                   strSuccess = JSON["status"]as Any as? String
+                                      var strSuccess : String!
+                                      strSuccess = JSON["status"]as Any as? String
                                    
-                                   if strSuccess == "success" //true
-                                   {
+                                      var strSuccess_2 : String!
+                                      strSuccess_2 = JSON["msg"]as Any as? String
+                                      
+                                   if strSuccess == "success" {
                                    
                                     Utils.RiteVetIndicatorHide()
+                                       
+                                       let alert = UIAlertController(title: "Success", message: strSuccess_2, preferredStyle: UIAlertController.Style.alert)
+                                       alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                                           
+                                           self.navigationController?.popViewController(animated: true)
+                                           
+                                       }))
+                                       
+                                       self.present(alert, animated: true, completion: nil)
+                                       
                                    }
                                    else
                                    {

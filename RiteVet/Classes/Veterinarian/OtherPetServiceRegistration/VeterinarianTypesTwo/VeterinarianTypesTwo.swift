@@ -56,7 +56,7 @@ class VeterinarianTypesTwo: UIViewController {
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "VETERINARIAN REGISTRATION"
+            lblNavigationTitle.text = "OTHER PET SERVICES"
             lblNavigationTitle.textColor = .white
         }
     }

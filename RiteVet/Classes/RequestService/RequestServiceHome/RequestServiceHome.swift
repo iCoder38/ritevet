@@ -137,6 +137,14 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        
+        self.filterViaClickWB_search(strAction: "requestservice",
+                              strUtpe: String(self.strGetRequestServiceHome),
+                              strTypeOfBusiness: String(self.str_type_of_business),
+                              page_number: 1,
+                                     search_word:String(txtSearch.text!))
+        
+        
         return true
     }
     
@@ -264,6 +272,84 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
                      
                     
                 }
+            }
+        }
+    }
+    
+    @objc func filterViaClickWB_search(strAction:String,
+                                strUtpe:String,
+                                strTypeOfBusiness:String,
+                                page_number:Int,
+                                search_word:String) {
+       
+        self.arr_mut_request_service_list.removeAllObjects()
+        
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        parameters = [
+            "action"            : strAction,
+            "UTYPE"             : strUtpe,
+             "keyword"       : String(search_word),
+            "typeofbusiness"    : strTypeOfBusiness,
+            "pageNo"        :   page_number
+        ]
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        
+                        self.tbleView.delegate = self
+                        self.tbleView.dataSource = self
+                        
+                        var ar : NSArray!
+                        ar = (JSON["data"] as! Array<Any>) as NSArray
+                        // self.arrListOfRequestServiceHome = (ar as! Array<Any>)
+                        self.arr_mut_request_service_list.addObjects(from: ar as! [Any])
+                        
+                        Utils.RiteVetIndicatorHide()
+                        self.tbleView.reloadData()
+                        self.loadMore = 1
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
             }
         }
     }

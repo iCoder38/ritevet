@@ -64,7 +64,15 @@ class DogFoodDetails: UIViewController {
         
         setMyQuantityCount = 0
         
-         // print(dictGetAnimalFoodDetails as Any)
+        
+        
+        /*
+         The iTunes information is;
+         Triple R Services, LLC
+         mailto:3rcustomdetail@gmail.com
+         3Rcustoms$
+         */
+        
         /*
          SKU = 4ty;
          categoryId = 8;
@@ -95,23 +103,40 @@ class DogFoodDetails: UIViewController {
             
             if myString == myString2 {
                 print("yes my product")
-                btnGear.isHidden = false
-                btnGear.addTarget(self, action: #selector(gearClickMethod), for: .touchUpInside)
+                self.btnGear.isHidden = false
+                
+                
+                
+                print(dictGetAnimalFoodDetails as Any)
+               
+//                if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+//                    let x : Int = (person["userId"] as! Int)
+//                    let myString = String(x)
+//                    print(myString)
+//
+//                }
+                
+                
+                if "\(self.dictGetAnimalFoodDetails["status"]!)" == "0" {
+                    self.btnGear.addTarget(self, action: #selector(publish_gearClickMethod), for: .touchUpInside)
+                } else {
+                    self.btnGear.addTarget(self, action: #selector(gearClickMethod), for: .touchUpInside)
+                }
+                
             }
             else {
                 print("no my product")
                 btnGear.isHidden = true
             }
         }
-        
-        
+                
         saveTotalQuantity = "0"
+
+        self.btnAddToCartList.addTarget(self, action: #selector(addToCartListClickMethod), for: .touchUpInside)
         
-        
-        
-        btnAddToCartList.addTarget(self, action: #selector(addToCartListClickMethod), for: .touchUpInside)
     }
-    @objc func gearClickMethod() {
+    
+    @objc func publish_gearClickMethod() {
         let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in
@@ -122,6 +147,34 @@ class DogFoodDetails: UIViewController {
             push!.dictGetForEdit = self.dictGetAnimalFoodDetails
             self.navigationController?.pushViewController(push!, animated: true)
             
+        }))
+
+        alert.addAction(UIAlertAction(title: "Publish", style: .default , handler:{ (UIAlertAction)in
+            print("User click unpublished button")
+            
+             self.publish_this_product_again()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel , handler:{ (UIAlertAction)in
+            print("User click dismiss button")
+        }))
+
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    }
+    
+    @objc func gearClickMethod() {
+        let alert = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler:{ (UIAlertAction)in
+            print("User click edit button")
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddNewProductId") as? AddNewProduct
+            push!.editStringOrNot = "1"
+            push!.dictGetForEdit = self.dictGetAnimalFoodDetails
+            self.navigationController?.pushViewController(push!, animated: true)
             
         }))
 
@@ -137,16 +190,17 @@ class DogFoodDetails: UIViewController {
             print("completion block")
         })
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
     @objc func backClick() {
         self.navigationController?.popViewController(animated: true)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        
         
         let defaults = UserDefaults.standard
         if let myString2 = defaults.string(forKey: "keyEditProductDone") {
@@ -161,9 +215,9 @@ class DogFoodDetails: UIViewController {
         }
     }
     
-    @objc func unpublishThisProduct() {
+    @objc func publish_this_product_again() {
         Utils.RiteVetIndicatorShow()
-           
+        
         let urlString = BASE_URL_KREASE
         
         var parameters:Dictionary<AnyHashable, Any>!
@@ -172,65 +226,152 @@ class DogFoodDetails: UIViewController {
         if let myString2 = defaults.string(forKey: "keyEditedProductIdIs") {
             print("editProduct: \(myString2)")
             
-           // if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-                      // let x : Int = (person["userId"] as! Int)
-                      // let myString = String(x)
-                      
-                   parameters = [
-                       "action"       :   "productstatus",
-                       "status"       :   "1",
-                       "productId"    :   dictGetAnimalFoodDetails?["productId"] as Any,// product id
-                   ]
-       // }
+            parameters = [
+                "action"       :   "productstatus",
+                "status"       :   "1",
+                "productId"    :   "\(self.dictGetAnimalFoodDetails!["productId"]!)"
+            ]
+            // }
         }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+//                    The iTunes information is;
+//                    Triple R Services, LLC
+//                    mailto:3rcustomdetail@gmail.com
+//                    3Rcustoms$
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        let alert = UIAlertController(title: "Alert", message: "This product is published again.",preferredStyle: .alert)
+
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
                 
-                   print("parameters-------\(String(describing: parameters))")
-                   
-                   AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                       {
-                           response in
-               
-                           switch(response.result) {
-                           case .success(_):
-                              if let data = response.value {
-
-                               
-                               let JSON = data as! NSDictionary
-                               print(JSON)
-                               
-                               var strSuccess : String!
-                               strSuccess = JSON["status"]as Any as? String
-                               
-                               if strSuccess == "success" {
-                                 Utils.RiteVetIndicatorHide()
-                               }
-                               else {
-                                Utils.RiteVetIndicatorHide()
-                               }
-                               
-                           }
-
-                           case .failure(_):
-                               print("Error message:\(String(describing: response.error))")
-                               Utils.RiteVetIndicatorHide()
-                               
-                               let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
-                               let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                       UIAlertAction in
-                                       NSLog("OK Pressed")
-                                   }
-                               
-                               alertController.addAction(okAction)
-                               
-                               self.present(alertController, animated: true, completion: nil)
-                               
-                               break
-                            }
-                       }
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+        
+        
+    }
     
-       
-    
+    @objc func unpublishThisProduct() {
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        let defaults = UserDefaults.standard
+        if let myString2 = defaults.string(forKey: "keyEditedProductIdIs") {
+            print("editProduct: \(myString2)")
+            
+            parameters = [
+                "action"       :   "productstatus",
+                "status"       :   "0",
+                "productId"    :   "\(self.dictGetAnimalFoodDetails!["productId"]!)"
+            ]
+            // }
+        }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+//                    The iTunes information is;
+//                    Triple R Services, LLC
+//                    mailto:3rcustomdetail@gmail.com
+//                    3Rcustoms$
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        let alert = UIAlertController(title: "Alert", message: "This product is unpublished now. No one will able to see your product.",preferredStyle: .alert)
+
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+        
+        
     }
     
     @objc func showDetailPageAfterEdit() {
@@ -723,15 +864,15 @@ extension DogFoodDetails: UITableViewDataSource {
         
         
         // shipping
-        let livingAreaShipping = dictGetAnimalFoodDetails?["shippingAmount"] as? Int ?? 0
-        if livingAreaShipping == 0 {
-            let stringValue = String(livingAreaShipping)
-            cell.lblShipping.text = "SHIPPING: $"+stringValue
-        }
-        else {
-            let stringValue = String(livingAreaShipping)
-            cell.lblShipping.text = "SHIPPING: $"+stringValue
-        }
+//        let livingAreaShipping = dictGetAnimalFoodDetails?["shippingAmount"] as? Int ?? 0
+//        if livingAreaShipping == 0 {
+//            let stringValue = String(livingAreaShipping)
+//            cell.lblShipping.text = "SHIPPING: $"+stringValue
+//        }
+//        else {
+//            let stringValue = String(livingAreaShipping)
+        cell.lblShipping.text = "SHIPPING : $\(self.dictGetAnimalFoodDetails["shippingAmount"]!)"
+//        }
         
         // category
         cell.lblCategory.text = "CATEGORY: "+(dictGetAnimalFoodDetails!["categoryName"] as! String)

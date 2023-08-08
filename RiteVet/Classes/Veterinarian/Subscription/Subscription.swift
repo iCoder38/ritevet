@@ -19,7 +19,7 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
     let cellReuseIdentifier = "subscriptionTableCell"
     
     var arrSubscription = [
-        "Free Trial",
+//        "Free Trial",
         "Subscription",
         // "12 months $89.95 ( you save $29.45 )",
         // "1 month free ( enter coupon code )"
@@ -93,6 +93,7 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
          UTYPE:
          */
         
+        // dishant rajput
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any]
         {
             let x : Int = (person["userId"] as! Int)
@@ -127,7 +128,7 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
                         var dict: Dictionary<AnyHashable, Any>
                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
                         
-                        //print(dict as Any)
+                        print(dict as Any)
                         self.dictSaveAllDataVeterinarian = dict as NSDictionary
                         
                         //
@@ -136,14 +137,6 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
                         
                         let defaults = UserDefaults.standard
                         defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                         
                         Utils.RiteVetIndicatorHide()
                     }
@@ -282,6 +275,21 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
                     print("Purchased Failed");
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
                     
+                    let alertController = UIAlertController(title: "Alert", message: "Something went wrong. Please try again after some time.", preferredStyle: .alert)
+                    let cancel = UIAlertAction(title: "Ok", style: .cancel) { (action:UIAlertAction!) in
+                        //
+                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+                        self.navigationController?.pushViewController(push, animated: true)
+                        //
+                    }
+                    
+                    alertController.addAction(cancel)
+                    self.present(alertController, animated: true, completion:nil)
+                    
+                    
+                        
+                    
+                    
                     break;
                     
                 case .restored:
@@ -344,7 +352,9 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
                     
-                    if strSuccess == "success" {
+                    if strSuccess == "success" || strSuccess == "Success"  {
+                        Utils.RiteVetIndicatorHide()
+                        ERProgressHud.sharedInstance.hide()
                         
                         self.pushToVeterinarianRegistration()
                         Utils.RiteVetIndicatorHide()
@@ -410,7 +420,7 @@ extension Subscription: UITableViewDataSource
             cell.btnSubscription.setTitle("      Free Trial", for: .normal)
         }
         else */
-        if indexPath.row == 1 {
+        if indexPath.row == 0 {
             cell.btnSubscription.setTitle("      Subscription", for: .normal)
         }
         
@@ -420,16 +430,17 @@ extension Subscription: UITableViewDataSource
     }
     
     @objc func subscriptionClickMethod(_ sender:UIButton) {
-        if sender.tag == 0 {
+        /*if sender.tag == 0 {
             self.freeTrialActionSheet()
             /*
             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VeterinarianRegistrationId") as? VeterinarianRegistration
             self.navigationController?.pushViewController(push!, animated: true)
             */
         }
-        else if sender.tag == 1 {
+////        else */
+//        if sender.tag == 1 {
             self.subscriptionActionSheet()
-        }
+//        }
         
     }
     

@@ -25,7 +25,7 @@ class Registration: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "SIGN IN"
+            lblNavigationTitle.text = "SIGN UP"
             lblNavigationTitle.textColor = .white
         }
     }
@@ -62,8 +62,8 @@ class Registration: UIViewController,UITextFieldDelegate {
         self.UIdesignOfLoginScreen()
         btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
         
-        strStateId = "0"
-        strCountryId = "0"
+        self.strStateId = "0"
+        self.strCountryId = "0"
         
         
         
@@ -81,14 +81,23 @@ class Registration: UIViewController,UITextFieldDelegate {
             UIAlertAction in
             NSLog("Edit Pressed")
             
-            self.ourTermsAndConditionsWB(strPrivacyOrTerms: "termAndConditions")
+            // self.ourTermsAndConditionsWB(strPrivacyOrTerms: "termAndConditions")
+            
+            if let url = URL(string: "http://ritevet.com/terms.html") {
+                UIApplication.shared.open(url)
+            }
             
         }
         let delete = UIAlertAction(title: "Privacy policy", style: UIAlertAction.Style.default) {
             UIAlertAction in
             NSLog("Delete Pressed")
             
-            self.ourTermsAndConditionsWB(strPrivacyOrTerms: "privacypolicy")
+            // self.ourTermsAndConditionsWB(strPrivacyOrTerms: "privacypolicy")
+            
+            if let url = URL(string: "http://ritevet.com/privacy-policy.html") {
+                UIApplication.shared.open(url)
+            }
+            
         }
         
         let okAction = UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.destructive) {
@@ -125,16 +134,17 @@ class Registration: UIViewController,UITextFieldDelegate {
         let indexPath = IndexPath.init(row: 0, section: 0)
         let cell = self.tbleView.cellForRow(at: indexPath) as! RegistrationCell
         
-        Utils.textFieldDR(text: cell.txtName, placeHolder: "Full Name", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtEmail, placeHolder: "Email address", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtName, placeHolder: "First Name*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtLastName, placeHolder: "Last Name*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtEmail, placeHolder: "Email address*", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtPhone, placeHolder: "Phone Number", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtAddress, placeHolder: "Address", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtCountry, placeHolder: "Country", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtState, placeHolder: "State", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtCity, placeHolder: "City", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtAddress, placeHolder: "Address*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtCountry, placeHolder: "Country*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtState, placeHolder: "State*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtCity, placeHolder: "City*", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtZipcode, placeHolder: "Zip Code", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtPassword, placeHolder: "Password", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtConfirmPassword, placeHolder: "Confirm Password", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtPassword, placeHolder: "Password*", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtConfirmPassword, placeHolder: "Confirm Password*", cornerRadius: 20, color: .white)
         
         cell.txtName.delegate = self
         cell.txtEmail.delegate = self
@@ -158,20 +168,20 @@ class Registration: UIViewController,UITextFieldDelegate {
         cell.btnCheckUncheck.tag = 0
         
         /****** FACEBOOK *********/
-        cell.btnFB.backgroundColor = UIColor.init(red: 46.0/255.0, green: 79.0/255.0, blue: 183.0/255.0, alpha: 1)
-        cell.btnFB.layer.cornerRadius = 20
-        cell.btnFB.clipsToBounds = true
+//        cell.btnFB.backgroundColor = UIColor.init(red: 46.0/255.0, green: 79.0/255.0, blue: 183.0/255.0, alpha: 1)
+//        cell.btnFB.layer.cornerRadius = 20
+//        cell.btnFB.clipsToBounds = true
         // cell.btnFB.setTitle("f", for: .normal)
-        cell.btnFB.setTitleColor(.white, for: .normal)
-        cell.btnFB.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
+//        cell.btnFB.setTitleColor(.white, for: .normal)
+//        cell.btnFB.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
         
         /****** G+ *********/
-        cell.btnGooglePlus.backgroundColor = UIColor.init(red: 193.0/255.0, green: 47.0/255.0, blue: 38.0/255.0, alpha: 1)
-        cell.btnGooglePlus.layer.cornerRadius = 20
-        cell.btnGooglePlus.clipsToBounds = true
+//        cell.btnGooglePlus.backgroundColor = UIColor.init(red: 193.0/255.0, green: 47.0/255.0, blue: 38.0/255.0, alpha: 1)
+//        cell.btnGooglePlus.layer.cornerRadius = 20
+//        cell.btnGooglePlus.clipsToBounds = true
         // cell.btnGooglePlus.setTitle("g+", for: .normal)
-        cell.btnGooglePlus.setTitleColor(.white, for: .normal)
-        cell.btnGooglePlus.addTarget(self, action: #selector(gClickMethod), for: .touchUpInside)
+//        cell.btnGooglePlus.setTitleColor(.white, for: .normal)
+//        cell.btnGooglePlus.addTarget(self, action: #selector(gClickMethod), for: .touchUpInside)
         
         cell.btnSignUp.isUserInteractionEnabled = false
         cell.btnSignUp.backgroundColor = .lightGray
@@ -370,9 +380,9 @@ class Registration: UIViewController,UITextFieldDelegate {
             self.fieldShouldNotBeEmptyPopup()
         } else if cell.txtEmail.text == "" {
             self.fieldShouldNotBeEmptyPopup()
-        } else if cell.txtPhone.text == "" {
+        }/* else if cell.txtPhone.text == "" {
             self.fieldShouldNotBeEmptyPopup()
-        } else if cell.txtCountry.text == "" {
+        } */else if cell.txtCountry.text == "" {
             self.fieldShouldNotBeEmptyPopup()
         } else if cell.txtState.text == "" {
             self.fieldShouldNotBeEmptyPopup()
@@ -384,10 +394,27 @@ class Registration: UIViewController,UITextFieldDelegate {
             self.fieldShouldNotBeEmptyPopup()
         } else if cell.txtConfirmPassword.text == "" {
             self.fieldShouldNotBeEmptyPopup()
-        } else if cell.txtZipcode.text == "" {
+        }/* else if cell.txtZipcode.text == "" {
             self.fieldShouldNotBeEmptyPopup()
-        } else {
-            self.registrationClickAgterMapLocation()
+        } */else {
+            
+            if (self.strCountryId == "231") {
+                if cell.txtZipcode.text == "" {
+                    
+                    let alert = UIAlertController(title: "Error!", message: "Please enter zipcode.",preferredStyle: UIAlertController.Style.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                } else {
+                    self.registrationClickAgterMapLocation()
+                }
+                
+            } else {
+                self.registrationClickAgterMapLocation()
+            }
+            
         }
         
         
@@ -443,6 +470,7 @@ class Registration: UIViewController,UITextFieldDelegate {
             "action"        :   "registration",
             "email"         :   String(cell.txtEmail.text!),
             "fullName"      :   String(cell.txtName.text!),
+            "lastName"      :   String(cell.txtLastName.text!),
             "contactNumber" :   String(cell.txtPhone.text!),
             "password"      :   String(cell.txtPassword.text!),
             "address"       :   String(cell.txtAddress.text!),
@@ -495,7 +523,13 @@ class Registration: UIViewController,UITextFieldDelegate {
                         
                         
                     } else {
+                        Utils.RiteVetIndicatorHide()
+                        let alert = UIAlertController(title: strSuccess, message: String(strSuccess2),preferredStyle: .alert)
                         
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                             
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                         
                     }
                     
@@ -504,6 +538,7 @@ class Registration: UIViewController,UITextFieldDelegate {
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
                 //self.whileLoadingEnable()
+                Utils.RiteVetIndicatorHide()
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
                 
                 let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {

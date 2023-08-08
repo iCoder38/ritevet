@@ -13,6 +13,7 @@ class AddNewProductTableCell: UITableViewCell {
     @IBOutlet weak var txtSelectCategory:UITextField!
     
     @IBOutlet weak var txt_seller_name:UITextField!
+    @IBOutlet weak var txt_seller_last_name:UITextField!
     @IBOutlet weak var txt_Seller_phone:UITextField!
     @IBOutlet weak var txt_Seller_email:UITextField!
     @IBOutlet weak var txt_seller_company_name:UITextField!

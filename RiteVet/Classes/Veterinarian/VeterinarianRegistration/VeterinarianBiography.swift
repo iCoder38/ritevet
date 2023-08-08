@@ -35,6 +35,8 @@ class VeterinarianBiography: UIViewController,UINavigationControllerDelegate,UII
     
     var strChekcTerm:String!
     
+    var dict_new:NSDictionary!
+    
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
             viewNavigation.backgroundColor = NAVIGATION_BACKGROUND_COLOR
@@ -43,7 +45,7 @@ class VeterinarianBiography: UIViewController,UINavigationControllerDelegate,UII
     @IBOutlet weak var btnBack:UIButton!
     @IBOutlet weak var lblNavigationTitle:UILabel! {
         didSet {
-            lblNavigationTitle.text = "VETERINARIAN REGISTRATION"
+            lblNavigationTitle.text = "VETERINARIAN BIOGRAPHY"
             lblNavigationTitle.textColor = .white
         }
     }
@@ -58,8 +60,10 @@ class VeterinarianBiography: UIViewController,UINavigationControllerDelegate,UII
         }
     }
     
+    
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad() 
         
         /****** VIEW BG IMAGE *********/
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
@@ -180,7 +184,139 @@ extension VeterinarianBiography: UITableViewDataSource {
         
         cell.btnNext.addTarget(self, action: #selector(nextClick(_:)), for: .touchUpInside)
         
+        
+        cell.btn_upload_own_profile_picture.addTarget(self, action: #selector(upload_profile_picture_click_method), for: .touchUpInside)
+        
+        cell.btn_upload_business_picture.addTarget(self, action: #selector(upload_profile_business_picture_click_method), for: .touchUpInside)
+        
+        cell.btn_upload_e_price_picture.addTarget(self, action: #selector(upload_profile_e_price_click_method), for: .touchUpInside)
+        
+        cell.btn_upload_transcript_picture.addTarget(self, action: #selector(upload_profile_transcript_click_method), for: .touchUpInside)
+        
+        cell.btn_upload_license_picture.addTarget(self, action: #selector(upload_profile_license_click_method), for: .touchUpInside)
+        
+        cell.btn_upload_document_picture.addTarget(self, action: #selector(upload_profile_document_click_method), for: .touchUpInside)
+        
         return cell
+    }
+    
+    @objc func upload_profile_business_picture_click_method() {
+        
+        var dict_multi_image: Dictionary<AnyHashable, Any>
+        dict_multi_image = self.dict_new["multi_image"] as! Dictionary<AnyHashable, Any>
+        print(dict_multi_image as Any)
+        
+        var ar_multi_image : NSArray!
+        ar_multi_image = (dict_multi_image["Business"] as! Array<Any>) as NSArray
+        print(ar_multi_image as Any)
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        
+        push!.str_title_name = "Upload Business Picture"
+        push!.arr_image = ar_multi_image
+        
+        push!.str_image_type = String("Business")
+        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+        self.navigationController?.pushViewController(push!, animated: true)
+    }
+    @objc func upload_profile_e_price_click_method() {
+        
+        var dict_multi_image: Dictionary<AnyHashable, Any>
+        dict_multi_image = self.dict_new["multi_image"] as! Dictionary<AnyHashable, Any>
+        print(dict_multi_image as Any)
+        
+        var ar_multi_image : NSArray!
+        ar_multi_image = (dict_multi_image["Eprice"] as! Array<Any>) as NSArray
+        print(ar_multi_image as Any)
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        
+        push!.str_title_name = "Upload Estimate Price Picture"
+        push!.arr_image = ar_multi_image
+        
+        push!.str_image_type = String("Eprice")
+        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+        self.navigationController?.pushViewController(push!, animated: true)
+    }
+    
+    @objc func upload_profile_transcript_click_method() {
+        
+        var dict_multi_image: Dictionary<AnyHashable, Any>
+        dict_multi_image = self.dict_new["multi_image"] as! Dictionary<AnyHashable, Any>
+        print(dict_multi_image as Any)
+        
+        var ar_multi_image : NSArray!
+        ar_multi_image = (dict_multi_image["Transcript"] as! Array<Any>) as NSArray
+        print(ar_multi_image as Any)
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        
+        push!.str_title_name = "Upload Transcript Picture"
+        push!.arr_image = ar_multi_image
+        
+        push!.str_image_type = String("Transcript")
+        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+        self.navigationController?.pushViewController(push!, animated: true)
+    }
+    
+    @objc func upload_profile_license_click_method() {
+        
+        var dict_multi_image: Dictionary<AnyHashable, Any>
+        dict_multi_image = self.dict_new["multi_image"] as! Dictionary<AnyHashable, Any>
+        print(dict_multi_image as Any)
+        
+        var ar_multi_image : NSArray!
+        ar_multi_image = (dict_multi_image["License"] as! Array<Any>) as NSArray
+        print(ar_multi_image as Any)
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        
+        push!.str_title_name = "Upload License Picture"
+        push!.arr_image = ar_multi_image
+        
+        push!.str_image_type = String("License")
+        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+        self.navigationController?.pushViewController(push!, animated: true)
+    }
+    
+    @objc func upload_profile_document_click_method() {
+        
+        var dict_multi_image: Dictionary<AnyHashable, Any>
+        dict_multi_image = self.dict_new["multi_image"] as! Dictionary<AnyHashable, Any>
+        print(dict_multi_image as Any)
+        
+        var ar_multi_image : NSArray!
+        ar_multi_image = (dict_multi_image["Document"] as! Array<Any>) as NSArray
+        print(ar_multi_image as Any)
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        
+        push!.str_title_name = "Upload Documents"
+        push!.arr_image = ar_multi_image
+        
+        push!.str_image_type = String("Document")
+        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+        self.navigationController?.pushViewController(push!, animated: true)
+    }
+    
+    @objc func upload_profile_picture_click_method() {
+        
+        var dict_multi_image: Dictionary<AnyHashable, Any>
+        dict_multi_image = self.dict_new["multi_image"] as! Dictionary<AnyHashable, Any>
+        print(dict_multi_image as Any)
+        
+        var ar_multi_image : NSArray!
+        ar_multi_image = (dict_multi_image["Own"] as! Array<Any>) as NSArray
+        print(ar_multi_image as Any)
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        
+        push!.str_title_name = "Upload Profile Picture"
+        push!.arr_image = ar_multi_image
+        
+        push!.str_image_type = String("Own")
+        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+        self.navigationController?.pushViewController(push!, animated: true)
     }
     
     /*
@@ -420,164 +556,7 @@ extension VeterinarianBiography: UITableViewDataSource {
     
     @objc func uploadImage(strImageName:String!) {
             
-        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            let x : Int = (person["userId"] as! Int)
-            let myString = String(x)
-              
-            var urlRequest = URLRequest(url: URL(string: BASE_URL_KREASE)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0 * 1000)
-            urlRequest.httpMethod = "POST"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-            
-            // let indexPath = IndexPath.init(row: 0, section: 0)
-            // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
-            
-            //Set Your Parameter
-            let parameterDict = [
-                "action"          :   "petparentregistration",
-                "userId"          :   String(myString),
-                "UTYPE"           :   "2",
-                "biography"        :  "",
-            ]
-            
-//                        let parameters = [
-//                           "action"        :   "editprofile",
-//                           "userId"        :   String(myString)
-//
-//                       ]
-            
-            
-            // Now Execute
-            AF.upload(multipartFormData: { multiPart in
-                for (key, value) in parameterDict {
-                    if let temp = value as? String {
-                        multiPart.append(temp.data(using: .utf8)!, withName: key as! String)
-                    }
-                    if let temp = value as? Int {
-                        multiPart.append("\(temp)".data(using: .utf8)!, withName: key as! String)
-                    }
-                    if let temp = value as? NSArray {
-                        temp.forEach({ element in
-                            let keyObj = key as! String + "[]"
-                            if let string = element as? String {
-                                multiPart.append(string.data(using: .utf8)!, withName: keyObj)
-                            } else
-                            if let num = element as? Int {
-                                let value = "\(num)"
-                                multiPart.append(value.data(using: .utf8)!, withName: keyObj)
-                            }
-                        })
-                    }
-                }
-                multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
-            }, with: urlRequest)
-                .uploadProgress(queue: .main, closure: { progress in
-                    //Current upload progress of file
-                    print("Upload Progress: \(progress.fractionCompleted)")
-                })
-                .responseJSON(completionHandler: { data in
-                    
-                    switch data.result {
-                        
-                    case .success(_):
-                        do {
-                            
-                            let dictionary = try JSONSerialization.jsonObject(with: data.data!, options: .fragmentsAllowed) as! NSDictionary
-                            
-                            print("Success!")
-                            print(dictionary)
-                            
-                            var dict: Dictionary<AnyHashable, Any>
-                            dict = dictionary["data"] as! Dictionary<AnyHashable, Any>
-                                
-                            let defaults = UserDefaults.standard
-                            defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
-                                
-                            self.dismiss(animated: true, completion: nil)
-                                
-                            self.allZeroImageString()
-                            
-                        }
-                        catch {
-                            // catch error.
-                            print("catch error")
-                            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"strSuccessAlert", dismissDelay: 1.5, completion:{})
-                        }
-                        break
-                        
-                    case .failure(_):
-                        print("failure")
-                        ERProgressHud.sharedInstance.hide()
-                        break
-                        
-                    }
-                    
-                    
-                })
-            
-            /*let parameters = [
-                "action"          :   "petparentregistration",
-                "userId"          :   String(myString),
-                "UTYPE"           :   "2",
-                "biography"        :  "",
-            ] //Optional for extra parameter
-                
-            print(parameters as Any)
-                
-            Alamofire.upload(multipartFormData: { multipartFormData in
-                multipartFormData.append(self.imgData, withName: strImageName,fileName: "riteVetImage.jpg", mimeType: "image/jpg")
-                for (key, value) in parameters {
-                    multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                } //Optional for extra parameters
-            },
-            to:BASE_URL_KREASE)
-            { (result) in
-                switch result {
-                case .success(let upload, _, _):
-
-                    upload.uploadProgress(closure: { (progress) in
-                            //print("Upload Progress: \(progress.fractionCompleted)")
-                            
-
-                        /*let alertController = UIAlertController(title: nil, message: "Please wait......", preferredStyle: .alert)
-                        let progressDownload : UIProgressView = UIProgressView(progressViewStyle: .default)
-
-                        progressDownload.setProgress(Float((progress.fractionCompleted)/1.0), animated: true)
-                        progressDownload.frame = CGRect(x: 10, y: 70, width: 250, height: 0)
-
-                        alertController.view.addSubview(progressDownload)
-                        self.present(alertController, animated: true, completion: nil)*/
-                            
-                    })
-
-                    upload.responseJSON { response in
-                            //print(response.result.value as Any)
-                        if let data = response.value {
-                            let JSON = data as! NSDictionary
-                                
-                            var dict: Dictionary<AnyHashable, Any>
-                            dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                                
-                            let defaults = UserDefaults.standard
-                            defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
-                                
-                            self.dismiss(animated: true, completion: nil)
-                                
-                            self.allZeroImageString()
-                            }
-                            else {
-                                self.dismiss(animated: true, completion: nil)
-                                CRNotifications.showNotification(type: CRNotifications.success, title: "Error!", message:"Server Not Responding. Please try again Later.", dismissDelay: 1.5, completion:{})
-
-                            }
-                            
-                    }
-
-                case .failure(let encodingError):
-                    print(encodingError)
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }*/
-        }
+         
     }
     
     @objc func nextClick(_ sender:UIButton) {
@@ -644,6 +623,8 @@ extension VeterinarianBiography: UITableViewDataSource {
                         
                          var dict: Dictionary<AnyHashable, Any>
                          dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        
+                        self.dict_new = dict as NSDictionary
                         
                         let cell = tbleView.cellForRow(at: NSIndexPath(row: 0, section: 0) as IndexPath) as! VeterinarianBiographyTableCell
                         

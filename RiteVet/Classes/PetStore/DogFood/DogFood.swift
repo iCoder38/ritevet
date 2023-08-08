@@ -75,7 +75,7 @@ class DogFood: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        btnAdd.addTarget(self, action: #selector(addClickMethod), for: .touchUpInside)
+        self.btnAdd.addTarget(self, action: #selector(addClickMethod), for: .touchUpInside)
         //print(getCategoryIdInDogFood as Any)
         //print(getSubCategoryIdInDogFood as Any)
         
@@ -185,13 +185,12 @@ class DogFood: UIViewController,UITextFieldDelegate {
                     
                     
                     let JSON = data as! NSDictionary
-                    //print(JSON)
+                    print(JSON)
                     
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
                     
-                    if strSuccess == "success" //true
-                    {
+                    if strSuccess == "success" {
                         // arrBrowsePetStore
                         
                         self.clView!.dataSource = self

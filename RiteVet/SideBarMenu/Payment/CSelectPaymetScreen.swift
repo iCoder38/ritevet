@@ -134,7 +134,16 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
-        // print(self.dict_get_selected_product_Details)
+         print(self.dict_get_selected_product_Details as Any)
+        
+        /*
+         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "CSelectPaymetScreenId") as? CSelectPaymetScreen
+         
+         push!.finalPrice = self.str_total_price
+         push!.dict_get_selected_product_Details = buyNowItemFullQuery
+         
+         self.navigationController?.pushViewController(push!, animated: true)
+         */
         
         // MARK:- DISMISS KEYBOARD WHEN CLICK OUTSIDE -
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -351,20 +360,13 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
             self.present(alert, animated: true, completion: nil)
         } else {
             
-            self.dummy_send_data_wb()
-            /*let alert = UIAlertController(title: "Alert!", message: "Successfully purchase",preferredStyle: UIAlertController.Style.alert)
-
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId") as? Dashboard
-                self.navigationController?.pushViewController(push!, animated: true)
-            }))
-            self.present(alert, animated: true, completion: nil)
-            */
-            // self.fetchStripeToken()
+            self.fetchStripeToken()
+            
+            
         }
     }
     
-    @objc func dummy_send_data_wb() {
+    @objc func dummy_send_data_wb(stripe_token:String) {
         //self.pushFromLoginPage()
         
         // indicator.startAnimating()
@@ -489,7 +491,8 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 "SKU"           : (self.dict_get_selected_product_Details["SKU"] as! String),
                 "productName"   : (self.dict_get_selected_product_Details["productName"] as! String),
                 "price"         : String(pass_price),
-                "amount"        : String(pass_special_price)
+                "amount"        : String(pass_special_price),
+                
             ]
             
             var res = [[String: String]]()
@@ -517,7 +520,8 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 "ShippingState"     :   (person["stateName"] as! String),
                 "shippingZipcode"   :   (person["zipCode"] as! String),
                 "ShippingMobile"    :   (person["contactNumber"] as! String),
-                "productList"       :   String(paramsString)
+                "productList"       :   String(paramsString),
+                "transactionId":String(stripe_token)
                 
             ]
             
@@ -544,8 +548,9 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                     
                     if strSuccess == "success" {
                         Utils.RiteVetIndicatorHide()
+                        ERProgressHud.sharedInstance.hide()
                         
-                        let alert = UIAlertController(title: "Alert!", message: "Successfully purchase",preferredStyle: UIAlertController.Style.alert)
+                        let alert = UIAlertController(title: "Success", message: strSuccessAlert2,preferredStyle: .alert)
 
                         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
                             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId") as? Dashboard
@@ -559,6 +564,7 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                         // self.indicator.stopAnimating()
                         // self.enableService()
                         Utils.RiteVetIndicatorHide()
+                        ERProgressHud.sharedInstance.hide()
                     }
                 }
             case .failure(_):
@@ -619,10 +625,12 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 return
             }
             
+            
             let tokenID = token.tokenId
             print(tokenID)
             
-            self.update_payment_webservice(str_token_id: tokenID)
+            self.dummy_send_data_wb(stripe_token: tokenID)
+            // self.update_payment_webservice(str_token_id: tokenID)
         }
         
     }

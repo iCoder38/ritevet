@@ -105,92 +105,92 @@ class PetStoreHome: UIViewController {
      */
     
     @objc func requestServiceWB() {
-           //self.pushFromLoginPage()
-           
-           //indicator.startAnimating()
-           //self.disableService()
-           Utils.RiteVetIndicatorShow()
-           
-               let urlString = BASE_URL_KREASE
-               
-               var parameters:Dictionary<AnyHashable, Any>!
-           
-                   parameters = [
-                       "action"        :   "typeofbusiness"
-                       //"UTYPE"        :   "4"
-                   ]
-              
+        //self.pushFromLoginPage()
+        
+        //indicator.startAnimating()
+        //self.disableService()
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        parameters = [
+            "action"        :   "typeofbusiness"
+            //"UTYPE"        :   "4"
+        ]
+        
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        var ar : NSArray!
+                        ar = (JSON["data"] as! Array<Any>) as NSArray
+                        //print(ar as Any)
+                        
+                        //var arServices : NSArray!
+                        var itemCountarServices:Int!
+                        var newString1arServices = ""
+                        var ssarServices:String!
+                        
+                        itemCountarServices = ar.count-1
+                        
+                        for i in 0 ... itemCountarServices {
+                            let itemarServices = ar[i] as? [String:Any]
+                            ssarServices = (itemarServices!["name"] as! String)
+                            newString1arServices += "\(ssarServices!)+"
+                        }
+                        
+                        //print(newString1arServices as Any)
+                        //self.strSaveFullValueOfServiceInOneString = newString1arServices
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set((newString1arServices), forKey: "keyRequestServiceDropDown")
+                        
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
                 
-                   print("parameters-------\(String(describing: parameters))")
-                   
-                   AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                       {
-                           response in
-               
-                           switch(response.result) {
-                           case .success(_):
-                              if let data = response.value {
-
-                               
-                               let JSON = data as! NSDictionary
-                               //print(JSON)
-                               
-                               var strSuccess : String!
-                               strSuccess = JSON["status"]as Any as? String
-                               
-                               if strSuccess == "success" {
-                                var ar : NSArray!
-                                ar = (JSON["data"] as! Array<Any>) as NSArray
-                                //print(ar as Any)
-                                
-                                //var arServices : NSArray!
-                                var itemCountarServices:Int!
-                                var newString1arServices = ""
-                                var ssarServices:String!
-                                
-                                itemCountarServices = ar.count-1
-                                   
-                                for i in 0 ... itemCountarServices {
-                                    let itemarServices = ar[i] as? [String:Any]
-                                    ssarServices = (itemarServices!["name"] as! String)
-                                    newString1arServices += "\(ssarServices!)+"
-                                }
-                                
-                                //print(newString1arServices as Any)
-                                //self.strSaveFullValueOfServiceInOneString = newString1arServices
-                                
-                                let defaults = UserDefaults.standard
-                                defaults.set((newString1arServices), forKey: "keyRequestServiceDropDown")
-                                
-                                   Utils.RiteVetIndicatorHide()
-                               }
-                               else {
-                                   Utils.RiteVetIndicatorHide()
-                               }
-                               
-                           }
-
-                           case .failure(_):
-                               print("Error message:\(String(describing: response.error))")
-                               
-                               Utils.RiteVetIndicatorHide()
-                               
-                               let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
-                               let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                       UIAlertAction in
-                                       NSLog("OK Pressed")
-                                   }
-                               
-                               alertController.addAction(okAction)
-                               
-                               self.present(alertController, animated: true, completion: nil)
-                               
-                               break
-                            }
-                       }
-    
-       }
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+    }
 }
 
 extension PetStoreHome: UITableViewDataSource {
@@ -231,8 +231,28 @@ extension PetStoreHome: UITableViewDataSource {
         
         if sender.tag == 0 {
             
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddNewProductId") as? AddNewProduct
-            self.navigationController?.pushViewController(push!, animated: true)
+            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+                // print(person as Any)
+                
+                
+
+                
+                
+                if (person["profile_ID_image"] as! String) == "" {
+                    //
+                    let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "pet_store_id_proof_id") as? pet_store_id_proof
+                    self.navigationController?.pushViewController(push!, animated: true)
+                    
+                } else {
+//
+                    let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddNewProductId") as? AddNewProduct
+                    self.navigationController?.pushViewController(push!, animated: true)
+//
+                }
+                
+                
+            }
+            
             
         }
             

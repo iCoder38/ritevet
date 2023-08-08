@@ -66,6 +66,9 @@ class ConfirmAppointment: UIViewController {
     
     @IBOutlet weak var btnHome:UIButton!
     
+    var str_success:String!
+    @IBOutlet weak var lbl_success_message_status:UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,6 +81,19 @@ class ConfirmAppointment: UIViewController {
         lblBookedDate.text = String(strGetBookingDate)
         
         let defaults = UserDefaults.standard
+        if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+            
+            if (myString22 == "2") {
+                self.lbl_success_message_status.text = "Veterinarian will come to your house at the time of the appointment."
+            } else if (myString22 == "3") {
+                self.lbl_success_message_status.text = "Veterinarian will call you at the time of your appointment."
+            } else {
+                self.lbl_success_message_status.isHidden = true
+            }
+        }
+        
+         
+        
         if let myString = defaults.string(forKey: "keySaveVendorImage") {
             imgView.sd_setImage(with: URL(string: myString), placeholderImage: UIImage(named: "plainBack"))
             
@@ -91,7 +107,7 @@ class ConfirmAppointment: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-     navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

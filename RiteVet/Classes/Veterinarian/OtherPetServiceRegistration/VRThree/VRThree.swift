@@ -410,11 +410,11 @@ class VRThree: UIViewController, UITextFieldDelegate {
         let cell = self.tbleView.cellForRow(at: indexPath) as! VRThreeTableCell
         
         Utils.RiteVetIndicatorShow()
-           
+        
         let urlString = BASE_URL_KREASE
-               
+        
         var parameters:Dictionary<AnyHashable, Any>!
-           
+        
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
@@ -449,66 +449,66 @@ class VRThree: UIViewController, UITextFieldDelegate {
                 "VBusinessName" :   String(cell.txtBusinessName.text!),
                 "BusinessLicenseNo" :   String(cell.txtBusinessLicenceNumber.text!),
                 "VTaxID"        :   String(cell.txtIENTAXidNumber.text!),
-                  
+                
                 "Multilicenses" : paramsString
             ]
-                
+            
         }
-                
+        
         print("parameters-------\(String(describing: parameters))")
-                   
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
-               
+            
             switch(response.result) {
             case .success(_):
                 if let data = response.value {
-                               
+                    
                     let JSON = data as! NSDictionary
                     print(JSON)
-                               
+                    
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                               
+                    
                     if strSuccess == "success" {
                         
                         // var dict: Dictionary<AnyHashable, Any>
                         // dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                                   
+                        
                         Utils.RiteVetIndicatorHide()
-                                
-                            // let defaults = UserDefaults.standard
-                            // defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
-                                
+                        
+                        // let defaults = UserDefaults.standard
+                        // defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
+                        
                         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BusinessAddressTwoId")
                         self.navigationController?.pushViewController(push, animated: true)
-                               
+                        
                     }
                     else {
-                                   //self.indicator.stopAnimating()
-                                   //self.enableService()
+                        //self.indicator.stopAnimating()
+                        //self.enableService()
                         Utils.RiteVetIndicatorHide()
                     }
-                               
+                    
                 }
-
+                
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
-                               //self.indicator.stopAnimating()
-                               //self.enableService()
+                //self.indicator.stopAnimating()
+                //self.enableService()
                 Utils.RiteVetIndicatorHide()
-                               
+                
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
+                
                 let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                     UIAlertAction in
                     NSLog("OK Pressed")
                 }
-                               
+                
                 alertController.addAction(okAction)
-                               
+                
                 self.present(alertController, animated: true, completion: nil)
-                               
+                
                 break
             }
         }

@@ -361,7 +361,25 @@ class RequestServiceDetails: UIViewController {
 
         }
         
+        let defaults = UserDefaults.standard
+        if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+            print(myString22)
+            
+            if (myString22 == "3") {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Click on the video camera icon to Video chat with a veterinarian now” Or Click on the “Book an appointment” button below to schedule a video chat appointment for later time.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+
+            
+            
+        }
+        
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -620,7 +638,7 @@ class RequestServiceDetails: UIViewController {
                         
                         
                         
-                        if "\(dict["MessageChat"] as! Int)" == "1" {
+                        /*if "\(dict["MessageChat"] as! Int)" == "1" {
                             // no chat
                             self.btnChatShow.tintColor = .lightGray
                             self.btnChatShow.isUserInteractionEnabled = false
@@ -641,26 +659,36 @@ class RequestServiceDetails: UIViewController {
                             // yes audio chat
                             self.btnAudioShow.tintColor = NAVIGATION_BACKGROUND_COLOR
                             self.btnAudioShow.isUserInteractionEnabled = true
-                        }
+                        }*/
                         
                         
-                        if "\(dict["videoChat"] as! Int)" == "1" {
-                            // no video chat
-                            self.btnVideoShow.tintColor = .lightGray
-                            self.btnVideoShow.isUserInteractionEnabled = false
-                            
-                        } else {
-                            // yes video chat
-                            self.btnVideoShow.tintColor = NAVIGATION_BACKGROUND_COLOR
-                            self.btnVideoShow.isUserInteractionEnabled = true
-                        }
-                        
-                        
-                            
-                        self.btnChatShow.addTarget(self, action: #selector(chatClickMethod), for: .touchUpInside)
-                        self.btnVideoShow.addTarget(self, action: #selector(videoClickMethod), for: .touchUpInside)
-                        self.btnAudioShow.addTarget(self, action: #selector(audioClickMethod), for: .touchUpInside)
+                        // self.btnChatShow.addTarget(self, action: #selector(chatClickMethod), for: .touchUpInside)
+                        // self.btnAudioShow.addTarget(self, action: #selector(audioClickMethod), for: .touchUpInside)
 
+                        let defaults = UserDefaults.standard
+                        if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+                            print(myString22)
+                            
+                            if (myString22 == "3") {
+                                if "\(dict["videoChat"] as! Int)" == "1" {
+                                    // no video chat
+                                    self.btnVideoShow.tintColor = .lightGray
+                                    self.btnVideoShow.isUserInteractionEnabled = false
+                                    self.btnVideoShow.backgroundColor = .clear
+                                } else {
+                                    // yes video chat
+                                    self.btnVideoShow.tintColor = NAVIGATION_BACKGROUND_COLOR
+                                    self.btnVideoShow.isUserInteractionEnabled = true
+                                    self.btnVideoShow.backgroundColor = .clear
+                                }
+                                
+                                self.btnVideoShow.addTarget(self, action: #selector(videoClickMethod), for: .touchUpInside)
+                                
+                            } else {
+                                self.btnVideoShow.isHidden = true
+                            }
+                        }
+                        
                         Utils.RiteVetIndicatorHide()
                         self.tbleView.reloadData()
                         
@@ -825,11 +853,22 @@ class RequestServiceDetails: UIViewController {
     
     @objc func sendNotificationForSingleUser(str_type:String) {
         
-        
         print(self.str_business_type_is as Any)
         print(self.getUtypeInDetailsPage as Any)
-        
         print(self.getDictRequestServiceHome as Any)
+        
+        let alert = UIAlertController(title: "Ritevet", message: "Veterinarian will call you at your appointment time, you can cancel your appointment at least by 2 hours before your appointment time", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            
+            self.pushToBookAppointment(str_type_2: str_type)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func pushToBookAppointment(str_type_2:String) {
         
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "payment_before_booking_id") as? payment_before_booking
         
@@ -875,15 +914,13 @@ class RequestServiceDetails: UIViewController {
                 push!.strGetCountryName = (self.getDictRequestServiceHome["Country"] as! String)
                 push!.strGetAmericanBoardCertificate = (self.getDictRequestServiceHome["american_board_certified_option"] as! String)
                 push!.str_get_business_type_for_payment = String(self.str_business_type_is)
-                push!.str_instant_payment = String(str_type)
+                push!.str_instant_payment = String(str_type_2)
             }
         }
         
         self.navigationController?.pushViewController(push!, animated: true)
         
     }
-    
-    
     
     @objc func send_notification_to_doctor(str_get_type:String) {
         
@@ -1084,6 +1121,18 @@ class RequestServiceDetails: UIViewController {
     
     @objc func bookAnAppoitmentClickMethod() {
     
+        let alert = UIAlertController(title: "Ritevet", message: "Book an appointment by pressing the below Book appointment button.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+            
+            self.push_to_book_an_appointment()
+            
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func push_to_book_an_appointment() {
         // print(self.getDictRequestServiceHome)
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "CalendarId") as? Calendar
         
@@ -1127,9 +1176,9 @@ extension RequestServiceDetails: UITableViewDataSource
             print("details count")
             
             if "\(self.getDictRequestServiceHome["american_board_certified_option"]!)" == "" {
-                return 4
+                return 3
             } else {
-                return 5 // arrSetDetailsAndService.count
+                return 4 // arrSetDetailsAndService.count
             }
             
         }
@@ -1167,7 +1216,7 @@ extension RequestServiceDetails: UITableViewDataSource
                 cell.lblStaticTitle.text = "ADDRESS"
                 cell.lblDynamicTitle.text = (getDictRequestServiceHome!["VBusinessAddress"] as! String)+",\n\nCity : "+(getDictRequestServiceHome!["Vcity"] as! String)+",\n\nState : "+(getDictRequestServiceHome!["stateName"] as! String)+",\n\nCountry : "+(getDictRequestServiceHome!["Country"] as! String)+",\n\nZipCode : "+(getDictRequestServiceHome!["VZipcode"] as! String)
                 
-            }  else if indexPath.row == 2 {
+            } /* else if indexPath.row == 2 {
                 //print(strSaveFullValueOfSpecializationInOneString as Any)
                 if strSaveFullValueOfSpecializationInOneString == "0" {
                     cell.lblStaticTitle.text = "SPECIALIZATION"
@@ -1185,8 +1234,8 @@ extension RequestServiceDetails: UITableViewDataSource
                 }
                 
             }
-            else
-            if indexPath.row == 3 {
+            else*/
+            if indexPath.row == 2 {
                 
                 
                 cell.lblStaticTitle.text = "TYPE OF SERVICES"
@@ -1207,7 +1256,7 @@ extension RequestServiceDetails: UITableViewDataSource
                 }
             }
             else
-            if indexPath.row == 4 {
+            if indexPath.row == 3 {
                 
                 
                 cell.lblStaticTitle.text = "AMERICAN BOARD CERTIFIED SPECIALIZATION"

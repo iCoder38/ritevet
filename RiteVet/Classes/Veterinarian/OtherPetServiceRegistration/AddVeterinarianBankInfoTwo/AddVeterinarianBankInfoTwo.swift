@@ -220,8 +220,17 @@ class AddVeterinarianBankInfoTwo: UIViewController, UITextFieldDelegate {
                                 let defaults = UserDefaults.standard
                                 defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
                                 
-                                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-                                self.navigationController?.pushViewController(push, animated: true)
+                                   let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as other pet services provider, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to 14 days. Please feel free to email us mailto:ritevet@ritevet.com or call us 321-682-9800Monday – Sunday from 7:00 pm -10:00 pm US Eastern Standard time. Please leave a message if you called in different time or if we did not answer, will get back to you within 48 hours. ", preferredStyle: UIAlertController.Style.alert)
+                                   alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                                       
+                                       let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
+                                       self.navigationController?.pushViewController(push, animated: true)
+                                       
+                                   }))
+                                   
+                                   self.present(alert, animated: true, completion: nil)
+                                   
+                                
                                 
                                 Utils.RiteVetIndicatorHide()
                                }

@@ -119,7 +119,7 @@ class ExamplePopupViewController: BottomPopupViewController {
     // You can override the desired method to change appearance
     
       func getPopupHeight() -> CGFloat {
-        return height ?? CGFloat(300)
+        return height ?? CGFloat(500)
     }
     
       func getPopupTopCornerRadius() -> CGFloat {

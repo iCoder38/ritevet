@@ -32,25 +32,19 @@ class AddToCart: UIViewController {
     var itemCount:Int!
     
     var sum = 0.0
-    
-    
-    
-    
+
     var strSumTotalIs:String!
-    
-    
     
     var intAddValueOne:Int!
     var intAddValueTwo:Int!
     var intAddValueThree:Int!
     
-    
     var intAddValueOne1:NSNumber!
     var intAddValueTwo1:NSNumber!
     var intAddValueThree1:NSNumber!
-    
-    
-    
+
+    var str_save_final_shipping_amount:String!
+    var str_save_final_total_amount:String!
     
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
@@ -87,9 +81,18 @@ class AddToCart: UIViewController {
     
     var strFromSideBarCart:String!
     
+    @IBOutlet weak var btnmakePayment:UIButton! {
+        didSet {
+            btnmakePayment.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+            btnmakePayment.setTitle("PAY NOW", for: .normal)
+            btnmakePayment.setTitleColor(.white, for: .normal)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         btnBack.addTarget(self, action: #selector(backClick), for: .touchUpInside)
+        
         // print(dictGetAnimalFoodDetails as Any)
         
         //btnAddToCartList.addTarget(self, action: #selector(addToCartListClickMethod), for: .touchUpInside)
@@ -179,12 +182,6 @@ class AddToCart: UIViewController {
                 pass_price = tempString
             }
             
-            
-            
-            
-            // let spri : Int = (item["specialPrice"] as! Int)
-            // let spriiValue = String(spri)
-            
             let pass_special_price :String!
             
             if item["specialPrice"] is String {
@@ -223,10 +220,60 @@ class AddToCart: UIViewController {
             
             self.addInitialMutable.addObjects(from: res)
             
+            
+            
+            /*
+             SKU = 134;
+             SellerCompanyName = 1;
+             categoryId = 8;
+             categoryName = Fish;
+             description = "<p>Animal food means&nbsp;<em>any food intended to be fed to any household animal</em>, including, but not limited to, cats, or dogs and other carnivores.</p>
+         \n";
+             image = "https://ritevet.com/img/uploads/products/1687273601add_club_logo.png";
+             price = 1414;
+             productId = 47;
+             productName = we;
+             productUserId = 54;
+             quantity = 1;
+             sellerAddress = "";
+             sellerEmail = qwq;
+             sellerLastName = "";
+             sellerName = qw;
+             sellerPhone = q;
+             shippingAmount = 1314;
+             specialPrice = 1;
+             status = 1;
+             subcategoryId = 30;
+             subcategoryName = "Fish Food";
+             */
         }
         
+        // print(self.addInitialMutable)
         
-        self.orderPlaceWB()
+//         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "CSelectPaymetScreenId") as? CSelectPaymetScreen
+//         
+//         push!.finalPrice = self.str_total_price
+//         push!.dict_get_selected_product_Details = buyNowItemFullQuery
+//         
+//         self.navigationController?.pushViewController(push!, animated: true)
+         
+        
+        /*
+         self.str_save_final_shipping_amount = String(newShipMent)
+         self.str_save_final_total_amount = String(add)
+         */
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_to_cart_payment_id") as? add_to_cart_payment
+        
+        push!.arr_get_orders_data = self.addInitialMutable
+        push!.get_final_total_price = String(self.str_save_final_total_amount)
+        push!.get_final_shipping_amount = String(self.str_save_final_shipping_amount)
+        
+        // push!.finalPrice = self.str_total_price
+         // push!.dict_get_selected_product_Details = buyNowItemFullQuery
+        
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+        // self.orderPlaceWB()
     }
     
     @objc func orderPlaceWB() {
@@ -239,19 +286,6 @@ class AddToCart: UIViewController {
         let urlString = BASE_URL_KREASE
         
         var parameters:Dictionary<AnyHashable, Any>!
-        
-        // print(arrListOfMyCartItems as Any)
-        
-        /*
-         [userId] => 173
-         [shippingAmount] =>
-         [TotalAmount] =>
-         [shippingAddress] => dhdhdififj
-         [ShippingCity] => New Delhi
-         [ShippingState] => Delhi
-         [shippingZipcode] =>
-         [ShippingMobile] => 9865326564
-         */
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             // print(person as Any)
@@ -268,16 +302,16 @@ class AddToCart: UIViewController {
             
             parameters = [
                 
-                "action"            :   "order",
-                "userId"            :   String(myString),
-                "shippingAmount"    :   String(""), // empty
-                "TotalAmount"       :   String(self.lblTotalPrice.text!), // empty
-                "shippingAddress"   :   (person["address"] as! String),
-                "ShippingCity"      :   (person["city"] as! String),
-                "ShippingState"     :   (person["stateName"] as! String),
-                "shippingZipcode"   :   (person["zipCode"] as! String),
-                "ShippingMobile"    :   (person["contactNumber"] as! String),
-                "productList"       :   String(paramsString)
+                "action"            :  "order",
+                "userId"            :  String(myString),
+                "shippingAmount"    :  String(self.newShipMent),
+                "TotalAmount"       :  String(self.lblTotalPrice.text!), // empty
+                "shippingAddress"   :  (person["address"] as! String),
+                "ShippingCity"      :  (person["city"] as! String),
+                "ShippingState"     :  (person["stateName"] as! String),
+                "shippingZipcode"   :  (person["zipCode"] as! String),
+                "ShippingMobile"    :  (person["contactNumber"] as! String),
+                "productList"       :  String(paramsString)
                 
             ]
             
@@ -972,19 +1006,6 @@ extension AddToCart: UITableViewDataSource
         
          cell.lblDetails.text = (item!["productName"] as! String)
 
-         /*if item!["foodTag"] as! String == "Veg" {
-             cell.imgVegNonveg.image = UIImage(named: "veg")
-         } else if item!["foodTag"] as! String == "" {
-             cell.imgVegNonveg.image = UIImage(named: "veg")
-         } else {
-             cell.imgVegNonveg.image = UIImage(named: "nonVeg")
-         }*/
-         
-         // cell.lblRealPrice.text = "PRICE : "+(item!["specialPrice"] as! String)
-         
-         
-         
-         
          if item!["specialPrice"] is String {
              
              print("Yes, it's a String")
@@ -1046,7 +1067,7 @@ extension AddToCart: UITableViewDataSource
         
         newShipMent += Double(myString2)!
         
-        // print(newString1)
+        print(newShipMent)
          
         
         
@@ -1055,26 +1076,14 @@ extension AddToCart: UITableViewDataSource
         
         self.lblSubTotal.text = "$"+String(newString1)
         self.lblShipingCharge.text = "$"+String(newShipMent)
-        
         self.lblTotalPrice.text = "$"+String(add)
         
+        self.str_save_final_shipping_amount = String(newShipMent)
+        self.str_save_final_total_amount = String(add)
         
-         // food id
-         /*let x4 : Int = item!["foodId"] as! Int
-         let myString4 = String(x4)*/
-         
          // array quantity
          let x5 : Int = item!["quantity"] as! Int
          let myString5 = String(x5)
-         
-         // array res id
-         /*let x6 : Int = item!["resturentId"] as! Int
-         let myString6 = String(x6)*/
-         
-         // specialPrice
-         // let xSpecialPrice : Int = item!["specialPrice"] as! Int
-         // let myStringSpecialPrice = String(xSpecialPrice)
-         
          
          let myStringSpecialPrice:String!
          
@@ -1225,10 +1234,10 @@ extension AddToCart: UITableViewDataSource
                  */
                 
                 parameters = [
-                    "action"       :   "editcart",
-                    "userId"       :   myString,// login id
-                    "cartId"       :   cartIdInInt,// cart id
-                    "quantity"          : String(strQuantity)
+                    "action"        :   "editcart",
+                    "userId"        :   myString,// login id
+                    "cartId"        :   cartIdInInt,// cart id
+                    "quantity"      : String(strQuantity)
                 ]
             }
             print("parameters-------\(String(describing: parameters))")
@@ -1241,10 +1250,8 @@ extension AddToCart: UITableViewDataSource
                 case .success(_):
                     if let data = response.value {
                         
-                        
                         let JSON = data as! NSDictionary
                         print(JSON)
-                        
                         
                         var strSuccess : String!
                         strSuccess = JSON["status"]as Any as? String

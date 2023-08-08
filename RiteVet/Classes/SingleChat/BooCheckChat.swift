@@ -240,32 +240,22 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
     
     @objc func notFromDialog() {
     
-        let xR : Int = receiverData["userId"] as! Int
+        print(self.receiverData as Any)
+        
+        let xR : Int = receiverData["userID"] as! Int
         let myStringR = String(xR)
         
         self.strReceiptId = String(myStringR)
-        self.strReceiptImage = (receiverData["ownPicture"] as! String)
+        self.strReceiptImage = (receiverData["userImage"] as! String)
         
-        self.receiverNameIs = (receiverData["VFirstName"] as! String)
+        self.receiverNameIs = (receiverData["userName"] as! String)
         
         self.lblNavigationTitle.text = self.receiverNameIs
         self.imgReceiverProfilePicture.sd_imageIndicator = SDWebImageActivityIndicator.whiteLarge
-        self.imgReceiverProfilePicture.sd_setImage(with: URL(string: (receiverData["ownPicture"] as! String)), placeholderImage: UIImage(named: "logo"))
+        self.imgReceiverProfilePicture.sd_setImage(with: URL(string: (receiverData["userImage"] as! String)), placeholderImage: UIImage(named: "logo"))
         
-        self.strReceiverDevice = (receiverData["device"] as! String)
-        self.strReceiverDeviceToken = (receiverData["deviceToken"] as! String)
-        
-        /*let x30 : Int = (receiverData["chatStatus"] as! Int)
-         let myString30 = String(x30)
-         if myString30 == "1" {
-         self.readUnreadStatus()
-         } else {
-         self.observeMessage()
-         }*/
-        
-        
-        
-        
+        self.strReceiverDevice = (receiverData["userdevice"] as! String)
+        self.strReceiverDeviceToken = (receiverData["userdeviceToken"] as! String)
         
         self.observeMessage()
     }

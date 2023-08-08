@@ -73,12 +73,14 @@ class Utils: NSObject {
         loadingView.mainColor = UIColor.yellow
         loadingView.showOnKeyWindow()
     }
+    
     class func RiteVetIndicatorHide() {
         let loadingView = RSLoadingView()
         loadingView.mainColor = UIColor.clear
         loadingView.showOnKeyWindow()
         loadingView.hide()
     }
+    
 }
 
 

@@ -281,17 +281,13 @@ class Login: UIViewController,UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
-            }
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.view.frame.origin.y -= keyboardSize.height
         }
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
+        self.view.frame.origin.y = 0
     }
     
     //MARK:-
@@ -301,7 +297,7 @@ class Login: UIViewController,UITextFieldDelegate {
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
         /****** TEXT FIELDS *********/
-        Utils.textFieldDR(text: txtEmail, placeHolder: "Username", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: txtEmail, placeHolder: "User Email", cornerRadius: 20, color: .white)
         
         
         /****** SIGN IN BUTTON *********/
@@ -312,18 +308,18 @@ class Login: UIViewController,UITextFieldDelegate {
         btnSignUp.addTarget(self, action: #selector(pushToRegistration), for: .touchUpInside)
         
         /****** FACEBOOK *********/
-            btnFB.backgroundColor = UIColor.init(red: 46.0/255.0, green: 79.0/255.0, blue: 183.0/255.0, alpha: 1)
-            btnFB.layer.cornerRadius = 20
-            btnFB.clipsToBounds = true
+//            btnFB.backgroundColor = UIColor.init(red: 46.0/255.0, green: 79.0/255.0, blue: 183.0/255.0, alpha: 1)
+//            btnFB.layer.cornerRadius = 20
+//            btnFB.clipsToBounds = true
             // btnFB.setTitle("f", for: .normal)
-            btnFB.setTitleColor(.white, for: .normal)
+//            btnFB.setTitleColor(.white, for: .normal)
             
         /****** G+ *********/
-            btnGooglePlus.backgroundColor = UIColor.init(red: 193.0/255.0, green: 47.0/255.0, blue: 38.0/255.0, alpha: 1)
-            btnGooglePlus.layer.cornerRadius = 20
-            btnGooglePlus.clipsToBounds = true
+//            btnGooglePlus.backgroundColor = UIColor.init(red: 193.0/255.0, green: 47.0/255.0, blue: 38.0/255.0, alpha: 1)
+//            btnGooglePlus.layer.cornerRadius = 20
+//            btnGooglePlus.clipsToBounds = true
             // btnGooglePlus.setTitle("g+", for: .normal)
-            btnGooglePlus.setTitleColor(.white, for: .normal)
+//            btnGooglePlus.setTitleColor(.white, for: .normal)
            
     }
     
@@ -381,8 +377,8 @@ class Login: UIViewController,UITextFieldDelegate {
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
                             
-                            //var strSuccessAlert : String!
-                            //strSuccessAlert = JSON["msg"]as Any as? String
+                    var strSuccessAlert : String!
+                    strSuccessAlert = JSON["msg"]as Any as? String
                             
                     if strSuccess == "success" {
                         self.enableService()
@@ -402,6 +398,18 @@ class Login: UIViewController,UITextFieldDelegate {
                         self.indicator.stopAnimating()
                         self.enableService()
                         Utils.RiteVetIndicatorHide()
+                        
+                        let alertController = UIAlertController(title: nil, message: String(strSuccessAlert), preferredStyle: .actionSheet)
+                                
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                            UIAlertAction in
+                            NSLog("OK Pressed")
+                        }
+                                
+                        alertController.addAction(okAction)
+                                
+                        self.present(alertController, animated: true, completion: nil)
+                        
                     }
                 }
                 case .failure(_):
@@ -437,8 +445,8 @@ class Login: UIViewController,UITextFieldDelegate {
     @objc func enableService() {
         self.txtEmail.isUserInteractionEnabled      = true
         self.txtPassword.isUserInteractionEnabled   = true
-        self.btnFB.isUserInteractionEnabled         = true
-        self.btnGooglePlus.isUserInteractionEnabled = true
+//        self.btnFB.isUserInteractionEnabled         = true
+//        self.btnGooglePlus.isUserInteractionEnabled = true
         self.btnSignIn.isUserInteractionEnabled     = true
         self.btnSignUp.isUserInteractionEnabled     = true
     }
@@ -446,8 +454,8 @@ class Login: UIViewController,UITextFieldDelegate {
     @objc func disableService() {
         self.txtEmail.isUserInteractionEnabled      = false
         self.txtPassword.isUserInteractionEnabled   = false
-        self.btnFB.isUserInteractionEnabled         = false
-        self.btnGooglePlus.isUserInteractionEnabled = false
+//        self.btnFB.isUserInteractionEnabled         = false
+//        self.btnGooglePlus.isUserInteractionEnabled = false
         self.btnSignIn.isUserInteractionEnabled     = false
         self.btnSignUp.isUserInteractionEnabled     = false
     }

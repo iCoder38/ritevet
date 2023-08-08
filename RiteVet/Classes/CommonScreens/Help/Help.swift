@@ -7,8 +7,11 @@
 //
 
 import UIKit
+ import MessageUI
 
-class Help: UIViewController {
+class Help: UIViewController,
+            MFMailComposeViewControllerDelegate
+{
 
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
@@ -41,23 +44,25 @@ class Help: UIViewController {
         self.designUIhelpScreen()
     }
     override func viewWillAppear(_ animated: Bool) {
-              super.viewWillAppear(true)
-           navigationController?.setNavigationBarHidden(true, animated: animated)
-          }
-          override var preferredStatusBarStyle: UIStatusBarStyle {
-              return .lightContent
-          }
-          @objc func backClickMethod() {
-              self.navigationController?.popViewController(animated: true)
-          }
-           @objc func sideBarMenu() {
-               if revealViewController() != nil {
-               btnBack.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-               
-                   revealViewController().rearViewRevealWidth = 300
-                   view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-                 }
-       }
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    @objc func backClickMethod() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func sideBarMenu() {
+        if revealViewController() != nil {
+            btnBack.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+            
+            revealViewController().rearViewRevealWidth = 300
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+    }
     
     @objc func designUIhelpScreen() {
         /*
@@ -71,10 +76,33 @@ class Help: UIViewController {
         
         // call
         btnCall.backgroundColor = .clear
-        btnCall.setTitle("1800-1234-5678", for: .normal)
+        btnCall.setTitle("321-682-9800", for: .normal)
         
         // mail
         btnMail.backgroundColor = .clear
-        btnMail.setTitle("support@ritevet.com", for: .normal)
+        btnMail.setTitle("ritevethelp@gmail.com", for: .normal)
+        
+        btnMail.addTarget(self, action: #selector(sendEmail), for: .touchUpInside)
+    }
+    //
+    
+    @objc func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["ritevethelp@gmail.com"])
+            mail.setMessageBody("<p>Type your message here</p>", isHTML: true)
+
+            present(mail, animated: true)
+        } else {
+            // show failure alert
+            
+             
+            
+        }
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }

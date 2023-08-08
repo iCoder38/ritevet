@@ -29,6 +29,13 @@ class VeterinarianBiographyTableCell: UITableViewCell {
     @IBOutlet weak var btnLicense:UIButton!
     @IBOutlet weak var btnUploadSupportDocumantation:UIButton!
     
+    @IBOutlet weak var btn_upload_own_profile_picture:UIButton!
+    @IBOutlet weak var btn_upload_business_picture:UIButton!
+    @IBOutlet weak var btn_upload_e_price_picture:UIButton!
+    @IBOutlet weak var btn_upload_transcript_picture:UIButton!
+    @IBOutlet weak var btn_upload_license_picture:UIButton!
+    @IBOutlet weak var btn_upload_document_picture:UIButton!
+    
     @IBOutlet weak var imgBtnUploadYourProfilePicture:UIButton! {
         didSet {
             imgBtnUploadYourProfilePicture.isHidden = true

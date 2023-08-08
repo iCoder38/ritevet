@@ -65,7 +65,7 @@ class Calendar: UIViewController {
        @IBOutlet weak var btnBack:UIButton!
        @IBOutlet weak var lblNavigationTitle:UILabel! {
            didSet {
-               lblNavigationTitle.text = "VETERINARIAN REGISTRATION"
+               lblNavigationTitle.text = "Select Date/Time And Service"
                lblNavigationTitle.textColor = .white
            }
        }

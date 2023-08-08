@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import BottomPopup
+import CRNotifications
 
 class VRTwo: UIViewController, UITextFieldDelegate {
 
@@ -264,11 +265,11 @@ class VRTwo: UIViewController, UITextFieldDelegate {
     @objc func welcomeWB() {
         // indicator.startAnimating()
         Utils.RiteVetIndicatorShow()
-           
+        
         let urlString = BASE_URL_KREASE
-               
+        
         var parameters:Dictionary<AnyHashable, Any>!
-           
+        
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             // print(person as Any)
             
@@ -281,27 +282,35 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                 "UTYPE"     : "2"
             ]
         }
-                
+        
         print("parameters-------\(String(describing: parameters))")
-                   
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
-               
+            
             switch(response.result) {
             case .success(_):
                 if let data = response.value {
-
+                    
                     let JSON = data as! NSDictionary
                     print(JSON)
                     
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                              
+                    
                     if strSuccess == "success" {
                         // Utils.RiteVetIndicatorHide()
                         
-                         var dict: Dictionary<AnyHashable, Any>
-                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         self.dictPetRegistration = dict as NSDictionary
                         
@@ -317,12 +326,12 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                         if ar.count == 0 {
                             
                             let myDictionary: [String:String] = [
-                                  
+                                
                                 "stateId"       : "",
                                 "stateName"     : "",
                                 "licenceNo"     : ""
                             ]
-                                
+                            
                             self.arrVeterinarianRegistrationMultipleLicence.add(myDictionary)
                             
                         } else {
@@ -331,17 +340,17 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                                 
                                 let item = ar[index] as? [String:Any]
                                 print(item as Any)
-                                 
+                                
                                 // let x : Int = (item!["stateId"] as! Int)
                                 // let myString = String(x)
                                 // state
                                 if item!["stateId"] is String {
                                     print("Yes, it's a String")
-
+                                    
                                     // self.strStateId = (item!["stateId"] as! String)
                                     
                                     let myDictionary: [String:String] = [
-                                      
+                                        
                                         "stateId"       : (item!["stateId"] as! String),
                                         "stateName"     : (item!["stateName"] as! String),
                                         "licenceNo"     : (item!["licenceNo"] as! String)
@@ -351,13 +360,13 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                                     
                                 } else if item!["stateId"] is Int {
                                     print("It is Integer")
-                                                
+                                    
                                     let x2 : Int = (item!["stateId"] as! Int)
                                     let myString2 = String(x2)
                                     // self.strStateId = myString2
                                     
                                     let myDictionary: [String:String] = [
-                                      
+                                        
                                         "stateId"       : myString2,
                                         "stateName"     : (item!["stateName"] as! String),
                                         "licenceNo"     : (item!["licenceNo"] as! String)
@@ -368,13 +377,13 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                                     
                                 } else {
                                     print("i am number")
-                                                
+                                    
                                     let temp:NSNumber = item!["stateId"] as! NSNumber
                                     let tempString = temp.stringValue
                                     // self.strStateId = tempString
                                     
                                     let myDictionary: [String:String] = [
-                                      
+                                        
                                         "stateId"       : tempString,
                                         "stateName"     : (item!["stateName"] as! String),
                                         "licenceNo"     : (item!["licenceNo"] as! String)
@@ -386,7 +395,7 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                             }
                         }
                         
-                       
+                        
                         self.tbleView.delegate = self
                         self.tbleView.dataSource = self
                         
@@ -425,33 +434,63 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                         
                     }
                 }
-
+                
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
                 Utils.RiteVetIndicatorHide()
                 
-//                               self.indicator.stopAnimating()
-//                               self.enableService()
+                //                               self.indicator.stopAnimating()
+                //                               self.enableService()
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
+                
                 let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
                     UIAlertAction in
                     NSLog("OK Pressed")
                 }
-                               
+                
                 alertController.addAction(okAction)
-                               
+                
                 self.present(alertController, animated: true, completion: nil)
                 break
             }
         }
     }
 
-    /*
-     
-     */
-    
-    
+    @objc func check_validation_before_submit() {
+        let indexPath = IndexPath.init(row: 0, section: 0)
+        let cell = self.tbleView.cellForRow(at: indexPath) as! VRTwoTableCell
+        /*
+         "VFirstName"    :   String(cell.txtFirstName.text!),
+         "VmiddleName"   :   String(cell..text!),
+         "VLastName"     :   String(cell..text!),
+         
+         "VBusinessName" :   String(cell..text!),
+         "BusinessLicenseNo" :   String(cell..text!),
+         "VTaxID"        :   String(cell..text!),
+           
+         "american_board_certified"  :   String(),
+         "american_board_certified_option"   : String(),*/
+        
+        if (cell.txtFirstName.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        }/* else if (cell.txtMiddleName.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } */else if (cell.txtLastName.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } else if (cell.txtBusinessName.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } /*else if (cell.txtBusinessLicenceNumber.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } else if (cell.txtIENTAXidNumber.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } */else if (self.strSpecialized == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } else if (self.strSavedSpecializationIds == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        }  else {
+            self.submitDataToServer()
+        }
+    }
     @objc func submitDataToServer() {
         let indexPath = IndexPath.init(row: 0, section: 0)
         let cell = self.tbleView.cellForRow(at: indexPath) as! VRTwoTableCell
@@ -674,7 +713,7 @@ class VRTwo: UIViewController, UITextFieldDelegate {
         
         
             guard let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "secondVC") as? ExamplePopupViewController else { return }
-            popupVC.height = self.height
+            popupVC.height = 500 // self.height
             popupVC.topCornerRadius = self.topCornerRadius
             popupVC.presentDuration = self.presentDuration
             popupVC.dismissDuration = self.dismissDuration
@@ -1293,7 +1332,7 @@ extension VRTwo: UITableViewDataSource {
         
         // cell.lblIndexCount.text = "1/"+String(self.arrVeterinarianRegistrationMultipleLicence.count)
         
-        cell.btnNext.addTarget(self, action: #selector(submitDataToServer), for: .touchUpInside)
+        cell.btnNext.addTarget(self, action: #selector(check_validation_before_submit), for: .touchUpInside)
         
         cell.backgroundColor = .clear
         // cell.accessoryType = .disclosureIndicator

@@ -81,6 +81,7 @@ class BuyNow: UIViewController {
     }
     
     @objc func push_to_payment_page() {
+        print(self.buyNowItemFullQuery as Any)
         
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "CSelectPaymetScreenId") as? CSelectPaymetScreen
         
@@ -90,6 +91,8 @@ class BuyNow: UIViewController {
         self.navigationController?.pushViewController(push!, animated: true)
         
     }
+    
+    
 }
 
 extension BuyNow: UITableViewDataSource {
@@ -150,33 +153,9 @@ extension BuyNow: UITableViewDataSource {
             lblSubTotal.text = "$ "+stringValue
         }*/
         
-        lblSubTotal.text = (buyNowItemFullQuery!["specialPrice"] as! String)
+        self.lblSubTotal.text = (buyNowItemFullQuery!["specialPrice"] as! String)
         
-        /*// shipping amount
-        let livingArea2 = (buyNowItemFullQuery!["shippingAmount"] as! Int)
-        if livingArea2 == 0 {
-            let stringValue = String(livingArea2)
-            lblShipingCharge.text = "$ "+stringValue
-        }
-        else {
-            let stringValue = String(livingArea2)
-            lblShipingCharge.text = "$ "+stringValue
-        }*/
-        
-        lblShipingCharge.text = (buyNowItemFullQuery!["shippingAmount"] as! String)
-        
-        
-        /*// total price
-        let livingArea3 = Int(quantityCount)*(buyNowItemFullQuery!["specialPrice"] as! Int)+(buyNowItemFullQuery!["shippingAmount"] as! Int)
-        if livingArea3 == 0 {
-            let stringValue = String(livingArea3)
-             lblTotalPrice.text = "$ "+stringValue
-        }
-        else {
-            let stringValue = String(livingArea3)
-             lblTotalPrice.text = "$ "+stringValue
-        }*/
-        
+        self.lblShipingCharge.text = (buyNowItemFullQuery!["shippingAmount"] as! String)
         
         let calculateNewTotalPrice = quantityCount*Double(buyNowItemFullQuery!["specialPrice"] as! String)!+Double(buyNowItemFullQuery!["shippingAmount"] as! String)!
         lblTotalPrice.text = "$ "+String(calculateNewTotalPrice)
@@ -193,26 +172,14 @@ extension BuyNow: UITableViewDataSource {
 
         cell.lblStepperText.text = Int(sender.value).description
         
-        /*// sum of total
-        let myInt = Int(cell.lblStepperText.text!)
-        let livingArea = myInt!*(buyNowItemFullQuery!["specialPrice"] as! Int)
-        if livingArea == 0 {
-            let stringValue = String(livingArea)
-            lblSubTotal.text = "$ "+stringValue
-        }
-        else {
-            let stringValue = String(livingArea)
-            lblSubTotal.text = "$ "+stringValue
-        }*/
-        
         let myInt = Double(cell.lblStepperText.text!)!
         
         let getStepperValue = myInt*Double(buyNowItemFullQuery!["specialPrice"] as! String)!
         print(getStepperValue as Any)
         
-        lblSubTotal.text = "$"+String(getStepperValue)// (buyNowItemFullQuery!["specialPrice"] as! String)
+        self.lblSubTotal.text = "$"+String(getStepperValue)
         
-        lblShipingCharge.text = "$"+(buyNowItemFullQuery!["shippingAmount"] as! String)
+        self.lblShipingCharge.text = "$"+(buyNowItemFullQuery!["shippingAmount"] as! String)
         
         let calculateNewTotalPrice = Double(getStepperValue)+Double(buyNowItemFullQuery!["shippingAmount"] as! String)!
         lblTotalPrice.text = String(calculateNewTotalPrice)
@@ -220,158 +187,6 @@ extension BuyNow: UITableViewDataSource {
         self.str_total_price = String(calculateNewTotalPrice)
         
     }
-    
-    /*
-    @objc func editCart(cartIdInInt:Int,strQuantity:String) {
-        
-        //print(saveTotalQuantity as Any)
-        if saveTotalQuantity == "0" {
-            self.deleteProduct(cartIdInIntForDelete: cartIdInInt)
-        }
-        else
-        {
-       
-            Utils.RiteVetIndicatorShow()
-           
-            let urlString = BASE_URL_KREASE
-        
-        var parameters:Dictionary<AnyHashable, Any>!
-           if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any]
-                  {
-                      let x : Int = (person["userId"] as! Int)
-                      let myString = String(x)
-                      
-                    /*
-                     action: editcart
-                     userId:
-                     cartId:
-                     */
-                    
-                   parameters = [
-                       "action"       :   "editcart",
-                       "userId"       :   myString,// login id
-                        "cartId"       :   cartIdInInt,// cart id
-                        "quantity"          : String(strQuantity)
-                   ]
-        }
-                   print("parameters-------\(String(describing: parameters))")
-                   
-                   AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                       {
-                           response in
-               
-                           switch(response.result) {
-                           case .success(_):
-                              if let data = response.value {
-
-                               
-                               let JSON = data as! NSDictionary
-                               //print(JSON)
-                               
-                                
-                               var strSuccess : String!
-                               strSuccess = JSON["status"]as Any as? String
-                               
-                               if strSuccess == "success" //true
-                               {
-                                Utils.RiteVetIndicatorHide()
-                                var ar : NSArray!
-                                ar = (JSON["data"] as! Array<Any>) as NSArray
-                                self.arrListOfMyCartItems = (ar as! Array<Any>)
-
-                                // arrListOfMyCartItems2
-                                var ar2 : NSArray!
-                                ar2 = (JSON["data"] as! Array<Any>) as NSArray
-                                self.arrListOfMyCartItems2 = (ar2 as! Array<Any>)
-                                
-                                if self.arrListOfMyCartItems.count == 0 {
-                                    self.yourCartIsEmpty()
-                                    
-                                }
-                                else
-                                {
-                                // total shipping amount
-                                var newString1 = 0
-                                var ss:Int!
-                                self.itemCount = self.arrListOfMyCartItems.count-1
-                                
-                                for i in 0 ... self.itemCount {
-                                    
-                                    let item = self.arrListOfMyCartItems[i] as? [String:Any]
-                                    
-                                    ss = (item!["shippingAmount"] as! Int)
-                                    
-                                    newString1 += ss
-                                }
-                                //print("Total Shipping Cost: "+newString1)
-                                //self.lblShipingCharge.text = newString1
-                                let y: Int? = newString1
-                                let c = String(y!)
-                                self.lblShipingCharge.text = "$"+c
-                                
-                                // total price
-                                
-                                var newString2 = 0
-                                var ss2:Int!
-                                var getQuantity:Int!
-                                    
-                                self.itemCount = self.arrListOfMyCartItems.count-1
-                                
-                                for i in 0 ... self.itemCount {
-                                    
-                                    let item = self.arrListOfMyCartItems[i] as? [String:Any]
-                                    
-                                    getQuantity = (item!["quantity"] as! Int)
-                                    ss2 = (item!["specialPrice"] as! Int)
-                                    
-                                    newString2 += ss2*getQuantity
-                                }
-                                //print("Total Price: "+newString2)
-                                let y2: Int? = newString2
-                                let c2 = String(y2!)
-                                self.lblSubTotal.text = "$"+c2
-                                
-                                let getFinalPrice : Int!
-                                getFinalPrice = newString1+newString2
-                                
-                                let y3: Int? = getFinalPrice
-                                let c3 = String(y3!)
-                                self.lblTotalPrice.text = "$"+c3
-                                }
-                                
-                                self.tbleView.delegate = self
-                                self.tbleView.dataSource = self
-                                self.tbleView.reloadData()
-                               }
-                               else
-                               {
-                                Utils.RiteVetIndicatorHide()
-                               }
-                               
-                           }
-
-                           case .failure(_):
-                               print("Error message:\(String(describing: response.error))")
-                               Utils.RiteVetIndicatorHide()
-                               
-                               let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
-                               let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                       UIAlertAction in
-                                       NSLog("OK Pressed")
-                                   }
-                               
-                               alertController.addAction(okAction)
-                               
-                               self.present(alertController, animated: true, completion: nil)
-                               
-                               break
-                            }
-                       }
-       }
-    
-    }
-    */
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath, animated: true)

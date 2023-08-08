@@ -170,6 +170,7 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
             let cell = tbleView.cellForRow(at: indexPath) as! EditProfileTableCell
             
             cell.txtUsername.text   = (person["fullName"] as! String)
+            cell.txtLastUsername.text   = (person["lastName"] as! String)
             cell.txtEmail.text      = (person["email"] as! String)
             cell.txtPhone.text      = (person["contactNumber"] as! String)
             cell.txtAddress.text    = (person["address"] as! String)
@@ -333,74 +334,72 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
         let defaults = UserDefaults.standard
         if let myString = defaults.string(forKey: "keyDoneSelectingCountryId")
         {
-
+            
             parameters = [
-                        "action"        :   "statelist",
-                        "counttyId"      :   String(myString)
-                        ]
+                "action"        :   "statelist",
+                "counttyId"      :   String(myString)
+            ]
             defaults.set("", forKey: "keyDoneSelectingCountryId")
             defaults.set(nil, forKey: "keyDoneSelectingCountryId")
         }
-                        print("parameters-------\(String(describing: parameters))")
-                        
-                        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                            {
-                                response in
-                    
-                                switch(response.result) {
-                                case .success(_):
-                                   if let data = response.value {
-
-                                    
-                                    let JSON = data as! NSDictionary
-                                      //print(JSON)
-                                     
-                                    var strSuccess : String!
-                                    strSuccess = JSON["status"]as Any as? String
-                                    
-                                    if strSuccess == "success" //true
-                                    {
-                                     let ar : NSArray!
-                                     ar = (JSON["data"] as! Array<Any>) as NSArray
-                                     
-                                     let defaults = UserDefaults.standard
-                                     defaults.set(ar, forKey: "keyStateListForEditProfile")
-                                     
-                                     
-                                     self.bottomPopuPviewForState()
-     
-                                     
-                                     Utils.RiteVetIndicatorHide()
-                                    }
-                                    else
-                                    {
-                                        Utils.RiteVetIndicatorHide()
-                                    }
-                                    
-                                }
-
-                                case .failure(_):
-                                    print("Error message:\(String(describing: response.error))")
-                                    Utils.RiteVetIndicatorHide()
-                                    
-                                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                    
-                                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                            UIAlertAction in
-                                            NSLog("OK Pressed")
-                                        }
-                                    
-                                    alertController.addAction(okAction)
-                                    
-                                    self.present(alertController, animated: true, completion: nil)
-                                    
-                                    break
-                                 }
-                            }
-         
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
             
-         
-     }
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" //true
+                    {
+                        let ar : NSArray!
+                        ar = (JSON["data"] as! Array<Any>) as NSArray
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set(ar, forKey: "keyStateListForEditProfile")
+                        
+                        
+                        self.bottomPopuPviewForState()
+                        
+                        
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else
+                    {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+   
+    }
     
     @objc func bottomPopuPviewForState() {
         guard let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "secondVC") as? ExamplePopupViewController else { return }
@@ -417,217 +416,143 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
     
     @objc func submitEditProfileClickMethod(_ sender:UIButton) {
         
-            let indexPath = IndexPath.init(row: 0, section: 0)
-            let cell = tbleView.cellForRow(at: indexPath) as! EditProfileTableCell
+        let indexPath = IndexPath.init(row: 0, section: 0)
+        let cell = tbleView.cellForRow(at: indexPath) as! EditProfileTableCell
+        
+        
+        if cell.txtUsername.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtEmail.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtPhone.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtAddress.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtCountry.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtState.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtCity.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        else
+        if cell.txtZipcode.text == "" {
+            self.textFieldShouldNotBeEmpty()
+        }
+        
+        else
+        {
             
-            
-            if cell.txtUsername.text == "" {
-                self.textFieldShouldNotBeEmpty()
+            // imgUploadYesOrNo
+            if imgUploadYesOrNo == "1" {
+                // yes image upload
+                if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any]
+                {
+                    let x : Int = (person["userId"] as! Int)
+                    let myString = String(x)
+                    
+                    var urlRequest = URLRequest(url: URL(string: BASE_URL_KREASE)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0 * 1000)
+                    urlRequest.httpMethod = "POST"
+                    urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+                    
+                    // let indexPath = IndexPath.init(row: 0, section: 0)
+                    // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
+                    
+                    //Set Your Parameter
+                    let parameterDict = NSMutableDictionary()
+                    parameterDict.setValue("editprofile", forKey: "action")
+                    parameterDict.setValue(String(myString), forKey: "userId")
+                    
+                    // Now Execute
+                    AF.upload(multipartFormData: { multiPart in
+                        for (key, value) in parameterDict {
+                            if let temp = value as? String {
+                                multiPart.append(temp.data(using: .utf8)!, withName: key as! String)
+                            }
+                            if let temp = value as? Int {
+                                multiPart.append("\(temp)".data(using: .utf8)!, withName: key as! String)
+                            }
+                            if let temp = value as? NSArray {
+                                temp.forEach({ element in
+                                    let keyObj = key as! String + "[]"
+                                    if let string = element as? String {
+                                        multiPart.append(string.data(using: .utf8)!, withName: keyObj)
+                                    } else
+                                    if let num = element as? Int {
+                                        let value = "\(num)"
+                                        multiPart.append(value.data(using: .utf8)!, withName: keyObj)
+                                    }
+                                })
+                            }
+                        }
+                        multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
+                    }, with: urlRequest)
+                    .uploadProgress(queue: .main, closure: { progress in
+                        //Current upload progress of file
+                        print("Upload Progress: \(progress.fractionCompleted)")
+                    })
+                    .responseJSON(completionHandler: { data in
+                        
+                        switch data.result {
+                            
+                        case .success(_):
+                            do {
+                                
+                                let dictionary = try JSONSerialization.jsonObject(with: data.data!, options: .fragmentsAllowed) as! NSDictionary
+                                
+                                print("Success!")
+                                print(dictionary)
+                                
+                                ERProgressHud.sharedInstance.hide()
+                                
+                                let JSON = dictionary
+                                print(JSON)
+                                
+                                var dict: Dictionary<AnyHashable, Any>
+                                dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                                
+                                let defaults = UserDefaults.standard
+                                defaults.setValue(dict, forKey: "keyLoginFullData")
+                                
+                            }
+                            catch {
+                                // catch error.
+                                print("catch error")
+                                ERProgressHud.sharedInstance.hide()
+                            }
+                            break
+                            
+                        case .failure(_):
+                            print("failure")
+                            ERProgressHud.sharedInstance.hide()
+                            break
+                            
+                        }
+                        
+                        
+                    })
+                    
+                }
             }
-            else
-            if cell.txtEmail.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            else
-            if cell.txtPhone.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            else
-            if cell.txtAddress.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            else
-            if cell.txtCountry.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            else
-            if cell.txtState.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            else
-            if cell.txtCity.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            else
-            if cell.txtZipcode.text == "" {
-                self.textFieldShouldNotBeEmpty()
-            }
-            
             else
             {
-               
-                // imgUploadYesOrNo
-                if imgUploadYesOrNo == "1" {
-                    // yes image upload
-                    if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any]
-                        {
-                         let x : Int = (person["userId"] as! Int)
-                         let myString = String(x)
-                            
-                        var urlRequest = URLRequest(url: URL(string: BASE_URL_KREASE)!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0 * 1000)
-                        urlRequest.httpMethod = "POST"
-                        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-                        
-                        // let indexPath = IndexPath.init(row: 0, section: 0)
-                        // let cell = self.tablView.cellForRow(at: indexPath) as! AddTableTableViewCell
-                        
-                        //Set Your Parameter
-                        let parameterDict = NSMutableDictionary()
-                        parameterDict.setValue("editprofile", forKey: "action")
-                        parameterDict.setValue(String(myString), forKey: "userId")
-                        
-//                        let parameters = [
-//                           "action"        :   "editprofile",
-//                           "userId"        :   String(myString)
-//
-//                       ]
-                        
-                        
-                        // Now Execute
-                        AF.upload(multipartFormData: { multiPart in
-                            for (key, value) in parameterDict {
-                                if let temp = value as? String {
-                                    multiPart.append(temp.data(using: .utf8)!, withName: key as! String)
-                                }
-                                if let temp = value as? Int {
-                                    multiPart.append("\(temp)".data(using: .utf8)!, withName: key as! String)
-                                }
-                                if let temp = value as? NSArray {
-                                    temp.forEach({ element in
-                                        let keyObj = key as! String + "[]"
-                                        if let string = element as? String {
-                                            multiPart.append(string.data(using: .utf8)!, withName: keyObj)
-                                        } else
-                                        if let num = element as? Int {
-                                            let value = "\(num)"
-                                            multiPart.append(value.data(using: .utf8)!, withName: keyObj)
-                                        }
-                                    })
-                                }
-                            }
-                            multiPart.append(self.imgData, withName: "image", fileName: "add_club_logo.png", mimeType: "image/png")
-                        }, with: urlRequest)
-                            .uploadProgress(queue: .main, closure: { progress in
-                                //Current upload progress of file
-                                print("Upload Progress: \(progress.fractionCompleted)")
-                            })
-                            .responseJSON(completionHandler: { data in
-                                
-                                switch data.result {
-                                    
-                                case .success(_):
-                                    do {
-                                        
-                                        let dictionary = try JSONSerialization.jsonObject(with: data.data!, options: .fragmentsAllowed) as! NSDictionary
-                                        
-                                        print("Success!")
-                                        print(dictionary)
-                                        
-                                        ERProgressHud.sharedInstance.hide()
-                                        
-                                        let JSON = dictionary
-                                        print(JSON)
-                                        
-                                         var dict: Dictionary<AnyHashable, Any>
-                                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                                        
-                                         let defaults = UserDefaults.standard
-                                         defaults.setValue(dict, forKey: "keyLoginFullData")
-                                        
-                                    }
-                                    catch {
-                                        // catch error.
-                                        print("catch error")
-                                        ERProgressHud.sharedInstance.hide()
-                                    }
-                                    break
-                                    
-                                case .failure(_):
-                                    print("failure")
-                                    ERProgressHud.sharedInstance.hide()
-                                    break
-                                    
-                                }
-                                
-                                
-                            })
-                        
-                        
-                         /*let parameters = [
-                            "action"        :   "editprofile",
-                            "userId"        :   String(myString)
-                            
-                        ] //Optional for extra parameter
-                        
-                            print(parameters as Any)
-                        
-                        AF.upload(multipartFormData: { multipartFormData in
-                            multipartFormData.append(self.imgData, withName: "image",fileName: "riteVetImage.jpg", mimeType: "image/jpg")
-                                for (key, value) in parameters {
-                                    multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                                    } //Optional for extra parameters
-                            },
-                        to:BASE_URL_KREASE)
-                        { (result) in
-                            switch result {
-                            case .success(_):
-
-                                /*upload.uploadProgress(closure: { (progress) in
-                                    //print("Upload Progress: \(progress.fractionCompleted)")
-                                    
-
-                                    let alertController = UIAlertController(title: "Uploading image", message: "Please wait......", preferredStyle: .alert)
-
-                                    let progressDownload : UIProgressView = UIProgressView(progressViewStyle: .default)
-
-                                    progressDownload.setProgress(Float((progress.fractionCompleted)/1.0), animated: true)
-                                    progressDownload.frame = CGRect(x: 10, y: 70, width: 250, height: 0)
-
-                                    alertController.view.addSubview(progressDownload)
-                                    self.present(alertController, animated: true, completion: nil)
-                                    
-                                    
-                                    
-                                })*/
-
-                                upload.responseJSON { response in
-                                    print(response.result.value as Any)
-                                    self.dismiss(animated: true, completion: nil)
-                                    self.navigationController?.popViewController(animated: true)
-                                    //self.listofAllSchoolImages()
-                                    self.imgUploadYesOrNo = "0"
-                                    
-                                    if let data = response.result.value
-                                    {
-                                        let JSON = data as! NSDictionary
-                                        print(JSON)
-                                        
-                                         var dict: Dictionary<AnyHashable, Any>
-                                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                                        
-                                         let defaults = UserDefaults.standard
-                                         defaults.setValue(dict, forKey: "keyLoginFullData")
-                                        
-                                    }
-                                    
-                                    
-                                    
-                                }
-
-                            case .failure(let encodingError):
-                                print(encodingError)
-                                self.dismiss(animated: true, completion: nil)
-                            }
-                        }*/
-                    }
-                }
-                else
-                {
-                    // no image upload
-                    self.uploadDataNotImage()
+                // no image upload
+                self.uploadDataNotImage()
                 
-        }
-                ///// final else
+            }
+            
         }
     }
     
@@ -675,6 +600,7 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
                         "contactNumber"  :   String(cell.txtPhone.text!),
                         "address"       :   String(cell.txtAddress.text!),
                         "fullName"      :   String(cell.txtUsername.text!),
+                        "lastName"      :   String(cell.txtLastUsername.text!),
                         "device"        :   String("ios"),
                         "city"          :   String(cell.txtCity.text!),
                         "countryId"     :   String(strMySelectedCountryId),
@@ -688,61 +614,58 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
                        print("parameters-------\(String(describing: parameters))")
                        
                        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                           {
-                               response in
-                   
-                               switch(response.result) {
-                               case .success(_):
-                                  if let data = response.value {
-
-                                   
-                                   let JSON = data as! NSDictionary
-                                     // print(JSON)
-                                    
-                                   var strSuccess : String!
-                                   strSuccess = JSON["status"]as Any as? String
-                                   
-                                   if strSuccess == "success" //true
-                                   {
-                                    var dict: Dictionary<AnyHashable, Any>
-                                    dict = JSON["data"] as! Dictionary<AnyHashable, Any>
-                                    
-                                    let defaults = UserDefaults.standard
-                                    defaults.setValue(dict, forKey: "keyLoginFullData")
-                                    
-                                    // self.bottomPopuPviewForState()
-    
-                                    
-                                    Utils.RiteVetIndicatorHide()
-                                   }
-                                   else
-                                   {
-                                       Utils.RiteVetIndicatorHide()
-                                   }
-                                   
-                               }
-
-                               case .failure(_):
-                                   print("Error message:\(String(describing: response.error))")
-                                   Utils.RiteVetIndicatorHide()
-                                   
-                                   let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                   
-                                   let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                           UIAlertAction in
-                                           NSLog("OK Pressed")
-                                       }
-                                   
-                                   alertController.addAction(okAction)
-                                   
-                                   self.present(alertController, animated: true, completion: nil)
-                                   
-                                   break
-                                }
-                           }
-        
-           
-        
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    // print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" //true
+                    {
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.setValue(dict, forKey: "keyLoginFullData")
+                        
+                        // self.bottomPopuPviewForState()
+                        
+                        
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else
+                    {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
     }
     
     @objc func textFieldShouldNotBeEmpty() {
@@ -768,7 +691,8 @@ extension EditProfile: UITableViewDataSource
         cell.backgroundColor = .clear
         
         
-        Utils.textFieldDR(text: cell.txtUsername, placeHolder: "Username", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtUsername, placeHolder: "First Name", cornerRadius: 20, color: .white)
+        Utils.textFieldDR(text: cell.txtLastUsername, placeHolder: "Last Name", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtEmail, placeHolder: "Email", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtPhone, placeHolder: "Phone Number", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtAddress, placeHolder: "Address", cornerRadius: 20, color: .white)
@@ -780,6 +704,11 @@ extension EditProfile: UITableViewDataSource
         cell.btnCountry.addTarget(self, action: #selector(btnCountryListWB(_:)), for: .touchUpInside)
         cell.btnState.addTarget(self, action: #selector(btnStateListWB), for: .touchUpInside)
         cell.btnChangePassword.addTarget(self, action: #selector(change_password_click_method), for: .touchUpInside)
+        
+        
+        cell.btn_vet_profile.addTarget(self, action: #selector(vet_profile_click_method), for: .touchUpInside)
+        cell.btn_other_pet_Service_provider.addTarget(self, action: #selector(other_pet_click_method), for: .touchUpInside)
+        cell.btn_update_pet_parent.addTarget(self, action: #selector(update_pet_click_method), for: .touchUpInside)
         
         let defaults = UserDefaults.standard
         if let myString = defaults.string(forKey: "keyDoneSelectingCountryName")
@@ -803,28 +732,49 @@ extension EditProfile: UITableViewDataSource
             defaults.set(nil, forKey: "keyDoneSelectingStateName")
         }
         
-        
-        
-        /*
-         strUsername = ""
-         strEmail = ""
-         strPhoneNumber = ""
-         strAddress = ""
-         strCountry = ""
-         strState = ""
-         strCity = ""
-         strZipcode = ""
-         */
-        
-        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         cell.imgUploadPhoto.isUserInteractionEnabled = true
         cell.imgUploadPhoto.addGestureRecognizer(tapGestureRecognizer)
         
         cell.btnSubmit.addTarget(self, action: #selector(submitEditProfileClickMethod), for: .touchUpInside)
         
+        
+        cell.btn_id_proof.addTarget(self, action: #selector(push_to_id_proof_page), for: .touchUpInside)
+        
         return cell
     }
+    
+    @objc func push_to_id_proof_page() {
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "pet_store_id_proof_id") as? pet_store_id_proof
+        
+        push!.str_from_edit = "from_edit"
+        
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+    }
+    
+    @objc func vet_profile_click_method() {
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRTwoId")
+        self.navigationController?.pushViewController(push, animated: true)
+        
+    }
+    
+    @objc func other_pet_click_method() {
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRThreeId")
+        self.navigationController?.pushViewController(push, animated: true)
+        
+    }
+    
+    @objc func update_pet_click_method() {
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PetAndParentsInformationId") as? PetAndParentsInformation
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+    }
+    
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
     {
@@ -876,23 +826,23 @@ extension EditProfile: UITableViewDataSource
     }
     
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
-        {
+    {
         
-            imgUploadYesOrNo = "1"
-            
-            let indexPath = IndexPath.init(row: 0, section: 0)
-            let cell = tbleView.cellForRow(at: indexPath) as! EditProfileTableCell
-            
-            let image_data = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-            cell.imgUploadPhoto.image = image_data // show image on image view
-            let imageData:Data = image_data!.pngData()!
-            imageStr = imageData.base64EncodedString()
-            self.dismiss(animated: true, completion: nil)
-            
-            imgData = image_data!.jpegData(compressionQuality: 0.2)!
-                //print(type(of: imgData))
-                //print(imgData)
-
+        imgUploadYesOrNo = "1"
+        
+        let indexPath = IndexPath.init(row: 0, section: 0)
+        let cell = tbleView.cellForRow(at: indexPath) as! EditProfileTableCell
+        
+        let image_data = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        cell.imgUploadPhoto.image = image_data // show image on image view
+        let imageData:Data = image_data!.pngData()!
+        imageStr = imageData.base64EncodedString()
+        self.dismiss(animated: true, completion: nil)
+        
+        imgData = image_data!.jpegData(compressionQuality: 0.2)!
+        //print(type(of: imgData))
+        //print(imgData)
+        
     }
     
     @objc func stepperValueChanged(_ sender: UIButton) {

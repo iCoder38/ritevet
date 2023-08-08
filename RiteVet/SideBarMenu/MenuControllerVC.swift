@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MenuControllerVC: UIViewController {
 
@@ -16,22 +17,23 @@ class MenuControllerVC: UIViewController {
     
     var arrMenuItemList = ["Dashboard",
                            "Edit Profile",
-                           "My Posts",
-                           "Submit New Post",
+                           "Free Stuff",
+                           "Post Free Stuff",
                            "Request Services",
                            "Pet Store",
-                           "My Products",
+                           "Sell items",
                            "Missed Call",
                            "Chat",
-                           "My Reviews",
-                           "My Orders",
-                           "Order Received",
+                           "Reviews Received",
+                           "Items Purchased",
+                           "Orders Received",
                            "My Cart",
-                           "Appointments",
+                           "Manage Appointments",
                            "My Bookings",
                            "Wallet",
                            "Change Password",
                            "Help",
+                           "Delete Account",
                            "Sign out",
     ]
     
@@ -53,6 +55,7 @@ class MenuControllerVC: UIViewController {
                             "m_wallet",
                             "m_change_password",
                             "m_help",
+                            "remove",
                                 "m_sign_out"]
     
     @IBOutlet weak var viewNavigation:UIView! {
@@ -122,6 +125,82 @@ class MenuControllerVC: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    
+    @objc func delete_generateOTP() {
+        
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            parameters = [
+                "action"       :   "deleteotp",
+                "userId"       :   myString,
+//                "OTP":""
+               
+            ]
+        }
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    var strSuccess2 : String!
+                    strSuccess2 = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "Success" || strSuccess == "success"  {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "delete_account_id") as! delete_account
+                         obj.str_delete_account_message = String(strSuccess2)
+                        let navController = UINavigationController(rootViewController: obj)
+                        navController.setViewControllers([obj], animated:true)
+                        self.revealViewController().setFront(navController, animated: true)
+                        self.revealViewController().setFrontViewPosition(FrontViewPosition.left, animated: true)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+    }
+    
+    
 }
 
 extension MenuControllerVC: UITableViewDataSource {
@@ -421,10 +500,10 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Edit Profile" {
             pushPageNumber(strMyPageNumber: "2")
         }
-        if String(arrMenuItemList[indexPath.row]) == "My Posts" {
+        if String(arrMenuItemList[indexPath.row]) == "Free Stuff" {
             pushPageNumber(strMyPageNumber: "4")
         }
-        if String(arrMenuItemList[indexPath.row]) == "Submit New Post" {
+        if String(arrMenuItemList[indexPath.row]) == "Post Free Stuff" {
             pushPageNumber(strMyPageNumber: "5")
         }
         if String(arrMenuItemList[indexPath.row]) == "Request Services" {
@@ -433,10 +512,10 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Pet Store" {
             pushPageNumber(strMyPageNumber: "7")
         }
-        if String(arrMenuItemList[indexPath.row]) == "My Orders" {
+        if String(arrMenuItemList[indexPath.row]) == "Items Purchased" {
             pushPageNumber(strMyPageNumber: "8")
         }
-        if String(arrMenuItemList[indexPath.row]) == "Appointments" {
+        if String(arrMenuItemList[indexPath.row]) == "Manage Appointments" {
             pushPageNumber(strMyPageNumber: "11")
         }
         if String(arrMenuItemList[indexPath.row]) == "My Bookings" {
@@ -454,7 +533,7 @@ extension MenuControllerVC: UITableViewDataSource {
         if String(arrMenuItemList[indexPath.row]) == "Sign out" {
             pushPageNumber(strMyPageNumber: "13")
         }
-        if String(arrMenuItemList[indexPath.row]) == "My Products" {
+        if String(arrMenuItemList[indexPath.row]) == "Sell items" {
             pushPageNumber(strMyPageNumber: "14")
         }
         if String(arrMenuItemList[indexPath.row]) == "My Cart" {
@@ -475,8 +554,12 @@ extension MenuControllerVC: UITableViewDataSource {
             pushPageNumber(strMyPageNumber: "19")
         }
         
-        if String(arrMenuItemList[indexPath.row]) == "My Reviews" {
+        if String(arrMenuItemList[indexPath.row]) == "Reviews Received" {
             pushPageNumber(strMyPageNumber: "20")
+        }
+        
+        if String(arrMenuItemList[indexPath.row]) == "Delete Account" {
+            pushPageNumber(strMyPageNumber: "21")
         }
         
         
@@ -484,6 +567,31 @@ extension MenuControllerVC: UITableViewDataSource {
     
     @objc func pushPageNumber(strMyPageNumber:String) {
        
+        if strMyPageNumber == "21" {
+            
+            let alert = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your account ?",preferredStyle: UIAlertController.Style.alert)
+
+            alert.addAction(UIAlertAction(title: "Yes, delete", style: .default, handler: { _ in
+                //Cancel Action
+                self.delete_generateOTP()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .destructive, handler: { _ in
+                //Cancel Action
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            
+//            let obj = self.storyboard?.instantiateViewController(withIdentifier: "all_reviews_id") as! all_reviews
+//            let navController = UINavigationController(rootViewController: obj)
+//            navController.setViewControllers([obj], animated:true)
+//            self.revealViewController().setFront(navController, animated: true)
+//            self.revealViewController().setFrontViewPosition(FrontViewPosition.left, animated: true)
+            
+        }
+        
         if strMyPageNumber == "20" {
             
             let obj = self.storyboard?.instantiateViewController(withIdentifier: "all_reviews_id") as! all_reviews

@@ -11,6 +11,7 @@ import UIKit
 class RegistrationCell: UITableViewCell {
 
     @IBOutlet weak var txtName:UITextField!
+    @IBOutlet weak var txtLastName:UITextField!
     @IBOutlet weak var txtEmail:UITextField!
     @IBOutlet weak var txtPhone:UITextField!
     @IBOutlet weak var txtCountry:UITextField!

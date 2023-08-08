@@ -387,7 +387,24 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
     
     
     @objc func nextClickMethod() {
-        self.veterianrianRegistrationSecondPage()
+        
+        if (self.strCountryId == "231") {
+            if self.txtZipcode.text == "" {
+                
+                let alert = UIAlertController(title: "Error!", message: "Please enter zipcode.",preferredStyle: UIAlertController.Style.alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                self.veterianrianRegistrationSecondPage()
+            }
+            
+        } else {
+            self.veterianrianRegistrationSecondPage()
+        }
+        
     }
     
     @objc func welcome2() {
@@ -507,7 +524,7 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
                         self.btnMobilClinic.setImage(UIImage(named: "tickWhite"), for: .normal)
                         self.btnVirtualVeterianarian.setImage(UIImage(named: "tickWhite"), for: .normal)
                         
-                        for index in 0..<array.count {
+                        /*for index in 0..<array.count {
                             
                             let item = array[index]
                             print(item as Any)
@@ -532,7 +549,7 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
                                 
                             }
                             
-                        }
+                        }*/
                         
                         self.btnClinicOrHospital.addTarget(self, action: #selector(self.clinicClickMethod), for: .touchUpInside)
                         self.btnMobilClinic.addTarget(self, action: #selector(self.mobilClickMethod), for: .touchUpInside)
@@ -1132,3 +1149,223 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
     }
     
 }
+
+/*
+extension BusinessAddress: UITableViewDataSource , UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:VeterinarianTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)
+            as! VeterinarianTableCell
+        
+        cell.backgroundColor = .clear
+        
+        cell.btnNext.addTarget(self, action: #selector(nextClick), for: .touchUpInside)
+        
+        return cell
+    }
+
+    @objc func nextClick() {
+        print(strDog as Any)
+        print(strCat as Any)
+        print(strPoultry as Any)
+        print(strReptiles as Any)
+        print(strExcoticBirds as Any)
+        print(strEquine as Any)
+        print(strFoodAnimalDiary as Any)
+        print(strOther as Any)
+        
+        
+        let addOne = String(strDog)+","+String(strCat)+","+String(strPoultry)+","+String(strReptiles)
+        let addTwo = String(strExcoticBirds)+","+String(strEquine)+","+String(strFoodAnimalDiary)+","+String(strOther)
+        
+        var addAllStrings = String(addOne)+","+String(addTwo)
+        
+        //print(addAllStrings as Any)
+        
+        addAllStrings = addAllStrings.replacingOccurrences(of: "0,", with: "", options: [.regularExpression, .caseInsensitive])
+        addAllStrings = addAllStrings.replacingOccurrences(of: ",0", with: "", options: [.regularExpression, .caseInsensitive])
+        
+        //print(addAllStrings as Any)
+        
+        // type of service
+        
+        print(strGeneral as Any)
+        print(strWelness as Any)
+        print(strImaging as Any)
+        print(strDiagnosticLab as Any)
+        print()
+        let addThree = String(strGeneral)+","+String(strWelness)+","+String(strImaging)+","+String(strDiagnosticLab)
+        let addFour = String(strDental)+","+String(strBoarding)+","+String(strOther2)
+        
+        var typeOfService = String(addThree)+","+String(addFour)
+        
+        typeOfService = typeOfService.replacingOccurrences(of: "0,", with: "", options: [.regularExpression, .caseInsensitive])
+        typeOfService = typeOfService.replacingOccurrences(of: ",0", with: "", options: [.regularExpression, .caseInsensitive])
+        
+        
+        
+        let addFive = String(strBehaviour)+","+String(strNeurology)+","+String(strOncology)+","+String(strRadiology)
+        let addSix = String(strDermatalogy)+","+String(strCardilogy)+","+String(strOphthalmology)+","+String(strSurgery)
+        
+        var specialization = String(addFive)+","+String(addSix)
+        
+        specialization = specialization.replacingOccurrences(of: "0,", with: "", options: [.regularExpression, .caseInsensitive])
+        specialization = specialization.replacingOccurrences(of: ",0", with: "", options: [.regularExpression, .caseInsensitive])
+        
+        
+        print(addAllStrings)
+        print(typeOfService)
+        print(specialization)
+        
+        if addAllStrings == "0" {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Please fill atleast one Type of Pet", dismissDelay: 1.5, completion:{})
+        }
+        else
+        if typeOfService == "0" {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Please fill atleast one Type of Services", dismissDelay: 1.5, completion:{})
+        }
+        else
+        if specialization == "0" {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Please fill atleast one Specialization", dismissDelay: 1.5, completion:{})
+        }
+        else {
+            self.veterianrianRegistrationThirdPage(strGetTypeOfPet: addAllStrings, strGetTypeOfService: typeOfService, strSpecialization: specialization)
+        }
+        
+        
+        
+    }
+    
+    @objc func veterianrianRegistrationThirdPage(strGetTypeOfPet:String,strGetTypeOfService:String,strSpecialization:String) {
+        let indexPath = IndexPath.init(row: 0, section: 0)
+        let cell = self.tbleView.cellForRow(at: indexPath) as! VeterinarianTableCell
+        
+        Utils.RiteVetIndicatorShow()
+           
+        let urlString = BASE_URL_KREASE
+               
+        var parameters:Dictionary<AnyHashable, Any>!
+           
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            //if let person = UserDefaults.standard.value(forKey: "saveVeterinarianRegistration") as? [String:Any] {
+            parameters = [
+                "action"          :   "petparentregistration",
+                "userId"          :   String(myString),
+                "UTYPE"           :   "2",
+                "typeOfPets"       :  String(strGetTypeOfPet),
+                "otherPet"         :  String(cell.txtOther.text!),
+                "TypeOfService"     : String(strGetTypeOfService),
+                "otherService"      : String(cell.txtOther2.text!),
+                "Specialization"     : String(strSpecialization)
+                       
+            ]
+                
+            //}
+        }
+                
+        print("parameters-------\(String(describing: parameters))")
+                   
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+               
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+
+                               
+                    let JSON = data as! NSDictionary
+                               //print(JSON)
+                               
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                               
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                                   
+                        let defaults = UserDefaults.standard
+                        defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
+                        
+                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VeterinarianBiographyId") as? VeterinarianBiography
+                        self.navigationController?.pushViewController(push!, animated: true)
+                                
+                    }
+                    else {
+                                   //self.indicator.stopAnimating()
+                                   //self.enableService()
+                        Utils.RiteVetIndicatorHide()
+                    }
+                               
+                }
+
+                case .failure(_):
+                    print("Error message:\(String(describing: response.error))")
+                               //self.indicator.stopAnimating()
+                               //self.enableService()
+                    Utils.RiteVetIndicatorHide()
+                               
+                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                               
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                    }
+                               
+                    alertController.addAction(okAction)
+                               
+                    self.present(alertController, animated: true, completion: nil)
+                               
+                    break
+            }
+        }
+    
+    }
+    
+    
+    
+    
+    
+    
+    // second cell click
+    
+    
+    
+    // third
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView .deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       
+        return 1000
+        
+    }
+}
+class BusinessAddressTableCell: UITableViewCell {
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+}
+*/

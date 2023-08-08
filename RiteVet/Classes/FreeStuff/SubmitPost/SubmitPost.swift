@@ -1692,7 +1692,7 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
     @objc func pushToFreeStuff() {
         Utils.RiteVetIndicatorHide()
         
-         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "FreeStuffId") as? FreeStuff
+         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId") as? Dashboard
          self.navigationController?.pushViewController(push!, animated: true)
     }
     

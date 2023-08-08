@@ -50,4 +50,8 @@ pod 'GrowingTextView'
 
 pod 'Stripe', '21.4'
 
+pod 'BSImagePicker', '~> 3.1'
+pod 'OpalImagePicker'
+pod 'QCropper'
+
 end

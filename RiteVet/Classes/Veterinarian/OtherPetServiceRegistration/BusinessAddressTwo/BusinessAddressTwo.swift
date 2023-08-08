@@ -386,7 +386,23 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
     
     
     @objc func nextClickMethod() {
-        self.veterianrianRegistrationSecondPage()
+        if (self.strCountryId == "231") {
+            if self.txtZipcode.text == "" {
+                
+                let alert = UIAlertController(title: "Error!", message: "Please enter zipcode.",preferredStyle: UIAlertController.Style.alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                self.veterianrianRegistrationSecondPage()
+            }
+            
+        } else {
+            self.veterianrianRegistrationSecondPage()
+        }
+        
     }
     
     @objc func welcome2() {

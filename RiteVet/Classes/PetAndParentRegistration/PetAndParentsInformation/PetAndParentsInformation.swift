@@ -437,7 +437,7 @@ class PetAndParentsInformation: UIViewController,UITextFieldDelegate {
         let cell = self.tbleView.cellForRow(at: indexPath) as! PetAndParentsInformationTableCell
         
         cell.txtFirstName.delegate = self
-        cell.txtLastName.delegate = self
+        // cell.txtLastName.delegate = self
         cell.txtExplainAboutTheOtherAnimal.delegate = self
         
         /*indicator.style = .large
@@ -449,7 +449,7 @@ class PetAndParentsInformation: UIViewController,UITextFieldDelegate {
         
         /****** TEXT FIELDS *********/
         Utils.textFieldDR(text: cell.txtFirstName, placeHolder: "First Name", cornerRadius: 20, color: .white)
-        Utils.textFieldDR(text: cell.txtLastName, placeHolder: "Last Name", cornerRadius: 20, color: .white)
+         Utils.textFieldDR(text: cell.txtLastName, placeHolder: "Last Name", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtExplainAboutTheOtherAnimal, placeHolder: "Explain about the other animal", cornerRadius: 20, color: .white)
         
         /****** BUTTON *********/
@@ -807,9 +807,15 @@ extension PetAndParentsInformation: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+        
         let cell:PetAndParentsInformationTableCell = tableView.dequeueReusableCell(withIdentifier: "petAndParentsInformationTableCell") as! PetAndParentsInformationTableCell
-          
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            // print(person as Any)
+            cell.txtFirstName.text = (person["fullName"] as! String)
+            cell.txtLastName.text = (person["lastName"] as! String)
+        }
+        
         let backgroundView = UIView()
         backgroundView.backgroundColor = .clear
         cell.selectedBackgroundView = backgroundView

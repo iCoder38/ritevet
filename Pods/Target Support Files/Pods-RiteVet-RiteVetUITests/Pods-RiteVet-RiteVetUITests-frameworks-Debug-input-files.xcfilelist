@@ -1,6 +1,7 @@
 ${PODS_ROOT}/Target Support Files/Pods-RiteVet-RiteVetUITests/Pods-RiteVet-RiteVetUITests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework
+${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework
 ${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework
 ${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework
 ${BUILT_PRODUCTS_DIR}/CRNotifications/CRNotifications.framework
@@ -25,7 +26,9 @@ ${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework
 ${BUILT_PRODUCTS_DIR}/JKCalendar/JKCalendar.framework
 ${BUILT_PRODUCTS_DIR}/JKInfinitePageView/JKInfinitePageView.framework
 ${BUILT_PRODUCTS_DIR}/Libuv-gRPC/uv.framework
+${BUILT_PRODUCTS_DIR}/OpalImagePicker/OpalImagePicker.framework
 ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
+${BUILT_PRODUCTS_DIR}/QCropper/QCropper.framework
 ${BUILT_PRODUCTS_DIR}/RSLoadingView/RSLoadingView.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework

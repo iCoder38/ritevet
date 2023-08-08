@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>RiteVet would like toh access your Camera to Upload Products images and Post free stuff image&apos;s.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -66,9 +68,9 @@
 		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>RiteVet</string>
+	<string>RiteVet would like toh access your Gallery to Upload Products images and Post free stuff image&apos;s.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>RiteVet</string>
+	<string>RiteVet would like toh access your Camera to Upload Products images and Post free stuff image&apos;s.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>RiteVet would like toh access your location only when you register in this app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

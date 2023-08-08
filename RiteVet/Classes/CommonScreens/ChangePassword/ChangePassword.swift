@@ -181,6 +181,7 @@ class ChangePassword: UIViewController,UITextFieldDelegate {
                      strSuccess2 = JSON["msg"]as Any as? String
                                
                     if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
                         let alert = UIAlertController(title: String(strSuccess), message: String(strSuccess2), preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
                             
