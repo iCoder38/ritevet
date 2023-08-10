@@ -144,19 +144,19 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
         self.addComment()
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
-    }
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+//            if self.view.frame.origin.y == 0 {
+//                self.view.frame.origin.y -= keyboardSize.height
+//            }
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        if self.view.frame.origin.y != 0 {
+//            self.view.frame.origin.y = 0
+//        }
+//    }
     
     
     
@@ -274,16 +274,12 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
            override var preferredStatusBarStyle: UIStatusBarStyle {
                return .lightContent
            }
-           @objc func backClickMethod() {
-               self.navigationController?.popViewController(animated: true)
-           }
+    @objc func backClickMethod() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     
     func freeStuffDetailsWB() {
-               //self.pushFromLoginPage()
-               
-               //indicator.startAnimating()
-    //           self.disableService()
                
         Utils.RiteVetIndicatorShow()
                
@@ -296,7 +292,6 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
             "staffId"    : (getFreeStuffDict!["staffId"] as! NSNumber)
         ]
                   
-                    
         print("parameters-------\(String(describing: parameters))")
                        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {

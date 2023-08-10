@@ -172,12 +172,29 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
         let address = String(self.dictShowFullDetails["VBusinessAddress"] as! String)
         let country = String(self.dictShowFullDetails["Country"] as! String)
         
-        let alert = UIAlertController(title: "Details", message: "You have selected veterinarian ' \(name) ' from  ' \(address) ' '\(country) ' and you will be charge ' $\(price) ', and you will get full refund if you canceled in 2 hours or less from the time of their appointment", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+        let defaults = UserDefaults.standard
+        if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+            print(myString22)
             
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
+            if (myString22 == "2") {
+                
+                let alert = UIAlertController(title: "Details", message: "You have selected veterinarian ' \(name) ' from  ' \(address) ' '\(country) ' and you will be charge ' $\(price) ', and you will get full refund if you canceled in 48 hours or less from the time of their appointment", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertController(title: "Details", message: "You have selected veterinarian ' \(name) ' from  ' \(address) ' '\(country) ' and you will be charge ' $\(price) ', and you will get full refund if you canceled in 2 hours or less from the time of their appointment", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
         
     }
     

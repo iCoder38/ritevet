@@ -127,6 +127,88 @@ class MenuControllerVC: UIViewController {
     }
     
     
+    @objc func logout_WB() {
+        
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            parameters = [
+                "action"    :   "logout",
+                "userId"    :   myString,
+               
+            ]
+        }
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    var strSuccess2 : String!
+                    strSuccess2 = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "Success" || strSuccess == "success"  {
+                        Utils.RiteVetIndicatorHide()
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.setValue("", forKey: "keyLoginFullData")
+                        defaults.setValue(nil, forKey: "keyLoginFullData")
+                        
+                        let obj = self.storyboard?.instantiateViewController(withIdentifier: "LoginId") as! Login
+                        // obj.strBookingOrAppointment = "bookingIs"
+                        let navController = UINavigationController(rootViewController: obj)
+                        navController.setViewControllers([obj], animated:true)
+                        self.revealViewController().setFront(navController, animated: true)
+                        self.revealViewController().setFrontViewPosition(FrontViewPosition.left, animated: true)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     @objc func delete_generateOTP() {
         
         Utils.RiteVetIndicatorShow()
@@ -550,7 +632,7 @@ extension MenuControllerVC: UITableViewDataSource {
             pushPageNumber(strMyPageNumber: "18")
         }
         
-        if String(arrMenuItemList[indexPath.row]) == "Order Received" {
+        if String(arrMenuItemList[indexPath.row]) == "Orders Received" {
             pushPageNumber(strMyPageNumber: "19")
         }
         
@@ -750,16 +832,10 @@ extension MenuControllerVC: UITableViewDataSource {
 
             alert.addAction(UIAlertAction(title: "Yes, Logout", style: UIAlertAction.Style.default, handler: { _ in
                 //Cancel Action
-                let defaults = UserDefaults.standard
-                defaults.setValue("", forKey: "keyLoginFullData")
-                defaults.setValue(nil, forKey: "keyLoginFullData")
                 
-                let obj = self.storyboard?.instantiateViewController(withIdentifier: "LoginId") as! Login
-                // obj.strBookingOrAppointment = "bookingIs"
-                let navController = UINavigationController(rootViewController: obj)
-                navController.setViewControllers([obj], animated:true)
-                self.revealViewController().setFront(navController, animated: true)
-                self.revealViewController().setFrontViewPosition(FrontViewPosition.left, animated: true)
+                
+                self.logout_WB()
+                
             }))
             
             alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.destructive, handler: { _ in

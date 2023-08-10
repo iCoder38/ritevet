@@ -286,10 +286,6 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
                     alertController.addAction(cancel)
                     self.present(alertController, animated: true, completion:nil)
                     
-                    
-                        
-                    
-                    
                     break;
                     
                 case .restored:

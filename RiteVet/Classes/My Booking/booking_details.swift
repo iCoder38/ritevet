@@ -169,7 +169,7 @@ extension booking_details: UITableViewDataSource , UITableViewDelegate {
         self.lbl_address.text = (self.dictBookingDetails["vendorAddress"] as! String)
         self.imgProfile.sd_setImage(with: URL(string: (self.dictBookingDetails["vendorImage"] as! String)), placeholderImage: UIImage(named: "logo-500"))
         
-        print(self.dictBookingDetails["serviceArray"])
+        // print(self.dictBookingDetails["serviceArray"])
         // print(self.dictBookingDetails["serviceArray"].debugDescription.count)
         
         if let array = self.dictBookingDetails["serviceArray"] as? [String] {

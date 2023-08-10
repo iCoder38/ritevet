@@ -520,8 +520,9 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 "ShippingState"     :   (person["stateName"] as! String),
                 "shippingZipcode"   :   (person["zipCode"] as! String),
                 "ShippingMobile"    :   (person["contactNumber"] as! String),
+                "shippingName"      :  (person["fullName"] as! String)+" "+(person["lastName"] as! String),
                 "productList"       :   String(paramsString),
-                "transactionId":String(stripe_token)
+                "transactionId"     :String(stripe_token)
                 
             ]
             

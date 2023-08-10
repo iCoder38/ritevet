@@ -22,6 +22,7 @@ class DogFoodDetailsTableCell: UITableViewCell {
     }
     
     @IBOutlet weak var lbl_seller_name:UILabel!
+    @IBOutlet weak var lbl_seller_last_name:UILabel!
     @IBOutlet weak var lbl_seller_phone:UILabel!
     @IBOutlet weak var lbl_seller_email:UILabel!
     @IBOutlet weak var lbl_seller_company_name:UILabel!

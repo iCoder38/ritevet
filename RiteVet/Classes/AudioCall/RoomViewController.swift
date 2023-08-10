@@ -19,7 +19,7 @@ protocol RoomVCDelegate: class {
 
 class RoomViewController: UIViewController {
     
-    var secondsRemaining = 10
+    var secondsRemaining = 20
     var call_cut_timer:Timer!
     
     // let dict : [String : Any] = UserDefaults.standard.dictionary(forKey: "kAPI_LOGIN_DATA") ?? [:]
@@ -146,7 +146,7 @@ class RoomViewController: UIViewController {
     @IBOutlet weak var lblWhoJoined:UILabel!
     
     // modified
-    var loginUserNameIs:String!
+    var loginUserNameIs:String! = ""
     var arrSaveMultipleJoinedUsers:NSMutableArray = []
     
     var currentPageNumber:Int = 1
@@ -212,17 +212,16 @@ class RoomViewController: UIViewController {
             // self.logTableView.separatorColor = .clear
             
             roomNameLabel.text = "\(roomName!)"
-            print("\(roomName!)")
             
-            
-            
-            let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
-            
+
+            let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)            
             
             self.start_timer_for_call_cut()
             
             // self.fullIncomingCallView.isHidden = true
             if "\(setSteps!)" == "1" { // call is incoming
+                
+                print("\(roomName!)")
                 
                 agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
                 agoraKit.delegate = self
@@ -249,8 +248,10 @@ class RoomViewController: UIViewController {
                 
             } else if "\(setSteps!)" == "2" { // who start the call
                 
-                agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-                agoraKit.delegate = self
+                print("\(roomName!)")
+                
+//                agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+//                agoraKit.delegate = self
                 
                 self.roomNameLabel.text = "\(callerName!)"
                 
@@ -445,8 +446,51 @@ private extension RoomViewController {
 
     func loadAgoraKit()   {
         
+        
+        /*agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+        
+        // Assign delegate later
+        agoraKit.delegate = self
+        
+        // let mergeNameAndImage =
+        
+        let registerResponse: Int32 = agoraKit.registerLocalUserAccount(String(self.loginUserNameIs), appId: KeyCenter.AppId)
+        
+        if registerResponse == 0 {
+            print("Successfully registered")
+            // print(roomName)
+            
+            agoraKit.joinChannel(byToken: "", channelId: String(self.roomName), userAccount: String(roomName)) { (channel, uid, elapsed) in
+                print("User joined channel \(channel) with \(uid). Elapsed time is \(elapsed)ms.")
+            }
+            
+             
+            
+//            agoraKit.joinChannel()
+//
+//            agoraKit.joinChannel(
+//                byToken: "", channelId: String(roomName), uid: 0, mediaOptions: option,
+//                    joinSuccess: { (channel, uid, elapsed) in }
+//                )
+            
+            
+        } else {
+            
+            print("Failed to register")
+            
+        }*/
+        
+        
+        
+        
+        
 //        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
 //        agoraKit.delegate = self
+        
+        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
+        
+        // Assign delegate later
+        agoraKit.delegate = self
         
         let option = AgoraRtcChannelMediaOptions()
 
@@ -651,10 +695,13 @@ extension RoomViewController: AgoraRtcEngineDelegate {
             // print(self.arrSaveMultipleJoinedUsers as Any)
             
             if self.arrSaveMultipleJoinedUsers.count >= 1 {
+                
                 self.roomNameLabel.text = "On Call with"
                 self.lblCounter.isHidden = true
                 // self.startTimer()
+                
             } else {
+                
                 self.timer?.invalidate()
                 
                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
@@ -679,13 +726,11 @@ extension RoomViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
         append(log: "Did joined of uid: \(uid)")
         
-        
         audioPlayer.stop()
     }
    
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {
         append(log: "Did offline of uid: \(uid), reason: \(reason.rawValue)")
-        
         
         for indexx in 0..<self.arrSaveMultipleJoinedUsers.count {
             
@@ -736,7 +781,7 @@ extension RoomViewController: AgoraRtcEngineDelegate {
             
         }
         
-        print("TOTAL USER IN THIS CHAT IS ==== >",self.arrSaveMultipleJoinedUsers.count as Any)
+        // print("TOTAL USER IN THIS CHAT IS ==== >",self.arrSaveMultipleJoinedUsers.count as Any)
         
         if self.arrSaveMultipleJoinedUsers.count == 0 {
             self.leaveChannel()

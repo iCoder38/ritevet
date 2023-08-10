@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import RSLoadingView
+import CRNotifications
 
 class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
     
@@ -539,11 +540,17 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
                                 self.btnMobilClinic.tag = 1
                                 self.btnMobilClinic.setImage(UIImage(named: "tickGreen"), for: .normal)
                                 
-                            } else {
+                            } else if item == "3" {
                                 
                                 self.strVirtualServices = "3"
                                 self.btnVirtualVeterianarian.tag = 1
                                 self.btnVirtualVeterianarian.setImage(UIImage(named: "tickGreen"), for: .normal)
+                                
+                            } else {
+                                
+                                self.btnClinicOrHospital.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                self.btnMobilClinic.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                self.btnVirtualVeterianarian.setImage(UIImage(named: "tickWhite"), for: .normal)
                                 
                             }
                             
@@ -728,9 +735,10 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
                                    
                         let defaults = UserDefaults.standard
                         defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
-                                
-                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VeterinarianTypesTwoId") as? VeterinarianTypesTwo
-                        self.navigationController?.pushViewController(push!, animated: true)
+                             
+                        self.alert_before_push()
+                        
+                        
                                 
                         Utils.RiteVetIndicatorHide()
                     }
@@ -761,6 +769,46 @@ class BusinessAddressTwo: UIViewController, UITextFieldDelegate {
                 break
             }
         }
+    }
+    
+    @objc func alert_before_push() {
+        
+        if (self.txtStreetAddress.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } else if (self.txtState.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        }   else   if (self.txtCity.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        } else   if (self.txtPhone.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        }   else if (self.txtYearsInBusinessExperience.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        }  else if (self.txtEmail.text == "") {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+        }  else {
+            
+            
+            if (self.strCountryId == "231") {
+                if self.txtZipcode.text == "" {
+                    
+                    let alert = UIAlertController(title: "Error!", message: "Please enter zipcode.",preferredStyle: UIAlertController.Style.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                } else {
+                    let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VeterinarianTypesTwoId") as? VeterinarianTypesTwo
+                    self.navigationController?.pushViewController(push!, animated: true)
+                }
+                
+            } else {
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VeterinarianTypesTwoId") as? VeterinarianTypesTwo
+                self.navigationController?.pushViewController(push!, animated: true)
+            }
+            
+        }
+        
     }
 
     @objc func countryListWb() {

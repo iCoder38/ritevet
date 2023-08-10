@@ -304,14 +304,6 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                         var dict: Dictionary<AnyHashable, Any>
                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                         self.dictPetRegistration = dict as NSDictionary
                         
                         self.strSavedSpecializationIds = (self.dictPetRegistration["american_board_certified_option"] as! String)
@@ -422,6 +414,10 @@ class VRTwo: UIViewController, UITextFieldDelegate {
                         
                         cell.lblIndexCount.text = String("1")+"/"+String(self.arrVeterinarianRegistrationMultipleLicence.count)
                         
+                        if (self.dictPetRegistration["american_board_certified_option_name"] as! String) == "" {
+                            cell.txt_do_you_have.text = "No"
+                        }
+                        
                         // self.american_board_WB()
                         
                         self.stateListWB()
@@ -467,30 +463,51 @@ class VRTwo: UIViewController, UITextFieldDelegate {
          "VBusinessName" :   String(cell..text!),
          "BusinessLicenseNo" :   String(cell..text!),
          "VTaxID"        :   String(cell..text!),
-           
+         
          "american_board_certified"  :   String(),
          "american_board_certified_option"   : String(),*/
         
         if (cell.txtFirstName.text == "") {
             CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
         }/* else if (cell.txtMiddleName.text == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        } */else if (cell.txtLastName.text == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        } else if (cell.txtBusinessName.text == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        } /*else if (cell.txtBusinessLicenceNumber.text == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        } else if (cell.txtIENTAXidNumber.text == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        } */else if (self.strSpecialized == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        } else if (self.strSavedSpecializationIds == "") {
-            CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
-        }  else {
-            self.submitDataToServer()
-        }
+          CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+          } */else if (cell.txtLastName.text == "") {
+              CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+          } else if (cell.txtBusinessName.text == "") {
+              CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+              // 9 - august - 2023
+          } else if (cell.txt_do_you_have.text == "") {
+              CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+          } /*else if (cell.txtBusinessLicenceNumber.text == "") {
+             CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+             } else if (cell.txtIENTAXidNumber.text == "") {
+             CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+             } else if (self.strSpecialized == "") {
+             CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+             } else if (self.strSavedSpecializationIds == "") {
+             CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
+             }  */else {
+                 
+                 // 9 - august - 2023
+                 // print("all done")
+                 
+                 if (cell.txt_do_you_have.text == "No") {
+                     self.submitDataToServer()
+                 } else {
+                     if (cell.txt_specialization_options.text == "") {
+                         
+                         CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Please select Specialization Options.", dismissDelay: 1.5, completion:{})
+                         
+                     } else {
+                         
+                         self.submitDataToServer()
+                     }
+                     
+                 }
+             }
+        
     }
+    
     @objc func submitDataToServer() {
         let indexPath = IndexPath.init(row: 0, section: 0)
         let cell = self.tbleView.cellForRow(at: indexPath) as! VRTwoTableCell
@@ -1354,25 +1371,11 @@ extension VRTwo: UITableViewDataSource {
         }
         
         return cell
-        
     }
 
-     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath, animated: true)
         
-        // let item = self.arrListOfAllMyOrders[indexPath.section] as? [String:Any]
-        // var ar : NSArray!
-        // ar = (item!["SubCat"] as! Array<Any>) as NSArray
-        
-        // let item1 = ar[indexPath.row] as? [String:Any]
-        
-        // let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConversationStartersDetailsId") as? ConversationStartersDetails
-        // push!.dictGetConversationStarters = item1 as NSDictionary?
-        // self.navigationController?.pushViewController(push!, animated: true)
-        
-        //
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

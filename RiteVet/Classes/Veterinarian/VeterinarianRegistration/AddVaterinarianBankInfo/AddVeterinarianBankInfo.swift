@@ -219,18 +219,34 @@ class AddVeterinarianBankInfo: UIViewController,UITextFieldDelegate {
                                    
                                 let defaults = UserDefaults.standard
                                 defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
-                                
+                                   
                                 
                                    
-                                   let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as a veterinarian, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to14 days. Please feel free to email us at mailto:ritevet@ritevet.com or call us Monday-Sunday at 321-682-9800Monday - Sunday from 7:00 pm -10:00 pm US Eastern Standard Time. Please leave a message if you called us in different time or if we did not answer your call, we will get back to you within 48 hours", preferredStyle: UIAlertController.Style.alert)
-                                   alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
-                                       
+                                   
+                                   
+                                   
+                                   
+                                   if let myString = defaults.string(forKey: "key_first_time_vet_reg") {
                                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
                                        self.navigationController?.pushViewController(push, animated: true)
+                                   } else {
+                                       defaults.setValue("first_time_ved_reg", forKey: "key_first_time_vet_reg")
+                                       let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as a veterinarian, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to14 days. Please feel free to email us at mailto:ritevet@ritevet.com or call us Monday-Sunday at 321-682-9800Monday - Sunday from 7:00 pm -10:00 pm US Eastern Standard Time. Please leave a message if you called us in different time or if we did not answer your call, we will get back to you within 48 hours", preferredStyle: UIAlertController.Style.alert)
+                                       alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                                           
+                                           let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
+                                           self.navigationController?.pushViewController(push, animated: true)
+                                           
+                                       }))
                                        
-                                   }))
+                                       self.present(alert, animated: true, completion: nil)
+                                       
+                                   }
+                                       
+                                
+                                
                                    
-                                   self.present(alert, animated: true, completion: nil)
+                                   
                                    
                                    
                                 
@@ -322,8 +338,25 @@ extension AddVeterinarianBankInfo: UITableViewDataSource
     }
     
     @objc func skipClickMethod() {
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-        self.navigationController?.pushViewController(push, animated: true)
+        
+        let defaults = UserDefaults.standard
+        
+        if let myString = defaults.string(forKey: "key_first_time_vet_reg") {
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
+            self.navigationController?.pushViewController(push, animated: true)
+        } else {
+            defaults.setValue("first_time_ved_reg", forKey: "key_first_time_vet_reg")
+            let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as a veterinarian, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to14 days. Please feel free to email us at mailto:ritevet@ritevet.com or call us Monday-Sunday at 321-682-9800Monday - Sunday from 7:00 pm -10:00 pm US Eastern Standard Time. Please leave a message if you called us in different time or if we did not answer your call, we will get back to you within 48 hours", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
+                self.navigationController?.pushViewController(push, animated: true)
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
     }
     
     @objc func finishClickMethod() {

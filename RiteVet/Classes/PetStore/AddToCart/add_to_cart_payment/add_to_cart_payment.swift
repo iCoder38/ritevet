@@ -322,6 +322,7 @@ class add_to_cart_payment: UIViewController, UITextFieldDelegate, CLLocationMana
                 "shippingZipcode"   :   (person["zipCode"] as! String),
                 "ShippingMobile"    :   (person["contactNumber"] as! String),
                 "productList"       :   String(paramsString),
+                "shippingName"      :  (person["fullName"] as! String)+" "+(person["lastName"] as! String),
                 "transactionId"     : String(stripe_token)
                 
             ]

@@ -104,7 +104,7 @@ class VeterinarianBiography: UIViewController,UINavigationControllerDelegate,UII
             
         }*/
         
-        self.welcome4()
+        
     }
     
     @objc func dismissKeyboard() {
@@ -115,6 +115,8 @@ class VeterinarianBiography: UIViewController,UINavigationControllerDelegate,UII
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        self.welcome4()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -207,17 +209,32 @@ extension VeterinarianBiography: UITableViewDataSource {
         print(dict_multi_image as Any)
         
         var ar_multi_image : NSArray!
-        ar_multi_image = (dict_multi_image["Business"] as! Array<Any>) as NSArray
-        print(ar_multi_image as Any)
+        if (dict_multi_image["Business"] == nil) {
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Business Picture"
+            push!.arr_image = []
+            
+            push!.str_image_type = String("Business")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            
+            self.navigationController?.pushViewController(push!, animated: true)
+            
+        } else {
+            ar_multi_image = (dict_multi_image["Business"] as! Array<Any>) as NSArray
+            print(ar_multi_image as Any)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Business Picture"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Business")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        }
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
-        
-        push!.str_title_name = "Upload Business Picture"
-        push!.arr_image = ar_multi_image
-        
-        push!.str_image_type = String("Business")
-        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
-        self.navigationController?.pushViewController(push!, animated: true)
     }
     @objc func upload_profile_e_price_click_method() {
         
@@ -226,17 +243,34 @@ extension VeterinarianBiography: UITableViewDataSource {
         print(dict_multi_image as Any)
         
         var ar_multi_image : NSArray!
-        ar_multi_image = (dict_multi_image["Eprice"] as! Array<Any>) as NSArray
-        print(ar_multi_image as Any)
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        if (dict_multi_image["Eprice"] == nil) {
+             
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Estimate Price Picture"
+            push!.arr_image = []
+            
+            push!.str_image_type = String("Eprice")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+            
+        } else {
+            
+            ar_multi_image = (dict_multi_image["Eprice"] as! Array<Any>) as NSArray
+            print(ar_multi_image as Any)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Estimate Price Picture"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Eprice")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+            
+        }
         
-        push!.str_title_name = "Upload Estimate Price Picture"
-        push!.arr_image = ar_multi_image
-        
-        push!.str_image_type = String("Eprice")
-        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
-        self.navigationController?.pushViewController(push!, animated: true)
     }
     
     @objc func upload_profile_transcript_click_method() {
@@ -246,17 +280,34 @@ extension VeterinarianBiography: UITableViewDataSource {
         print(dict_multi_image as Any)
         
         var ar_multi_image : NSArray!
-        ar_multi_image = (dict_multi_image["Transcript"] as! Array<Any>) as NSArray
-        print(ar_multi_image as Any)
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        if (dict_multi_image["Transcript"] == nil) {
+             
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Transcript Picture"
+            push!.arr_image = []
+            
+            push!.str_image_type = String("Transcript")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+            
+        } else {
+            
+            ar_multi_image = (dict_multi_image["Transcript"] as! Array<Any>) as NSArray
+            print(ar_multi_image as Any)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Transcript Picture"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Transcript")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+            
+        }
         
-        push!.str_title_name = "Upload Transcript Picture"
-        push!.arr_image = ar_multi_image
-        
-        push!.str_image_type = String("Transcript")
-        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
-        self.navigationController?.pushViewController(push!, animated: true)
     }
     
     @objc func upload_profile_license_click_method() {
@@ -266,17 +317,31 @@ extension VeterinarianBiography: UITableViewDataSource {
         print(dict_multi_image as Any)
         
         var ar_multi_image : NSArray!
-        ar_multi_image = (dict_multi_image["License"] as! Array<Any>) as NSArray
-        print(ar_multi_image as Any)
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        if (dict_multi_image["License"] == nil) {
+             
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload License Picture"
+            push!.arr_image = []
+            
+            push!.str_image_type = String("License")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        } else {
+            ar_multi_image = (dict_multi_image["License"] as! Array<Any>) as NSArray
+            print(ar_multi_image as Any)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload License Picture"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("License")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        }
         
-        push!.str_title_name = "Upload License Picture"
-        push!.arr_image = ar_multi_image
-        
-        push!.str_image_type = String("License")
-        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
-        self.navigationController?.pushViewController(push!, animated: true)
     }
     
     @objc func upload_profile_document_click_method() {
@@ -286,17 +351,31 @@ extension VeterinarianBiography: UITableViewDataSource {
         print(dict_multi_image as Any)
         
         var ar_multi_image : NSArray!
-        ar_multi_image = (dict_multi_image["Document"] as! Array<Any>) as NSArray
-        print(ar_multi_image as Any)
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        if (dict_multi_image["Document"] == nil) {
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Documents"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Document")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        } else {
+            ar_multi_image = (dict_multi_image["Document"] as! Array<Any>) as NSArray
+            print(ar_multi_image as Any)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Documents"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Document")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        }
         
-        push!.str_title_name = "Upload Documents"
-        push!.arr_image = ar_multi_image
-        
-        push!.str_image_type = String("Document")
-        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
-        self.navigationController?.pushViewController(push!, animated: true)
     }
     
     @objc func upload_profile_picture_click_method() {
@@ -306,17 +385,31 @@ extension VeterinarianBiography: UITableViewDataSource {
         print(dict_multi_image as Any)
         
         var ar_multi_image : NSArray!
-        ar_multi_image = (dict_multi_image["Own"] as! Array<Any>) as NSArray
-        print(ar_multi_image as Any)
         
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+        if (dict_multi_image["Own"] == nil) {
+             
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Profile Picture"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Own")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        } else {
+            ar_multi_image = (dict_multi_image["Own"] as! Array<Any>) as NSArray
+            print(ar_multi_image as Any)
+            
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "add_images_in_vet_id") as? add_images_in_vet
+            
+            push!.str_title_name = "Upload Profile Picture"
+            push!.arr_image = ar_multi_image
+            
+            push!.str_image_type = String("Own")
+            push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
+            self.navigationController?.pushViewController(push!, animated: true)
+        }
         
-        push!.str_title_name = "Upload Profile Picture"
-        push!.arr_image = ar_multi_image
-        
-        push!.str_image_type = String("Own")
-        push!.str_user_info_id = "\(self.dict_new["userInfoId"]!)"
-        self.navigationController?.pushViewController(push!, animated: true)
     }
     
     /*

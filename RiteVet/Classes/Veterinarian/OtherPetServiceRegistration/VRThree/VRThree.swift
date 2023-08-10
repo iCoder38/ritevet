@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import BottomPopup
+import CRNotifications
 
 class VRThree: UIViewController, UITextFieldDelegate {
     
@@ -480,8 +481,7 @@ class VRThree: UIViewController, UITextFieldDelegate {
                         // let defaults = UserDefaults.standard
                         // defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
                         
-                        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BusinessAddressTwoId")
-                        self.navigationController?.pushViewController(push, animated: true)
+                        self.validation_before_push()
                         
                     }
                     else {
@@ -512,6 +512,25 @@ class VRThree: UIViewController, UITextFieldDelegate {
                 break
             }
         }
+    }
+    
+    @objc func validation_before_push() {
+        
+        let indexPath = IndexPath.init(row: 0, section: 0)
+        let cell = self.tbleView.cellForRow(at: indexPath) as! VRThreeTableCell
+        
+        if cell.txtFirstName.text == "" {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Error!", message:"Field Should not be empty.", dismissDelay: 1.5, completion:{})
+        } else if cell.txtLastName.text == "" {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Error!", message:"Field Should not be empty.", dismissDelay: 1.5, completion:{})
+        } else if cell.txtBusinessName.text == "" {
+            CRNotifications.showNotification(type: CRNotifications.error, title: "Error!", message:"Field Should not be empty.", dismissDelay: 1.5, completion:{})
+        } else {
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BusinessAddressTwoId")
+            self.navigationController?.pushViewController(push, animated: true)
+        }
+        
+        
     }
     
     @objc func stateListWB() {

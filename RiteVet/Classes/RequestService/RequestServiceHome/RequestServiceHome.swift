@@ -81,6 +81,26 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
         print(strSubCategoryId as Any)
         print(self.str_type_of_business as Any)
         
+        if (self.str_type_of_business == "1") {
+            self.txtCategory.text = "Veterinary Clinic / Hospital Near me"
+        } else
+        if (self.str_type_of_business == "2") {
+            self.txtCategory.text = "Mobile Clinic / Veterinarian Come to my Home"
+        } else
+        if (self.str_type_of_business == "3") {
+            self.txtCategory.text = "Video Chat with a Veterinarian"
+        } else
+        if (self.str_type_of_business == "4") {
+            self.txtCategory.text = "Fixed Location"
+        } else
+        if (self.str_type_of_business == "5") {
+            self.txtCategory.text = "Mobile Business"
+        } else
+        if (self.str_type_of_business == "6") {
+            self.txtCategory.text = "Mobile Service Provider"
+        } else {
+            self.txtCategory.text = ""
+        }
         
         
         /****** VIEW BG IMAGE *********/
@@ -114,6 +134,8 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
         txtCategory.delegate = self
         
         // self.requestServiceHomeWB()
+        
+        self.txtSearch.returnKeyType = .search
         
         self.filterViaClickWB(strAction: "requestservice",
                               strUtpe: String(self.strGetRequestServiceHome),
@@ -293,9 +315,9 @@ class RequestServiceHome: UIViewController,UITextFieldDelegate {
         parameters = [
             "action"            : strAction,
             "UTYPE"             : strUtpe,
-             "keyword"       : String(search_word),
+             "keyword"          : String(search_word),
             "typeofbusiness"    : strTypeOfBusiness,
-            "pageNo"        :   page_number
+            "pageNo"            :   page_number
         ]
         
         print("parameters-------\(String(describing: parameters))")

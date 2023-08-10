@@ -763,11 +763,22 @@ class VeterinarianTypes: UIViewController {
                                 cell.btnExcoticAnimals.tag = 1
                                 cell.btnExcoticAnimals.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
-                            } else { // Lab. Animal
+                            } else if item == "8" { // Lab. Animal
                                 
                                 self.strEquine = "8"
                                 cell.btnLabAnimals.tag = 1
                                 cell.btnLabAnimals.setImage(UIImage(named: strSelectImage), for: .normal)
+                                
+                            } else {
+                                
+                                cell.btnDog.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnCat.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnPoultry.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnExcoticBirds.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnFoodAnimalAndDiary.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnExcoticAnimals.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnOther.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnLabAnimals.setImage(UIImage(named: "tickWhite"), for: .normal)
                                 
                             }
                             
@@ -856,13 +867,24 @@ class VeterinarianTypes: UIViewController {
                                 cell.btnDiagonsticLab.tag = 1
                                 cell.btnDiagonsticLab.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
-                            } else {
+                            } else if item == "7" {
                                 
                                 self.strOther2 = "7"
                                 cell.btnOther2.tag = 1
                                 cell.btnOther2.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
+                            } else {
+                            
+                                cell.btnGeneral.setImage(UIImage(named: strDeSelectImage), for: .normal) // 1
+                                cell.btnWellness.setImage(UIImage(named: strDeSelectImage), for: .normal) // 2
+                                cell.btnImaging.setImage(UIImage(named: strDeSelectImage), for: .normal) // 4
+                                cell.btnDiagonsticLab.setImage(UIImage(named: strDeSelectImage), for: .normal) // 6
+                                cell.btnDental.setImage(UIImage(named: strDeSelectImage), for: .normal) // 3
+                                cell.btnBording.setImage(UIImage(named: strDeSelectImage), for: .normal) // 5
+                                cell.btnOther2.setImage(UIImage(named: strDeSelectImage), for: .normal) // 7
+                                
                             }
+                            
                             
                         }
                         

@@ -662,9 +662,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         UserDefaults.standard.set(nil, forKey: "key_instant_calling")
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            print()
+            
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
+            print(myString)
             
             Utils.RiteVetIndicatorShow()
             
@@ -679,16 +680,16 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 "userId"        : String(myString),
                 "todevice"      : "\(self.dictBookingDetails["userdevice"] as! String)",
                 "device"        : "iOS",
-                "channel"       : "\(self.dictBookingDetails["userID"]!)+\(String(myString))",
+                "channel"       : "\(self.dictBookingDetails["userID"]!)+\(self.dictBookingDetails["vendorID"]!)",
                 "name"          : (person["fullName"] as! String),
                 "image"         : "\(self.dictBookingDetails["userImage"] as! String)",
-                "Token"         : "\(self.dictBookingDetails["userdeviceToken"] as! String)",
+                "Token"         : "\(self.dictBookingDetails["vendordeviceToken"] as! String)",
                 "deviceToken"   : (person["deviceToken"] as! String),
                 "mobileNumber"  : ""
             ]
             
             print("parameters-------\(String(describing: parameters))")
-            
+            // "135+133"
             AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
                 [self]
                 response in
@@ -731,7 +732,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
                                 
-                                push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(String(myString))"
+                                push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(self.dictBookingDetails["vendorID"]!)"
                                 push!.setSteps = "2"
                                 push!.strIamCallingTo = "\(self.dictBookingDetails["userName"] as! String)"
                                 
@@ -763,7 +764,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VideoChatViewControllerId") as? VideoChatViewController
                                 
-                                push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(String(myString))"
+                                push!.roomName = "\(self.dictBookingDetails["userID"]!)+\(self.dictBookingDetails["vendorID"]!)"
                                 push!.setSteps = "2"
                                 push!.strIamCallingTo = "\(self.dictBookingDetails["userName"] as! String)"
                                 

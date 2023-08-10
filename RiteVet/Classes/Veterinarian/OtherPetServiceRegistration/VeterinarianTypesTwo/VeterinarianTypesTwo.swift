@@ -709,12 +709,22 @@ class VeterinarianTypesTwo: UIViewController {
                                 cell.btnExcoticAnimals.tag = 1
                                 cell.btnExcoticAnimals.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
-                            } else { // Lab. Animal
+                            } else if item == "8" { // Lab. Animal
                                 
                                 self.strEquine = "8"
                                 cell.btnLabAnimals.tag = 1
                                 cell.btnLabAnimals.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
+                            } else {
+                                cell.btnDog.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnCat.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnPoultry.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnExcoticBirds.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnFoodAnimalAndDiary.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnExcoticAnimals.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnOther.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnLabAnimals.setImage(UIImage(named: "tickWhite"), for: .normal)
+
                             }
                             
                         }
@@ -793,12 +803,20 @@ class VeterinarianTypesTwo: UIViewController {
                                 cell.btnPetTraining.tag = 1
                                 cell.btnPetTraining.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
-                            } else { // Food Animals & Dairy
+                            } else if item == "10" { // Food Animals & Dairy
                                 
                                 self.strPetWalking = "10"
                                 cell.btnPetWalking.tag = 1
                                 cell.btnPetWalking.setImage(UIImage(named: strSelectImage), for: .normal)
                                 
+                            } else {
+                                cell.btnGrooming.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnOtherServices.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                // cell.btnImaging.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnPetHotel.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnPetSettingAnd.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnPetTraining.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                cell.btnPetWalking.setImage(UIImage(named: "tickWhite"), for: .normal)
                             }
                             
                         }
@@ -1163,7 +1181,7 @@ extension VeterinarianTypesTwo: UITableViewDataSource {
         
         var addAllStrings = String(addOne)+","+String(addTwo)
         
-        //print(addAllStrings as Any)
+        print(addAllStrings as Any)
         
         addAllStrings = addAllStrings.replacingOccurrences(of: "0,", with: "", options: [.regularExpression, .caseInsensitive])
         addAllStrings = addAllStrings.replacingOccurrences(of: ",0", with: "", options: [.regularExpression, .caseInsensitive])

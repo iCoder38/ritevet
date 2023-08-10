@@ -120,52 +120,23 @@ class MyOrdersDetails: UIViewController {
     }
 }
 
-extension MyOrdersDetails: UITableViewDataSource
-{
-    func numberOfSections(in tableView: UITableView) -> Int
-    {
+extension MyOrdersDetails: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1 // arrListOfMyOrders.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell:MyOrdersDetailsTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! MyOrdersDetailsTableCell
         
         cell.backgroundColor = .clear
         
-        /*
-         SKU = e4t64r222;
-         ShippingCity = "Dishant Rajput Vendor";
-         ShippingMobile = 123456789;
-         ShippingState = "";
-         TotalAmount = 8000;
-         amount = 8000;
-         created = "December 26th, 2019, 6:10 pm";
-         id = 65;
-         image = "http://demo2.evirtualservices.com/ritevet/site/img/uploads/products/1575973651bb3ce36c-a3bc-4ab6-bd0e-1efcf105cc75_1.d403ef16688c4b782fc44a6e10e2058a.jpeg";
-         orderID = 55;
-         orderStatus = 1;
-         paymentTrouugh = "";
-         price = 4000;
-         productId = 77;
-         productName = "Pet Food";
-         quantity = 2;
-         shippingAddress = "";
-         shippingAmount = 10;
-         shippingName = "";
-         shippingZipcode = "";
-         transactionID = "";
-         */
-        
-        
-         // let item = arrListOfMyOrders[indexPath.row] as? [String:Any]
-        
-         // image
+        // image
         cell.imgProductImage.sd_setImage(with: URL(string: (dictGetOrderDetails!["image"] as! String)), placeholderImage: UIImage(named: "plainBack"))
         
          // product name
@@ -177,47 +148,29 @@ extension MyOrdersDetails: UITableViewDataSource
         // quantity
         let livingArea = dictGetOrderDetails?["quantity"] as? Int ?? 0
         if livingArea == 0 {
+            
+            let stringValue = String(livingArea)
+            cell.lblQuantity.text = " Quantity: "+(stringValue)+" |"
+            
+        } else {
+            
             let stringValue = String(livingArea)
             cell.lblQuantity.text = " Quantity: "+(stringValue)+" |"
         }
-        else
-        {
-            let stringValue = String(livingArea)
-            cell.lblQuantity.text = " Quantity: "+(stringValue)+" |"
-        }
+        
         // price
         // let livingArea2 = dictGetOrderDetails?["price"] as? Int ?? 0
         cell.lblPrice.text = "$\(self.dictGetOrderDetails["price"]!)"
         
         // fullName = purnima;
         // shipping details
-         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            cell.lblUsername.text = (self.dictGetOrderDetails["SellerCompanyName"] as! String)+"\n"+(dictGetOrderDetails["shippingAddress"] as! String)+"\n"+(dictGetOrderDetails["ShippingCity"] as! String)+"\n"+(dictGetOrderDetails["ShippingState"] as! String)+"\nPhone Number : "+(dictGetOrderDetails["ShippingMobile"] as! String)
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             
-         }
+            cell.lblUsername.text = (person["fullName"] as! String)+" "+(person["lastName"] as! String)+"\n"+(dictGetOrderDetails["shippingAddress"] as! String)+"\n"+(dictGetOrderDetails["ShippingCity"] as! String)+"\n"+(dictGetOrderDetails["ShippingState"] as! String)+"\nPhone Number : "+(dictGetOrderDetails["ShippingMobile"] as! String)
+            
+        }
         
         cell.lbl_seller_info.text = "Name : "+(self.dictGetOrderDetails["sellerName"] as! String)+"\nEmail : "+(self.dictGetOrderDetails["sellerEmail"] as! String)+"\nPhone : "+(self.dictGetOrderDetails["sellerPhone"] as! String)+"\nCompany name : "+(self.dictGetOrderDetails["SellerCompanyName"] as! String)
-        
-        
-        
-        /*cell.lblAddress.text = "State : "+(dictGetOrderDetails["ShippingState"] as! String)
-        cell.lblZipcode.text = "Address : "+(dictGetOrderDetails["shippingAddress"] as! String)+" - "+(dictGetOrderDetails["shippingZipcode"] as! String)
-        cell.lblPhoneNumber.text = "Phone number : "+(dictGetOrderDetails["ShippingMobile"] as! String)*/
-        /*}
-        else {
-            cell.lblUsername.text = "no name availaible"
-            cell.lblAddress.text = "no address availaible"
-            cell.lblPhoneNumber.text = "Phone number : "+"no phone number availaible"
-        }*/
-        
-        
-        
-        // payment details
-        /*
-         @IBOutlet weak var lblPaymentDetails:UILabel!
-         @IBOutlet weak var lblInvoiceDate:UILabel!
-         @IBOutlet weak var lblRefId:UILabel!
-         */ // created
         
         if "\(self.dictGetOrderDetails!["orderStatus"]!)" == "3" {
             self.lblInTransit.text = "Delivered"
@@ -225,12 +178,12 @@ extension MyOrdersDetails: UITableViewDataSource
             self.lblInTransit.text = "In-Transit"
         }
         
-        
         cell.lblPaymentDetails.text = "Payment Details" //(item!["productName"] as! String)
         cell.lblInvoiceDate.text = "Invoice Date : "+(self.dictGetOrderDetails!["created"] as! String)
         cell.lblRefId.text = "Ref ID : "+"e4t64r222" //(item!["productName"] as! String)
         
         return cell
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -248,7 +201,6 @@ extension MyOrdersDetails: UITableViewDataSource
     }
 }
 
-extension MyOrdersDetails: UITableViewDelegate
-{
+extension MyOrdersDetails: UITableViewDelegate {
     
 }

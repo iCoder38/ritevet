@@ -66,7 +66,7 @@ class order_received_details: UIViewController {
         // self.sideBarMenu()
         
         self.view.backgroundColor = UIColor.init(red: 7.0/255.0, green: 30.0/255.0, blue: 86.0/255.0, alpha: 1)
-        // print(dictGetOrderDetails as Any)
+        print(dictGetOrderDetails as Any)
         
         let livingArea = dictGetOrderDetails["orderID"] as? Int ?? 0
         if livingArea == 0 {
@@ -290,11 +290,11 @@ extension order_received_details: UITableViewDataSource , UITableViewDelegate
         
         // fullName = purnima;
         // shipping details
-        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+//        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             
-            cell.lblUsername.text = (person["fullName"] as! String)+"\n"+(dictGetOrderDetails["shippingAddress"] as! String)+"\n"+(dictGetOrderDetails["ShippingCity"] as! String)+"\n"+(dictGetOrderDetails["ShippingState"] as! String)+"\nPhone Number : "+(dictGetOrderDetails["ShippingMobile"] as! String)
+            cell.lblUsername.text = (dictGetOrderDetails["shippingName"] as! String)+"\n"+(dictGetOrderDetails["shippingAddress"] as! String)+"\n"+(dictGetOrderDetails["ShippingCity"] as! String)+"\n"+(dictGetOrderDetails["ShippingState"] as! String)+"\nPhone Number : "+(dictGetOrderDetails["ShippingMobile"] as! String)
             
-        }
+//        }
         
         cell.lbl_seller_info.text = "Name : "+(self.dictGetOrderDetails["sellerName"] as! String)+"\nEmail : "+(self.dictGetOrderDetails["sellerEmail"] as! String)+"\nPhone : "+(self.dictGetOrderDetails["sellerPhone"] as! String)+"\nCompany name : "+(self.dictGetOrderDetails["SellerCompanyName"] as! String)
         

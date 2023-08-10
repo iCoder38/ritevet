@@ -103,8 +103,8 @@ class Login: UIViewController,UITextFieldDelegate {
         //self.login()
         
         
-        txtEmail.delegate = self
-        txtPassword.delegate = self
+        self.txtEmail.delegate = self
+        self.txtPassword.delegate = self
         
         self.rememberMe()
         
@@ -280,15 +280,7 @@ class Login: UIViewController,UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            self.view.frame.origin.y -= keyboardSize.height
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y = 0
-    }
+    
     
     //MARK:-
     @objc func UIdesignOfLoginScreen() {
@@ -306,21 +298,7 @@ class Login: UIViewController,UITextFieldDelegate {
         
         /****** SIGN UP BUTTON *********/
         btnSignUp.addTarget(self, action: #selector(pushToRegistration), for: .touchUpInside)
-        
-        /****** FACEBOOK *********/
-//            btnFB.backgroundColor = UIColor.init(red: 46.0/255.0, green: 79.0/255.0, blue: 183.0/255.0, alpha: 1)
-//            btnFB.layer.cornerRadius = 20
-//            btnFB.clipsToBounds = true
-            // btnFB.setTitle("f", for: .normal)
-//            btnFB.setTitleColor(.white, for: .normal)
-            
-        /****** G+ *********/
-//            btnGooglePlus.backgroundColor = UIColor.init(red: 193.0/255.0, green: 47.0/255.0, blue: 38.0/255.0, alpha: 1)
-//            btnGooglePlus.layer.cornerRadius = 20
-//            btnGooglePlus.clipsToBounds = true
-            // btnGooglePlus.setTitle("g+", for: .normal)
-//            btnGooglePlus.setTitleColor(.white, for: .normal)
-           
+             
     }
     
     @objc func pushToRegistration() {

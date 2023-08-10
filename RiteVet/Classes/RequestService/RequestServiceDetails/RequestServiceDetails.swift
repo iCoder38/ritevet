@@ -1121,14 +1121,19 @@ class RequestServiceDetails: UIViewController {
     
     @objc func bookAnAppoitmentClickMethod() {
     
-        let alert = UIAlertController(title: "Ritevet", message: "Book an appointment by pressing the below Book appointment button.", preferredStyle: UIAlertController.Style.alert)
+        // 9 - august - 2023
+        self.push_to_book_an_appointment()
+        
+        
+            
+        /*let alert = UIAlertController(title: "Ritevet", message: "Book an appointment by pressing the below Book appointment button.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
             
             self.push_to_book_an_appointment()
             
         }))
         
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)*/
         
     }
     

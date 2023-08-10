@@ -31,7 +31,7 @@ let SERVER_ISSUE_TITLE          = "Server Issue."
 let SERVER_ISSUE_MESSAGE_ONE    = "Server Not Responding."
 let SERVER_ISSUE_MESSAGE_TWO    = "Please contact to Server Admin."
 
-let AGORA_KEY_ID = "2c977cd3879a43fc86e67e928a859067"
+let AGORA_KEY_ID = "bbe938fe04a746fd9019971106fa51ff"
 
 
 //let FONT_NAME_12 = UIFont.
@@ -126,4 +126,23 @@ extension UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+}
+
+
+extension UIViewController {
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= keyboardSize.height
+        }
+    }
+}
+
+@objc func keyboardWillHide(notification: NSNotification) {
+    if self.view.frame.origin.y != 0 {
+        self.view.frame.origin.y = 0
+    }
+
+}
 }

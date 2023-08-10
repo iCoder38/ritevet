@@ -111,6 +111,7 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
         strClinicHospital   = "0"
         strMobileClinic     = "0"
         strVirtualServices  = "0"
+        
         strStateId = "0"
         strCountryId = "0"
         
@@ -446,8 +447,8 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
                     if strSuccess == "success" {
                         // Utils.RiteVetIndicatorHide()
                         
-                         var dict: Dictionary<AnyHashable, Any>
-                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
                         
                         self.txtStreetAddress.text  = (dict["VBusinessAddress"] as! String)
                         self.txtSuit.text           = (dict["VBSuite"] as! String)
@@ -524,7 +525,7 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
                         self.btnMobilClinic.setImage(UIImage(named: "tickWhite"), for: .normal)
                         self.btnVirtualVeterianarian.setImage(UIImage(named: "tickWhite"), for: .normal)
                         
-                        /*for index in 0..<array.count {
+                        for index in 0..<array.count {
                             
                             let item = array[index]
                             print(item as Any)
@@ -541,15 +542,21 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
                                 self.btnMobilClinic.tag = 1
                                 self.btnMobilClinic.setImage(UIImage(named: "tickGreen"), for: .normal)
                                 
-                            } else {
+                            }  else if item == "3" {
                                 
                                 self.strVirtualServices = "3"
                                 self.btnVirtualVeterianarian.tag = 1
                                 self.btnVirtualVeterianarian.setImage(UIImage(named: "tickGreen"), for: .normal)
                                 
+                            } else {
+                                
+                                self.btnClinicOrHospital.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                self.btnMobilClinic.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                self.btnVirtualVeterianarian.setImage(UIImage(named: "tickWhite"), for: .normal)
+                                
                             }
                             
-                        }*/
+                        }
                         
                         self.btnClinicOrHospital.addTarget(self, action: #selector(self.clinicClickMethod), for: .touchUpInside)
                         self.btnMobilClinic.addTarget(self, action: #selector(self.mobilClickMethod), for: .touchUpInside)
@@ -810,7 +817,7 @@ class BusinessAddress: UIViewController, UITextFieldDelegate {
                 if let data = response.value {
 
                     let JSON = data as! NSDictionary
-                    print(JSON)
+                    // print(JSON)
                     
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String

@@ -311,6 +311,7 @@ class AddToCart: UIViewController {
                 "ShippingState"     :  (person["stateName"] as! String),
                 "shippingZipcode"   :  (person["zipCode"] as! String),
                 "ShippingMobile"    :  (person["contactNumber"] as! String),
+                "shippingName"      :  (person["fullName"] as! String)+" "+(person["lastName"] as! String),
                 "productList"       :  String(paramsString)
                 
             ]

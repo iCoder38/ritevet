@@ -70,6 +70,10 @@ class ChangePassword: UIViewController,UITextFieldDelegate {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view .endEditing(true)
+        return true
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -85,6 +89,8 @@ class ChangePassword: UIViewController,UITextFieldDelegate {
                 revealViewController().rearViewRevealWidth = 300
                 view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
               }
+        
+        self.view.endEditing(true)
     }
     
     @objc func changePasswordUI() {
@@ -93,6 +99,10 @@ class ChangePassword: UIViewController,UITextFieldDelegate {
         Utils.textFieldDR(text: txtNewPassword, placeHolder: "Current Password", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: txtConfirmPassword, placeHolder: "New Password", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: txtReConfirmPassword, placeHolder: "Confirm Password", cornerRadius: 20, color: .white)
+        
+        self.txtNewPassword.delegate = self
+        self.txtConfirmPassword.delegate = self
+        self.txtReConfirmPassword.delegate = self
         
         /****** BUTTON *********/
         Utils.buttonDR(button: btnSavePassword, text: "CHANGE PASSWORD", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 20)

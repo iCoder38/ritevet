@@ -75,6 +75,35 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
         self.clView!.dataSource = self
         self.clView!.delegate = self
         self.clView!.reloadData()
+
+        if (self.arr_image == nil) {
+            
+            self.arr_image = []
+            Utils.buttonDR(button: btn_upload, text: "Upload", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 0)
+            
+            self.btn_upload.isUserInteractionEnabled = true
+            
+            self.btn_upload.addTarget(self, action: #selector(openActionSheet), for: .touchUpInside)
+            
+        } else {
+            
+            if (self.arr_image.count == 10) {
+                
+                self.btn_upload.backgroundColor = .lightGray
+                self.btn_upload.isUserInteractionEnabled = false
+                
+            } else {
+                
+                Utils.buttonDR(button: btn_upload, text: "Upload", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 0)
+                
+                self.btn_upload.isUserInteractionEnabled = true
+                
+                self.btn_upload.addTarget(self, action: #selector(openActionSheet), for: .touchUpInside)
+                
+            }
+            
+        }
+        
         
         self.btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
         
@@ -130,17 +159,9 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
         
         print("Selected: \(assets)")
         
-        // self.imgProfile.image = self.getAssetThumbnail(asset: assets[0])
-        
         print(assets.count)
         
         self.arrImagesThumbnail.add(self.getAssetThumbnail(asset: assets[0]))
-        
-        // for uiimage view
-        // self.imgFeed.image = self.getAssetThumbnail(asset: assets[0])
-        
-        // for button
-        // self.imgFeed.setImage(self.getAssetThumbnail(asset: assets[0]), for: .normal)
         
         self.arrTest.removeAllObjects()
         
@@ -159,7 +180,7 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
         //Dismiss Controller
         self.presentedViewController?.dismiss(animated: true, completion: nil)
         
-         // self.upload_selected_photos_to_server()
+        self.upload_image()
     }
     
     func getAssetThumbnail(asset: PHAsset) -> UIImage {
@@ -174,38 +195,6 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
         return thumbnail
         
     }
-    
-    /*@objc func openCamera() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera;
-        imagePicker.allowsEditing = false
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    @objc func openGallery() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary;
-        imagePicker.allowsEditing = false
-        self.present(imagePicker, animated: true, completion: nil)
-    }*/
-    
-    
-    
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    
-        let image_data = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        
-        //  cell.image = image_data // show image on image view
-        let imageData:Data = image_data!.pngData()!
-        self.imageStr = imageData.base64EncodedString()
-        self.dismiss(animated: true, completion: nil)
-        self.imgData = image_data!.jpegData(compressionQuality: 0.2)!
-        
-        self.upload_image()
-    }
-    
     
     @objc func upload_image() {
 
@@ -261,7 +250,17 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
                     
                 }
                 
-                multiPart.append(self.imgData, withName: "multiImage", fileName: "add_biography.png", mimeType: "image/png")
+                for i in 0..<self.arrTest.count {
+                    print("\("multiImage")"+"\([i])")
+                    
+                    let image : UIImage = UIImage(data: self.arrTest![i] as! Data)!
+                    
+                    multiPart.append((image ).jpegData(compressionQuality: 0.5)!, withName: "\("multiImage")"+"\([i])", fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/png")
+                    
+                }
+                
+                
+//                multiPart.append(self.imgData, withName: "multiImage", fileName: "add_biography.png", mimeType: "image/png")
                 
             }, with: urlRequest)
             .uploadProgress(queue: .main, closure: { progress in
@@ -282,8 +281,14 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
                         
                         ERProgressHud.sharedInstance.hide()
                         
-                        let JSON = dictionary
-                        print(JSON)
+                        let alert = UIAlertController(title: "Success", message: (dictionary["msg"] as! String), preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
+//                        let JSON = dictionary
+//                        print(JSON)
                         
                         /*var dict: Dictionary<AnyHashable, Any>
                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
@@ -335,20 +340,8 @@ extension add_images_in_vet: UICollectionViewDelegate {
 
         cell.imgDogProduct.sd_setImage(with: URL(string: (item!["image"] as! String)), placeholderImage: UIImage(named: "plainBack"))
         
-        if (self.arr_image.count == 10) {
-            
-            self.btn_upload.backgroundColor = .lightGray
-            self.btn_upload.isUserInteractionEnabled = false
-            
-        } else {
-            
-            Utils.buttonDR(button: btn_upload, text: "Upload", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 0)
-            
-            self.btn_upload.isUserInteractionEnabled = true
-            
-            self.btn_upload.addTarget(self, action: #selector(openActionSheet), for: .touchUpInside)
-            
-        }
+        
+        
         
         return cell
         

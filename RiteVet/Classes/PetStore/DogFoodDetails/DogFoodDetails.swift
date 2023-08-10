@@ -808,10 +808,15 @@ extension DogFoodDetails: UITableViewDataSource {
         // title
         cell.lblDetails.text = (dictGetAnimalFoodDetails!["productName"] as! String)
         
-        cell.lbl_seller_email.text = (dictGetAnimalFoodDetails!["sellerEmail"] as! String)
-        cell.lbl_seller_name.text = (dictGetAnimalFoodDetails!["sellerName"] as! String)
+        cell.lbl_seller_email.text = (dictGetAnimalFoodDetails!["userEmail"] as! String)
+        cell.lbl_seller_name.text = (dictGetAnimalFoodDetails!["userName"] as! String)
         cell.lbl_seller_company_name.text = (dictGetAnimalFoodDetails!["SellerCompanyName"] as! String)
-        cell.lbl_seller_phone.text = (dictGetAnimalFoodDetails!["sellerPhone"] as! String)
+        cell.lbl_seller_phone.text = (dictGetAnimalFoodDetails!["userPhone"] as! String)
+        cell.lbl_seller_last_name.text = (dictGetAnimalFoodDetails!["userLastName"] as! String)
+        
+        
+        
+        
         
         // old price
         

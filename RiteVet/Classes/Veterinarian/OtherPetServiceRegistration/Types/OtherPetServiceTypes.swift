@@ -480,26 +480,26 @@ extension OtherPetServiceTypes: UITableViewDataSource {
     @objc func FoodAnimalDiaryClick() {
         if btnFoodAnimalDiary.tag == 0 {
             strFoodAnimalDiary = "7"
-                 btnFoodAnimalDiary.setImage(UIImage(named: "tickGreen"), for: .normal)
-                 btnFoodAnimalDiary.tag = 1
-             }
-             else if btnFoodAnimalDiary.tag == 1 {
+            btnFoodAnimalDiary.setImage(UIImage(named: "tickGreen"), for: .normal)
+            btnFoodAnimalDiary.tag = 1
+        }
+        else if btnFoodAnimalDiary.tag == 1 {
             strFoodAnimalDiary = "0"
-                 btnFoodAnimalDiary.setImage(UIImage(named: "tickWhite"), for: .normal)
-                 btnFoodAnimalDiary.tag = 0
-             }
+            btnFoodAnimalDiary.setImage(UIImage(named: "tickWhite"), for: .normal)
+            btnFoodAnimalDiary.tag = 0
+        }
     }
     @objc func Other2Click() {
         if btnOther2.tag == 0 {
             strOther2 = "8"
-                 btnOther2.setImage(UIImage(named: "tickGreen"), for: .normal)
-                 btnOther2.tag = 1
-             }
-             else if btnOther2.tag == 1 {
+            btnOther2.setImage(UIImage(named: "tickGreen"), for: .normal)
+            btnOther2.tag = 1
+        }
+        else if btnOther2.tag == 1 {
             strOther2 = "0"
-                 btnOther2.setImage(UIImage(named: "tickWhite"), for: .normal)
-                 btnOther2.tag = 0
-             }
+            btnOther2.setImage(UIImage(named: "tickWhite"), for: .normal)
+            btnOther2.tag = 0
+        }
     }
     
     // MARK:- FIRST BLOCK
