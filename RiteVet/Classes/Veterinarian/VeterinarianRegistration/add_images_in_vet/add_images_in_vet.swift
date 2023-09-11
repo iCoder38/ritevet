@@ -92,6 +92,11 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
                 self.btn_upload.backgroundColor = .lightGray
                 self.btn_upload.isUserInteractionEnabled = false
                 
+            } else if (self.arr_image.count > 10) {
+                
+                self.btn_upload.backgroundColor = .lightGray
+                self.btn_upload.isUserInteractionEnabled = false
+                
             } else {
                 
                 Utils.buttonDR(button: btn_upload, text: "Upload", backgroundColor: BUTTON_BACKGROUND_COLOR_BLUE, textColor: BUTTON_TEXT_COLOR, cornerRadius: 0)
@@ -117,6 +122,8 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
     
     
     @objc func openActionSheet() {
+        
+        print(self.arr_image.count as Any)
         
         let imagePicker = OpalImagePickerController()
         imagePicker.imagePickerDelegate = self
@@ -144,7 +151,6 @@ class add_images_in_vet: UIViewController , UINavigationControllerDelegate , UII
         } else {
             imagePicker.maximumSelectionsAllowed = 0
         }
-        
         
         imagePicker.allowedMediaTypes = Set([PHAssetMediaType.image])
         present(imagePicker, animated: true, completion: nil)

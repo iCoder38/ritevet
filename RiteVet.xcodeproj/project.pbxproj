@@ -200,6 +200,7 @@
 		B9CB54D72A275E26003B586B /* cashout_listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D62A275E26003B586B /* cashout_listing.swift */; };
 		B9CB54DA2A2776A4003B586B /* cashout_pay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9CB54D92A2776A4003B586B /* cashout_pay.swift */; };
 		B9D20B3B2A403BD300BB12A0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */; };
+		B9DDFB3D2AA741D000811EAC /* other_subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DDFB3C2AA741D000811EAC /* other_subscription.swift */; };
 		B9E074802A29B1750009BE04 /* order_received.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E0747F2A29B1750009BE04 /* order_received.swift */; };
 		B9E074832A29B45A0009BE04 /* order_received_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E074822A29B45A0009BE04 /* order_received_details.swift */; };
 		B9EA84322A20C2E5003C25BF /* booking_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EA84312A20C2E5003C25BF /* booking_details.swift */; };
@@ -432,6 +433,7 @@
 		B9CB54D62A275E26003B586B /* cashout_listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_listing.swift; sourceTree = "<group>"; };
 		B9CB54D92A2776A4003B586B /* cashout_pay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashout_pay.swift; sourceTree = "<group>"; };
 		B9D20B3A2A403BD300BB12A0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B9DDFB3C2AA741D000811EAC /* other_subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = other_subscription.swift; sourceTree = "<group>"; };
 		B9E0747F2A29B1750009BE04 /* order_received.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received.swift; sourceTree = "<group>"; };
 		B9E074822A29B45A0009BE04 /* order_received_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = order_received_details.swift; sourceTree = "<group>"; };
 		B9EA84312A20C2E5003C25BF /* booking_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = booking_details.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 			children = (
 				1857AEDE238E7CC600E2147F /* Subscription.swift */,
 				1857AEE0238E7DD200E2147F /* SubscriptionTableCell.swift */,
+				B9DDFB3C2AA741D000811EAC /* other_subscription.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -1791,6 +1794,7 @@
 				A4870C3523C84380008328D2 /* MyOrdersDetails.swift in Sources */,
 				A48F588E23C74B94000DBA74 /* MyPost.swift in Sources */,
 				1845318D26C3F95900E6209B /* DialogsTableCell.swift in Sources */,
+				B9DDFB3D2AA741D000811EAC /* other_subscription.swift in Sources */,
 				18B91839238D4CD20044F33D /* Dashboard.swift in Sources */,
 				1857AEEC238EA03900E2147F /* VeterinarianTableCell.swift in Sources */,
 				A454572723C31181000A1279 /* RequestServiceHome.swift in Sources */,
@@ -2132,7 +2136,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.8;
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2165,7 +2169,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.8;
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.evs.ritevet.prod5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

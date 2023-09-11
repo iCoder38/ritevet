@@ -214,6 +214,8 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
             self.strSenderDeviceToken = (person["deviceToken"] as! String)
         }
         
+        print(self.receiverData as Any)
+        
         if self.fromDialog == "yes" {
             self.yesFromDialog()
         } else {
@@ -223,7 +225,6 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
     }
     
     @objc func yesFromDialog() {
-        
         
         self.strReceiptId = String(self.receiverIdFromDialog)
         
@@ -235,6 +236,15 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
         self.imgReceiverProfilePicture.sd_imageIndicator = SDWebImageActivityIndicator.whiteLarge
         self.imgReceiverProfilePicture.sd_setImage(with: URL(string: receiverImageFromDialog), placeholderImage: UIImage(named: "logo"))
         
+        print(self.strLoginUserId as Any)
+        print(self.strLoginUserName as Any)
+        
+        print(self.strReceiptId as Any)
+        print(self.receiverNameFromDialog as Any)
+        print(self.receiverNameFromDialog as Any)
+        
+        print(self.receiverImageFromDialog as Any)
+        
         self.observeMessage()
     }
     
@@ -242,20 +252,40 @@ class BooCheckChat: UIViewController, MessagingDelegate, UINavigationControllerD
     
         print(self.receiverData as Any)
         
-        let xR : Int = receiverData["userID"] as! Int
-        let myStringR = String(xR)
-        
-        self.strReceiptId = String(myStringR)
-        self.strReceiptImage = (receiverData["userImage"] as! String)
-        
-        self.receiverNameIs = (receiverData["userName"] as! String)
-        
-        self.lblNavigationTitle.text = self.receiverNameIs
-        self.imgReceiverProfilePicture.sd_imageIndicator = SDWebImageActivityIndicator.whiteLarge
-        self.imgReceiverProfilePicture.sd_setImage(with: URL(string: (receiverData["userImage"] as! String)), placeholderImage: UIImage(named: "logo"))
-        
-        self.strReceiverDevice = (receiverData["userdevice"] as! String)
-        self.strReceiverDeviceToken = (receiverData["userdeviceToken"] as! String)
+        if String(self.strLoginUserId) == "\(self.receiverData["userID"]!)" {
+            print("same")
+            
+            self.strReceiptId = "\(self.receiverData["vendorID"]!)"
+            self.strReceiptImage = (receiverData["vendorImage"] as! String)
+            
+            self.receiverNameIs = (receiverData["vendorName"] as! String)
+            
+            self.lblNavigationTitle.text = self.receiverNameIs
+            self.imgReceiverProfilePicture.sd_imageIndicator = SDWebImageActivityIndicator.whiteLarge
+            self.imgReceiverProfilePicture.sd_setImage(with: URL(string: (receiverData["vendorImage"] as! String)), placeholderImage: UIImage(named: "logo"))
+            
+            self.strReceiverDevice = (receiverData["vendordevice"] as! String)
+            self.strReceiverDeviceToken = (receiverData["vendordeviceToken"] as! String)
+            
+        } else {
+            print("different")
+            
+            self.strReceiptId = "\(self.receiverData["userID"]!)"
+            self.strReceiptImage = (receiverData["userImage"] as! String)
+            
+            self.receiverNameIs = (receiverData["userName"] as! String)
+            
+            self.lblNavigationTitle.text = self.receiverNameIs
+            self.imgReceiverProfilePicture.sd_imageIndicator = SDWebImageActivityIndicator.whiteLarge
+            self.imgReceiverProfilePicture.sd_setImage(with: URL(string: (receiverData["userImage"] as! String)), placeholderImage: UIImage(named: "logo"))
+            
+            self.strReceiverDevice = (receiverData["userdevice"] as! String)
+            self.strReceiverDeviceToken = (receiverData["userdeviceToken"] as! String)
+            
+        }
+
+        print(self.strLoginUserId as Any)
+        print(self.strReceiptId as Any)
         
         self.observeMessage()
     }

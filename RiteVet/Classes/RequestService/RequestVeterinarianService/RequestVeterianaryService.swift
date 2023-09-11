@@ -47,8 +47,7 @@ class RequestVeterianaryService: UIViewController {
         /****** VIEW BG IMAGE *********/
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
-        btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
-        
+        self.btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
         
         if (self.getBusinessType == "2") {
             self.lblNavigationTitle.text = "REQUEST VETERINARY SERVICES"

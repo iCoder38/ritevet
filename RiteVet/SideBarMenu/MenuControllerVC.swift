@@ -169,6 +169,13 @@ class MenuControllerVC: UIViewController {
                         defaults.setValue("", forKey: "keyLoginFullData")
                         defaults.setValue(nil, forKey: "keyLoginFullData")
                         
+                        defaults.setValue("", forKey: "key_first_time_vet_reg")
+                        defaults.setValue(nil, forKey: "key_first_time_vet_reg")
+                        
+                        defaults.setValue("", forKey: "key_first_time_other_reg")
+                        defaults.setValue(nil, forKey: "key_first_time_other_reg")
+                        
+                        
                         let obj = self.storyboard?.instantiateViewController(withIdentifier: "LoginId") as! Login
                         // obj.strBookingOrAppointment = "bookingIs"
                         let navController = UINavigationController(rootViewController: obj)

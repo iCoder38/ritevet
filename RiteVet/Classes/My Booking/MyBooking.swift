@@ -171,7 +171,7 @@ class MyBooking: UIViewController {
                 parameters = [
                     "action"       :   "bookinglist2",
                     "userId"       :   myString,
-                        "pageNo"       :   "0",
+                    "pageNo"   :   "0",
                 ]
             }
         print("parameters-------\(String(describing: parameters))")
@@ -273,7 +273,7 @@ extension MyBooking: UITableViewDataSource
         
         // vendor id : 87,185
         let item = arrListOfAppointment[indexPath.row] as? [String:Any]
-        // print(item as Any)
+         print(item as Any)
         
          // image
         cell.imgProfile.sd_setImage(with: URL(string: (item!["userImage"] as! String)), placeholderImage: UIImage(named: "logo-500"))
@@ -323,7 +323,8 @@ extension MyBooking: UITableViewDataSource
         tableView .deselectRow(at: indexPath, animated: true)
         
         let item = arrListOfAppointment[indexPath.row] as? [String:Any]
-        // print(item )
+        print(item as Any)
+        
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "appointment_details_id") as? appointment_details
         
         push!.str_from_booking = "yes"

@@ -14,6 +14,13 @@ import CRNotifications
 
 class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
+    var str_pet_data:String!
+    var str_other_data:String!
+    var str_pet_parent_apple_pay_show:String! = "0"
+    
+    var str_admin_approved_pet:String!
+    var str_admin_approved_other:String!
+    
     let cellReuseIdentifier = "editProfileTableCell"
     
     // bottom view popup
@@ -233,6 +240,8 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
      navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        self.check_vet_reg()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -672,6 +681,219 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
         CRNotifications.showNotification(type: CRNotifications.error, title: "Alert!", message:"Fields should not be Empty.", dismissDelay: 1.5, completion:{})
     }
     
+    
+    @objc func check_vet_reg() {
+        // indicator.startAnimating()
+        Utils.RiteVetIndicatorShow()
+           
+        let urlString = BASE_URL_KREASE
+               
+        var parameters:Dictionary<AnyHashable, Any>!
+           
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            // print(person as Any)
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            parameters = [
+                "action"    : "returnprofile",
+                "userId"    : String(myString),
+                "UTYPE"     : "2"
+            ]
+        }
+                
+        print("parameters-------\(String(describing: parameters))")
+                   
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+               
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+
+                    let JSON = data as! NSDictionary
+
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                              
+                    if strSuccess == "success" {
+                        
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+
+                        self.str_pet_data = (dict["VFirstName"] as! String)
+                        
+                        //
+                        if "\(dict["verifyAdmin"]!)" == "1"{
+                            self.str_admin_approved_pet = "1" // active
+
+                        } else {
+                            self.str_admin_approved_pet = "0" // in active
+                        }
+                        
+                        self.check_vet_reg_other()
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                        //  self.indicator.stopAnimating()
+                        //  self.enableService()
+                    }
+                }
+
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+//                               self.indicator.stopAnimating()
+//                               self.enableService()
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                               
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                               
+                alertController.addAction(okAction)
+                               
+                self.present(alertController, animated: true, completion: nil)
+                break
+            }
+        }
+    }
+    
+    @objc func check_vet_reg_other() {
+        // indicator.startAnimating()
+        // Utils.RiteVetIndicatorShow()
+           
+        let urlString = BASE_URL_KREASE
+               
+        var parameters:Dictionary<AnyHashable, Any>!
+           
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            // print(person as Any)
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            parameters = [
+                "action"    : "returnprofile",
+                "userId"    : String(myString),
+                "UTYPE"     : "3"
+            ]
+        }
+                
+        print("parameters-------\(String(describing: parameters))")
+                   
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+               
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                              
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                         var dict: Dictionary<AnyHashable, Any>
+                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                             
+                        self.str_other_data = (dict["VFirstName"] as! String)
+                        
+                        if "\(dict["verifyAdmin"]!)" == "1"{
+                            self.str_admin_approved_other = "1" // active
+                        } else {
+                            self.str_admin_approved_other = "0" // in active
+                        }
+                        
+                        // self.clView.delegate = self
+                        // self.clView.dataSource = self
+                        
+                        self.set_buttons()
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                        //  self.indicator.stopAnimating()
+                        //  self.enableService()
+                    }
+                }
+
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+//                               self.indicator.stopAnimating()
+//                               self.enableService()
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                               
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                               
+                alertController.addAction(okAction)
+                               
+                self.present(alertController, animated: true, completion: nil)
+                break
+            }
+        }
+    }
+    
+    @objc func set_buttons() {
+        let indexPath = IndexPath.init(row: 0, section: 0)
+        let cell = tbleView.cellForRow(at: indexPath) as! EditProfileTableCell
+        
+        print(self.str_admin_approved_pet as Any)
+        
+        if (self.str_pet_data == "") {
+            
+            cell.btn_vet_profile.isUserInteractionEnabled = true
+            cell.btn_vet_profile.backgroundColor = .systemGray
+            
+        } else {
+            
+            if (self.str_admin_approved_pet == "1") {
+                cell.btn_vet_profile.isUserInteractionEnabled = true
+                cell.btn_vet_profile.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+                
+            } else {
+                cell.btn_vet_profile.isUserInteractionEnabled = false
+                cell.btn_vet_profile.backgroundColor = .systemGray
+            }
+            
+        }
+        
+        
+        //
+        if (self.str_other_data == "") {
+            
+            cell.btn_other_pet_Service_provider.isUserInteractionEnabled = true
+            cell.btn_other_pet_Service_provider.backgroundColor = .systemGray
+            
+        } else {
+            
+            if (self.str_admin_approved_other == "1") {
+                cell.btn_other_pet_Service_provider.isUserInteractionEnabled = true
+                cell.btn_other_pet_Service_provider.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+                
+            } else {
+                cell.btn_other_pet_Service_provider.isUserInteractionEnabled = false
+                cell.btn_other_pet_Service_provider.backgroundColor = .systemGray
+            }
+            
+        }
+        
+        
+        
+    }
 }
 
 extension EditProfile: UITableViewDataSource
@@ -690,6 +912,9 @@ extension EditProfile: UITableViewDataSource
         
         cell.backgroundColor = .clear
         
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .clear
+        cell.selectedBackgroundView = backgroundView
         
         Utils.textFieldDR(text: cell.txtUsername, placeHolder: "First Name", cornerRadius: 20, color: .white)
         Utils.textFieldDR(text: cell.txtLastUsername, placeHolder: "Last Name", cornerRadius: 20, color: .white)

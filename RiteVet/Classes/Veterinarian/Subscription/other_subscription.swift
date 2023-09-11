@@ -1,9 +1,9 @@
 //
-//  Subscription.swift
+//  other_subscription.swift
 //  RiteVet
 //
-//  Created by Apple  on 27/11/19.
-//  Copyright © 2019 Apple . All rights reserved.
+//  Created by Dishant Rajput on 05/09/23.
+//  Copyright © 2023 Apple . All rights reserved.
 //
 
 import UIKit
@@ -12,11 +12,11 @@ import SwiftyJSON
 import RSLoadingView
 import StoreKit
 
-class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransactionObserver {
-
+class other_subscription: UIViewController ,SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    
     var in_app_auto_renew_one_month: String!
     
-    let cellReuseIdentifier = "subscriptionTableCell"
+    // let cellReuseIdentifier = "subscriptionTableCell"
     
     var arrSubscription = [
 //        "Free Trial",
@@ -61,19 +61,26 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
         // in-app purchase
         SKPaymentQueue.default().add(self)
         
+        
+        
+        
+        
         // self.in_app_auto_renew_one_month = "one_month_sub"
-        self.in_app_auto_renew_one_month = "one_month_auto"
+        self.in_app_auto_renew_one_month = "one_month_other"
+        
+        
+        
+        
+        
+        
         
         /****** VIEW BG IMAGE *********/
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
-        btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
-        
+        self.btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
          
-            self.veterianrianRegistration()
-        
-        
-        
+        self.veterianrianRegistration()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -295,7 +302,6 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
                             let alert = UIAlertController(title: "Already Purchase", message: "You already purchased this product.", preferredStyle: UIAlertController.Style.alert)
                             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
                                 
-                                // [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
                                 self.navigationController?.pushViewController(push, animated: true)
                                 
@@ -527,7 +533,7 @@ class Subscription: UIViewController,SKProductsRequestDelegate, SKPaymentTransac
     
 }
 
-extension Subscription: UITableViewDataSource
+extension other_subscription: UITableViewDataSource
 {
     func numberOfSections(in tableView: UITableView) -> Int
     {
@@ -541,7 +547,7 @@ extension Subscription: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell:SubscriptionTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! SubscriptionTableCell
+        let cell:other_subscription_table_cell = tableView.dequeueReusableCell(withIdentifier: "other_subscription_table_cell") as! other_subscription_table_cell
         
         cell.backgroundColor = .clear
         
@@ -667,15 +673,24 @@ extension Subscription: UITableViewDataSource
     }
 }
 
-extension Subscription: UITableViewDelegate {
+extension other_subscription: UITableViewDelegate {
     
 }
 
 
-extension Date {
-    func today(format : String = "dd-MM-yyyy") -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        return formatter.string(from: self)
+class other_subscription_table_cell: UITableViewCell {
+
+    @IBOutlet weak var btnSubscription:UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
     }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
 }

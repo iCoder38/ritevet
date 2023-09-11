@@ -12,7 +12,14 @@ import SwiftyJSON
 import RSLoadingView
 import CRNotifications
 
+import PassKit
+
 class AddVeterinarianBankInfoTwo: UIViewController, UITextFieldDelegate {
+    
+    var str_user_info_id:String!
+    var str_pet_parent_apple_pay_show:String!
+    
+    var payment_for_apple_pay:String!
     
     let cellReuseIdentifier = "addVeterinarianBankInfoTwoTableCell"
     
@@ -117,6 +124,8 @@ class AddVeterinarianBankInfoTwo: UIViewController, UITextFieldDelegate {
                          var dict: Dictionary<AnyHashable, Any>
                          dict = JSON["data"] as! Dictionary<AnyHashable, Any>
                         
+                        self.str_user_info_id = "\(dict["userInfoId"]!)"
+                        
                         let cell = tbleView.cellForRow(at: NSIndexPath(row: 0, section: 0) as IndexPath) as! AddVeterinarianBankInfoTwoTableCell
                         
                         cell.txtYourName.text = (dict["ACName"] as! String)
@@ -129,6 +138,35 @@ class AddVeterinarianBankInfoTwo: UIViewController, UITextFieldDelegate {
                         
                         cell.txtEmailAddress.text = (dict["PaypalEmail"] as! String)
                         cell.txtAccountNumber.text = (dict["paypalAccount"] as! String)
+                        
+                        if (dict["expiryDate"] as! String) != "" {
+                            
+                            //
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            //
+                            let diffInDays = NSCalendar.current.dateComponents([.day], from: Date(), to: dateFormatter.date(from: (dict["expiryDate"] as! String))!).day
+                            print(diffInDays as Any)
+                            
+                            if ("\(diffInDays!)") == "1" {
+                                self.str_pet_parent_apple_pay_show = "1"
+                            } else if ("\(diffInDays!)") == "0" {
+                                print("stop and apple pay")
+                                self.str_pet_parent_apple_pay_show = "1"
+                            } else if ("\(diffInDays!)") < "0" {
+                                print("stop and apple pay")
+                                self.str_pet_parent_apple_pay_show = "1"
+                            } else {
+                                self.str_pet_parent_apple_pay_show = "0"
+                            }
+                            
+                            print(self.str_pet_parent_apple_pay_show as Any)
+                            
+                        } else {
+                            self.str_pet_parent_apple_pay_show = "1"
+                        }
+                       
+                        
                     }
                     else {
                         Utils.RiteVetIndicatorHide()
@@ -221,17 +259,35 @@ class AddVeterinarianBankInfoTwo: UIViewController, UITextFieldDelegate {
                                       defaults.setValue(dict, forKey: "saveVeterinarianRegistration")
                                       
                                       if let myString = defaults.string(forKey: "key_first_time_other_reg") {
-                                          let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-                                          self.navigationController?.pushViewController(push, animated: true)
+                                          
+                                          /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "other_subscription_id")
+                                          self.navigationController?.pushViewController(push, animated: true)*/
+                                          
+                                          if (self.str_pet_parent_apple_pay_show == "1") {
+                                              self.apple_pay()
+                                          } else {
+                                              print("==== ALREADY SUBSCRIBED ====")
+                                              let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+                                              self.navigationController?.pushViewController(push, animated: true)
+                                          }
+                                          
                                       } else {
                                           defaults.setValue("first_time_other_reg", forKey: "key_first_time_other_reg")
                                           
-                                          let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as other pet services provider, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to 14 days. Please feel free to email us mailto:ritevet@ritevet.com or call us 321-682-9800Monday – Sunday from 7:00 pm -10:00 pm US Eastern Standard time. Please leave a message if you called in different time or if we did not answer, will get back to you within 48 hours. ", preferredStyle: UIAlertController.Style.alert)
+                                          let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as other pet services provider, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to 14 days. Please feel free to email us ritevet@ritevet.com or call us 321-682-9800Monday – Sunday from 7:00 pm -10:00 pm US Eastern Standard time. Please leave a message if you called in different time or if we did not answer, will get back to you within 48 hours. ", preferredStyle: UIAlertController.Style.alert)
                                           alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
 
-                                              let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-                                              self.navigationController?.pushViewController(push, animated: true)
+                                              /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "other_subscription_id")
+                                              self.navigationController?.pushViewController(push, animated: true)*/
 
+                                              if (self.str_pet_parent_apple_pay_show == "1") {
+                                                  self.apple_pay()
+                                              } else {
+                                                  print("==== ALREADY SUBSCRIBED ====")
+                                                  let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+                                                  self.navigationController?.pushViewController(push, animated: true)
+                                              }
+                                              
                                           }))
 
                                           self.present(alert, animated: true, completion: nil)
@@ -273,6 +329,183 @@ class AddVeterinarianBankInfoTwo: UIViewController, UITextFieldDelegate {
     
        }
     
+    
+    
+    //
+    // MARK: - APPLE PAY -
+    @objc func apple_pay() {
+        // ERProgressHud.sharedInstance.showDarkBackgroundView(withTitle: "Please wait...")
+        
+        self.payment_for_apple_pay = String(apple_pay_price)
+        print(self.payment_for_apple_pay as Any)
+        
+        let message = String("Other Pet Service Provider Fee per month")
+        
+        let paymentItem = PKPaymentSummaryItem.init(label: String(message), amount: NSDecimalNumber(value: Double(self.payment_for_apple_pay)!))
+        
+        // for cards
+        let paymentNetworks = [PKPaymentNetwork.amex, .discover, .masterCard, .visa]
+        
+        // check user did payment
+        if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) {
+            
+            // if user make payment
+            let request = PKPaymentRequest()
+            request.currencyCode = "USD" // 1
+            request.countryCode = "US" // 2
+            
+            request.merchantIdentifier = String(merchant_id)
+            
+            request.merchantCapabilities = PKMerchantCapability.capability3DS // 4
+            request.supportedNetworks = paymentNetworks // 5
+            request.paymentSummaryItems = [paymentItem] // 6
+            
+            
+            guard let paymentVC = PKPaymentAuthorizationViewController(paymentRequest: request) else {
+                displayDefaultAlert(title: "Error", message: "Unable to present Apple Pay authorization.")
+                return
+            }
+            paymentVC.delegate = self
+            self.present(paymentVC, animated: true, completion: nil)
+            
+        } else {
+            displayDefaultAlert(title: "Error", message: "Unable to make Apple Pay transaction.")
+        }
+        
+    }
+    
+    func displayDefaultAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+}
+
+// MARK: - APPLE PAY -
+extension AddVeterinarianBankInfoTwo: PKPaymentAuthorizationViewControllerDelegate {
+    
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        
+        dismiss(animated: true, completion: nil)
+        
+        print("The Apple Pay transaction was complete.")
+        
+        print(payment.token.paymentData)
+        print(payment.token.paymentMethod)
+        print(payment.token.transactionIdentifier)
+        
+        if let url = Bundle.main.appStoreReceiptURL,
+           let data = try? Data(contentsOf: url) {
+              let receiptBase64 = data.base64EncodedString()
+              // Send to server
+            print(receiptBase64)
+        }
+        
+        // displayDefaultAlert(title: "Success!", message: "The Apple Pay transaction was complete.")
+        
+        // call webservice
+        
+        // self.book_a_table_wb(advanced_payment: Double(self.payment_for_apple_pay)!)
+        self.update_payment_in_our_Server_too()
+    }
+    
+
+    @objc func update_payment_in_our_Server_too() {
+        Utils.RiteVetIndicatorShow()
+        ERProgressHud.sharedInstance.showDarkBackgroundView(withTitle: "Please wait...")
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            // let date = Date().today(format: "dd-MM-yyyy")
+            
+            parameters = [
+                "action"            :   "updatepayment",
+                "userId"            :   String(myString),
+                "userInfoId"        :   String(self.str_user_info_id),
+                "SubscriptionFrom"  :   "iOS",
+                "UTYPE"             :   "3"
+            ]
+        }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" || strSuccess == "Success"  {
+                        Utils.RiteVetIndicatorHide()
+                        ERProgressHud.sharedInstance.hide()
+                        
+                        self.pushToVeterinarianRegistration()
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else {
+                        //self.indicator.stopAnimating()
+                        //self.enableService()
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                //self.indicator.stopAnimating()
+                //self.enableService()
+                Utils.RiteVetIndicatorHide()
+                ERProgressHud.sharedInstance.hide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+    }
+    
+    @objc func pushToVeterinarianRegistration() {
+        let alert = UIAlertController(title: "Success", message: "Successfully Subscribed.",preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+            self.navigationController?.pushViewController(push, animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
     
 }
 
@@ -329,17 +562,38 @@ extension AddVeterinarianBankInfoTwo: UITableViewDataSource {
         
         let defaults = UserDefaults.standard
         if let myString = defaults.string(forKey: "key_first_time_other_reg") {
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-            self.navigationController?.pushViewController(push, animated: true)
+            
+            
+            // apple_pay
+            
+            /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "other_subscription_id")
+            self.navigationController?.pushViewController(push, animated: true)*/
+            
+            if (self.str_pet_parent_apple_pay_show == "1") {
+                self.apple_pay()
+            } else {
+                print("==== ALREADY SUBSCRIBED ====")
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+                self.navigationController?.pushViewController(push, animated: true)
+            }
+            
         } else {
             defaults.setValue("first_time_other_reg", forKey: "key_first_time_other_reg")
             
-            let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as other pet services provider, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to 14 days. Please feel free to email us mailto:ritevet@ritevet.com or call us 321-682-9800Monday – Sunday from 7:00 pm -10:00 pm US Eastern Standard time. Please leave a message if you called in different time or if we did not answer, will get back to you within 48 hours. ", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Ritevet", message: "Thank you for registering as other pet services provider, our management staff will review your submitted information and documents, once they complete the review process you will receive an email informing you that your registration process is complete and you can start using the App. You may also receive a phone call from one of our management staff to verify some of your submitted information. This process will take from 2 to 14 days. Please feel free to email us ritevet@ritevet.com or call us 321-682-9800 Monday – Sunday from 7:00 pm -10:00 pm US Eastern Standard time. Please leave a message if you called in different time or if we did not answer, will get back to you within 48 hours. ", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { action in
 
-                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-                self.navigationController?.pushViewController(push, animated: true)
+                /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "other_subscription_id")
+                self.navigationController?.pushViewController(push, animated: true)*/
 
+                if (self.str_pet_parent_apple_pay_show == "1") {
+                    self.apple_pay()
+                } else {
+                    print("==== ALREADY SUBSCRIBED ====")
+                    let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+                    self.navigationController?.pushViewController(push, animated: true)
+                }
+                
             }))
 
             self.present(alert, animated: true, completion: nil)
@@ -347,9 +601,7 @@ extension AddVeterinarianBankInfoTwo: UITableViewDataSource {
             
         }
         
-        
-//        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
-//        self.navigationController?.pushViewController(push, animated: true)
+
     }
     
     @objc func finishClickMethod() {

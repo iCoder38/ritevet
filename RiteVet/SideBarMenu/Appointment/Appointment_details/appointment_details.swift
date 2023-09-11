@@ -557,11 +557,25 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
     
     @objc func one_to_one_chat_click_method() {
              
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
-        push!.receiverData = self.dictBookingDetails as NSDictionary?
-        push!.fromDialog = "no"
-        self.navigationController?.pushViewController(push!, animated: true)
+        if (self.str_from_booking == "yes") {
+            
+            print(self.dictBookingDetails as Any)
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
+            push!.receiverData = self.dictBookingDetails as NSDictionary?
+            push!.fromDialog = "no"
+            self.navigationController?.pushViewController(push!, animated: true)
+            
+        } else {
+            // from appointment
+            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
+            push!.receiverData = self.dictBookingDetails as NSDictionary?
+            push!.fromDialog = "no"
+            self.navigationController?.pushViewController(push!, animated: true)
+        }
         
+        
+
+//
     }
     
     @objc func audio_call_click_method() {

@@ -5,7 +5,9 @@
 //  Created by evs_SSD on 1/6/20.
 //  Copyright © 2020 Apple . All rights reserved.
 //
-
+/*
+ 
+ */
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -241,7 +243,7 @@ class RequestServiceDetails: UIViewController {
         strSaveFullValueOfSpecializationInOneString = "0"
         strSaveFullValueOfServiceInOneString = "0"
         
-        btnBookAnAppointment.addTarget(self, action: #selector(bookAnAppoitmentClickMethod), for: .touchUpInside)
+        self.btnBookAnAppointment.addTarget(self, action: #selector(bookAnAppoitmentClickMethod), for: .touchUpInside)
         
         
         self.star_function()
@@ -857,15 +859,8 @@ class RequestServiceDetails: UIViewController {
         print(self.getUtypeInDetailsPage as Any)
         print(self.getDictRequestServiceHome as Any)
         
-        let alert = UIAlertController(title: "Ritevet", message: "Veterinarian will call you at your appointment time, you can cancel your appointment at least by 2 hours before your appointment time", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-            
-            self.pushToBookAppointment(str_type_2: str_type)
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-        
+        self.pushToBookAppointment(str_type_2: str_type)
+
     }
     
     @objc func pushToBookAppointment(str_type_2:String) {
@@ -1120,21 +1115,26 @@ class RequestServiceDetails: UIViewController {
     }
     
     @objc func bookAnAppoitmentClickMethod() {
-    
-        // 9 - august - 2023
-        self.push_to_book_an_appointment()
         
-        
+        let defaults = UserDefaults.standard
+        if let myString22 = defaults.string(forKey: "selectedBusinessIdIs") {
+            print(myString22)
             
-        /*let alert = UIAlertController(title: "Ritevet", message: "Book an appointment by pressing the below Book appointment button.", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
-            
-            self.push_to_book_an_appointment()
-            
-        }))
-        
-        self.present(alert, animated: true, completion: nil)*/
-        
+            if (myString22 == "3") {
+                
+                let alert = UIAlertController(title: "Ritevet", message: "Veterinarian will call you at your appointment time, you can cancel your appointment at least by 2 hours before your appointment time", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    self.push_to_book_an_appointment()
+                    
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                self.push_to_book_an_appointment()
+            }
+        }
     }
     
     @objc func push_to_book_an_appointment() {

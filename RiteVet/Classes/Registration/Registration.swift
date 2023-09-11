@@ -394,9 +394,16 @@ class Registration: UIViewController,UITextFieldDelegate {
             self.fieldShouldNotBeEmptyPopup()
         } else if cell.txtConfirmPassword.text == "" {
             self.fieldShouldNotBeEmptyPopup()
-        }/* else if cell.txtZipcode.text == "" {
-            self.fieldShouldNotBeEmptyPopup()
-        } */else {
+        } else if cell.txtPassword.text != cell.txtConfirmPassword.text {
+            
+            let alert = UIAlertController(title: "Error!", message: "Password not matched.",preferredStyle: UIAlertController.Style.alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
             
             if (self.strCountryId == "231") {
                 if cell.txtZipcode.text == "" {

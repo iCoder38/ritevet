@@ -10,8 +10,15 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import AVFAudio
+import StoreKit
+import JKCalendar
 
-class Dashboard: UIViewController {
+class Dashboard: UIViewController, SKPaymentTransactionObserver {
+    
+    var str_pet_data:String!
+    var str_other_data:String!
+    
+    var str_pet_parent_apple_pay_show:String! = "0"
     
     var collectionView: UICollectionView?
     var screenSize: CGRect!
@@ -39,6 +46,9 @@ class Dashboard: UIViewController {
     
     // var arrListOfDashboardItems:NSMutableArray! = []
     
+    var str_admin_approved_pet:String!
+    var str_admin_approved_other:String!
+    
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
             viewNavigation.backgroundColor = NAVIGATION_BACKGROUND_COLOR
@@ -56,8 +66,7 @@ class Dashboard: UIViewController {
         didSet
         {
             //collection
-            clView.delegate = self
-            clView.dataSource = self
+            
             screenSize = UIScreen.main.bounds
             screenWidth = screenSize.width
             screenHeight = screenSize.height
@@ -105,9 +114,78 @@ class Dashboard: UIViewController {
         
         // self.welcomeWB()
         
+        
         self.askPermissionIfNeeded()
         self.updateLoginUserDeviceToken()
+        //
+        self.check_vet_reg()
+        //
+        // in-app purchase
+        // print(SKPaymentQueue.default().finishTransaction(Transaction//))
     }
+    
+    
+    func paymentQueue(_ queue: SKPaymentQueue,
+                      updatedTransactions transactions: [SKPaymentTransaction])
+    
+    {
+        print("Received Payment Transaction Response from Apple");
+        
+        for transaction:AnyObject in transactions {
+            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
+                switch trans.transactionState {
+                case .purchased:
+                    
+                    // if you successfully purchased an item
+                    print("Product Purchased")
+                    // print(transactions.)
+                    
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    // Handle the purchase
+                    UserDefaults.standard.set(true , forKey: "purchased")
+                    
+                    break;
+                case .failed:
+                    
+                    ERProgressHud.sharedInstance.hide()
+                    print("Purchased Failed");
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    
+                    let alertController = UIAlertController(title: "Alert", message: "Something went wrong. Please try again after some time.", preferredStyle: .alert)
+                    let cancel = UIAlertAction(title: "Ok", style: .cancel) { (action:UIAlertAction!) in
+                        //
+                        /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DashboardId")
+                        self.navigationController?.pushViewController(push, animated: true)*/
+                        //
+                    }
+                    
+                    alertController.addAction(cancel)
+                    self.present(alertController, animated: true, completion:nil)
+                    
+                    break;
+                    
+                case .restored:
+                    
+                    ERProgressHud.sharedInstance.hide()
+                    
+                    print("Already Purchased");
+                    SKPaymentQueue.default().restoreCompletedTransactions()
+                                        
+                    // Handle the purchase
+                    UserDefaults.standard.set(true , forKey: "purchased")
+                    //adView.hidden = true
+
+                    break;
+                    
+                default:
+                    break;
+                }
+            }
+        }
+        
+    }
+    
+    
     
     func askPermissionIfNeeded() {
         let session = AVAudioSession.sharedInstance()
@@ -166,7 +244,7 @@ class Dashboard: UIViewController {
                         strSuccess = JSON["status"]as Any as? String
                         
                         if strSuccess == "success" {
-                            Utils.RiteVetIndicatorHide()
+                            
                         }
                         else {
                             
@@ -227,19 +305,97 @@ class Dashboard: UIViewController {
     
     
     func welcomeWB() {
-           //self.pushFromLoginPage()
-           
-           //indicator.startAnimating()
+        //self.pushFromLoginPage()
+        
+        //indicator.startAnimating()
         //self.disableService()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        parameters = [
+            "action"        :   "welcome"
+        ]
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    //var strSuccessAlert : String!
+                    //strSuccessAlert = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "success" {
+                        
+                        /*var ar : NSArray!
+                         ar = (JSON["data"] as! Array<Any>) as NSArray
+                         self.arrListOfDashboardItems.addObjects(from: ar as! [Any])*/
+                        
+                        /*self.clView!.dataSource = self
+                         self.clView!.delegate = self
+                         self.clView.reloadData()*/
+                        
+                    }
+                    else {
+                        //                                   self.indicator.stopAnimating()
+                        //                                   self.enableService()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                //                               self.indicator.stopAnimating()
+                //                               self.enableService()
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                break
+            }
+        }
+        
+    }
+    
+    
+    @objc func check_vet_reg() {
+        // indicator.startAnimating()
+        Utils.RiteVetIndicatorShow()
            
         let urlString = BASE_URL_KREASE
                
         var parameters:Dictionary<AnyHashable, Any>!
            
-        parameters = [
-            "action"        :   "welcome"
-        ]
-                  
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            // print(person as Any)
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            parameters = [
+                "action"    : "returnprofile",
+                "userId"    : String(myString),
+                "UTYPE"     : "2"
+            ]
+        }
+                
+        print("parameters-------\(String(describing: parameters))")
+                   
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
             response in
                
@@ -248,34 +404,68 @@ class Dashboard: UIViewController {
                 if let data = response.value {
 
                     let JSON = data as! NSDictionary
+
                     print(JSON)
-                               
+                    
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
-                               
-                               //var strSuccessAlert : String!
-                               //strSuccessAlert = JSON["msg"]as Any as? String
-                               
+                              
                     if strSuccess == "success" {
-                                
-                                /*var ar : NSArray!
-                                ar = (JSON["data"] as! Array<Any>) as NSArray
-                                self.arrListOfDashboardItems.addObjects(from: ar as! [Any])*/
-                                
-                        self.clView!.dataSource = self
-                        self.clView!.delegate = self
-                        self.clView.reloadData()
-                                
+                        
+                        var dict: Dictionary<AnyHashable, Any>
+                        dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+
+                        self.str_pet_data = (dict["VFirstName"] as! String)
+                        
+                        if (dict["expiryDate"] as! String) != "" {
+                            
+                            //
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            //
+                            let diffInDays = NSCalendar.current.dateComponents([.day], from: Date(), to: dateFormatter.date(from: (dict["expiryDate"] as! String))!).day
+                            print(diffInDays as Any)
+                            
+                            if ("\(diffInDays!)") == "1" {
+                                self.str_pet_parent_apple_pay_show = "1"
+                            } else if ("\(diffInDays!)") == "0" {
+                                print("stop and apple pay")
+                                self.str_pet_parent_apple_pay_show = "1"
+                            } else if ("\(diffInDays!)") < "0" {
+                                print("stop and apple pay")
+                                self.str_pet_parent_apple_pay_show = "1"
+                            } else {
+                                self.str_pet_parent_apple_pay_show = "0"
+                            }
+                            
+                            print(self.str_pet_parent_apple_pay_show as Any)
+                            
+                        }
+                        
+                        
+                    
+
+                        //
+                        if "\(dict["verifyAdmin"]!)" == "1"{
+                            self.str_admin_approved_pet = "1" // active
+
+                        } else {
+                            self.str_admin_approved_pet = "0" // in active
+                        }
+                        
+                        self.check_vet_reg_other()
                     }
                     else {
-//                                   self.indicator.stopAnimating()
-//                                   self.enableService()
+                        Utils.RiteVetIndicatorHide()
+                        //  self.indicator.stopAnimating()
+                        //  self.enableService()
                     }
-                               
                 }
 
             case .failure(_):
                 print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
 //                               self.indicator.stopAnimating()
 //                               self.enableService()
                 let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
@@ -291,8 +481,91 @@ class Dashboard: UIViewController {
                 break
             }
         }
-    
     }
+    
+    @objc func check_vet_reg_other() {
+        // indicator.startAnimating()
+        Utils.RiteVetIndicatorShow()
+           
+        let urlString = BASE_URL_KREASE
+               
+        var parameters:Dictionary<AnyHashable, Any>!
+           
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            // print(person as Any)
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            parameters = [
+                "action"    : "returnprofile",
+                "userId"    : String(myString),
+                "UTYPE"     : "3"
+            ]
+        }
+                
+        print("parameters-------\(String(describing: parameters))")
+                   
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+            response in
+               
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+
+                    let JSON = data as! NSDictionary
+                    print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                              
+                    if strSuccess == "success" {
+                        Utils.RiteVetIndicatorHide()
+                        
+                         var dict: Dictionary<AnyHashable, Any>
+                         dict = JSON["data"] as! Dictionary<AnyHashable, Any>
+                             
+                        self.str_other_data = (dict["VFirstName"] as! String)
+                        
+                        if "\(dict["verifyAdmin"]!)" == "1"{
+                            self.str_admin_approved_other = "1" // active
+                        } else {
+                            self.str_admin_approved_other = "0" // in active
+                        }
+                        
+                        self.clView.delegate = self
+                        self.clView.dataSource = self
+                        
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                        //  self.indicator.stopAnimating()
+                        //  self.enableService()
+                    }
+                }
+
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+//                               self.indicator.stopAnimating()
+//                               self.enableService()
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                               
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                               
+                alertController.addAction(okAction)
+                               
+                self.present(alertController, animated: true, completion: nil)
+                break
+            }
+        }
+    }
+    
     
 }
 
@@ -314,8 +587,54 @@ extension Dashboard: UICollectionViewDelegate {
         //print(item!["name"] as! String)
         //cell.
         
-        cell.imgTitle.image = UIImage(named: arrListOfDashboardImages[indexPath.row])
-        
+        // cell.imgTitle.image = UIImage(named: arrListOfDashboardImages[indexPath.row])
+        // var arrListOfDashboardImages = ["pet","register","other","drequest","free","pet-sore"]
+        if (indexPath.row == 0) {
+            
+            cell.imgTitle.image = UIImage(named: "pet")
+            
+        } else  if (indexPath.row == 1) {
+
+            /*if (self.str_pet_data == "") {
+                cell.imgTitle.image = UIImage(named: "register")
+            } else {*/
+                if (self.str_admin_approved_pet == "1") {
+                    cell.imgTitle.image = UIImage(named: "register")
+                } else {
+                    cell.imgTitle.image = UIImage(named: "grey_register")
+                }
+            // }
+            
+            
+        } else  if (indexPath.row == 2) {
+            
+            // str_other_data
+            
+            /*if (self.str_other_data == "") {
+                cell.imgTitle.image = UIImage(named: "other")
+            } else {*/
+                if (self.str_admin_approved_other == "1") {
+                    cell.imgTitle.image = UIImage(named: "other")
+                } else {
+                    cell.imgTitle.image = UIImage(named: "grey_other")
+                }
+            // }
+            
+            
+            
+        } else  if (indexPath.row == 3) {
+            
+            cell.imgTitle.image = UIImage(named: "drequest")
+            
+        } else  if (indexPath.row == 4) {
+            
+            cell.imgTitle.image = UIImage(named: "free")
+            
+        } else  if (indexPath.row == 5) {
+            
+            cell.imgTitle.image = UIImage(named: "pet-sore")
+            
+        }
         
         return cell
         
@@ -338,37 +657,63 @@ extension Dashboard: UICollectionViewDataSource {
         /*
         print(indexPath.row)
         */
-        
-        
+
         if indexPath.row == 0 {
             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PetAndParentsInformationId") as? PetAndParentsInformation
             self.navigationController?.pushViewController(push!, animated: true)
         }
         
         if indexPath.row == 1 {
-            
-            /*let alert = UIAlertController(title: "Alert!", message: "Working.",preferredStyle: UIAlertController.Style.alert)
 
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-                //Cancel Action
-            }))
-            self.present(alert, animated: true, completion: nil)*/
+            // let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubscriptionId")
+            // self.navigationController?.pushViewController(push, animated: true)
             
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRTwoId")
-            self.navigationController?.pushViewController(push, animated: true)
+            print(self.str_admin_approved_pet as Any)
+            
+            if (self.str_pet_data == "") {
+                
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRTwoId")
+                self.navigationController?.pushViewController(push, animated: true)
+                
+            } else {
+                
+                if (self.str_admin_approved_pet == "1") {
+                    let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRTwoId")
+                    self.navigationController?.pushViewController(push, animated: true)
+                } else {
+                    
+                }
+                
+            }
+            //
+            
+            
+//            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRTwoId")
+//            self.navigationController?.pushViewController(push, animated: true)
+            
         }
         
         if indexPath.row == 2 {
             
-            /*let alert = UIAlertController(title: "Alert!", message: "Working.",preferredStyle: UIAlertController.Style.alert)
-
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { _ in
-                //Cancel Action
-            }))
-            self.present(alert, animated: true, completion: nil)*/
+            if (self.str_other_data == "") {
+                
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRThreeId")
+                self.navigationController?.pushViewController(push, animated: true)
+                
+            } else {
+                
+                if (self.str_admin_approved_other == "1") {
+                    let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRThreeId")
+                    self.navigationController?.pushViewController(push, animated: true)
+                } else {
+                    
+                }
+                
+            }
             
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "VRThreeId")
-            self.navigationController?.pushViewController(push, animated: true)
+            
+            
+            
         }
         
         if indexPath.row == 3 {

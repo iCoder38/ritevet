@@ -333,12 +333,11 @@ extension Dialogs: UITableViewDataSource {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             let item = self.arrListOfAllSingleFriendList.reversed()[indexPath.row] as? [String:Any]
+            print(item as Any)
             
             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
             push!.fromDialog = "yes"
-            
-            
-            
+
             if (item!["SenderId"] as! String) == String(myString) {
                 
                 push!.receiverIdFromDialog = (item!["ReceiverId"] as! String)

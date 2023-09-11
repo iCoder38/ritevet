@@ -12,6 +12,9 @@ import RSLoadingView
 // 25,32,143
 let BASE_URL_KREASE = "http://ritevet.com/services/index/"
 
+let merchant_id = "merchant.com.pay.ritevet"
+let apple_pay_price = "9.99"
+
 let NAVIGATION_BACKGROUND_COLOR = UIColor.init(red: 7.0/255.0, green: 33.0/255.0, blue: 98.0/255.0, alpha: 1)
 
 let BUTTON_BACKGROUND_COLOR = UIColor.init(red: 242.0/255.0, green: 208.0/255.0, blue: 11.0/255.0, alpha: 1)
@@ -29,7 +32,7 @@ let PLACEHOLDER_ADDRESS     = "Address"
 // SERVER ISSUE
 let SERVER_ISSUE_TITLE          = "Server Issue."
 let SERVER_ISSUE_MESSAGE_ONE    = "Server Not Responding."
-let SERVER_ISSUE_MESSAGE_TWO    = "Please contact to Server Admin."
+let SERVER_ISSUE_MESSAGE_TWO    = "Please contact your Server Admin."
 
 let AGORA_KEY_ID = "bbe938fe04a746fd9019971106fa51ff"
 
