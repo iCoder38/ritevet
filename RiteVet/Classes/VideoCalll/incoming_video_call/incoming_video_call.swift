@@ -117,7 +117,7 @@ class incoming_video_call: UIViewController {
         print("====================================")
         
         self.str_video_id = "\(self.dictGetAllDataForVideoCall["video_call_id"]!)"
-        
+        // print()
         // self.view_decline.isHidden = false
         self.btn_decline.addTarget(self, action: #selector(leave_channel), for: .touchUpInside)
         
@@ -334,7 +334,7 @@ class incoming_video_call: UIViewController {
         )
         
         if (result == 0) {
-            print("Successfully joined the channel as ")
+            print("Successfully joined the channel as incoming call ")
             
             
         }
@@ -511,7 +511,7 @@ class incoming_video_call: UIViewController {
      
      Utils.RiteVetIndicatorHide()
      
-     let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+     let alertController = UIAlertController(vtitle: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
      
      let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
      UIAlertAction in

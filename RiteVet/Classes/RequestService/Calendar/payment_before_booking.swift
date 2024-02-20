@@ -432,13 +432,24 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                         
                         if (self.str_instant_payment == "yes_audio") {
                             
-                            self.navigationController?.popViewController(animated: true)
-                            UserDefaults.standard.set("yes_audio", forKey: "key_instant_calling")
+                            // self.navigationController?.popViewController(animated: true)
+                            // UserDefaults.standard.set("yes_audio", forKey: "key_instant_calling")
+                            
+                            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MyBookingId") as? MyBooking
+                            // push!.strGetBookingDate = String(self.strBookingDate)
+                            // push!.strGetBookingTime = String(self.strSlotTime)
+                            self.navigationController?.pushViewController(push!, animated: true)
                             
                         } else if (self.str_instant_payment == "yes_video") {
                             
-                            self.navigationController?.popViewController(animated: true)
-                            UserDefaults.standard.set("yes_video", forKey: "key_instant_calling")
+                            // self.navigationController?.popViewController(animated: true)
+                            // UserDefaults.standard.set("yes_video", forKey: "key_instant_calling")
+                            
+                            
+                            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MyBookingId") as? MyBooking
+                            // push!.strGetBookingDate = String(self.strBookingDate)
+                            // push!.strGetBookingTime = String(self.strSlotTime)
+                            self.navigationController?.pushViewController(push!, animated: true)
                             
                         } else {
                         

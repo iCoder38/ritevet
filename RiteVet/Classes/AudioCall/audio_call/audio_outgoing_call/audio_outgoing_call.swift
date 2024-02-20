@@ -49,6 +49,8 @@ class audio_outgoing_call: UIViewController {
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
     
+    @IBOutlet weak var str_sub_label:UILabel!
+    
     @IBOutlet weak var lbl_caller_name:UILabel!  {
         didSet {
             lbl_caller_name.textColor = .white
@@ -321,6 +323,8 @@ extension audio_outgoing_call: AgoraRtcEngineDelegate {
         print("TIMER : INVALIDATE.")
         print("==================")
         self.call_cut_timer.invalidate()
+        
+        self.str_sub_label.text = "on call"
     }
    
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {

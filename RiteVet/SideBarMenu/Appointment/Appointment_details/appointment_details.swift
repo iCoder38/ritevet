@@ -67,6 +67,10 @@ class appointment_details: UIViewController {
     var str_caller_device_token:String!
     var str_caller_device_name:String!
     
+    var str_enable_calling:String! = "0"
+    
+    var str_time_save:String! = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,6 +79,13 @@ class appointment_details: UIViewController {
         self.btnBack.addTarget(self, action: #selector(backClick), for: .touchUpInside)
         self.btnBack.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         self.btnBack.tintColor = .white
+        
+        
+        
+         
+        
+        
+        
         
         
         
@@ -496,9 +507,6 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         if today_current_date?.compare(booking_date!) == .orderedSame {
             print("Both dates are same")
             
-            
-            
-            
             let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
@@ -611,6 +619,70 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
         }
         
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let current_time = dateFormatter.string(from: date)
+        print("current time -->",current_time)
+        
+        
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm"
+        
+        
+         // 7:59
+        // let f2 = DateFormatter()
+        // f2.dateFormat = "HH:mm"
+        
+        let fullName    = (self.dictBookingDetails["slotTime"] as! String)
+        let fullNameArr = fullName.components(separatedBy: "-")
+
+        let name    = fullNameArr[0]
+        let time_one = String(name) // 7
+        
+        
+        let surname = fullNameArr[1]
+        // time 2
+        let time_two = String(surname)
+        
+        print(time_one as Any)
+        print(time_two as Any)
+        
+        // current time
+        f.date(from: current_time)
+        
+        // time start
+        f.date(from: time_one)
+        
+        // time end
+        f.date(from: time_two)
+        
+        self.str_time_save = (self.dictBookingDetails["slotTime"] as! String)
+        
+        if (f.date(from: current_time)! > f.date(from: time_one)!) {
+            print("CURRENT TIME IS GREATER THEN TIME ONE")
+            self.str_enable_calling = "0"
+            // time 2
+            // this time should be lower then time 2
+            if (f.date(from: current_time)! > f.date(from: time_two)!) {
+                print("CURRENT TIME IS GREATER THEN TIME TWO")
+                self.str_enable_calling = "0"
+                
+                // print("USER HAVE SOME MORE TIME TO CALL")
+            } else if (f.date(from: current_time)! < f.date(from: time_two)!) {
+                print("ENABLE CALLING TIME")
+                self.str_enable_calling = "1"
+            }
+            
+        } else  if (f.date(from: current_time)! < f.date(from: time_one)!) {
+            print("TIME ONE IS GREATER THEN CURRENT TIME")
+            print("DISBALED CALLING OPTIONS")
+            self.str_enable_calling = "0"
+        } else {
+            print("DIFFERENT DATA")
+            self.str_enable_calling = "0"
+        }
+        
         cell.btn_chat.addTarget(self, action: #selector(one_to_one_chat_click_method), for: .touchUpInside)
         cell.btn_audio.addTarget(self, action: #selector(audio_call_click_method), for: .touchUpInside)
         cell.btn_video.addTarget(self, action: #selector(video_chat_click_method), for: .touchUpInside)
@@ -620,20 +692,31 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
     
     @objc func one_to_one_chat_click_method() {
              
-        if (self.str_from_booking == "yes") {
+        if (self.str_enable_calling == "0") {
             
-            print(self.dictBookingDetails as Any)
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
-            push!.receiverData = self.dictBookingDetails as NSDictionary?
-            push!.fromDialog = "no"
-            self.navigationController?.pushViewController(push!, animated: true)
+            let alert = UIAlertController(title: "Alert", message: "You can only chat between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
             
         } else {
-            // from appointment
-            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
-            push!.receiverData = self.dictBookingDetails as NSDictionary?
-            push!.fromDialog = "no"
-            self.navigationController?.pushViewController(push!, animated: true)
+            
+            if (self.str_from_booking == "yes") {
+                
+                print(self.dictBookingDetails as Any)
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
+                push!.receiverData = self.dictBookingDetails as NSDictionary?
+                push!.fromDialog = "no"
+                self.navigationController?.pushViewController(push!, animated: true)
+                
+            } else {
+                // from appointment
+                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BooCheckChatId") as? BooCheckChat
+                push!.receiverData = self.dictBookingDetails as NSDictionary?
+                push!.fromDialog = "no"
+                self.navigationController?.pushViewController(push!, animated: true)
+            }
         }
 
     }
@@ -641,15 +724,35 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
     
     @objc func audio_call_click_method() {
         
-        self.store_data_in_db_before_call(str_type: "audio")
+        if (self.str_enable_calling == "0") {
+            
+            let alert = UIAlertController(title: "Alert", message: "You can only call between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+            self.store_data_in_db_before_call(str_type: "audio")
+        }
+        
         // self.send_notification_to_doctor(str_get_type: "audiocall")
         
     }
     
     @objc func video_chat_click_method() {
-        
-        self.store_data_in_db_before_call(str_type: "video")
-        // self.send_notification_to_doctor(str_get_type: "videocall")
+        if (self.str_enable_calling == "0") {
+            
+            let alert = UIAlertController(title: "Alert", message: "You can only call between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+            self.store_data_in_db_before_call(str_type: "video")
+            // self.send_notification_to_doctor(str_get_type: "videocall")
+        }
         
     }
     
@@ -795,7 +898,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
-            
+            print(myString as Any)
             if (String(myString)) == "\(self.dictBookingDetails["userID"]!)" {
                 // parse vendor detaiils here ( receiver )
                 self.str_vendor_name = (self.dictBookingDetails["vendorName"] as! String)
@@ -831,6 +934,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             
         }
+        
         
         
         
@@ -1056,7 +1160,8 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                                 
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "outgoing_video_call_id") as? outgoing_video_call
                                 
-                                 push!.str_receiver_name = String(self.str_vendor_name)
+                                print(video_call_id as Any)
+                                push!.str_receiver_name = String(self.str_vendor_name)
                                 push!.str_store_channel_name = String(video_call_id)
                                 
                                 self.navigationController?.pushViewController(push!, animated: true)

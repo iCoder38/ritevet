@@ -182,6 +182,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             let destinationController = storyboard.instantiateViewController(withIdentifier:"incoming_video_call_id") as? incoming_video_call
                 
             destinationController?.dictGetAllDataForVideoCall = dict as NSDictionary
+              
+            let frontNavigationController = UINavigationController(rootViewController: destinationController!)
+
+            let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
+
+            let mainRevealController = SWRevealViewController()
+
+            mainRevealController.rearViewController = rearViewController
+            mainRevealController.frontViewController = frontNavigationController
+            
+            DispatchQueue.main.async {
+                UIApplication.shared.keyWindow?.rootViewController = mainRevealController
+            }
+            
+            window?.makeKeyAndVisible()
+            
+        } else {
+            
+        }
+        
+    }
+    
+    // MARK:- WHEN APP IS IN BACKGROUND - ( after click popup ) -
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("User Info = ",response.notification.request.content.userInfo)
+        
+        let dict = response.notification.request.content.userInfo
+        
+        if (dict["type"] as! String) == "audio_call" {
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+  
+            let destinationController = storyboard.instantiateViewController(withIdentifier:"audio_incoming_call_id") as? audio_incoming_call
+                
+            destinationController?.dictGetAllDataForAudioCall = dict as NSDictionary
             /*destinationController?.callerName = (dict["name"] as! String)
             destinationController?.callerImage = (dict["image"] as! String)
             destinationController?.roomName = (dict["channel"] as! String)*/
@@ -202,10 +238,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             window?.makeKeyAndVisible()
             
             /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-                // print(notification.request.content.userInfo as NSDictionary)
-                
-            let destinationController = storyboard.instantiateViewController(withIdentifier:"VideoChatViewControllerId") as? VideoChatViewController
+  
+            let destinationController = storyboard.instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
                 
             destinationController?.setSteps = "1"
             destinationController?.callerName = (dict["name"] as! String)
@@ -227,19 +261,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             window?.makeKeyAndVisible()*/
             
+        } else if (dict["type"] as! String) == "video_call" {
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+  
+            let destinationController = storyboard.instantiateViewController(withIdentifier:"incoming_video_call_id") as? incoming_video_call
+                
+            destinationController?.dictGetAllDataForVideoCall = dict as NSDictionary
+              
+            let frontNavigationController = UINavigationController(rootViewController: destinationController!)
+
+            let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
+
+            let mainRevealController = SWRevealViewController()
+
+            mainRevealController.rearViewController = rearViewController
+            mainRevealController.frontViewController = frontNavigationController
+            
+            DispatchQueue.main.async {
+                UIApplication.shared.keyWindow?.rootViewController = mainRevealController
+            }
+            
+            window?.makeKeyAndVisible()
+            
         } else {
             
         }
         
-    }
-    
-    // MARK:- WHEN APP IS IN BACKGROUND - ( after click popup ) -
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("User Info = ",response.notification.request.content.userInfo)
-        
-        let dict = response.notification.request.content.userInfo
-        if (dict["message"] as! String) == "Incoming Audio call" {
+        /*if (dict["message"] as! String) == "Incoming Audio call" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
   
@@ -295,7 +344,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
         } else {
             
-        }
+        }*/
         
     }
     

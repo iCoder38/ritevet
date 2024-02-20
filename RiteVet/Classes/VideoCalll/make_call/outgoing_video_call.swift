@@ -180,12 +180,13 @@ class outgoing_video_call: UIViewController  {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
-            let uuid = UUID().uuidString
-            print(uuid)
+            // let uuid = UUID().uuidString
+            // print(uuid)
             
+            print(self.str_store_channel_name as Any)
             Firestore.firestore().collection(video_call_collection_path).addDocument(data: [
                 
-                "video_call_id" : String(uuid),
+                "video_call_id" : String(self.str_store_channel_name),
                 "type"          : "video_call",
                 "call_status"   : "calling",
                 
@@ -205,12 +206,10 @@ class outgoing_video_call: UIViewController  {
                     print("=====================================================================")
                     print("=====================================================================")
                     
-                    // firebase check call status every time
-                    self.check_call_status(get_video_call_id: String(uuid))
-                    
+                    self.join_channel(channel_name: String(self.str_store_channel_name))
                     
                     // send notification to receiver
-                    self.send_notification_fore_video_chat(video_call_id: String(uuid))
+                    // self.send_notification_fore_video_chat(video_call_id: String(uuid))
                 }
             }
             
@@ -289,6 +288,8 @@ class outgoing_video_call: UIViewController  {
         if (result == 0) {
             print("Successfully joined the channel as ")
             
+            // firebase check call status every time
+            self.check_call_status(get_video_call_id: String(channel_name))
             
         }
         
@@ -310,7 +311,7 @@ class outgoing_video_call: UIViewController  {
     }
     // MARK: - LEAVE -
     @objc func leave_channel() {
-        self.audioPlayer
+        self.audioPlayer.stop()
         agoraKit.leaveChannel(nil)
         
         //
@@ -373,7 +374,6 @@ class outgoing_video_call: UIViewController  {
                     print("=====================================================================")
                     
                 }
-                
             }
         }
         

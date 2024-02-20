@@ -126,7 +126,7 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         self.btn_call.addTarget(self, action: #selector(dummy_video_call_click_method), for: .touchUpInside)
         
         
-        let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
+        /*let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
         do {
             
             print("===============")
@@ -139,7 +139,7 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
             
         } catch {
             
-        }
+        }*/
         
         
         

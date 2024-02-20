@@ -89,6 +89,8 @@ class audio_incoming_call: UIViewController  {
     
     var audioPlayer = AVAudioPlayer()
     
+    @IBOutlet weak var str_sub_label:UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,9 +100,7 @@ class audio_incoming_call: UIViewController  {
         
         // init agora
         self.agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-        self.agoraKit.delegate = self
-        
-        
+        self.agoraKit.delegate = self        
         
         self.lbl_caller_name.text = (self.dictGetAllDataForAudioCall["sender_name"] as! String)
         
@@ -487,6 +487,8 @@ extension audio_incoming_call: AgoraRtcEngineDelegate {
         print("TIMER : INVALIDATE.")
         print("==================")
         self.call_cut_timer.invalidate()
+        
+        self.str_sub_label.text = "on call"
     }
    
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {

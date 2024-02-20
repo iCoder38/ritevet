@@ -19143,6 +19143,7 @@
                         <outlet property="btn_decline" destination="5Oy-s2-zjX" id="LAC-bb-nmW"/>
                         <outlet property="btn_decline_after_accept" destination="zh0-DV-yeO" id="QNk-ND-6cM"/>
                         <outlet property="lbl_caller_name" destination="DZv-1w-jmU" id="Kp7-rI-6EH"/>
+                        <outlet property="str_sub_label" destination="Dhc-Bn-Mql" id="mcN-xX-5HI"/>
                         <outlet property="view_accept_decline" destination="bTj-If-yBV" id="QBq-yn-gZF"/>
                         <outlet property="view_after_Accept" destination="3wV-mw-o1g" id="PrJ-Eq-mwy"/>
                     </connections>
@@ -19229,6 +19230,7 @@
                     <connections>
                         <outlet property="btn_decline" destination="3fq-2m-CO1" id="qTF-bZ-T3s"/>
                         <outlet property="lbl_caller_name" destination="JZN-Yt-s7y" id="h5K-wX-eDj"/>
+                        <outlet property="str_sub_label" destination="rp2-Z0-by7" id="y2r-N4-VLr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eXf-bI-jRX" userLabel="First Responder" sceneMemberID="firstResponder"/>
