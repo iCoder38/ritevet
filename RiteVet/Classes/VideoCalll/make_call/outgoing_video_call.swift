@@ -175,7 +175,11 @@ class outgoing_video_call: UIViewController  {
     }
     
     @objc func set_up_firebase_before_set_up() {
-        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+        
+        self.join_channel(channel_name: String(self.str_store_channel_name))
+        
+        
+       /* if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             print(person as Any)
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
@@ -187,7 +191,7 @@ class outgoing_video_call: UIViewController  {
             Firestore.firestore().collection(video_call_collection_path).addDocument(data: [
                 
                 "video_call_id" : String(self.str_store_channel_name),
-                "type"          : "video_call",
+                "type"          : "videocall",
                 "call_status"   : "calling",
                 
             ]){
@@ -213,7 +217,7 @@ class outgoing_video_call: UIViewController  {
                 }
             }
             
-        }
+        }*/
     }
     
     // MARK: - CHECK CALL STATUS EVERYTIME -
@@ -496,10 +500,11 @@ class outgoing_video_call: UIViewController  {
                 "sender_image"          : (person["image"] as! String),
                 
                 //
-                "video_call_id"         : String(video_call_id),
+                //"video_call_id"         : String(video_call_id),
+                "channel"               : String(video_call_id),
                 
                 //
-                "type"                  : "video_call",
+                "type"                  : "videocall",
             ]
             
             print("parameters-------\(String(describing: parameters))")

@@ -14405,10 +14405,10 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="g22-Tt-JdJ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ES-8f-XaL">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ES-8f-XaL">
                                 <rect key="frame" x="0.0" y="817" width="414" height="79"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6eP-NL-1gn" customClass="GrowingTextView" customModule="GrowingTextView">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6eP-NL-1gn" customClass="GrowingTextView" customModule="GrowingTextView">
                                         <rect key="frame" x="50" y="8" width="324" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -14522,7 +14522,7 @@
                                     <constraint firstItem="sfs-le-c97" firstAttribute="centerY" secondItem="dxR-c8-KCy" secondAttribute="centerY" id="wZW-yN-3Ps"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-uW-is0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-uW-is0">
                                 <rect key="frame" x="0.0" y="88" width="414" height="729"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -19602,11 +19602,6 @@
             <point key="canvasLocation" x="-2752.1739130434785" y="1572.9910714285713"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="6eP-NL-1gn">
-            <size key="intrinsicContentSize" width="-1" height="30"/>
-        </designable>
-    </designables>
     <resources>
         <image name="Background" width="375" height="667"/>
         <image name="allCards" width="300" height="48"/>
@@ -19638,8 +19633,8 @@
         <image name="ic_arrow_left" width="19" height="30"/>
         <image name="ic_arrow_right" width="19" height="30"/>
         <image name="like" width="64" height="64"/>
-        <image name="location" catalog="system" width="128" height="119"/>
         <image name="location" width="64" height="64"/>
+        <image name="location" catalog="system" width="128" height="119"/>
         <image name="location1.1" width="40" height="40"/>
         <image name="lock" width="64" height="64"/>
         <image name="logo-400" width="400" height="400"/>
@@ -19662,8 +19657,8 @@
         <image name="pin.fill" catalog="system" width="116" height="128"/>
         <image name="plainBack" width="320" height="568"/>
         <image name="play_icon" width="396" height="229"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="64" height="64"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="previous" width="128" height="128"/>
         <image name="reg" width="128" height="128"/>
         <image name="regUncheck" width="32" height="32"/>

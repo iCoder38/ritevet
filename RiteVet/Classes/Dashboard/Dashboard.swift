@@ -141,8 +141,6 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
             
         }*/
         
-        
-        
     }
     
     @objc func dummy_video_call_click_method() {

@@ -85,8 +85,6 @@ class audio_incoming_call: UIViewController  {
         }
     }
     
-    
-    
     var audioPlayer = AVAudioPlayer()
     
     @IBOutlet weak var str_sub_label:UILabel!
@@ -100,7 +98,7 @@ class audio_incoming_call: UIViewController  {
         
         // init agora
         self.agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-        self.agoraKit.delegate = self        
+        self.agoraKit.delegate = self
         
         self.lbl_caller_name.text = (self.dictGetAllDataForAudioCall["sender_name"] as! String)
         
@@ -171,12 +169,12 @@ class audio_incoming_call: UIViewController  {
         
         
         Firestore.firestore().collection(audio_call_collection_path)
-            .whereField("audio_call_id", isEqualTo: (self.dictGetAllDataForAudioCall["audio_call_id"] as! String))
-         
+            .whereField("audio_call_id", isEqualTo: (self.dictGetAllDataForAudioCall["channel"] as! String))
+        
         
             .addSnapshotListener() { documentSnapshot, error in
                 if error != nil {
-                     print("Error to get user lists")
+                    print("Error to get user lists")
                     
                     return
                 }
@@ -230,7 +228,7 @@ class audio_incoming_call: UIViewController  {
         
         var query: Query!
         
-        query = Firestore.firestore().collection(audio_call_collection_path).whereField("audio_call_id", isEqualTo: (self.dictGetAllDataForAudioCall["audio_call_id"] as! String))
+        query = Firestore.firestore().collection(audio_call_collection_path).whereField("audio_call_id", isEqualTo: (self.dictGetAllDataForAudioCall["channel"] as! String))
         
         query.getDocuments { (snapshot, error) in
             //
@@ -361,7 +359,7 @@ class audio_incoming_call: UIViewController  {
         
         var query: Query!
         
-        query = Firestore.firestore().collection(audio_call_collection_path).whereField("audio_call_id", isEqualTo: (self.dictGetAllDataForAudioCall["audio_call_id"] as! String))
+        query = Firestore.firestore().collection(audio_call_collection_path).whereField("audio_call_id", isEqualTo: (self.dictGetAllDataForAudioCall["channel"] as! String))
         
         query.getDocuments { (snapshot, error) in
             //
@@ -448,12 +446,9 @@ class audio_incoming_call: UIViewController  {
             
             
         }
-        
     }
-    
-    
-    
 }
+
 extension audio_incoming_call: AgoraRtcEngineDelegate {
     
     func rtcEngineConnectionDidInterrupted(_ engine: AgoraRtcEngineKit) {

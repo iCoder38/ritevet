@@ -724,7 +724,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
     
     @objc func audio_call_click_method() {
         
-        if (self.str_enable_calling == "0") {
+        /*if (self.str_enable_calling == "0") {
             
             let alert = UIAlertController(title: "Alert", message: "You can only call between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
             
@@ -732,9 +732,9 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             self.present(alert, animated: true, completion: nil)
             
-        } else {
+        } else {*/
             self.store_data_in_db_before_call(str_type: "audio")
-        }
+        // }
         
         // self.send_notification_to_doctor(str_get_type: "audiocall")
         
@@ -752,7 +752,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         } else {
             self.store_data_in_db_before_call(str_type: "video")
             // self.send_notification_to_doctor(str_get_type: "videocall")
-        }
+         }
         
     }
     
@@ -773,7 +773,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     
                     
                     "audio_call_id" : String(uuid),//"\(self.dictBookingDetails["bookingID"]!)",
-                    "type"          : "audio_call",
+                    "type"          : "audiocall",
                     "call_status"   : "calling",
                     
                 ]){
@@ -802,11 +802,11 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 let uuid = UUID().uuidString
                 print(uuid)
                 
-                Firestore.firestore().collection(audio_call_collection_path).addDocument(data: [
+                Firestore.firestore().collection(video_call_collection_path).addDocument(data: [
                     
                     
                     "video_call_id" : String(uuid),//"\(self.dictBookingDetails["bookingID"]!)",
-                    "type"          : "video_call",
+                    "type"          : "videocall",
                     "call_status"   : "calling",
                     
                 ]){
@@ -829,27 +829,22 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                         self.manage_data_before_send_notification(get_type: String(str_type), getCallId: String(uuid))
                         
                         /*if (str_type == "audio") {
-                            
-                            // get data now
-                            self.manage_data_before_send_notification(get_type: String(str_type), getCallId: String(uuid))
-                            
-                        } else {
-                            
-                        }*/
+                         
+                         // get data now
+                         self.manage_data_before_send_notification(get_type: String(str_type), getCallId: String(uuid))
+                         
+                         } else {
+                         
+                         }*/
                         
                     }
                 }
                 
             }
             
-            
-            
         }
         
-        
     }
-    
-   
     
     func manage_data_before_send_notification(get_type:String,getCallId:String) {
         
@@ -1015,10 +1010,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     "sender_image"          : String(caller_image),
                     
                     //
-                    "audio_call_id" : String(audio_call_id),
+                    "channel" : String(audio_call_id),
                     
                     //
-                    "type"          : "audio_call",
+                    "type"          : "audiocall",
                 ]
                 
                 print("parameters-------\(String(describing: parameters))")
@@ -1128,10 +1123,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     "sender_image"          : String(caller_image),
                     
                     //
-                    "video_call_id" : String(video_call_id),
+                    "channel" : String(video_call_id),
                     
                     //
-                    "type"          : "video_call",
+                    "type"          : "videocall",
                 ]
                 
                 print("parameters-------\(String(describing: parameters))")

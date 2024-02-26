@@ -116,7 +116,7 @@ class incoming_video_call: UIViewController {
         print(self.dictGetAllDataForVideoCall as Any)
         print("====================================")
         
-        self.str_video_id = "\(self.dictGetAllDataForVideoCall["video_call_id"]!)"
+        self.str_video_id = "\(self.dictGetAllDataForVideoCall["channel"]!)"
         // print()
         // self.view_decline.isHidden = false
         self.btn_decline.addTarget(self, action: #selector(leave_channel), for: .touchUpInside)
@@ -618,7 +618,7 @@ extension incoming_video_call: AgoraRtcEngineDelegate {
         }
         
         
-        
+        self.leave_channel()
         
          // self.leave_channel()
         

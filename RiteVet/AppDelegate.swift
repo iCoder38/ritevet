@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         
         
-        if (dict["type"] as! String) == "audio_call" {
+        if (dict["type"] as! String) == "audiocall" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
   
@@ -175,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             window?.makeKeyAndVisible()*/
             
-        } else if (dict["type"] as! String) == "video_call" {
+        } else if (dict["type"] as! String) == "videocall" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
   
@@ -211,7 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         let dict = response.notification.request.content.userInfo
         
-        if (dict["type"] as! String) == "audio_call" {
+        if (dict["type"] as! String) == "audiocall" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
   
@@ -261,7 +261,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             
             window?.makeKeyAndVisible()*/
             
-        } else if (dict["type"] as! String) == "video_call" {
+        } else if (dict["type"] as! String) == "videocall" {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
   
