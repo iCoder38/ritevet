@@ -16,17 +16,17 @@ import AgoraRtcKit
 import SwiftUI
 
 class incoming_video_call: UIViewController {
-    
+    var audioPlayer = AVAudioPlayer()
     var dictGetAllDataForVideoCall:NSDictionary!
     
-    var secondsRemaining = 10
+    var secondsRemaining = 30
     var call_cut_timer:Timer!
     
     // weak var logVC: LogViewController?
     var agoraKit: AgoraRtcEngineKit!
     var localVideo: AgoraRtcVideoCanvas?
     var remoteVideo: AgoraRtcVideoCanvas?
-    
+    var str_save_data_in_missed_call:String!
     @IBOutlet weak var cameraButton: UIButton!
     
     var str_video_id:String!
@@ -109,6 +109,8 @@ class incoming_video_call: UIViewController {
         }
     }
     
+    @IBOutlet weak var lbl_receiver_name:UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,7 +119,10 @@ class incoming_video_call: UIViewController {
         print("====================================")
         
         self.str_video_id = "\(self.dictGetAllDataForVideoCall["channel"]!)"
-        // print()
+        print(self.str_video_id)
+        
+        self.lbl_receiver_name.text = "\(self.dictGetAllDataForVideoCall["sender_name"]!)"
+        
         // self.view_decline.isHidden = false
         self.btn_decline.addTarget(self, action: #selector(leave_channel), for: .touchUpInside)
         
@@ -125,8 +130,53 @@ class incoming_video_call: UIViewController {
         
         self.check_call_status()
         self.btn_accept.addTarget(self, action: #selector(call_accept_click_method), for: .touchUpInside)
+        
+        let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
+        do {
+            
+            print("===============")
+            print("SPEAKER IS TRUE")
+            print("===============")
+            
+            self.audioPlayer = try AVAudioPlayer(contentsOf: clickSound)
+            self.audioPlayer.play()
+             
+            
+            self.audioPlayer.volume = 1
+            
+        } catch {
+            
+        }
+        
+        // start timer
+        self.call_cut_timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(call_cut_count_down), userInfo: nil, repeats: true)
+        
+        
         // setup agora
         self.enable_and_init_video_camera()
+        
+    }
+    
+    // MARK: - TIMER COUNTDOWN -
+    @objc func call_cut_count_down() {
+        
+        if secondsRemaining > 0 {
+            print("\(secondsRemaining)")
+            secondsRemaining -= 1
+            
+        } else {
+            
+            self.leave_channel()
+            
+            print("===================")
+            print("TIMER : INVALIDATE.")
+            print("===================")
+            self.call_cut_timer.invalidate()
+             
+             
+            self.call_error_popup(text: "Call not answered")
+            
+        }
         
     }
     
@@ -189,6 +239,7 @@ class incoming_video_call: UIViewController {
         
         var query: Query!
         
+        print(self.self.str_video_id as Any)
         query = Firestore.firestore().collection(video_call_collection_path).whereField("video_call_id", isEqualTo: String(self.str_video_id))
         
         query.getDocuments { (snapshot, error) in
@@ -208,22 +259,25 @@ class incoming_video_call: UIViewController {
                 
                 print(snapshot?.documents as Any)
                 
-                if let documents = snapshot?.documents {
-                    
-                    Firestore.firestore().collection(video_call_collection_path)
-                    
-                    // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
-                        .document(documents[0].documentID)
-                    
-                        .updateData(["call_status": "caller_declined"])
-                    
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    
+                if (snapshot?.documents.count != 0) {
+                    if let documents = snapshot?.documents {
+                        
+                        Firestore.firestore().collection(video_call_collection_path)
+                        
+                        // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
+                            .document(documents[0].documentID)
+                        
+                            .updateData(["call_status": "caller_declined"])
+                        
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        
+                    }
                 }
+                
                 
             }
         }
@@ -247,11 +301,20 @@ class incoming_video_call: UIViewController {
     //  MARK: - DECLINE BEFORE ACCEPT -
     @objc func decline_before_Accept_click_methodd() {
         
+        print("==================")
+        print("TIMER : INVALIDATE.")
+        print("==================")
+        self.call_cut_timer.invalidate()
+        
+        self.audioPlayer.stop()
+        
         print("===============================================")
         print("FIRESTORE : RECEIVER DECLINE WITHOUT ACCEPTING.")
         print("===============================================")
         
         var query: Query!
+        
+        print(self.str_video_id as Any)
         
         query = Firestore.firestore().collection(video_call_collection_path).whereField("video_call_id", isEqualTo: String(self.str_video_id))
         
@@ -272,23 +335,24 @@ class incoming_video_call: UIViewController {
                 
                 print(snapshot?.documents as Any)
                 
-                if let documents = snapshot?.documents {
-                    
-                    Firestore.firestore().collection(video_call_collection_path)
-                    
-                    // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
-                        .document(documents[0].documentID)
-                    
-                        .updateData(["call_status": "receiver_declined"])
-                    
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    
-                }
-                
+                // if (snapshot?.documents.count != 0) {
+                    if let documents = snapshot?.documents {
+                        
+                        Firestore.firestore().collection(video_call_collection_path)
+                        
+                        // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
+                            .document(documents[0].documentID)
+                        
+                            .updateData(["call_status": "receiver_declined"])
+                        
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        
+                    }
+                // }
             }
         }
         
@@ -363,6 +427,7 @@ class incoming_video_call: UIViewController {
         removeFromParent(remoteVideo)
         remoteVideo = nil
         
+        self.audioPlayer.stop()
         self.call_error_popup(text: "Call ended")
     }
     
@@ -595,7 +660,7 @@ extension incoming_video_call: AgoraRtcEngineDelegate {
         if remoteVideo != nil {
             return
         }
-
+        self.audioPlayer.stop()
         let view = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: parent.frame.size))
         remoteVideo = AgoraRtcVideoCanvas()
         remoteVideo!.view = view

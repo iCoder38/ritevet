@@ -1065,7 +1065,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B7FF4CA1-98EF-4A63-8464-026349D4A51E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/SideBarMenu/Payment/CSelectPaymetScreen.swift"
@@ -1701,7 +1701,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A72A5CDC-1C23-4CE4-A2CD-5557EDCBE6DA"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/OtherPetServiceRegistration/OtherPetServiceAddress/OtherPetServiceAddress.swift"
@@ -1717,7 +1717,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C046FF37-667F-481C-B1BF-2702525B1D3C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/OtherPetServiceRegistration/VeterinarianTypesTwo/VeterinarianTypesTwo.swift"
@@ -1825,7 +1825,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C18A139B-AC27-4E8D-8746-D90E1C666D4B"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
@@ -1841,7 +1841,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FCDA52B8-6889-4235-85F9-D1DEF38211B7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
@@ -1857,7 +1857,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FA5717AD-F482-47D8-BF0A-17BAFBEC32D3"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
@@ -1873,7 +1873,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "5E2B6B5B-3993-44FF-8857-317CA22580F8"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
@@ -1889,7 +1889,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "486571E7-7022-41EE-9841-09789FD05904"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/Veterinarian/Subscription/Subscription.swift"
@@ -1905,7 +1905,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "088F5D6B-4700-42CF-931C-B258C65B7806"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/RequestService/RequestService.swift"
@@ -2013,7 +2013,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "CE6B48A1-9D54-4C39-B445-9188C326AC8E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/RequestService/RequestService.swift"
@@ -2169,7 +2169,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2826B7EC-747F-4847-B15A-6A91A80ECA7C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
@@ -3173,13 +3173,13 @@
             filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1233"
-            endingLineNumber = "1233"
+            startingLineNumber = "1239"
+            endingLineNumber = "1239"
             landmarkName = "send_notification_to_doctor(str_get_type:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A9A2F17E-A7FA-4085-A8E1-6E9893CF203F - a0e1cf901df2f9ad"
+                  uuid = "A9A2F17E-A7FA-4085-A8E1-6E9893CF203F - a0e1cf901df2f893"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3189,12 +3189,27 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1233"
-                  endingLineNumber = "1233"
-                  offsetFromSymbolStart = "7756">
+                  startingLineNumber = "1239"
+                  endingLineNumber = "1239"
+                  offsetFromSymbolStart = "9752">
                </Location>
                <Location
-                  uuid = "A9A2F17E-A7FA-4085-A8E1-6E9893CF203F - a0e1cf901df2f9ad"
+                  uuid = "A9A2F17E-A7FA-4085-A8E1-6E9893CF203F - b024550790a04c3e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.appointment_details.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1239"
+                  endingLineNumber = "1239"
+                  offsetFromSymbolStart = "556">
+               </Location>
+               <Location
+                  uuid = "A9A2F17E-A7FA-4085-A8E1-6E9893CF203F - a0e1cf901df2f893"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3204,8 +3219,8 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1233"
-                  endingLineNumber = "1233"
+                  startingLineNumber = "1239"
+                  endingLineNumber = "1239"
                   offsetFromSymbolStart = "9404">
                </Location>
             </Locations>
@@ -3316,102 +3331,6 @@
                   startingLineNumber = "214"
                   endingLineNumber = "214"
                   offsetFromSymbolStart = "708">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "81D9A7B5-E2E1-46BF-8235-206ECBA1ED4D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1295"
-            endingLineNumber = "1295"
-            landmarkName = "send_notification_to_doctor(str_get_type:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "81D9A7B5-E2E1-46BF-8235-206ECBA1ED4D - b024550790a04506"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.appointment_details.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1295"
-                  endingLineNumber = "1295"
-                  offsetFromSymbolStart = "10532">
-               </Location>
-               <Location
-                  uuid = "81D9A7B5-E2E1-46BF-8235-206ECBA1ED4D - b024550790a04506"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.appointment_details.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1295"
-                  endingLineNumber = "1295"
-                  offsetFromSymbolStart = "11976">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C9AB6387-8326-46BF-BB61-A2C22831C0C2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1294"
-            endingLineNumber = "1294"
-            landmarkName = "send_notification_to_doctor(str_get_type:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C9AB6387-8326-46BF-BB61-A2C22831C0C2 - b024550790a04527"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.appointment_details.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1294"
-                  endingLineNumber = "1294"
-                  offsetFromSymbolStart = "9456">
-               </Location>
-               <Location
-                  uuid = "C9AB6387-8326-46BF-BB61-A2C22831C0C2 - b024550790a04506"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.appointment_details.send_notification_to_doctor(str_get_type: Swift.String) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1295"
-                  endingLineNumber = "1295"
-                  offsetFromSymbolStart = "11976">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -3552,58 +3471,13 @@
             filePath = "RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "getDataForAudioCallSystem()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 61814525aef0d517"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs_2022/ritevet/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199"
-                  offsetFromSymbolStart = "1100">
-               </Location>
-               <Location
-                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 61814525aef0d517"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs_2022/ritevet/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199"
-                  offsetFromSymbolStart = "612">
-               </Location>
-               <Location
-                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 99ea76f6dc1ba09f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199"
-                  offsetFromSymbolStart = "612">
-               </Location>
-               <Location
-                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 328183eb07182a2a"
+                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 328183eb07182397"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3613,75 +3487,12 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199"
-                  offsetFromSymbolStart = "612">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DE1F60E1-6B5A-492D-B183-3434CAD74A19"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "getDataForAudioCallSystem()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DE1F60E1-6B5A-492D-B183-3434CAD74A19 - 61814525aef0d61c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs_2022/ritevet/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "3828">
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "1360">
                </Location>
                <Location
-                  uuid = "DE1F60E1-6B5A-492D-B183-3434CAD74A19 - 61814525aef0d61c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs_2022/ritevet/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "3668">
-               </Location>
-               <Location
-                  uuid = "DE1F60E1-6B5A-492D-B183-3434CAD74A19 - 99ea76f6dc1bbda4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Downloads/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "3668">
-               </Location>
-               <Location
-                  uuid = "DE1F60E1-6B5A-492D-B183-3434CAD74A19 - 328183eb07182733"
+                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 328183eb07182397"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -3691,9 +3502,24 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "3668">
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "4196">
+               </Location>
+               <Location
+                  uuid = "CD5BB267-027E-40D8-B29B-FE0FA868A5E9 - 328183eb07182397"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "612">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -3756,10 +3582,57 @@
             filePath = "RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "getDataForAudioCallSystem()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A5D2D9C9-B92E-4183-BBC0-ECC8BE2B1BE1 - 328183eb071822ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "257"
+                  endingLineNumber = "257"
+                  offsetFromSymbolStart = "2252">
+               </Location>
+               <Location
+                  uuid = "A5D2D9C9-B92E-4183-BBC0-ECC8BE2B1BE1 - 328183eb071822ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "257"
+                  endingLineNumber = "257"
+                  offsetFromSymbolStart = "4496">
+               </Location>
+               <Location
+                  uuid = "A5D2D9C9-B92E-4183-BBC0-ECC8BE2B1BE1 - 328183eb0718234d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.incoming_video_call.getDataForAudioCallSystem() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "256"
+                  endingLineNumber = "256"
+                  offsetFromSymbolStart = "1764">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3813,22 +3686,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2DD61686-9F6E-414F-A0AD-678DF09DE77E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/VideoCalll/incoming_video_call/incoming_video_call.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
-            landmarkName = "check_call_status()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4DAFB109-DC5E-43E1-AEF3-5068E0BC1ACB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -3845,80 +3702,96 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3732E186-484B-4FDF-BF9A-CAE8379F54A1"
+            uuid = "AB7181BA-7BDC-4C15-94FE-9B0213C1F1A3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/AudioCall/audio_call/audio_outgoing_call/audio_outgoing_call.swift"
+            filePath = "RiteVet/Classes/AudioCall/audio_call/audio_incoming_call/audio_incoming_call.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "get_firebase_data()"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D5C0A3A2-1B34-47A3-8138-87514F030402"
+            uuid = "C7EC07F8-5767-4111-8E54-2324A8835DD0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
+            filePath = "RiteVet/Classes/CallLogs/CallLogs.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "829"
-            endingLineNumber = "829"
-            landmarkName = "store_data_in_db_before_call(str_type:)"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "get_missed_calls_data()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "95FE06C7-5FA8-4791-ADE4-980A869BAC1A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1019"
-            endingLineNumber = "1019"
-            landmarkName = "send_notification_for_audio_call(caller_name:caller_id:caller_image:caller_device_token:receiver_userId:receiver_name:receiver_device_name:receiver_device_image:receiver_device_token:audio_call_id:caller_device_name:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C82C4A23-3A42-432F-ABFB-1BB56021D309"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/SideBarMenu/Appointment/Appointment_details/appointment_details.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "770"
-            endingLineNumber = "770"
-            landmarkName = "store_data_in_db_before_call(str_type:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0A038D4D-E0CD-4F26-83EA-1055E43561AF"
+            uuid = "F95363B7-A96A-47C6-BECF-30F2BE0C909D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RiteVet/Classes/VideoCalll/make_call/outgoing_video_call.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "check_call_status(get_video_call_id:)"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "missed_call()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F95363B7-A96A-47C6-BECF-30F2BE0C909D - 674d536aec377a8c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.outgoing_video_call.missed_call() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/make_call/outgoing_video_call.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "213"
+                  endingLineNumber = "213"
+                  offsetFromSymbolStart = "5364">
+               </Location>
+               <Location
+                  uuid = "F95363B7-A96A-47C6-BECF-30F2BE0C909D - 674d536aec377aa3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in RiteVet.outgoing_video_call.missed_call() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet-dev/RiteVet/Classes/VideoCalll/make_call/outgoing_video_call.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "212"
+                  endingLineNumber = "212"
+                  offsetFromSymbolStart = "4944">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B82A59B0-44DA-4754-AD97-AB53B6AD188A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/VideoCalll/make_call/outgoing_video_call.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "missed_call()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

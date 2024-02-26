@@ -14,6 +14,7 @@ let BASE_URL_KREASE = "http://ritevet.com/services/index/"
 
 let audio_call_collection_path = "mode/test/audio_call"
 let video_call_collection_path = "mode/test/video_call"
+let missed_call_collection_path = "mode/test/missed_call"
 
 let merchant_id = "merchant.com.pay.ritevet"
 let apple_pay_price = "9.99"

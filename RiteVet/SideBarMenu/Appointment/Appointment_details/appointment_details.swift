@@ -734,14 +734,14 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
         } else {*/
             self.store_data_in_db_before_call(str_type: "audio")
-        // }
+//         }
         
         // self.send_notification_to_doctor(str_get_type: "audiocall")
         
     }
     
     @objc func video_chat_click_method() {
-        if (self.str_enable_calling == "0") {
+       /*if (self.str_enable_calling == "0") {
             
             let alert = UIAlertController(title: "Alert", message: "You can only call between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
             
@@ -749,10 +749,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             self.present(alert, animated: true, completion: nil)
             
-        } else {
+        } else {*/
             self.store_data_in_db_before_call(str_type: "video")
             // self.send_notification_to_doctor(str_get_type: "videocall")
-         }
+//         }
         
     }
     
@@ -827,15 +827,6 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                         
                         // get data now
                         self.manage_data_before_send_notification(get_type: String(str_type), getCallId: String(uuid))
-                        
-                        /*if (str_type == "audio") {
-                         
-                         // get data now
-                         self.manage_data_before_send_notification(get_type: String(str_type), getCallId: String(uuid))
-                         
-                         } else {
-                         
-                         }*/
                         
                     }
                 }
@@ -977,105 +968,105 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                                           receiver_device_token:String,
                                           audio_call_id:String,
                                           caller_device_name:String) {
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             
-            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            print(myString)
+            
+            Utils.RiteVetIndicatorShow()
+            
+            let urlString = BASE_URL_KREASE
+            
+            var parameters:Dictionary<AnyHashable, Any>!
+            
+            parameters = [
+                "action"        : "sendnotification",
+                "Token"        : String(receiver_device_token), // receiver's token
                 
-                let x : Int = (person["userId"] as! Int)
-                let myString = String(x)
-                print(myString)
+                "message"       : String(caller_name)+" is calling", // custom message
+                "device"        : String(receiver_device_name), // receiver's device
                 
-                Utils.RiteVetIndicatorShow()
+                // receiver's custom data
+                "receiver_name"     : String(receiver_name),
+                "receiver_id"       : String(receiver_userId),
+                "receiver_image"    : String(receiver_device_image),
                 
-                let urlString = BASE_URL_KREASE
+                // sender's custom data
+                "sender_id"             : String(myString),
+                "sender_name"           : String(caller_name),
+                "sender_device"         : String(caller_device_name),
+                "sender_device_token"   : String(caller_device_token),
+                "sender_image"          : String(caller_image),
                 
-                var parameters:Dictionary<AnyHashable, Any>!
+                //
+                "channel" : String(audio_call_id),
                 
-                parameters = [
-                    "action"        : "sendnotification",
-                    "Token"        : String(receiver_device_token), // receiver's token
-                    
-                    "message"       : String(caller_name)+" is calling", // custom message
-                    "device"        : String(receiver_device_name), // receiver's device
-                    
-                    // receiver's custom data
-                    "receiver_name"     : String(receiver_name),
-                    "receiver_id"       : String(receiver_userId),
-                    "receiver_image"    : String(receiver_device_image),
-                    
-                    // sender's custom data
-                    "sender_id"             : String(myString),
-                    "sender_name"           : String(caller_name),
-                    "sender_device"         : String(caller_device_name),
-                    "sender_device_token"   : String(caller_device_token),
-                    "sender_image"          : String(caller_image),
-                    
-                    //
-                    "channel" : String(audio_call_id),
-                    
-                    //
-                    "type"          : "audiocall",
-                ]
+                //
+                "type"          : "audiocall",
+            ]
+            
+            print("parameters-------\(String(describing: parameters))")
+            // "135+133"
+            AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+                [self]
+                response in
                 
-                print("parameters-------\(String(describing: parameters))")
-                // "135+133"
-                AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
-                    [self]
-                    response in
-                    
-                    switch(response.result) {
-                    case .success(_):
-                        if let data = response.value {
+                switch(response.result) {
+                case .success(_):
+                    if let data = response.value {
+                        
+                        
+                        let JSON = data as! NSDictionary
+                        print(JSON)
+                        
+                        var strSuccess : String!
+                        strSuccess = JSON["status"]as Any as? String
+                        
+                        if strSuccess == "success" {
                             
+                            Utils.RiteVetIndicatorHide()
                             
-                            let JSON = data as! NSDictionary
-                            print(JSON)
+                            /*var dict: Dictionary<AnyHashable, Any>
+                             dict = JSON["data"] as! Dictionary<AnyHashable, Any>*/
                             
-                            var strSuccess : String!
-                            strSuccess = JSON["status"]as Any as? String
+                            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "audio_outgoing_call_id") as? audio_outgoing_call
                             
-                            if strSuccess == "success" {
-                                
-                                Utils.RiteVetIndicatorHide()
-                                
-                                /*var dict: Dictionary<AnyHashable, Any>
-                                 dict = JSON["data"] as! Dictionary<AnyHashable, Any>*/
-                                
-                                let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "audio_outgoing_call_id") as? audio_outgoing_call
-                                
-                                push!.str_receiver_name = String(self.str_vendor_name)
-                                push!.channel_id_for_audio_call = String(audio_call_id)
-                                
-                                self.navigationController?.pushViewController(push!, animated: true)
-                            }
-                            else {
-                                Utils.RiteVetIndicatorHide()
-                            }
+                            push!.str_receiver_name = String(self.str_vendor_name)
+                            push!.channel_id_for_audio_call = String(audio_call_id)
                             
+                            self.navigationController?.pushViewController(push!, animated: true)
+                        }
+                        else {
+                            Utils.RiteVetIndicatorHide()
                         }
                         
-                    case .failure(_):
-                        print("Error message:\(String(describing: response.error))")
-                        
-                        Utils.RiteVetIndicatorHide()
-                        
-                        let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                        
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                            UIAlertAction in
-                            NSLog("OK Pressed")
-                        }
-                        
-                        alertController.addAction(okAction)
-                        
-                        self.present(alertController, animated: true, completion: nil)
-                        
-                        break
                     }
+                    
+                case .failure(_):
+                    print("Error message:\(String(describing: response.error))")
+                    
+                    Utils.RiteVetIndicatorHide()
+                    
+                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                    }
+                    
+                    alertController.addAction(okAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    break
                 }
-                
             }
             
         }
+        
+    }
     
     
     func send_notification_for_video_call(caller_name:String,
@@ -1102,7 +1093,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 let urlString = BASE_URL_KREASE
                 
                 var parameters:Dictionary<AnyHashable, Any>!
-                
+                 
                 parameters = [
                     "action"        : "sendnotification",
                     "Token"        : String(receiver_device_token), // receiver's token
@@ -1121,7 +1112,11 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     "sender_device"         : String(caller_device_name),
                     "sender_device_token"   : String(caller_device_token),
                     "sender_image"          : String(caller_image),
-                    
+                    //
+                    "notification": [
+                             "sound": "default",
+                        ],
+                    "priority": "high",
                     //
                     "channel" : String(video_call_id),
                     
@@ -1156,8 +1151,19 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                                 let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "outgoing_video_call_id") as? outgoing_video_call
                                 
                                 print(video_call_id as Any)
-                                push!.str_receiver_name = String(self.str_vendor_name)
+                                
                                 push!.str_store_channel_name = String(video_call_id)
+                                push!.str_receiver_token_for_missed_call_notification = String(receiver_device_token)
+                                
+                                push!.str_sender_id = String(myString)
+                                push!.str_sender_name = String(caller_name)
+                                push!.str_sender_token = String(caller_device_token)
+                                
+                                push!.str_receiver_id = String(receiver_userId)
+                                push!.str_receiver_name = String(self.str_vendor_name)
+                                push!.str_receiver_token = String(receiver_device_token)
+                                
+                                push!.self.str_save_data_in_missed_call = "0"
                                 
                                 self.navigationController?.pushViewController(push!, animated: true)
                             }

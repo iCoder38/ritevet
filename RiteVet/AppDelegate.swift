@@ -123,84 +123,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         let dict = notification.request.content.userInfo
         
-        
-        
-        if (dict["type"] as! String) == "audiocall" {
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  
-            let destinationController = storyboard.instantiateViewController(withIdentifier:"audio_incoming_call_id") as? audio_incoming_call
+        if (dict["type"] != nil) {
+            if (dict["type"] as! String) == "audiocall" {
                 
-            destinationController?.dictGetAllDataForAudioCall = dict as NSDictionary
-            /*destinationController?.callerName = (dict["name"] as! String)
-            destinationController?.callerImage = (dict["image"] as! String)
-            destinationController?.roomName = (dict["channel"] as! String)*/
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      
+                let destinationController = storyboard.instantiateViewController(withIdentifier:"audio_incoming_call_id") as? audio_incoming_call
+                    
+                destinationController?.dictGetAllDataForAudioCall = dict as NSDictionary
+                /*destinationController?.callerName = (dict["name"] as! String)
+                destinationController?.callerImage = (dict["image"] as! String)
+                destinationController?.roomName = (dict["channel"] as! String)*/
+                    
+                let frontNavigationController = UINavigationController(rootViewController: destinationController!)
+
+                let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
+
+                let mainRevealController = SWRevealViewController()
+
+                mainRevealController.rearViewController = rearViewController
+                mainRevealController.frontViewController = frontNavigationController
                 
-            let frontNavigationController = UINavigationController(rootViewController: destinationController!)
+                DispatchQueue.main.async {
+                    UIApplication.shared.keyWindow?.rootViewController = mainRevealController
+                }
+                
+                window?.makeKeyAndVisible()
+                
+                /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      
+                let destinationController = storyboard.instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
+                    
+                destinationController?.setSteps = "1"
+                destinationController?.callerName = (dict["name"] as! String)
+                destinationController?.callerImage = (dict["image"] as! String)
+                destinationController?.roomName = (dict["channel"] as! String)
+                    
+                let frontNavigationController = UINavigationController(rootViewController: destinationController!)
 
-            let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
+                let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
 
-            let mainRevealController = SWRevealViewController()
+                let mainRevealController = SWRevealViewController()
 
-            mainRevealController.rearViewController = rearViewController
-            mainRevealController.frontViewController = frontNavigationController
-            
-            DispatchQueue.main.async {
-                UIApplication.shared.keyWindow?.rootViewController = mainRevealController
+                mainRevealController.rearViewController = rearViewController
+                mainRevealController.frontViewController = frontNavigationController
+                
+                DispatchQueue.main.async {
+                    UIApplication.shared.keyWindow?.rootViewController = mainRevealController
+                }
+                
+                window?.makeKeyAndVisible()*/
+                
+            } else if (dict["type"] as! String) == "videocall" {
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      
+                let destinationController = storyboard.instantiateViewController(withIdentifier:"incoming_video_call_id") as? incoming_video_call
+                    
+                destinationController?.dictGetAllDataForVideoCall = dict as NSDictionary
+                  
+                let frontNavigationController = UINavigationController(rootViewController: destinationController!)
+
+                let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
+
+                let mainRevealController = SWRevealViewController()
+
+                mainRevealController.rearViewController = rearViewController
+                mainRevealController.frontViewController = frontNavigationController
+                
+                DispatchQueue.main.async {
+                    UIApplication.shared.keyWindow?.rootViewController = mainRevealController
+                }
+                
+                window?.makeKeyAndVisible()
+                
+            } else {
+                
             }
-            
-            window?.makeKeyAndVisible()
-            
-            /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  
-            let destinationController = storyboard.instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
-                
-            destinationController?.setSteps = "1"
-            destinationController?.callerName = (dict["name"] as! String)
-            destinationController?.callerImage = (dict["image"] as! String)
-            destinationController?.roomName = (dict["channel"] as! String)
-                
-            let frontNavigationController = UINavigationController(rootViewController: destinationController!)
-
-            let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
-
-            let mainRevealController = SWRevealViewController()
-
-            mainRevealController.rearViewController = rearViewController
-            mainRevealController.frontViewController = frontNavigationController
-            
-            DispatchQueue.main.async {
-                UIApplication.shared.keyWindow?.rootViewController = mainRevealController
-            }
-            
-            window?.makeKeyAndVisible()*/
-            
-        } else if (dict["type"] as! String) == "videocall" {
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  
-            let destinationController = storyboard.instantiateViewController(withIdentifier:"incoming_video_call_id") as? incoming_video_call
-                
-            destinationController?.dictGetAllDataForVideoCall = dict as NSDictionary
-              
-            let frontNavigationController = UINavigationController(rootViewController: destinationController!)
-
-            let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
-
-            let mainRevealController = SWRevealViewController()
-
-            mainRevealController.rearViewController = rearViewController
-            mainRevealController.frontViewController = frontNavigationController
-            
-            DispatchQueue.main.async {
-                UIApplication.shared.keyWindow?.rootViewController = mainRevealController
-            }
-            
-            window?.makeKeyAndVisible()
-            
-        } else {
-            
         }
+        
+        
         
     }
     
@@ -208,6 +210,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("User Info = ",response.notification.request.content.userInfo)
+        
+         
         
         let dict = response.notification.request.content.userInfo
         
@@ -236,30 +240,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }
             
             window?.makeKeyAndVisible()
-            
-            /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  
-            let destinationController = storyboard.instantiateViewController(withIdentifier:"RoomViewControllerId") as? RoomViewController
-                
-            destinationController?.setSteps = "1"
-            destinationController?.callerName = (dict["name"] as! String)
-            destinationController?.callerImage = (dict["image"] as! String)
-            destinationController?.roomName = (dict["channel"] as! String)
-                
-            let frontNavigationController = UINavigationController(rootViewController: destinationController!)
-
-            let rearViewController = storyboard.instantiateViewController(withIdentifier:"MenuControllerVCId") as? MenuControllerVC
-
-            let mainRevealController = SWRevealViewController()
-
-            mainRevealController.rearViewController = rearViewController
-            mainRevealController.frontViewController = frontNavigationController
-            
-            DispatchQueue.main.async {
-                UIApplication.shared.keyWindow?.rootViewController = mainRevealController
-            }
-            
-            window?.makeKeyAndVisible()*/
             
         } else if (dict["type"] as! String) == "videocall" {
             

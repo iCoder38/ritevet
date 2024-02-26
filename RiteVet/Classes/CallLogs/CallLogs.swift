@@ -52,10 +52,45 @@ class CallLogs: UIViewController {
     
     @objc func get_missed_calls_data() {
         // Utils.RiteVetIndicatorShow()
+       
+            Firestore.firestore().collection(missed_call_collection_path)
+                // .whereField("audio_call_id", isEqualTo: String(self.channel_id_for_audio_call))
+                .whereField("users_ids", arrayContainsAny: ["665"])
+                .addSnapshotListener() { documentSnapshot, error in
+                    if error != nil {
+                        print("Error to get user lists")
+                        
+                        return
+                    }
+                    
+                    if let snapshot = documentSnapshot {
+                        
+                        for document in snapshot.documents {
+                            
+                            let data = document.data()
+                            print(data as Any)
+                            
+                            self.arr_mut_missed_call_Data.add(data)
+                            self.tbleView.isHidden = false
+                            
+                            if self.arr_mut_missed_call_Data.count != 0 {
+                                self.tbleView.delegate = self
+                                self.tbleView.dataSource = self
+                                self.tbleView.reloadData()
+                            }
+                            
+                            
+                        }
+                        
+                    } else {
+                        print("no, data found")
+                    }
+                    
+                }
         
-        
+        /*
         let ref = Database.database().reference()
-        ref.child("missed_calls")
+        ref.child(missed_call_collection_path)
             // .queryOrdered(byChild: "TimeStamp")
             
             .observe(.value, with: { (snapshot) in
@@ -100,7 +135,7 @@ class CallLogs: UIViewController {
                 }
             })
         // print(self.chatMessages.reversed() as Any)
-        
+        */
     }
     
     @objc func sideBarMenu() {
@@ -148,22 +183,16 @@ extension CallLogs: UITableViewDataSource , UITableViewDelegate {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        let item = self.arr_mut_missed_call_Data.reversed()[indexPath.row] as? [String:Any]
-        // print(item as Any)
-        
+        let item = self.arr_mut_missed_call_Data[indexPath.row] as? [String:Any]
+         print(item as Any)
         /*
-         
-         ["caller_name": Lee, "receiver_name": kiwi one, "receiver_id": 3, "caller_image": , "type": No Answer, "room_id": 3+4, "time_stamp": 2022-01-12 22:21:03.709, "callType": Audio, "caller_token": chBdJBa86kw:APA91bHcLMoQcdtRwJWtfmxM_l8XQKAbYHWkl08nfa4d6Tn5zIjHkyJNEQ1uy_9JqO6SCBAcF_htjpCNaCwPR7YTyJJ7IugCPWVKyrFCXs7bxeth76ERaFgpbHkctmJFc-Z-aSiEl0Ge, "receiver_image": http://demo2.evirtualservices.co/ritevet/site/img/uploads/users/16288397010dc57b8d66c12736c666f157a3afa3ff.jpg, "receiver_token_id": e7EbN6R0RUq_lniKPhHzOE:APA91bGpJte3wOr4sHzlqbbfQq7hHOqB0LenUUw_Zi8N4m8lcowH5tTs3WPYalzUAOmMOwkPV8mTwueUuh_y0YcONe7kVv_pyp68spN5iRaf3VMWdvIPDwwlghA7ZE4ASFUmsuN9MCys, "caller_id": 4])
-         
+         ["sender_name": doc new, "sender_device": iOS, "sender_device_token": ew5E2o29gU3mmbCheOKnkt:APA91bEElcmturrTqkgagGqluW4fOSXcDe1VPkpR3XMfbE0bg8gm3k39NPkA6utPz-g1Ypoi3LFfBnVQB9fQWeQUn_ZJS6ZqidLvrQbPuyqZokWqsaKV1fY_wlDumYUy7Ek5kYtRqB0y, "type": video, "channel": AECED945-0981-491E-93D8-EEB16FB838FE, "call_status": missed, "time": 05:06, "receiver_device_token": dzoHIng1jUK1ir70IR_Dsz:APA91bFdFAC6MpVycc6llWPp68Ywal968BWe3geFfx4aXeUrKN0PACakHUwq0a393BHzUZ_ZTZSM9efVQ64byZn4pgdF6C5EEubL2W9cvI90OXSi5A-ZJXypRxPiiS2vFVo9KfbpfA8T, "receiver_name": DD new, "sender_id": 665, "date": 2024-02-26, "users_ids": <__NSArrayM 0x282ce8480>(
+         665,
+         713
+         )
          */
         
-        // let date = NSDate(timeIntervalSince1970: 1703835632)
-        // print(date)
-        
-        // let decimalToInt = NSDecimalNumber(decimal: person["time_stamp"]).intValue
-        
-        
-        if item!["time_stamp"] is String {
+        /*if item!["time_stamp"] is String {
             print("Yes, it's a String")
             
             let result = String((item!["time_stamp"] as! String).prefix(19))
@@ -184,34 +213,46 @@ extension CallLogs: UITableViewDataSource , UITableViewDelegate {
             let result = "\(date)".prefix(19)
             cell.lbl_time.text = "\(result)"
             
-        }
+        }*/
         
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
-            if (item!["caller_id"] as! String) == myString {
+            if (item!["sender_id"] as! String) == myString {
                 
                 cell.lbl_title.text = (item!["receiver_name"] as! String)
                 
             } else {
                 
-                cell.lbl_title.text = (item!["caller_name"] as! String)
+                cell.lbl_title.text = (item!["sender_name"] as! String)
                 
             }
-            
+            // type
+            if (item!["type"] as! String) == "audio" {
+                
+                cell.btn_title.setImage(UIImage(systemName: "phone.fill.arrow.down.left"), for: .normal)
+                
+            } else {
+                //
+                if (item!["sender_id"] as! String) == myString {
+                    
+                    cell.btn_title.setImage(UIImage(systemName: "arrow.up.right.video"), for: .normal)
+                    cell.btn_title.tintColor = .green
+                    
+                } else {
+                    cell.btn_title.setImage(UIImage(systemName: "video.slash.fill"), for: .normal)
+                    cell.btn_title.tintColor = .red
+                }
+                
+                //cell.btn_title.setImage(UIImage(systemName: ""), for: .normal)
+                
+            }
         }
         
-        if (item!["callType"] as! String) == "Audio" {
-            
-            cell.btn_title.setImage(UIImage(systemName: "phone.fill.arrow.down.left"), for: .normal)
-            
-        } else {
-            
-            cell.btn_title.setImage(UIImage(systemName: "video.slash.fill"), for: .normal)
-            
-        }
+        cell.lbl_time.text = (item!["time"] as! String)
+        cell.lbl_time.isHidden = false
         
         return cell
     }
@@ -219,17 +260,236 @@ extension CallLogs: UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath, animated: true)
             
-        let item = self.arr_mut_missed_call_Data.reversed()[indexPath.row] as? [String:Any]
+        let item = self.arr_mut_missed_call_Data[indexPath.row] as? [String:Any]
+        print(item as Any)
+        var query: Query!
         
-        if (item!["callType"] as! String) == "Audio" {
-            
-            self.send_notification_and_call(dict_call_Data:item! as NSDictionary,
-                                            strChannelName: (item!["room_id"] as! String),
-                                            strType: "audiocall",
-                                            strBody: "Incoming Audio call")
-            
+        query = Firestore.firestore().collection(missed_call_collection_path).whereField("video_call_id", isEqualTo: (item!["video_call_id"] as! String))
+        
+        query.getDocuments { (snapshot, error) in
+            //
+            if error != nil {
+                print("=====================================================================")
+                print("=====================================================================")
+                print("ERROR : \(error!)")
+                print("=====================================================================")
+                print("=====================================================================")
+            } else {
+                print("=====================================================================")
+                print("=====================================================================")
+                print("FIREBASE : DATA GET SUCCESSFULLY FOR AUDIO CALL FROM FIREBASE")
+                print("=====================================================================")
+                print("=====================================================================")
+                
+                print(snapshot as Any)
+                if let documents = snapshot?.documents {
+                    self.send_notification(receiver_token: (documents[0]["receiver_device_token"] as! String),
+                                           str_receiver_name: (documents[0]["receiver_name"] as! String),
+                                           str_receiver_id: (documents[0]["receiver_id"] as! String),
+                                           str_receiver_image: "",
+                                           sender_id: (documents[0]["sender_id"] as! String),
+                                           str_sender_name: (documents[0]["sender_name"] as! String),
+                                           str_sender_device: (documents[0]["sender_device"] as! String),
+                                           str_sender_device_token: (documents[0]["sender_device_token"] as! String),
+                                           str_sender_image: "",
+                                           channel: (documents[0]["video_call_id"] as! String))
+                }
+                /*if let documents = snapshot?.documents {
+                    
+                    Firestore.firestore().collection(audio_call_collection_path)
+                    
+                    // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
+                        .document(documents[0].documentID)
+                    
+                        .updateData(["call_status": "receiver_declined"])
+                    
+                    print("=====================================================================")
+                    print("=====================================================================")
+                    print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
+                    print("=====================================================================")
+                    print("=====================================================================")
+                    
+                }*/
+                
+            }
         }
         
+        /*let uuid = UUID().uuidString
+        print(uuid)
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            if (item!["sender_id"] as! String) == myString {
+                self.send_notification(receiver_token: (item!["receiver_device_token"] as! String),
+                                       str_receiver_name: (item!["receiver_name"] as! String),
+                                       str_receiver_id: (item!["receiver_id"] as! String),
+                                       str_receiver_image: "",
+                                       sender_id: (item!["sender_id"] as! String),
+                                       str_sender_name: (item!["sender_name"] as! String),
+                                       str_sender_device: (item!["sender_device"] as! String),
+                                       str_sender_device_token: (item!["sender_device_token"] as! String),
+                                       str_sender_image: "",
+                                       channel: String(uuid))
+            } else {
+                
+                Firestore.firestore().collection(video_call_collection_path).addDocument(data: [
+                    
+                    
+                    "video_call_id" : String(uuid),//"\(self.dictBookingDetails["bookingID"]!)",
+                    "type"          : "videocall",
+                    "call_status"   : "calling",
+                    
+                ]){
+                    (error) in
+                    
+                    if error != nil {
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        print("ERROR : \(error!)")
+                        print("=====================================================================")
+                        print("=====================================================================")
+                    } else {
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        print("FIREBASE : DATA STORE SUCCESSFULLY. NOW SEND NOTIFICATION TO RECEIVER")
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        
+                        // get data now
+                        self.send_notification(receiver_token: (item!["sender_device_token"] as! String),
+                                               str_receiver_name: (item!["sender_name"] as! String),
+                                               str_receiver_id: (item!["sender_id"] as! String),
+                                               str_receiver_image: "",
+                                               sender_id: (item!["receiver_id"] as! String),
+                                               str_sender_name: (item!["receiver_name"] as! String),
+                                               str_sender_device: "iOS",
+                                               str_sender_device_token: (item!["receiver_device_token"] as! String),
+                                               str_sender_image: "",
+                                               channel: String(uuid))
+                        
+                    }
+                }
+                
+                
+                
+            }
+        }*/
+        
+    }
+    
+    @objc func send_notification(receiver_token:String,str_receiver_name:String,
+                                 str_receiver_id:String,str_receiver_image:String,
+                                 sender_id:String,str_sender_name:String,str_sender_device:String,
+                                 str_sender_device_token:String,str_sender_image:String,
+                                 channel:String) {
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            print(myString)
+            
+            Utils.RiteVetIndicatorShow()
+            
+            let urlString = BASE_URL_KREASE
+            
+            var parameters:Dictionary<AnyHashable, Any>!
+             
+            parameters = [
+                "action"        : "sendnotification",
+                "Token"        : String(receiver_token), // receiver's token
+                
+                "message"       : String(str_sender_name)+" is calling", // custom message
+                "device"        : String("iOS"), // receiver's device
+                
+                // receiver's custom data
+                "receiver_name"     : String(str_receiver_name),
+                "receiver_id"       : String(str_receiver_id),
+                "receiver_image"    : String(str_receiver_image),
+                
+                // sender's custom data
+                "sender_id"             : String(myString),
+                "sender_name"           : String(str_sender_name),
+                "sender_device"         : String("iOS"),
+                "sender_device_token"   : String(str_sender_device_token),
+                // "sender_image"          : String(caller_image),
+                "channel" : String(channel),
+                
+                //
+                "type"          : "videocall",
+            ]
+            
+            print("parameters-------\(String(describing: parameters))")
+            // "135+133"
+            AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+                [self]
+                response in
+                
+                switch(response.result) {
+                case .success(_):
+                    if let data = response.value {
+                        
+                        
+                        let JSON = data as! NSDictionary
+                        print(JSON)
+                        
+                        var strSuccess : String!
+                        strSuccess = JSON["status"]as Any as? String
+                        
+                        if strSuccess == "success" {
+                            
+                            Utils.RiteVetIndicatorHide()
+                            
+                            /*var dict: Dictionary<AnyHashable, Any>
+                             dict = JSON["data"] as! Dictionary<AnyHashable, Any>*/
+                            
+                            let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "outgoing_video_call_id") as? outgoing_video_call
+                             
+                            push!.str_store_channel_name = String(channel)
+                            push!.str_receiver_token_for_missed_call_notification = String(receiver_token)
+                            
+                            push!.str_sender_id = String(myString)
+                            push!.str_sender_name = String(str_sender_name)
+                            push!.str_sender_token = String(str_sender_device_token)
+                            
+                            push!.str_receiver_id = String(str_receiver_id)
+                            push!.str_receiver_name = String(str_receiver_name)
+                            push!.str_receiver_token = String(receiver_token)
+                            
+                            push!.self.str_save_data_in_missed_call = "1"
+                            
+                            self.navigationController?.pushViewController(push!, animated: true)
+                        }
+                        else {
+                            Utils.RiteVetIndicatorHide()
+                        }
+                        
+                    }
+                    
+                case .failure(_):
+                    print("Error message:\(String(describing: response.error))")
+                    
+                    Utils.RiteVetIndicatorHide()
+                    
+                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                    }
+                    
+                    alertController.addAction(okAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    break
+                }
+            }
+            
+        }
         
     }
     
@@ -356,7 +616,7 @@ extension CallLogs: UITableViewDataSource , UITableViewDelegate {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
-            if (item!["caller_id"] as! String) == myString {
+            if (item!["sender_id"] as! String) == myString {
                 return 88
             } else if (item!["receiver_id"] as! String) == myString {
                 return 88

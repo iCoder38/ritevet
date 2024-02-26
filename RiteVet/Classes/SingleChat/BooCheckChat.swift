@@ -752,9 +752,14 @@ struct ReadUnreadStatus: Encodable {
 }
 
 extension Date {
- static func getCurrentDate() -> String {
+ static func getCurrentDateReal() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: Date())
     }
+    static func getCurrentDate() -> String {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "hh:mm"
+           return dateFormatter.string(from: Date())
+       }
 }

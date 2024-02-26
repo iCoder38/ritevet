@@ -17,8 +17,11 @@ import SwiftUI
 
 class outgoing_video_call: UIViewController  {
     
+    var str_document_id:String!
     
-    var secondsRemaining = 10
+    var str_save_data_in_missed_call:String!
+    
+    var secondsRemaining = 6
     var call_cut_timer:Timer!
     
     // weak var logVC: LogViewController?
@@ -26,10 +29,23 @@ class outgoing_video_call: UIViewController  {
     var localVideo: AgoraRtcVideoCanvas?
     var remoteVideo: AgoraRtcVideoCanvas?
     
-    var str_receiver_name:String!
+    
     var str_store_channel_name:String!
     
+    
+    var str_sender_id:String!
+    var str_sender_name:String!
+    var str_sender_token:String!
+    
+    var str_receiver_id:String!
+    var str_receiver_name:String!
+    var str_receiver_token:String!
+    
+    var str_receiver_token_for_missed_call_notification:String!
+    
     var audioPlayer = AVAudioPlayer()
+    
+    var decline_status_from_caller:String! = "call_missed"
     
     @IBOutlet weak var cameraButton: UIButton!
     
@@ -97,19 +113,262 @@ class outgoing_video_call: UIViewController  {
         }
     }
     
+    @IBOutlet weak var lbl_receiver_name:UILabel!
+     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view_decline.isHidden = false
-        self.btn_decline.addTarget(self, action: #selector(leave_channel), for: .touchUpInside)
+        self.btn_decline.addTarget(self, action: #selector(direct_decline_button), for: .touchUpInside)
         
+        self.lbl_receiver_name.text = String(self.str_receiver_name)
         
+        print(self.str_receiver_name as Any)
+        
+        // start timer
+        self.call_cut_timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(call_cut_count_down), userInfo: nil, repeats: true)
         
         // setup agora
         self.enable_and_init_video_camera()
         
     }
     
+    @objc func direct_decline_button() {
+        self.decline_status_from_caller = "caller_declined"
+        self.leave_channel()
+    }
+    // MARK: - TIMER COUNTDOWN -
+    @objc func call_cut_count_down() {
+        
+        if secondsRemaining > 0 {
+            print("\(secondsRemaining)")
+            secondsRemaining -= 1
+            
+        } else {
+            
+            self.leave_channel()
+            
+            print("===================")
+            print("TIMER : INVALIDATE.")
+            print("===================")
+            self.call_cut_timer.invalidate()
+             
+            if (self.str_save_data_in_missed_call != "1"){
+                self.missed_call()
+            }
+            
+            self.call_error_popup(text: "Call not answered")
+            
+        }
+        
+    }
+    
+    @objc func missed_call() {
+        var query: Query!
+        
+        query = Firestore.firestore().collection(video_call_collection_path).whereField("video_call_id", isEqualTo: String(self.str_store_channel_name))
+        
+        query.getDocuments { (snapshot, error) in
+            //
+            if error != nil {
+                print("=====================================================================")
+                print("=====================================================================")
+                print("ERROR : \(error!)")
+                print("=====================================================================")
+                print("=====================================================================")
+            } else {
+                print("=====================================================================")
+                print("=====================================================================")
+                print("FIREBASE : DATA GET SUCCESSFULLY FOR AUDIO CALL FROM FIREBASE")
+                print("=====================================================================")
+                print("=====================================================================")
+                
+                print(snapshot?.documents as Any)
+                
+                if (self.str_save_data_in_missed_call != "0") {
+                    
+                    self.call_cut_timer.invalidate()
+                    self.audioPlayer.stop()
+                    
+                    let alert = UIAlertController(title: "Call ended", message: nil, preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                        self.push_to_dashboard()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    if let documents = snapshot?.documents {
+                        
+                        self.str_document_id = "\(documents[0].documentID)"
+                        Firestore.firestore().collection(video_call_collection_path)
+                        
+                        // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
+                            .document(documents[0].documentID)
+                        
+                            .updateData(["call_status": "call_missed"])
+                        
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        print("FIREBASE : CALL MISSED ( call_status )")
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        
+                    }
+                }
+               
+            }
+        }
+//        Firestore.firestore().collection(video_call_collection_path)
+//        
+//        // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
+//            .document(self.str_document_id)
+//        
+//            .updateData(["call_status": "call_missed"])
+//        
+//        print("=====================================================================")
+//        print("=====================================================================")
+//        print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
+//        print("=====================================================================")
+//        print("=====================================================================")
+        /*
+         var :String!
+         var :String!
+         var :String!
+         */
+        Firestore.firestore().collection(missed_call_collection_path).addDocument(data: [
+            
+            "video_call_id" : String(self.str_store_channel_name),
+            "type"          : "video",
+            "call_status"   : "missed",
+            //
+            //
+            "sender_id"             : String(self.str_sender_id),
+            "sender_name"           : String(self.str_sender_name),
+            "sender_device"         : String("iOS"),
+            "sender_device_token"   : String(self.str_sender_token),
+            //
+            // receiver's custom data
+            "receiver_name"         : String(str_receiver_name),
+            "receiver_id"           : String(str_receiver_id),
+            "receiver_device_token" : String(str_receiver_token),
+            //
+            "date"                  : Date.getCurrentDateReal(),
+            "time"                  : Date.getCurrentDate(),
+            //
+            //
+            "time_stamp"            : Date.currentTimeStamp,
+            //
+            "users_ids": [
+                String(self.str_sender_id),
+                String(self.str_receiver_id)
+            ]
+            //
+        ]){ [self]
+            (error) in
+            
+            if error != nil {
+                print("=====================================================================")
+                print("=====================================================================")
+                print("ERROR : \(error!)")
+                print("=====================================================================")
+                print("=====================================================================")
+            } else {
+                print("=====================================================================")
+                print("=====================================================================")
+                print("FIREBASE : MISSED CALL DATA STORE SUCCESSFULLY. NOW SEND NOTIFICATION TO RECEIVER")
+                print("=====================================================================")
+                print("=====================================================================")
+                
+                self.missed_call_notification_to_receiver(caller_name: String(self.str_sender_name))
+            }
+        }
+        
+    }
+    
+    @objc func missed_call_notification_to_receiver(caller_name:String) {
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            print(myString)
+            
+            Utils.RiteVetIndicatorShow()
+            
+            let urlString = BASE_URL_KREASE
+            
+            var parameters:Dictionary<AnyHashable, Any>!
+            
+            parameters = [
+                "action"        : "sendnotification",
+                "Token"        : String(self.str_receiver_token_for_missed_call_notification), // receiver's token
+                
+                "message"       : "Missed call from "+String(caller_name),
+                "device"        : String("iOS"), // receiver's device
+                
+                
+            ]
+            
+            print("parameters-------\(String(describing: parameters))")
+            // "135+133"
+            AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON {
+                [self]
+                response in
+                
+                switch(response.result) {
+                case .success(_):
+                    if let data = response.value {
+                        
+                        
+                        let JSON = data as! NSDictionary
+                        print(JSON)
+                        
+                        var strSuccess : String!
+                        strSuccess = JSON["status"]as Any as? String
+                        
+                        if strSuccess == "success" {
+                            
+                            Utils.RiteVetIndicatorHide()
+                            
+                            /*var dict: Dictionary<AnyHashable, Any>
+                             dict = JSON["data"] as! Dictionary<AnyHashable, Any>*/
+                            
+                            /*let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "audio_outgoing_call_id") as? audio_outgoing_call
+                            
+                            push!.str_receiver_name = String(self.str_vendor_name)
+                            push!.channel_id_for_audio_call = String(audio_call_id)
+                            
+                            self.navigationController?.pushViewController(push!, animated: true)*/
+                        }
+                        else {
+                            Utils.RiteVetIndicatorHide()
+                        }
+                        
+                    }
+                    
+                case .failure(_):
+                    print("Error message:\(String(describing: response.error))")
+                    
+                    Utils.RiteVetIndicatorHide()
+                    
+                    let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                    }
+                    
+                    alertController.addAction(okAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    break
+                }
+            }
+            
+        }
+        
+    }
     //MARK: - AGORA INIT : INIT AGORA THEN ENABLE VIDEO SYSTEM THEN ENABLE LOCAL CAMERA VIEW -
     @objc func enable_and_init_video_camera() {
         // init AgoraRtcEngineKit
@@ -126,6 +385,8 @@ class outgoing_video_call: UIViewController  {
             self.audioPlayer = try AVAudioPlayer(contentsOf: clickSound)
             self.audioPlayer.play()
             self.agoraKit.setEnableSpeakerphone(true)
+            
+            self.audioPlayer.volume = 0.01
             
         } catch {
             
@@ -178,46 +439,6 @@ class outgoing_video_call: UIViewController  {
         
         self.join_channel(channel_name: String(self.str_store_channel_name))
         
-        
-       /* if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-            print(person as Any)
-            let x : Int = (person["userId"] as! Int)
-            let myString = String(x)
-            
-            // let uuid = UUID().uuidString
-            // print(uuid)
-            
-            print(self.str_store_channel_name as Any)
-            Firestore.firestore().collection(video_call_collection_path).addDocument(data: [
-                
-                "video_call_id" : String(self.str_store_channel_name),
-                "type"          : "videocall",
-                "call_status"   : "calling",
-                
-            ]){
-                (error) in
-                
-                if error != nil {
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    print("ERROR : \(error!)")
-                    print("=====================================================================")
-                    print("=====================================================================")
-                } else {
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    print("FIREBASE : DATA STORE SUCCESSFULLY. NOW SEND NOTIFICATION TO RECEIVER")
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    
-                    self.join_channel(channel_name: String(self.str_store_channel_name))
-                    
-                    // send notification to receiver
-                    // self.send_notification_fore_video_chat(video_call_id: String(uuid))
-                }
-            }
-            
-        }*/
     }
     
     // MARK: - CHECK CALL STATUS EVERYTIME -
@@ -362,22 +583,36 @@ class outgoing_video_call: UIViewController  {
                 
                 print(snapshot?.documents as Any)
                 
-                if let documents = snapshot?.documents {
+                if (self.str_save_data_in_missed_call != "0") {
                     
-                    Firestore.firestore().collection(video_call_collection_path)
+                    self.call_cut_timer.invalidate()
+                    self.audioPlayer.stop()
                     
-                    // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
-                        .document(documents[0].documentID)
+                    let alert = UIAlertController(title: "Call ended", message: nil, preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                        self.push_to_dashboard()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                     
-                        .updateData(["call_status": "caller_declined"])
-                    
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
-                    print("=====================================================================")
-                    print("=====================================================================")
-                    
+                    if let documents = snapshot?.documents {
+                        
+                        self.str_document_id = "\(documents[0].documentID)"
+                        Firestore.firestore().collection(video_call_collection_path)
+                        
+                        // .whereField("audio_call_id", isEqualTo: documents[0]["audio_call_id"] as! String)
+                            .document(documents[0].documentID)
+                        
+                            .updateData(["call_status": String(self.decline_status_from_caller)])
+                        
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        print("FIREBASE : DATA UPDATED SUCCESSFULLY ( call_status )")
+                        print("=====================================================================")
+                        print("=====================================================================")
+                        
+                    }
                 }
+               
             }
         }
         
@@ -590,6 +825,11 @@ extension outgoing_video_call: AgoraRtcEngineDelegate {
             return
         }
 
+        print("===================")
+        print("TIMER : INVALIDATE.")
+        print("===================")
+        self.call_cut_timer.invalidate()
+        
         let view = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: parent.frame.size))
         remoteVideo = AgoraRtcVideoCanvas()
         remoteVideo!.view = view
@@ -649,3 +889,9 @@ extension outgoing_video_call: AgoraRtcEngineDelegate {
 /*
 
 */
+
+extension Date {
+    static var currentTimeStamp: Int64{
+        return Int64(Date().timeIntervalSince1970 * 1000)
+    }
+}

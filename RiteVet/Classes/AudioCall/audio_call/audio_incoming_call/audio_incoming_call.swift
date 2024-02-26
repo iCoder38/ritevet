@@ -18,7 +18,7 @@ class audio_incoming_call: UIViewController  {
     
     var dictGetAllDataForAudioCall:NSDictionary!
     
-    var secondsRemaining = 10
+    var secondsRemaining = 30
     var call_cut_timer:Timer!
     
     var channel_id_for_audio_call:String! = "0"

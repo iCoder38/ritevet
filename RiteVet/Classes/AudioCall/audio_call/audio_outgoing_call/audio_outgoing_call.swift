@@ -17,7 +17,7 @@ import AVFoundation
 
 class audio_outgoing_call: UIViewController {
 
-    var secondsRemaining = 10
+    var secondsRemaining = 30
     var call_cut_timer:Timer!
     
     var dictGetAllDataForAudioCall:NSDictionary!
@@ -93,12 +93,10 @@ class audio_outgoing_call: UIViewController {
             self.audioPlayer.play()
             self.agoraKit.setEnableSpeakerphone(true)
             
+            self.audioPlayer.volume = 0.02
         } catch {
             
         }
-        
-        
-        
         
         self.loadAgoraKit()
         

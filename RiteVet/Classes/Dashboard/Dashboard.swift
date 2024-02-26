@@ -14,7 +14,7 @@ import StoreKit
 import JKCalendar
 import FirebaseCore
 import FirebaseFirestoreInternal
-
+import MediaPlayer
 // c0S4VOesvUkmqYk4DdPKNP:APA91bGtpV4tHt9QROmHgtJOyulnSJ53ced-uYvjMtkvSbKs2wWMZfHO49p_bmjpemFob2ly2r_pWupAMncnwiOqGCTvZ8ogiiATVwJBTOa5usE2FPRw8vGQY5yDiEvEFPU0EO_aPDtE
 
 class Dashboard: UIViewController, SKPaymentTransactionObserver {
@@ -123,32 +123,32 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         self.pet_parent_WB()
         //
         self.btn_call.isHidden = true
-        self.btn_call.addTarget(self, action: #selector(dummy_video_call_click_method), for: .touchUpInside)
+        // self.btn_call.addTarget(self, action: #selector(dummy_video_call_click_method), for: .touchUpInside)
         
         
-        /*let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
-        do {
-            
-            print("===============")
-            print("SPEAKER IS TRUE")
-            print("===============")
-            
-            self.audioPlayer = try AVAudioPlayer(contentsOf: clickSound)
-            self.audioPlayer.play()
-            // self.agoraKit.setEnableSpeakerphone(true)
-            
-        } catch {
-            
-        }*/
+//        let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
+//        do {
+//            
+//            print("===============")
+//            print("SPEAKER IS TRUE")
+//            print("===============")
+//            
+//            self.audioPlayer = try AVAudioPlayer(contentsOf: clickSound)
+//            self.audioPlayer.play()
+//             
+//            
+//            self.audioPlayer.volume = 0.01
+//            
+//        } catch {
+//            
+//        }
+        
+        //Update system volume
+         MPVolumeView.setVolume(0.2)
         
     }
     
-    @objc func dummy_video_call_click_method() {
-        
-        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "outgoing_video_call_id") as? outgoing_video_call
-        self.navigationController?.pushViewController(push!, animated: true)
-        
-    }
+    
     
     /*@objc func dummy_call() {
         print("Call button pressed")
@@ -1149,4 +1149,15 @@ extension TimeZone {
       timeZoneFormatter.dateFormat = "ZZZZZ"
       return timeZoneFormatter.string(from: Date())
   }
+}
+//Update system volume
+extension MPVolumeView {
+    static func setVolume(_ volume: Float) {
+        let volumeView = MPVolumeView()
+        let slider = volumeView.subviews.first(where: { $0 is UISlider }) as? UISlider
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
+            slider?.value = volume
+        }
+    }
 }
