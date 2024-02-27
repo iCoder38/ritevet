@@ -191,6 +191,7 @@
 		B91B10EE2B7DD65C0048FE68 /* outgoing_video_call.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91B10ED2B7DD65C0048FE68 /* outgoing_video_call.swift */; };
 		B95D22E92A2DF78F001222A8 /* send_review.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D22E82A2DF78F001222A8 /* send_review.swift */; };
 		B95D22EC2A2E0D67001222A8 /* all_reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95D22EB2A2E0D67001222A8 /* all_reviews.swift */; };
+		B96249D82B8DA9DB00157BC3 /* edit_bank_info.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96249D72B8DA9DB00157BC3 /* edit_bank_info.swift */; };
 		B96932762A820E7700E395E1 /* add_images_in_vet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96932752A820E7700E395E1 /* add_images_in_vet.swift */; };
 		B975E2552A1F490800A82F38 /* specialization_options.swift in Sources */ = {isa = PBXBuildFile; fileRef = B975E2542A1F490800A82F38 /* specialization_options.swift */; };
 		B97EE8D12A2871F4008770EC /* appointment_details.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97EE8D02A2871F4008770EC /* appointment_details.swift */; };
@@ -427,6 +428,7 @@
 		B91B10ED2B7DD65C0048FE68 /* outgoing_video_call.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outgoing_video_call.swift; sourceTree = "<group>"; };
 		B95D22E82A2DF78F001222A8 /* send_review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = send_review.swift; sourceTree = "<group>"; };
 		B95D22EB2A2E0D67001222A8 /* all_reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = all_reviews.swift; sourceTree = "<group>"; };
+		B96249D72B8DA9DB00157BC3 /* edit_bank_info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = edit_bank_info.swift; sourceTree = "<group>"; };
 		B96932752A820E7700E395E1 /* add_images_in_vet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = add_images_in_vet.swift; sourceTree = "<group>"; };
 		B975E2542A1F490800A82F38 /* specialization_options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = specialization_options.swift; sourceTree = "<group>"; };
 		B97EE8D02A2871F4008770EC /* appointment_details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appointment_details.swift; sourceTree = "<group>"; };
@@ -778,6 +780,7 @@
 		1861AA30238D1F6C00C3C986 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B96249D62B8DA9CB00157BC3 /* edit_profile_bank_info */,
 				B9C601182A44842700F071E0 /* delete_account */,
 				B95D22EA2A2E0D55001222A8 /* all_reviews */,
 				B95D22E72A2DF777001222A8 /* reviews */,
@@ -1461,6 +1464,14 @@
 			path = all_reviews;
 			sourceTree = "<group>";
 		};
+		B96249D62B8DA9CB00157BC3 /* edit_profile_bank_info */ = {
+			isa = PBXGroup;
+			children = (
+				B96249D72B8DA9DB00157BC3 /* edit_bank_info.swift */,
+			);
+			path = edit_profile_bank_info;
+			sourceTree = "<group>";
+		};
 		B96932742A820E6100E395E1 /* add_images_in_vet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1883,6 +1894,7 @@
 				18BD99892391040400228775 /* OtherPetServiceAddressTableCell.swift in Sources */,
 				A46F092423BDC359006066C9 /* YBTextPickerCell.swift in Sources */,
 				A40AE2C523B204CF001176CE /* DogFood.swift in Sources */,
+				B96249D82B8DA9DB00157BC3 /* edit_bank_info.swift in Sources */,
 				A44CCCAC23B1E7AF00A49261 /* PetStoreTermsAndConditions.swift in Sources */,
 				A40AE2D123B24FB7001176CE /* AddToCartTableCell.swift in Sources */,
 				A49F35E323B090E00012C67D /* FreeStuffDetails.swift in Sources */,

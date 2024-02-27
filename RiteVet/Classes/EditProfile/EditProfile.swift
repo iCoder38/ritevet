@@ -1061,6 +1061,12 @@ class EditProfile: UIViewController,UIImagePickerControllerDelegate,UINavigation
         
     }
     
+    @objc func push_to_seller_bank_info() {
+        
+        let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "edit_bank_info_id") as? edit_bank_info
+        self.navigationController?.pushViewController(push!, animated: true)
+        
+    }
 }
 
 extension EditProfile: UITableViewDataSource
@@ -1132,6 +1138,7 @@ extension EditProfile: UITableViewDataSource
         
         
         cell.btn_id_proof.addTarget(self, action: #selector(push_to_id_proof_page), for: .touchUpInside)
+        cell.btn_seller_account.addTarget(self, action: #selector(push_to_seller_bank_info), for: .touchUpInside)
         
         return cell
     }

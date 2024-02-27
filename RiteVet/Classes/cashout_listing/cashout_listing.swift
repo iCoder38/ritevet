@@ -360,8 +360,6 @@ class cashout_listing: UIViewController {
     
     @objc func check_vet_reg_other() {
         
-        
-           
         let urlString = BASE_URL_KREASE
                
         var parameters:Dictionary<AnyHashable, Any>!
@@ -470,9 +468,9 @@ class cashout_listing: UIViewController {
             let myString = String(x)
             
             parameters = [
-                "action"    : "returnprofile",
+                "action"    : "profile",
                 "userId"    : String(myString),
-                "UTYPE"     : String(type)
+                // "UTYPE"     : String(type)
             ]
         }
                 
@@ -497,7 +495,7 @@ class cashout_listing: UIViewController {
                          var dict: Dictionary<AnyHashable, Any>
                          dict = JSON["data"] as! Dictionary<AnyHashable, Any>
                           
-                        if (dict["AccountNo"] as! String == "") {
+                        if (dict["accountNo"] as! String == "") {
                             
                             let alertController = UIAlertController(title: "Alert", message: "Your bank account details are empty. Please complete that process from your registration portal.", preferredStyle: .actionSheet)
                             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)

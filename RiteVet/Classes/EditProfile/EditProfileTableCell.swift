@@ -93,6 +93,16 @@ class EditProfileTableCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var btn_seller_account:UIButton! {
+        didSet {
+            btn_seller_account.setTitle("Add/update seller bank account info", for: .normal)
+            btn_seller_account.setTitleColor(.white, for: .normal)
+            btn_seller_account.layer.cornerRadius = 4
+            btn_seller_account.clipsToBounds = true
+            btn_seller_account.backgroundColor = NAVIGATION_BACKGROUND_COLOR
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
