@@ -3914,22 +3914,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C32FBD5E-E7C8-4D7E-9D4E-667A97B49ADB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "39E288A6-0E7A-473E-83C0-990A731E6428"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -3940,22 +3924,6 @@
             startingLineNumber = "146"
             endingLineNumber = "146"
             landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "47A6AFB6-6FC2-4AE4-B284-B822E31B6C62"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RiteVet/Classes/FreeStuff/FreeStuffDetails/FreeStuffDetails.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
-            landmarkName = "addComment()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4130,6 +4098,22 @@
             startingLineNumber = "815"
             endingLineNumber = "815"
             landmarkName = "upload_image_for_index_one()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EDE10D6E-287A-46ED-9282-0F85E6009812"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "574"
+            endingLineNumber = "574"
+            landmarkName = "commentListWB()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

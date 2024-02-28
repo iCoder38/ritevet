@@ -523,7 +523,7 @@ class CSelectPaymetScreen: UIViewController, UITextFieldDelegate, CLLocationMana
                 "shippingName"      :  (person["fullName"] as! String)+" "+(person["lastName"] as! String),
                 "productList"       :   String(paramsString),
                 "transactionId"     :String(stripe_token),
-                "added_time"    : Date.get24TimeForTimeZone(),
+                "added_time"    : Date.get24TimeWithDateForTimeZone(),
                 "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 
             ]

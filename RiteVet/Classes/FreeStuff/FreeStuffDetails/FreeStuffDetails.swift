@@ -593,7 +593,7 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                     "commentId"     : String(self.str_comment_id),
                     "freestaffId"   : (getFreeStuffDict!["staffId"] as! NSNumber),
                     "comment"       : String(txtComment.text!),
-                    "added_time"    : Date.get24TimeForTimeZone(),
+                    "added_time"    : Date.get24TimeWithDateForTimeZone(),
                     "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 ]
             }
@@ -652,11 +652,9 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                 }
             }
             
-            
-            
         } else {
-            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any]
-            {
+            
+            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
                 let x : Int = (person["userId"] as! Int)
                 let myString = String(x)
                 
@@ -666,7 +664,7 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                     "freestaffId"   : (getFreeStuffDict!["staffId"] as! NSNumber),
                     "comment"       : String(txtComment.text!),
                     "added_time"    : Date.get24TimeWithDateForTimeZone(),
-                    "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+                    "current_time_zone" : "\(TimeZone.current.abbreviation()!)",
                 ]
             }
             
@@ -686,16 +684,13 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                         var strSuccess : String!
                         strSuccess = JSON["status"]as Any as? String
                         
-                        if strSuccess == "success" //true
-                        {
+                        if strSuccess == "success" {
+                            
                             self.txtComment.text = ""
                             self.commentListWB()
                             
                         }
-                        else
-                        {
-                            //                                   self.indicator.stopAnimating()
-                            //                                   self.enableService()
+                        else {
                             Utils.RiteVetIndicatorHide()
                         }
                         
@@ -721,10 +716,7 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                     break
                 }
             }
-            
-            
         }
-        
     }
     
     @objc func likeWB() {
@@ -768,12 +760,10 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
                     
-                    if strSuccess == "Success" //true
-                    {
+                    if strSuccess == "Success" {
                         self.freeStuffDetailsWB()
                     }
-                    else
-                    {
+                    else {
                         //                                   self.indicator.stopAnimating()
                         //                                   self.enableService()
                     }

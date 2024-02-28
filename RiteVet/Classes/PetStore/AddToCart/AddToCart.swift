@@ -313,7 +313,7 @@ class AddToCart: UIViewController {
                 "ShippingMobile"    :  (person["contactNumber"] as! String),
                 "shippingName"      :  (person["fullName"] as! String)+" "+(person["lastName"] as! String),
                 "productList"       :  String(paramsString),
-                "added_time"    : Date.get24TimeForTimeZone(),
+                "added_time"    : Date.get24TimeWithDateForTimeZone(),
                 "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 
             ]

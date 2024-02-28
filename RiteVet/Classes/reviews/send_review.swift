@@ -214,7 +214,7 @@ class send_review: UIViewController {
                 "star"          :  String(self.str_number),
                 "message"       :  String(self.txt_view.text!),
                 "bookingId"     : "\(self.dict_send_review_details["bookingID"]!)",
-                "added_time"    : Date.get24TimeForTimeZone(),
+                "added_time"    : Date.get24TimeWithDateForTimeZone(),
                 "current_time_zone":"\(TimeZone.current.abbreviation()!)",
             ]
         }

@@ -582,7 +582,7 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
                 if let data = response.value {
                     
                     let JSON = data as! NSDictionary
-                    //print(JSON)
+                    print(JSON)
                     
                     var strSuccess : String!
                     strSuccess = JSON["status"]as Any as? String
@@ -663,7 +663,7 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
                     "commentId"     : String(self.str_comment_id),
                     "freestaffId"   : (getFreeStuffDict!["staffId"] as! NSNumber),
                     "comment"       : String(txtComment.text!),
-                    "added_time"    : Date.get24TimeForTimeZone(),
+                    "added_time"    : Date.get24TimeWithDateForTimeZone(),
                     "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 ]
             }
@@ -735,7 +735,7 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
                     "userId"        :    myString,
                     "freestaffId"    : (getFreeStuffDict!["staffId"] as! NSNumber),
                     "comment"    :String(txtComment.text!),
-                    "added_time"    : Date.get24TimeForTimeZone(),
+                    "added_time"    : Date.get24TimeWithDateForTimeZone(),
                     "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 ]
             }
