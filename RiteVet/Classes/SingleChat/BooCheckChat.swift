@@ -762,4 +762,17 @@ extension Date {
            dateFormatter.dateFormat = "hh:mm"
            return dateFormatter.string(from: Date())
        }
+    
+    static func getTimeForTimeZone() -> String {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "hh:mm a"
+           return dateFormatter.string(from: Date())
+       }
+    
+    static func get24TimeForTimeZone() -> String {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "HH:MM"
+           return dateFormatter.string(from: Date())
+       }
+    
 }

@@ -93,7 +93,12 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*print(Date.getCurrentDate())
+        // server time - my time zone + or - with real time
+        print(Date.getCurrentDate())
+        
+        
+        print(Date.getTimeForTimeZone())
+        
         print(TimeZone.current.abbreviation()!)
         print(TimeZone.current)
         
@@ -105,10 +110,37 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         
         print(TimeZone.current.localizedName(for: .standard, locale: .current))
         
-        print(TimeZone(abbreviation: "UTC+07")!.localizedName(for: .shortStandard, locale: nil)!) // => GMT+7)
+        print(TimeZone(abbreviation: "UTC+05")!.localizedName(for: .shortStandard, locale: nil)!) // => GMT+7)
         
         print(TimeZone.current.offsetFromUTC()) // output is +0530
-        print(TimeZone.current.currentTimezoneOffset()) // output is "+05:30"*/
+        print(TimeZone.current.currentTimezoneOffset()) // output is "+05:30"
+        
+        print("\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())")
+         
+        // print(localTime(in: "Asia/Thailand"))
+        
+        /*let timezone = TimeZone.init(identifier: "America/Los_Angeles")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.timeZone = timezone
+        print(dateFormatter.string(from: Date()))*/
+        
+        let timeFormatterGet = DateFormatter()
+        timeFormatterGet.dateFormat = "h:mm a"
+        // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+        timeFormatterGet.timeZone = TimeZone(abbreviation: "IST")
+        
+        let timeFormatterPrint = DateFormatter()
+        timeFormatterPrint.dateFormat = "h:mm a"
+        timeFormatterPrint.timeZone = TimeZone(abbreviation: "NZST")
+        
+        // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
+
+        if let date = timeFormatterGet.date(from: "12:36 PM") {
+            print(timeFormatterPrint.string(from: date)) // "6:30 PM" if device in EST
+        } else {
+           print("There was an error decoding the string")
+        }
 
         /****** VIEW BG IMAGE *********/
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
@@ -148,7 +180,12 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         
     }
     
-    
+    func localTime(in timeZone: String) -> String {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime]
+        f.timeZone = TimeZone(identifier: timeZone)
+        return f.string(from: Date())
+    }
     
     /*@objc func dummy_call() {
         print("Call button pressed")

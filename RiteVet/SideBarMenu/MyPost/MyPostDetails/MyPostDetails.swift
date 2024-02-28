@@ -662,7 +662,9 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
                     "userId"        : myString,
                     "commentId"     : String(self.str_comment_id),
                     "freestaffId"   : (getFreeStuffDict!["staffId"] as! NSNumber),
-                    "comment"       : String(txtComment.text!)
+                    "comment"       : String(txtComment.text!),
+                    "added_time"    : Date.get24TimeForTimeZone(),
+                    "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 ]
             }
             
@@ -732,7 +734,9 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
                     "action"        :  "addcomment",
                     "userId"        :    myString,
                     "freestaffId"    : (getFreeStuffDict!["staffId"] as! NSNumber),
-                    "comment"    :String(txtComment.text!)
+                    "comment"    :String(txtComment.text!),
+                    "added_time"    : Date.get24TimeForTimeZone(),
+                    "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 ]
             }
             
