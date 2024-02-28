@@ -271,7 +271,76 @@ extension order_received_details: UITableViewDataSource , UITableViewDelegate
         cell.lblTitle.text = (dictGetOrderDetails!["productName"] as! String)
         
         // created at
-        cell.lblDate.text = (dictGetOrderDetails!["created"] as! String)
+        // cell.lblDate.text = (dictGetOrderDetails!["created"] as! String)
+        
+        print(TimeZone.current.abbreviation()!)
+        
+        if (dictGetOrderDetails!["added_time"] as! String) != "" {
+            // divide time
+            let fullName    = (dictGetOrderDetails!["added_time"] as! String)
+            let fullNameArr = fullName.components(separatedBy: " ")
+
+            let normal_date    = fullNameArr[0]
+            let surname = fullNameArr[1]
+            
+            // print(normal_date as Any)
+            // print(surname as Any)
+            
+            // divide sub time
+            let divide_time = surname.components(separatedBy: ":")
+            let time_hour    = divide_time[0]
+            let time_minute = divide_time[1]
+            
+            // print(time_hour as Any)
+            // print(time_minute as Any)
+            
+            let joiin_and_create_new_time = time_hour+":"+time_minute
+            // print(joiin_and_create_new_time as Any)
+            
+            let dateAsString = String(joiin_and_create_new_time)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+
+            let date = dateFormatter.date(from: dateAsString)
+            dateFormatter.dateFormat = "h:mm a"
+            let Date12 = dateFormatter.string(from: date!)
+            // print(Date12)
+            
+            // print(date24 as Any)
+            let commenter_time_zone = (dictGetOrderDetails!["current_time_zone"] as! String)
+            let commenter_watcher_time_zone = "\(TimeZone.current.abbreviation()!)"
+            // print(commenter_time_zone)
+            // print(commenter_watcher_time_zone)
+            
+            let timeFormatterGet = DateFormatter()
+            timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
+            // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+            timeFormatterGet.timeZone = TimeZone(abbreviation: "\(commenter_time_zone)")
+            
+            let timeFormatterPrint = DateFormatter()
+            timeFormatterPrint.dateFormat = "yyyy-MM-dd h:mm a"
+            timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(commenter_watcher_time_zone)")
+            
+            // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
+
+            let join_date_and_time_together = String(normal_date)+" "+String(Date12)
+            // print(join_date_and_time_together)
+            
+            var str_get:String! = ""
+            if let date = timeFormatterGet.date(from: "\(join_date_and_time_together)") {
+                print(timeFormatterPrint.string(from: date))
+                str_get = timeFormatterPrint.string(from: date)
+            } else {
+               print("There was an error decoding the string")
+            }
+            
+             print(str_get as Any)
+            
+            // created at
+            cell.lblDate.text = String(str_get)
+        } else {
+            cell.lblDate.text = String("")
+        }
         
         // quantity
         let livingArea = dictGetOrderDetails?["quantity"] as? Int ?? 0
@@ -300,8 +369,79 @@ extension order_received_details: UITableViewDataSource , UITableViewDelegate
         
         
         cell.lblPaymentDetails.text = "Payment Details" //(item!["productName"] as! String)
-        cell.lblInvoiceDate.text = "Invoice Date : "+(self.dictGetOrderDetails!["created"] as! String)
+        
         cell.lblRefId.text = "Ref ID : "+"e4t64r222" //(item!["productName"] as! String)
+        
+        print(TimeZone.current.abbreviation()!)
+        
+        if (dictGetOrderDetails!["added_time"] as! String) != "" {
+            // divide time
+            let fullName    = (dictGetOrderDetails!["added_time"] as! String)
+            let fullNameArr = fullName.components(separatedBy: " ")
+
+            let normal_date    = fullNameArr[0]
+            let surname = fullNameArr[1]
+            
+            // print(normal_date as Any)
+            // print(surname as Any)
+            
+            // divide sub time
+            let divide_time = surname.components(separatedBy: ":")
+            let time_hour    = divide_time[0]
+            let time_minute = divide_time[1]
+            
+            // print(time_hour as Any)
+            // print(time_minute as Any)
+            
+            let joiin_and_create_new_time = time_hour+":"+time_minute
+            // print(joiin_and_create_new_time as Any)
+            
+            let dateAsString = String(joiin_and_create_new_time)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+
+            let date = dateFormatter.date(from: dateAsString)
+            dateFormatter.dateFormat = "h:mm a"
+            let Date12 = dateFormatter.string(from: date!)
+            // print(Date12)
+            
+            // print(date24 as Any)
+            let commenter_time_zone = (dictGetOrderDetails!["current_time_zone"] as! String)
+            let commenter_watcher_time_zone = "\(TimeZone.current.abbreviation()!)"
+            // print(commenter_time_zone)
+            // print(commenter_watcher_time_zone)
+            
+            let timeFormatterGet = DateFormatter()
+            timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
+            // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+            timeFormatterGet.timeZone = TimeZone(abbreviation: "\(commenter_time_zone)")
+            
+            let timeFormatterPrint = DateFormatter()
+            timeFormatterPrint.dateFormat = "yyyy-MM-dd h:mm a"
+            timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(commenter_watcher_time_zone)")
+            
+            // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
+
+            let join_date_and_time_together = String(normal_date)+" "+String(Date12)
+            // print(join_date_and_time_together)
+            
+            var str_get:String! = ""
+            if let date = timeFormatterGet.date(from: "\(join_date_and_time_together)") {
+                print(timeFormatterPrint.string(from: date))
+                str_get = timeFormatterPrint.string(from: date)
+            } else {
+               print("There was an error decoding the string")
+            }
+            
+             print(str_get as Any)
+            
+            // created at
+            cell.lblInvoiceDate.text = "Invoice Date : "+String(str_get)
+        } else {
+            cell.lblInvoiceDate.text = "Invoice Date : "
+        }
+        
+        
         
         if "\(self.dictGetOrderDetails["orderStatus"]!)" == "3" {
             

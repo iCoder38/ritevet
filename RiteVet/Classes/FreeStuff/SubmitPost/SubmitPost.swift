@@ -809,6 +809,9 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             parameterDict.setValue(String(cell.txtPostTitle.text!), forKey: "postTitle")
             parameterDict.setValue(String(cell.txtDescription.text!), forKey: "description")
             
+            parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
+            
             print(parameterDict)
             
             // Now Execute
@@ -1059,7 +1062,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             parameterDict.setValue(String(myString), forKey: "userId")
             parameterDict.setValue(String(staffId), forKey: "staffId")
-            
+            // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
             print(parameterDict)
             
 
@@ -1253,7 +1257,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             parameterDict.setValue(String(myString), forKey: "userId")
             parameterDict.setValue(String(staffId), forKey: "staffId")
-            
+            // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
             print(parameterDict)
             
 
@@ -1452,7 +1457,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
         
         parameterDict.setValue(String(myString), forKey: "userId")
         parameterDict.setValue(String(staffId), forKey: "staffId")
-        
+        // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+        // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
         print(parameterDict)
         
 
@@ -1634,7 +1640,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             parameterDict.setValue(String(myString), forKey: "userId")
             parameterDict.setValue(String(staffId), forKey: "staffId")
-            
+            // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
             print(parameterDict)
             
             
@@ -1814,7 +1821,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             parameterDict.setValue(String(myString), forKey: "userId")
             parameterDict.setValue(String(staffId), forKey: "staffId")
-            
+            // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
             print(parameterDict)
             
             
@@ -1991,7 +1999,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             parameterDict.setValue(String(myString), forKey: "userId")
             parameterDict.setValue(String(staffId), forKey: "staffId")
-            
+            // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
             print(parameterDict)
             
 
@@ -2177,7 +2186,8 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
             
             parameterDict.setValue(String(myString), forKey: "userId")
             
-            
+            // parameterDict.setValue(Date.get24TimeForTimeZone(), forKey: "added_time")
+            // parameterDict.setValue("\(TimeZone.current.abbreviation()!)", forKey: "current_time_zone")
             if (self.dictGetPostForEdit == nil ) {
                 parameterDict.setValue(String(self.str_staff_id), forKey: "staffId")
             } else {
@@ -2358,7 +2368,11 @@ class SubmitPost: UIViewController,UINavigationControllerDelegate,UIImagePickerC
                 "categoryId"    : String(myCatIdIs),
                 "postTitle"     : String(cell.txtPostTitle.text!),
                 "description"   : String(cell.txtDescription.text!),
-                "staffId"       : "\(self.dictGetPostForEdit["staffId"]!)"
+                "staffId"       : "\(self.dictGetPostForEdit["staffId"]!)",
+                
+                "added_time"       : Date.get24TimeForTimeZone(),
+                "current_time_zone" : "\(TimeZone.current.abbreviation()!)",
+                 
             ]
             
             

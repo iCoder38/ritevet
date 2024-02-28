@@ -12,6 +12,8 @@ import SwiftyJSON
 
 class order_received: UIViewController {
 
+    var str_get:String! = ""
+    
     let cellReuseIdentifier = "myOrdersTableCell"
     
     var arrListOfMyOrders:NSMutableArray! = []
@@ -214,7 +216,8 @@ extension order_received: UITableViewDataSource , UITableViewDelegate {
          */
         
         
-         let item = arrListOfMyOrders[indexPath.row] as? [String:Any]
+        let item = arrListOfMyOrders[indexPath.row] as? [String:Any]
+        print(item as Any)
         
          // image
         cell.imgProfile.sd_setImage(with: URL(string: (item!["image"] as! String)), placeholderImage: UIImage(named: "plainBack"))
@@ -286,6 +289,74 @@ extension order_received: UITableViewDataSource , UITableViewDelegate {
             cell.btn_delivered_status.setTitle("In-Transit", for: .normal)
             cell.btn_delivered_status.backgroundColor = .systemOrange
             
+        }
+        
+        print(TimeZone.current.abbreviation()!)
+        
+        if (item!["added_time"] as! String) != "" {
+            // divide time
+            let fullName    = (item!["added_time"] as! String)
+            let fullNameArr = fullName.components(separatedBy: " ")
+
+            let normal_date    = fullNameArr[0]
+            let surname = fullNameArr[1]
+            
+            // print(normal_date as Any)
+            // print(surname as Any)
+            
+            // divide sub time
+            let divide_time = surname.components(separatedBy: ":")
+            let time_hour    = divide_time[0]
+            let time_minute = divide_time[1]
+            
+            // print(time_hour as Any)
+            // print(time_minute as Any)
+            
+            let joiin_and_create_new_time = time_hour+":"+time_minute
+            // print(joiin_and_create_new_time as Any)
+            
+            let dateAsString = String(joiin_and_create_new_time)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+
+            let date = dateFormatter.date(from: dateAsString)
+            dateFormatter.dateFormat = "h:mm a"
+            let Date12 = dateFormatter.string(from: date!)
+            // print(Date12)
+            
+            // print(date24 as Any)
+            let commenter_time_zone = (item!["current_time_zone"] as! String)
+            let commenter_watcher_time_zone = "\(TimeZone.current.abbreviation()!)"
+            // print(commenter_time_zone)
+            // print(commenter_watcher_time_zone)
+            
+            let timeFormatterGet = DateFormatter()
+            timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
+            // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+            timeFormatterGet.timeZone = TimeZone(abbreviation: "\(commenter_time_zone)")
+            
+            let timeFormatterPrint = DateFormatter()
+            timeFormatterPrint.dateFormat = "yyyy-MM-dd h:mm a"
+            timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(commenter_watcher_time_zone)")
+            
+            // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
+
+            let join_date_and_time_together = String(normal_date)+" "+String(Date12)
+            // print(join_date_and_time_together)
+            
+            
+            if let date = timeFormatterGet.date(from: "\(join_date_and_time_together)") {
+                print(timeFormatterPrint.string(from: date))
+                self.str_get = timeFormatterPrint.string(from: date)
+            } else {
+               print("There was an error decoding the string")
+            }
+            
+            print(str_get as Any)
+            cell.lblDate.text = String(self.str_get)
+            
+        } else {
+            cell.lblDate.text = ""
         }
         
         return cell

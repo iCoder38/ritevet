@@ -323,7 +323,9 @@ class add_to_cart_payment: UIViewController, UITextFieldDelegate, CLLocationMana
                 "ShippingMobile"    :   (person["contactNumber"] as! String),
                 "productList"       :   String(paramsString),
                 "shippingName"      :  (person["fullName"] as! String)+" "+(person["lastName"] as! String),
-                "transactionId"     : String(stripe_token)
+                "transactionId"     : String(stripe_token),
+                "added_time"    : Date.get24TimeForTimeZone(),
+                "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 
             ]
             
