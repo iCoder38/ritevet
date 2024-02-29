@@ -317,15 +317,6 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
     
     @objc func add_booking_wb(stripe_token:String) {
         
-        //        var strServiceList:String!
-        //        var :String!
-        //        var :String!
-        //        var :String!
-        //        var :String!
-        //        var :String!
-        
-        //        Utils.RiteVetIndicatorShow()
-        
         let urlString = BASE_URL_KREASE
         
         var parameters:Dictionary<AnyHashable, Any>!
@@ -393,19 +384,22 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
             
             
             parameters = [
-                "action"    : "addbooking",
-                "userId"    : String(myString),
-                "vendorId"   : String(self.strVendorId),
-                "typeOfServices" : String(self.strServiceList),
-                "bookingDate" : String(resultString),
-                "slotTime" : String(self.strSlotTime),
-                "typeofbusinessId" : String(self.strTypeOfBusiness),
-                "UTYPE" : String(self.strUType),
-                "transactionId" : String(stripe_token),
-                "payment_mode"  : "Card",
-                "amount"    : String(strCountryNameAndPrice),
+                "action"            : "addbooking",
+                "userId"            : String(myString),
+                "vendorId"          : String(self.strVendorId),
+                "typeOfServices"    : String(self.strServiceList),
+                "bookingDate"       : String(resultString),
+                "slotTime"          : String(self.strSlotTime),
+                "typeofbusinessId"  : String(self.strTypeOfBusiness),
+                "UTYPE"             : String(self.strUType),
+                "transactionId"     : String(stripe_token),
+                "payment_mode"      : "Card",
+                "amount"            : String(strCountryNameAndPrice),
+                
+                "added_time"        : Date.get24TimeWithDateForTimeZone(),
+                "current_time_zone" : "\(TimeZone.current.abbreviation()!)",
             ]
-             
+            
         }
         
         print("parameters-------\(String(describing: parameters))")
@@ -452,7 +446,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                             self.navigationController?.pushViewController(push!, animated: true)
                             
                         } else {
-                        
+                            
                             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
                             push!.strGetBookingDate = String(self.strBookingDate)
                             push!.strGetBookingTime = String(self.strSlotTime)

@@ -341,6 +341,9 @@ class Calendar: UIViewController {
                     "transactionId" : "123456",
                     "payment_mode"  : "Card",
                     "amount"        : "0",
+                    
+                    "added_time"       : Date.get24TimeWithDateForTimeZone(),
+                    "current_time_zone" : "\(TimeZone.current.abbreviation()!)",
                 ]
                 //            }
             }
