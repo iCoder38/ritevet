@@ -82,13 +82,6 @@ class appointment_details: UIViewController {
         
         
         
-         
-        
-        
-        
-        
-        
-        
         print("============================")
         print(self.dictBookingDetails as Any)
         print("============================")

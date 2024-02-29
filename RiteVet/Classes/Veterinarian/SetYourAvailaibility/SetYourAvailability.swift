@@ -248,7 +248,9 @@ class SetYourAvailability: UIViewController,UITextFieldDelegate {
                 "brakeStartTime" : String(txtLunchBreakFrom.text!),
                 "breakEndTime"   : String(txtLunchBreakTo.text!),
                 "dayendarray"    : String(txtWeekOff.text!),
-                "userType"    : String("2")
+                "userType"       : String("2"),
+                "added_time"     : Date.get24TimeWithDateForTimeZone(),
+                "current_time_zone":"\(TimeZone.current.abbreviation()!)",
             ]
         }
         
@@ -325,7 +327,9 @@ class SetYourAvailability: UIViewController,UITextFieldDelegate {
             parameters = [
                 "action"    : "getsetting",
                 "vendorId"    : String(myString),
-                "userType"    : String("2")
+                "userType"    : String("2"),
+                "added_time"    : Date.get24TimeWithDateForTimeZone(),
+                "current_time_zone":"\(TimeZone.current.abbreviation()!)",
             ]
         }
         
