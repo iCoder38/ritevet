@@ -479,202 +479,326 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         cell.lbl_appointment_time.text = (self.dictBookingDetails["slotTime"] as! String)
         cell.lbl_type_of_services.text = (self.dictBookingDetails["typeofbusinessName"] as! String)
         
-        
-        // current date
-        let dateformatter2 = DateFormatter()
-        dateformatter2.dateFormat = "yyyy-MM-dd"
-        let current_date = dateformatter2.string(from: Date())
-        print("Date Selected \(current_date)")
-        
-        
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let today_current_date = formatter.date(from: "\(current_date)")
-        let booking_date = formatter.date(from: String(server_booking_date))
-
-        // print(today_current_date)
-        // print(booking_date)
-        
-        // same
-        if today_current_date?.compare(booking_date!) == .orderedSame {
-            print("Both dates are same")
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             
-            let date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm"
-            let current_date = dateFormatter.string(from: date)
-            print("current time-->",current_date)
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
             
-            let prefix_time = String((self.dictBookingDetails["slotTime"] as! String).prefix(05))
-            print("server time-->",prefix_time)
-            
-            let prefix_one = String(current_date.prefix(02))
-            let prefix_two = String(prefix_time.prefix(02))
-            print(prefix_one)
-            print(prefix_two)
-            
-            let double_c_t = Double(prefix_one)
-            let double_s_t = Double(prefix_two)
-            
-            // print(double_c_t)
-            // print(double_s_t)
-            
-            let deduct_time = double_s_t! - double_c_t!
-            print(deduct_time," hours left")
-            
-            cell.btn_cancel.isHidden = false
-            
-            if deduct_time == 0.0 || deduct_time == 1.0 || deduct_time == 2.0  {
-                print(" HIDE CANCEL BUTTON : ")
+            if (String(myString) == "\(self.dictBookingDetails["userID"]!)") {
                 
-                cell.btn_cancel.isHidden = true
-            }
-            
-            var str_check = String("\(deduct_time.toString())".prefix(01))
-            // print(str_check)
-            
-            if (str_check) == "-" {
-                cell.btn_cancel.isHidden = true
-            }
-            
-        }
-        
-        // "Today's Date is greater then second date"
-        if (today_current_date?.compare(booking_date!)) == .orderedDescending {
-            print("Today's date is greater then Booking date")
-            
-            cell.btn_cancel.isHidden = true
-            
-        }
-        
-        // "Today's Date is lower then second date"
-        if (today_current_date?.compare(booking_date!)) == .orderedAscending {
-            print("Today's date is lower then Booking date")
-            
-            cell.btn_cancel.isHidden = false
-            
-        }
-        
-        // activate cancel button
-        cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
-        
-        
-        if "\(self.dictBookingDetails["status"]!)" == "1" {
-            
-            cell.btn_next.setTitle("Pending", for: .normal)
-            cell.btn_next.backgroundColor = .systemOrange
-            
-            if (self.str_from_booking != "yes") {
-                cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
-            }
-            
-            
-        } else if "\(self.dictBookingDetails["status"]!)" == "2" {
-            
-            cell.btn_next.setTitle("Completed", for: .normal)
-            cell.btn_next.backgroundColor = .systemGreen
-            cell.btn_cancel.isHidden = true
-            cell.btn_next.isUserInteractionEnabled = false
-            
-            if (self.str_from_booking == "yes") {
+                // PATIENT SIDE
+                
+                // current date
+                let dateformatter2 = DateFormatter()
+                dateformatter2.dateFormat = "yyyy-MM-dd"
+                let current_date = dateformatter2.string(from: Date())
+                print("Date Selected \(current_date)")
+                
+                
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                let today_current_date = formatter.date(from: "\(current_date)")
+                let booking_date = formatter.date(from: String(server_booking_date))
 
-                if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                // print(today_current_date)
+                // print(booking_date)
+                
+                
+                // same
+                if today_current_date?.compare(booking_date!) == .orderedSame {
+                    print("Both dates are same")
                     
-                    cell.btn_next.isUserInteractionEnabled = true
-                    cell.btn_next.backgroundColor = .systemYellow
-                    cell.btn_next.setTitle("Send Review", for: .normal)
-                    cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                    let date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "HH:mm"
+                    let current_date = dateFormatter.string(from: date)
+                    print("current time --> ",current_date)
                     
-                } else {
+                    let prefix_time = String((self.dictBookingDetails["slotTime"] as! String).prefix(05))
+                    print("server time --> ",prefix_time)
                     
-                    cell.btn_next.setTitle("Completed", for: .normal)
-                    cell.btn_next.isUserInteractionEnabled = false
+                    let prefix_one = String(current_date.prefix(02))
+                    let prefix_two = String(prefix_time.prefix(02))
+                    print(prefix_one)
+                    print(prefix_two)
+                    
+                    let double_c_t = Double(prefix_one)
+                    let double_s_t = Double(prefix_two)
+                    
+                    // print(double_c_t)
+                    // print(double_s_t)
+                    
+                    let deduct_time = double_s_t! - double_c_t!
+                    print(deduct_time," hours left")
+                    
+                    cell.btn_cancel.isHidden = false
+                    
+                    if deduct_time == 0.0 || deduct_time == 1.0 || deduct_time == 2.0  {
+                        print(" HIDE CANCEL BUTTON : ")
+                        
+                        cell.btn_cancel.isHidden = true
+                    }
+                    
+                    var str_check = String("\(deduct_time.toString())".prefix(01))
+                    // print(str_check)
+                    
+                    if (str_check) == "-" {
+                        cell.btn_cancel.isHidden = true
+                    }
                     
                 }
                 
-            }
-            
-        }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
-            
-            cell.btn_next.setTitle("Cancelled", for: .normal)
-            cell.btn_next.backgroundColor = .systemRed
-            cell.btn_cancel.isHidden = true
-        }
-        
-        if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
-         
-            cell.btn_video.isHidden = true
-            
-        } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
-            
-            cell.btn_video.isHidden = false
-            
-        }
-        
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        let current_time = dateFormatter.string(from: date)
-        print("current time -->",current_time)
-        
-        
-        let f = DateFormatter()
-        f.dateFormat = "HH:mm"
-        
-        
-         // 7:59
-        // let f2 = DateFormatter()
-        // f2.dateFormat = "HH:mm"
-        
-        let fullName    = (self.dictBookingDetails["slotTime"] as! String)
-        let fullNameArr = fullName.components(separatedBy: "-")
-
-        let name    = fullNameArr[0]
-        let time_one = String(name) // 7
-        
-        
-        let surname = fullNameArr[1]
-        // time 2
-        let time_two = String(surname)
-        
-        print(time_one as Any)
-        print(time_two as Any)
-        
-        // current time
-        f.date(from: current_time)
-        
-        // time start
-        f.date(from: time_one)
-        
-        // time end
-        f.date(from: time_two)
-        
-        self.str_time_save = (self.dictBookingDetails["slotTime"] as! String)
-        
-        if (f.date(from: current_time)! > f.date(from: time_one)!) {
-            print("CURRENT TIME IS GREATER THEN TIME ONE")
-            self.str_enable_calling = "0"
-            // time 2
-            // this time should be lower then time 2
-            if (f.date(from: current_time)! > f.date(from: time_two)!) {
-                print("CURRENT TIME IS GREATER THEN TIME TWO")
-                self.str_enable_calling = "0"
+                // "Today's Date is greater then second date"
+                if (today_current_date?.compare(booking_date!)) == .orderedDescending {
+                    print("Today's date is greater then Booking date")
+                    
+                    cell.btn_cancel.isHidden = true
+                    
+                }
                 
-                // print("USER HAVE SOME MORE TIME TO CALL")
-            } else if (f.date(from: current_time)! < f.date(from: time_two)!) {
-                print("ENABLE CALLING TIME")
-                self.str_enable_calling = "1"
+                // "Today's Date is lower then second date"
+                if (today_current_date?.compare(booking_date!)) == .orderedAscending {
+                    print("Today's date is lower then Booking date")
+                    
+                    cell.btn_cancel.isHidden = false
+                    
+                }
+                
+                // activate cancel button
+                cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
+                
+                
+                if "\(self.dictBookingDetails["status"]!)" == "1" {
+                    
+                    cell.btn_next.setTitle("Pending", for: .normal)
+                    cell.btn_next.backgroundColor = .systemOrange
+                    
+                    if (self.str_from_booking != "yes") {
+                        cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
+                    }
+                    
+                    
+                } else if "\(self.dictBookingDetails["status"]!)" == "2" {
+                    
+                    cell.btn_next.setTitle("Completed", for: .normal)
+                    cell.btn_next.backgroundColor = .systemGreen
+                    cell.btn_cancel.isHidden = true
+                    cell.btn_next.isUserInteractionEnabled = false
+                    
+                    if (self.str_from_booking == "yes") {
+
+                        if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                            
+                            cell.btn_next.isUserInteractionEnabled = true
+                            cell.btn_next.backgroundColor = .systemYellow
+                            cell.btn_next.setTitle("Send Review", for: .normal)
+                            cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                            
+                        } else {
+                            
+                            cell.btn_next.setTitle("Completed", for: .normal)
+                            cell.btn_next.isUserInteractionEnabled = false
+                            
+                        }
+                        
+                    }
+                    
+                }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
+                    
+                    cell.btn_next.setTitle("Cancelled", for: .normal)
+                    cell.btn_next.backgroundColor = .systemRed
+                    cell.btn_cancel.isHidden = true
+                }
+                
+                if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
+                 
+                    cell.btn_video.isHidden = true
+                    
+                } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
+                    
+                    cell.btn_video.isHidden = false
+                    
+                }
+                
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
+                let current_time = dateFormatter.string(from: date)
+                print("current time -->",current_time)
+                
+                
+                let f = DateFormatter()
+                f.dateFormat = "HH:mm"
+                
+                
+                 // 7:59
+                // let f2 = DateFormatter()
+                // f2.dateFormat = "HH:mm"
+                
+                let fullName    = (self.dictBookingDetails["slotTime"] as! String)
+                let fullNameArr = fullName.components(separatedBy: "-")
+
+                let name    = fullNameArr[0]
+                let time_one = String(name) // 7
+                
+                
+                let surname = fullNameArr[1]
+                // time 2
+                let time_two = String(surname)
+                
+                print(time_one as Any)
+                print(time_two as Any)
+                
+                // current time
+                f.date(from: current_time)
+                
+                // time start
+                f.date(from: time_one)
+                
+                // time end
+                f.date(from: time_two)
+                
+                self.str_time_save = (self.dictBookingDetails["slotTime"] as! String)
+                
+                if (f.date(from: current_time)! > f.date(from: time_one)!) {
+                    print("CURRENT TIME IS GREATER THEN TIME ONE")
+                    self.str_enable_calling = "0"
+                    // time 2
+                    // this time should be lower then time 2
+                    if (f.date(from: current_time)! > f.date(from: time_two)!) {
+                        print("CURRENT TIME IS GREATER THEN TIME TWO")
+                        self.str_enable_calling = "0"
+                        
+                        // print("USER HAVE SOME MORE TIME TO CALL")
+                    } else if (f.date(from: current_time)! < f.date(from: time_two)!) {
+                        print("ENABLE CALLING TIME")
+                        self.str_enable_calling = "1"
+                    }
+                    
+                } else  if (f.date(from: current_time)! < f.date(from: time_one)!) {
+                    print("TIME ONE IS GREATER THEN CURRENT TIME")
+                    print("DISBALED CALLING OPTIONS")
+                    self.str_enable_calling = "0"
+                } else {
+                    print("DIFFERENT DATA")
+                    self.str_enable_calling = "0"
+                }
+                
+            } else {
+                
+                
+                
+                // DOCTOR SIDE
+                print("============================")
+                print(self.dictBookingDetails as Any)
+                print("============================")
+                let get_booking_date_from_patient = String((self.dictBookingDetails["bookingDate"] as! String).prefix(10))
+                print(get_booking_date_from_patient as Any)
+                
+                
+                // check doctor' location current date is equal to patient's date
+                let doctor_current_location_date = Date.getCurrentDateReal()
+                print(doctor_current_location_date as Any)
+                
+                if String(get_booking_date_from_patient) == String(doctor_current_location_date) {
+                    print("DOCTOR AND PATIENT DATE ARE SAME")
+                } else {
+                    print("DOCTOR AND PATIENT DATE ARE DIFFERENT")
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                // check patient's date and doctor's date is same or not
+                /*let timeFormatterGet = DateFormatter()
+                timeFormatterGet.dateFormat = "yyyy-MM-dd"
+                timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+                
+                let timeFormatterPrint = DateFormatter()
+                timeFormatterPrint.dateFormat = "yyyy-MM-dd"
+                timeFormatterPrint.timeZone = TimeZone(abbreviation: (self.dictBookingDetails["current_time_zone"] as! String))
+                
+                // doctor's current location date
+                
+                if let date = timeFormatterGet.date(from: doctor_current_location_date) {
+                    print(timeFormatterPrint.string(from: date))
+                    
+                    
+                    if String(doctor_current_location_date) == "\(date)" {
+                        print("BOTH DATES ARE SAME")
+                    } else {
+                        print("BOTH DATES ARE DIFFERENT")
+                        
+                        
+                        
+                    }
+                    
+                } else {
+                   print("There was an error decoding the string")
+                }*/
+                
+                cell.btn_video.isHidden = false
+                
+                
+                if "\(self.dictBookingDetails["status"]!)" == "1" {
+                    
+                    cell.btn_next.setTitle("Pending", for: .normal)
+                    cell.btn_next.backgroundColor = .systemOrange
+                    
+                    if (self.str_from_booking != "yes") {
+                        cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
+                    }
+                    
+                    
+                } else if "\(self.dictBookingDetails["status"]!)" == "2" {
+                    
+                    cell.btn_next.setTitle("Completed", for: .normal)
+                    cell.btn_next.backgroundColor = .systemGreen
+                    cell.btn_cancel.isHidden = true
+                    cell.btn_next.isUserInteractionEnabled = false
+                    
+                    if (self.str_from_booking == "yes") {
+
+                        if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                            
+                            cell.btn_next.isUserInteractionEnabled = true
+                            cell.btn_next.backgroundColor = .systemYellow
+                            cell.btn_next.setTitle("Send Review", for: .normal)
+                            cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                            
+                        } else {
+                            
+                            cell.btn_next.setTitle("Completed", for: .normal)
+                            cell.btn_next.isUserInteractionEnabled = false
+                            
+                        }
+                        
+                    }
+                    
+                }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
+                    
+                    cell.btn_next.setTitle("Cancelled", for: .normal)
+                    cell.btn_next.backgroundColor = .systemRed
+                    cell.btn_cancel.isHidden = true
+                }
+                
             }
+                
             
-        } else  if (f.date(from: current_time)! < f.date(from: time_one)!) {
-            print("TIME ONE IS GREATER THEN CURRENT TIME")
-            print("DISBALED CALLING OPTIONS")
-            self.str_enable_calling = "0"
-        } else {
-            print("DIFFERENT DATA")
-            self.str_enable_calling = "0"
         }
+        
+        
+        
+        
+        
+        
+        
+        
         
         cell.btn_chat.addTarget(self, action: #selector(one_to_one_chat_click_method), for: .touchUpInside)
         cell.btn_audio.addTarget(self, action: #selector(audio_call_click_method), for: .touchUpInside)
@@ -682,6 +806,57 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
         
         return cell
     }
+    
+    @objc func check_booking_date_and_doctor_current_location_date() {
+        print("============================")
+        print(self.dictBookingDetails as Any)
+        print("============================")
+        
+        /*
+         UTYPE = 2;
+         "added_time" = "2024-02-29 14:09:00";
+         bookingDate = "2024-02-29T00:00:00+0530";
+         bookingID = 488;
+         contactNumber = 9865888080;
+         created = "Feb 29th, 2024, 2:09 pm";
+         "current_time_zone" = IST;
+         device = iOS;
+         deviceToken = "";
+         firebaseId = "";
+         slotTime = "20:00-20:30";
+         status = 1;
+         totalAmount = 70;
+         transactionId = "tok_1Op590KjKY5Kxs7IeTS75GG1";
+         typeofbusinessId = 3;
+         typeofbusinessName = "Virtual Veterinarian (Video Chat)";
+         userAddress = "c block surya";
+         userEmail = "doc@mailinator.com";
+         userID = 713;
+         userImage = "";
+         userName = "doc new";
+         vendorID = 665;
+         */
+        
+        // let current_user_
+        let timeFormatterGet = DateFormatter()
+        timeFormatterGet.dateFormat = "yyyy-MM-dd"
+        // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+        timeFormatterGet.timeZone = TimeZone(abbreviation: "IST")
+        
+        let timeFormatterPrint = DateFormatter()
+        timeFormatterPrint.dateFormat = "yyyy-MM-dd"
+        timeFormatterPrint.timeZone = TimeZone(abbreviation: "NZST")
+        
+        // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
+
+        if let date = timeFormatterGet.date(from: "2024-01-31 5:00 PM") {
+            print(timeFormatterPrint.string(from: date)) // "6:30 PM" if device in EST
+        } else {
+           print("There was an error decoding the string")
+        }
+    }
+    
+    
     
     @objc func one_to_one_chat_click_method() {
              
@@ -717,7 +892,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
     
     @objc func audio_call_click_method() {
         
-        /*if (self.str_enable_calling == "0") {
+        if (self.str_enable_calling == "0") {
             
             let alert = UIAlertController(title: "Alert", message: "You can only call between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
             
@@ -725,16 +900,16 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             self.present(alert, animated: true, completion: nil)
             
-        } else {*/
+        } else {
             self.store_data_in_db_before_call(str_type: "audio")
-//         }
+         }
         
         // self.send_notification_to_doctor(str_get_type: "audiocall")
         
     }
     
     @objc func video_chat_click_method() {
-       /*if (self.str_enable_calling == "0") {
+       if (self.str_enable_calling == "0") {
             
             let alert = UIAlertController(title: "Alert", message: "You can only call between "+String(self.str_time_save)+" time slot.", preferredStyle: .alert)
             
@@ -742,10 +917,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             
             self.present(alert, animated: true, completion: nil)
             
-        } else {*/
+        } else {
             self.store_data_in_db_before_call(str_type: "video")
             // self.send_notification_to_doctor(str_get_type: "videocall")
-//         }
+         }
         
     }
     

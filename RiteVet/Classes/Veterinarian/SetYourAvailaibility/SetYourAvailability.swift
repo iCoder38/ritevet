@@ -249,8 +249,11 @@ class SetYourAvailability: UIViewController,UITextFieldDelegate {
                 "breakEndTime"   : String(txtLunchBreakTo.text!),
                 "dayendarray"    : String(txtWeekOff.text!),
                 "userType"       : String("2"),
+                
                 "added_time"     : Date.get24TimeWithDateForTimeZone(),
-                "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+                // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+                "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",
+                
             ]
         }
         

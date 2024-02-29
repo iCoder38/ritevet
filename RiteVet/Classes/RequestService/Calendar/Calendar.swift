@@ -582,11 +582,13 @@ class Calendar: UIViewController {
     @objc func timeClickMethod() {
         
         if dateLabel.text == "" {
+            
             CRNotifications.showNotification(type: CRNotifications.error, title: "Hurray!", message:"Please Select Date", dismissDelay: 1.5, completion:{})
-        }
-        else {
+            return
+            
+        } else {
         
-//            print(self.arrListOfTime);
+            print(self.arrListOfTime as Any)
             
             let arrAvailaibleTime:NSMutableArray! = []
             
@@ -620,6 +622,7 @@ class Calendar: UIViewController {
             self.present(popupVC, animated: true, completion: nil)
     
         }
+        
     }
     
 }

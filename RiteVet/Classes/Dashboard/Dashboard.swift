@@ -99,6 +99,9 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         
         print(Date.getTimeForTimeZone())
         
+        print(TimeZone.current.offsetFromUTC()) // output is +0530
+        print(TimeZone.current.currentTimezoneOffset()) // output is "+05:30"
+        
         print(TimeZone.current.abbreviation()!)
         print(TimeZone.current)
         
@@ -112,8 +115,7 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         
         print(TimeZone(abbreviation: "UTC+05")!.localizedName(for: .shortStandard, locale: nil)!) // => GMT+7)
         
-        print(TimeZone.current.offsetFromUTC()) // output is +0530
-        print(TimeZone.current.currentTimezoneOffset()) // output is "+05:30"
+        
         
         print("\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())")
          
@@ -1187,6 +1189,7 @@ extension TimeZone {
       return timeZoneFormatter.string(from: Date())
   }
 }
+
 //Update system volume
 extension MPVolumeView {
     static func setVolume(_ volume: Float) {
