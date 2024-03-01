@@ -12,6 +12,11 @@ import Alamofire
 
 class payment_before_booking: UIViewController ,UITextFieldDelegate {
 
+    var str_doctor_time_zone:String!
+    var str_doctor_time_zone_with_real:String!
+    
+    var str_booking_time_for_added:String!
+    
     var str_instant_payment:String!
     
 //    "action"    : "addbooking",
@@ -95,6 +100,10 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
          
+        print(self.str_doctor_time_zone as Any)
+        print(self.str_doctor_time_zone_with_real as Any)
+        print(self.str_booking_time_for_added as Any)
+        
         print(str_get_business_type_for_payment as Any)
         
         // print(strUType)
@@ -110,7 +119,6 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
         btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
         
         self.btn_done.addTarget(self, action: #selector(generate_stripe_token), for: .touchUpInside)
-        
         
         self.manage_price()
     }
@@ -382,6 +390,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 strCountryNameAndPrice = "0"
             }
             
+            // var str_current_time:String!
             
             parameters = [
                 "action"            : "addbooking",
@@ -397,7 +406,15 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 "amount"            : String(strCountryNameAndPrice),
                 
                 "added_time"        : Date.get24TimeWithDateForTimeZone(),
-                "current_time_zone" : "\(TimeZone.current.abbreviation()!)",
+                
+                // doctor
+                "current_time_zone" : String(self.str_doctor_time_zone ),//"\(TimeZone.current.abbreviation()!)",
+                
+                //
+                "keyword_1":"\(TimeZone.current.abbreviation()!)", // booker time zone
+                "keyword_2":String(self.str_doctor_time_zone_with_real), // doctor time zone
+                "keyword_3":String(self.str_booking_time_for_added), // booking date yyyy-MM-dd
+                //
             ]
             
         }

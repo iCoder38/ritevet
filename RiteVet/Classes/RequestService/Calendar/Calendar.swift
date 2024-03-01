@@ -15,7 +15,11 @@ import BottomPopup
 
 class Calendar: UIViewController {
     
+    var str_doctor_time_zone_is:String!
+    var str_doctor_time_zone_real_is:String!
+    
     var str_get_business_type_for_calendar:String!
+    var str_date_for_Added:String!
     
     var str_set_payment:String!
     
@@ -433,6 +437,9 @@ class Calendar: UIViewController {
                 let productIDString = array.joined(separator: ",")
                 print(productIDString)
                 
+                push!.str_doctor_time_zone = String(self.str_doctor_time_zone_is)
+                push!.str_doctor_time_zone_with_real = String(self.str_doctor_time_zone_real_is)
+                push!.str_booking_time_for_added = String(self.str_date_for_Added)
                 
 //                push!.strGetPrice =
                 push!.dictShowFullDetails = self.dictGetVendorDetails
@@ -599,7 +606,7 @@ class Calendar: UIViewController {
                 if (item["status"] as! String) == "Available" {
                     
                     let custom = [
-                        "slot":(item["slot"] as! String),
+                        "slot":(item["converted_slot"] as! String),
                         "status":"Available"
                     ]
                     
@@ -692,10 +699,16 @@ extension Calendar: JKCalendarDataSource{
         let resultString = dateFormatter.string(from: date!)
         print(resultString)
         
+        self.str_date_for_Added = String(resultString)
+        
         parameters = [
             "action"    : "vendorslot",
             "vendorId"  : String(strGetVendorIdForCalendar),
-            "date"      : String(resultString)
+            "date"      : String(resultString),
+            "added_time"     : Date.get24TimeWithDateForTimeZone(),
+            // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+            "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",
+
         ]
 
         print("parameters-------\(String(describing: parameters))")
@@ -722,6 +735,12 @@ extension Calendar: JKCalendarDataSource{
                     
                     if strSuccess == "Success" {
                                
+                        self.str_doctor_time_zone_is = JSON["current_time_zone_doctor"]as Any as? String
+                        self.str_doctor_time_zone_real_is = JSON["zone_doctor"]as Any as? String
+                        
+                        
+                        
+                        
                         var ar : NSArray!
                         ar = (JSON["data"] as! Array<Any>) as NSArray
                         self.arrListOfTime = (ar as! Array<Any>)

@@ -118,14 +118,14 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         
         
         print("\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())")
-         
+        
         // print(localTime(in: "Asia/Thailand"))
         
         /*let timezone = TimeZone.init(identifier: "America/Los_Angeles")
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        dateFormatter.timeZone = timezone
-        print(dateFormatter.string(from: Date()))*/
+         let dateFormatter = DateFormatter()
+         dateFormatter.dateFormat = "HH:mm"
+         dateFormatter.timeZone = timezone
+         print(dateFormatter.string(from: Date()))*/
         
         let timeFormatterGet = DateFormatter()
         timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
@@ -137,13 +137,13 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         timeFormatterPrint.timeZone = TimeZone(abbreviation: "NZST")
         
         // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
-
+        
         if let date = timeFormatterGet.date(from: "2024-01-31 5:00 PM") {
             print(timeFormatterPrint.string(from: date)) // "6:30 PM" if device in EST
         } else {
-           print("There was an error decoding the string")
+            print("There was an error decoding the string")
         }
-
+        
         /****** VIEW BG IMAGE *********/
         self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
         
@@ -160,26 +160,75 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         // self.btn_call.addTarget(self, action: #selector(dummy_video_call_click_method), for: .touchUpInside)
         
         
-//        let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
-//        do {
-//            
-//            print("===============")
-//            print("SPEAKER IS TRUE")
-//            print("===============")
-//            
-//            self.audioPlayer = try AVAudioPlayer(contentsOf: clickSound)
-//            self.audioPlayer.play()
-//             
-//            
-//            self.audioPlayer.volume = 0.01
-//            
-//        } catch {
-//            
-//        }
+        //        let clickSound = URL(fileURLWithPath: Bundle.main.path(forResource: "inOrOut", ofType: "mp3")!)
+        //        do {
+        //
+        //            print("===============")
+        //            print("SPEAKER IS TRUE")
+        //            print("===============")
+        //
+        //            self.audioPlayer = try AVAudioPlayer(contentsOf: clickSound)
+        //            self.audioPlayer.play()
+        //
+        //
+        //            self.audioPlayer.volume = 0.01
+        //
+        //        } catch {
+        //
+        //        }
         
         //Update system volume
-         MPVolumeView.setVolume(0.2)
+        MPVolumeView.setVolume(0.2)
         
+        
+        
+        
+        
+        print(getDateAndTime(timeZoneIdentifier: "IST"))
+        
+        print(60*02.00)
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let current_date_time = dateFormatter.string(from: date)
+        print("before add time-->",current_date_time)
+        
+        //adding 5 miniuts
+        let addminutes = date.addingTimeInterval(60 * -120.0)
+        dateFormatter.dateFormat = "HH:mm"
+        let after_add_time = dateFormatter.string(from: addminutes)
+        print("after add time-->",after_add_time)
+        
+        
+        
+        /*
+         
+         1st = 
+         
+         current = +05:30
+         server  = -05:30
+         
+         both signs are different => add both time => customer ka sign with total value
+         
+         ****************
+         
+         2nd
+         
+         current = +04:30
+         server = +5:30
+         
+         both signs are same then minus => jo sign aeega wo customer k sign se minus ya plus krna hai
+         
+         */
+    }
+    
+    func getDateAndTime(timeZoneIdentifier: String) -> String? {
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+        dateFormatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
+
+        return dateFormatter.string(from: Date())
     }
     
     func localTime(in timeZone: String) -> String {
@@ -1174,8 +1223,7 @@ extension Dashboard: UICollectionViewDelegateFlowLayout {
 
 extension TimeZone {
     
-    func offsetFromUTC() -> String
-    {
+    func offsetFromUTC() -> String {
         let localTimeZoneFormatter = DateFormatter()
         localTimeZoneFormatter.timeZone = self
         localTimeZoneFormatter.dateFormat = "Z"
@@ -1188,6 +1236,7 @@ extension TimeZone {
       timeZoneFormatter.dateFormat = "ZZZZZ"
       return timeZoneFormatter.string(from: Date())
   }
+    
 }
 
 //Update system volume

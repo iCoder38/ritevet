@@ -86,6 +86,9 @@ class appointment_details: UIViewController {
         print(self.dictBookingDetails as Any)
         print("============================")
         
+        print(utcToLocal(dateStr: self.dictBookingDetails["current_time_zone"] as! String))
+        
+        
         /*
          UTYPE = 2;
          bookingDate = "2023-12-18T00:00:00+0530";
@@ -132,6 +135,20 @@ class appointment_details: UIViewController {
          */
     }
 
+    func utcToLocal(dateStr: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "H:mm:ss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        if let date = dateFormatter.date(from: dateStr) {
+            dateFormatter.timeZone = TimeZone.current
+            dateFormatter.dateFormat = "h:mm a"
+        
+            return dateFormatter.string(from: date)
+        }
+        return nil
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -182,10 +199,6 @@ class appointment_details: UIViewController {
                     
                     if strSuccess == "Success" {
                         Utils.RiteVetIndicatorHide()
-                        
-                        //                            var ar : NSArray!
-                        //                            ar = (JSON["historyList"] as! Array<Any>) as NSArray
-                        //                            self.arrListOfAppointment = (ar as! Array<Any>)
                         
                         self.dictBookingDetails = (JSON["data"] as! NSDictionary)
                         
@@ -487,9 +500,161 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
             if (String(myString) == "\(self.dictBookingDetails["userID"]!)") {
                 
                 // PATIENT SIDE
+                print("BOOKER ID")
                 
+                /*
+                 "keyword_1" = IST; patient zone
+                 "keyword_2" = "GMT-5"; // doctor zone
+                 "keyword_3" = "2024-03-01"; // booking date
+                 */
+                print(self.dictBookingDetails as Any)
+                print(self.dictBookingDetails["keyword_1"] as! String)
+                print(self.dictBookingDetails["keyword_2"] as! String)
+                print(self.dictBookingDetails["keyword_3"] as! String)
+                
+                let current_time_patient = Date.getTimeForTimeZone()
+                print(current_time_patient as Any)
+                
+                // compare patient date with doctor
+                let timeFormatterGet = DateFormatter()
+                timeFormatterGet.dateFormat = "yyyy-MM-dd hh:mm a"
+                // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+                timeFormatterGet.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_1"] as! String)
+                
+                let timeFormatterPrint = DateFormatter()
+                timeFormatterPrint.dateFormat = "yyyy-MM-dd hh:mm a"
+                timeFormatterPrint.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_2"] as! String)
+                
+                var str_what_we_get_date:String! = self.dictBookingDetails["keyword_3"] as! String+" "+String(current_time_patient)
+                print(str_what_we_get_date as Any)
+                
+                if let date = timeFormatterGet.date(from: String(str_what_we_get_date) ) {
+                    print(timeFormatterPrint.string(from: date))
+                    str_what_we_get_date = "\(timeFormatterPrint.string(from: date))"
+                } else {
+                    print("There was an error decoding the string")
+                }
+                
+                print(str_what_we_get_date as Any)
+                
+                // separate doctor's date
+                let separate_doctors_date = str_what_we_get_date.components(separatedBy: " ")
+
+                let doctor_date = separate_doctors_date[0]
+                print(doctor_date as Any)
+                
+                // patient current booking date
+                let patient_current_date = Date.getCurrentDateReal()
+                print(patient_current_date as Any)
+                
+                if (doctor_date == patient_current_date) {
+                    print("DOCTOR'S DATE AND BOOKER DATES ARE SAME")
+                    
+                    // activate cancel button
+                    cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
+                    
+                    if "\(self.dictBookingDetails["status"]!)" == "1" {
+                        
+                        cell.btn_next.setTitle("Pending", for: .normal)
+                        cell.btn_next.backgroundColor = .systemOrange
+                        
+                        if (self.str_from_booking != "yes") {
+                            cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
+                        }
+                        
+                        
+                    } else if "\(self.dictBookingDetails["status"]!)" == "2" {
+                        
+                        cell.btn_next.setTitle("Completed", for: .normal)
+                        cell.btn_next.backgroundColor = .systemGreen
+                        cell.btn_cancel.isHidden = true
+                        cell.btn_next.isUserInteractionEnabled = false
+                        
+                        if (self.str_from_booking == "yes") {
+
+                            if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                                
+                                cell.btn_next.isUserInteractionEnabled = true
+                                cell.btn_next.backgroundColor = .systemYellow
+                                cell.btn_next.setTitle("Send Review", for: .normal)
+                                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                                
+                            } else {
+                                
+                                cell.btn_next.setTitle("Completed", for: .normal)
+                                cell.btn_next.isUserInteractionEnabled = false
+                                
+                            }
+                            
+                        }
+                        
+                    }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
+                        
+                        cell.btn_next.setTitle("Cancelled", for: .normal)
+                        cell.btn_next.backgroundColor = .systemRed
+                        cell.btn_cancel.isHidden = true
+                    }
+                    
+                    if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
+                     
+                        cell.btn_video.isHidden = true
+                        
+                    } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
+                        
+                        cell.btn_video.isHidden = false
+                        
+                    }
+                    
+                    
+                    
+                    // you have to check time now from doctor's time to patient's time
+                    //
+                    
+                    var str_separate_appointment_slot_time = (self.dictBookingDetails["slotTime"] as! String)
+                    
+                    let str_separate_appointment_slot_time_space = str_separate_appointment_slot_time.components(separatedBy: "-")
+                    print(str_separate_appointment_slot_time_space as Any)
+                    
+                    let doctor_slot_time_one = str_separate_appointment_slot_time_space[0]
+                    let doctor_slot_time_two = str_separate_appointment_slot_time_space[1]
+                    
+                    print(doctor_slot_time_one as Any)
+                    print(doctor_slot_time_two as Any)
+                    
+                    print(Date.get24TimeForTimeZone())
+                    
+                    // compare doctor's time with patient's time slot
+                    let timeFormatterGet2 = DateFormatter()
+                    timeFormatterGet2.dateFormat = "yyyy-MM-dd hh:mm a"
+                    // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+                    timeFormatterGet2.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_1"] as! String)
+                    
+                    let timeFormatterPrint2 = DateFormatter()
+                    timeFormatterPrint2.dateFormat = "yyyy-MM-dd hh:mm a"
+                    timeFormatterPrint2.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_2"] as! String)
+                    
+                    var str_what_we_get_date:String! = self.dictBookingDetails["keyword_3"] as! String+" "+String(current_time_patient)
+                    print(str_what_we_get_date as Any)
+                    
+                    if let date = timeFormatterGet.date(from: String(str_what_we_get_date)) {
+                        print(timeFormatterPrint.string(from: date))
+                        str_what_we_get_date = "\(timeFormatterPrint.string(from: date))"
+                    } else {
+                        print("There was an error decoding the string")
+                    }
+                    
+                    
+                    
+                    
+                } else {
+                    print("DOCTOR'S DATE AND BOOKER DATES ARE DIFFERENT")
+                }
+                
+                
+                
+                print("stop breakpoint")
                 // current date
-                let dateformatter2 = DateFormatter()
+                /*let dateformatter2 = DateFormatter()
                 dateformatter2.dateFormat = "yyyy-MM-dd"
                 let current_date = dateformatter2.string(from: Date())
                 print("Date Selected \(current_date)")
@@ -683,7 +848,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 } else {
                     print("DIFFERENT DATA")
                     self.str_enable_calling = "0"
-                }
+                }*/
                 
             } else {
                 

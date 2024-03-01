@@ -253,6 +253,7 @@ class SetYourAvailability: UIViewController,UITextFieldDelegate {
                 "added_time"     : Date.get24TimeWithDateForTimeZone(),
                 // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
                 "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",
+                "zone":"\(TimeZone.current.abbreviation()!)",
                 
             ]
         }
@@ -331,8 +332,8 @@ class SetYourAvailability: UIViewController,UITextFieldDelegate {
                 "action"    : "getsetting",
                 "vendorId"    : String(myString),
                 "userType"    : String("2"),
-                "added_time"    : Date.get24TimeWithDateForTimeZone(),
-                "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+                // "added_time"    : Date.get24TimeWithDateForTimeZone(),
+                // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
             ]
         }
         
