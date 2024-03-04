@@ -15,6 +15,7 @@ import BottomPopup
 
 class Calendar: UIViewController {
     
+    var str_slot_parse_to_Server:String!
     var str_doctor_time_zone_is:String!
     var str_doctor_time_zone_real_is:String!
     
@@ -376,7 +377,7 @@ class Calendar: UIViewController {
                         
                         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
                         push!.strGetBookingDate = String(self.dateLabel.text!)
-                        push!.strGetBookingTime = String((self.btnTime.titleLabel?.text)!)
+                        push!.strGetBookingTime = String(self.str_slot_parse_to_Server)//String((self.btnTime.titleLabel?.text)!)
                         self.navigationController?.pushViewController(push!, animated: true)
                         
                     }
@@ -447,7 +448,7 @@ class Calendar: UIViewController {
                 push!.strServiceList = String(productIDString)
                 push!.strVendorId = String(strGetVendorIdForCalendar)
                 push!.strBookingDate = String(dateLabel.text!);
-                push!.strSlotTime = self.btnTime.titleLabel?.text;
+                push!.strSlotTime = String(self.str_slot_parse_to_Server)//self.btnTime.titleLabel?.text;
                 push!.strTypeOfBusiness = String(myString22);
                 push!.strUType = String(getUtypeForCalendar)
                 push!.strGetCountryName = String(self.strCountryName)
@@ -837,11 +838,17 @@ extension Calendar: BottomPopupDelegate {
         
         let defaults = UserDefaults.standard
         if let myString = defaults.string(forKey: "keySelectedTimeIs") {
-            print(myString)
-            btnTime.setTitle(myString, for: .normal)
+            //
+            if let myString2 = defaults.string(forKey: "keySelectedConvertedTimeIs") {
+                print(myString)
+                print(myString2)
+                btnTime.setTitle(myString2, for: .normal)
+                self.str_slot_parse_to_Server = String(myString)
+                
+                defaults.set("", forKey: "keySelectedTimeIs")
+                defaults.set(nil, forKey: "keySelectedTimeIs")
+            }
             
-            defaults.set("", forKey: "keySelectedTimeIs")
-            defaults.set(nil, forKey: "keySelectedTimeIs")
         }
         else {
             print("never went to that page")

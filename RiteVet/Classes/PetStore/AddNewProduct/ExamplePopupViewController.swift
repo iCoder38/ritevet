@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 
 class ExamplePopupViewController: BottomPopupViewController {
-
+    
     let cellReuseIdentifier = "exampleNewProductTableCel"
     
     var height: CGFloat?
@@ -63,7 +63,7 @@ class ExamplePopupViewController: BottomPopupViewController {
             tbleView.delegate = self
             tbleView.dataSource = self
         }
-            //
+        //
         else if strGetDetails == "countryListFromEdit" {
             lblTitle.text = "Country List"
             let defaults = UserDefaults.standard
@@ -88,7 +88,7 @@ class ExamplePopupViewController: BottomPopupViewController {
             let defaults = UserDefaults.standard
             if let myString = defaults.string(forKey: "keySelectedRequestServiceIs")
             {
-                print(myString)    
+                print(myString)
             }
             else
             {
@@ -118,98 +118,98 @@ class ExamplePopupViewController: BottomPopupViewController {
     // Bottom popup attribute methods
     // You can override the desired method to change appearance
     
-      func getPopupHeight() -> CGFloat {
+    func getPopupHeight() -> CGFloat {
         return height ?? CGFloat(500)
     }
     
-      func getPopupTopCornerRadius() -> CGFloat {
+    func getPopupTopCornerRadius() -> CGFloat {
         return topCornerRadius ?? CGFloat(10)
     }
     
-      func getPopupPresentDuration() -> Double {
+    func getPopupPresentDuration() -> Double {
         return presentDuration ?? 1.0
     }
     
-      func getPopupDismissDuration() -> Double {
+    func getPopupDismissDuration() -> Double {
         return dismissDuration ?? 1.0
     }
     
-      func shouldPopupDismissInteractivelty() -> Bool {
+    func shouldPopupDismissInteractivelty() -> Bool {
         return shouldDismissInteractivelty ?? true
     }
     
     func category() {
-           Utils.RiteVetIndicatorShow()
-           
-               let urlString = BASE_URL_KREASE
-               
-               var parameters:Dictionary<AnyHashable, Any>!
-           
-                   parameters = [
-                       "action"        :   "category"
-                   ]
-              
-                
-                   print("parameters-------\(String(describing: parameters))")
-                   
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        parameters = [
+            "action"        :   "category"
+        ]
+        
+        
+        print("parameters-------\(String(describing: parameters))")
+        
         AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                       {
-                           response in
-               
-                           switch(response.result) {
-                           case .success(_):
-                               
-                              if let data = response.value {
-
-                               
-                               let JSON = data as! NSDictionary
-                               //print(JSON)
-                                
-                               var strSuccess : String!
-                               strSuccess = JSON["status"]as Any as? String
-                               
-                               if strSuccess == "success" //true
-                               {
-                                // arrBrowsePetStore
-                                
-                                self.tbleView!.dataSource = self
-                                self.tbleView!.delegate = self
-                                
-                                var ar : NSArray!
-                                ar = (JSON["response"] as! Array<Any>) as NSArray
-                                self.arrListOfCategory = (ar as! Array<Any>)
-                                
-                                self.tbleView!.reloadData()
-                                
-                                Utils.RiteVetIndicatorHide()
-                               }
-                               else
-                               {
-                                   Utils.RiteVetIndicatorHide()
-                               }
-                               
-                           }
-
-                           case .failure(_):
-                               print("Error message:\(String(describing: response.error))")
-                               Utils.RiteVetIndicatorHide()
-                               
-                               let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
-                               let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                       UIAlertAction in
-                                       NSLog("OK Pressed")
-                                   }
-                               
-                               alertController.addAction(okAction)
-                               
-                               self.present(alertController, animated: true, completion: nil)
-                               
-                               break
-                            }
-                       }
-    
-       }
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                
+                if let data = response.value {
+                    
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    if strSuccess == "success" //true
+                    {
+                        // arrBrowsePetStore
+                        
+                        self.tbleView!.dataSource = self
+                        self.tbleView!.delegate = self
+                        
+                        var ar : NSArray!
+                        ar = (JSON["response"] as! Array<Any>) as NSArray
+                        self.arrListOfCategory = (ar as! Array<Any>)
+                        
+                        self.tbleView!.reloadData()
+                        
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    else
+                    {
+                        Utils.RiteVetIndicatorHide()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+    }
 }
 
 extension ExamplePopupViewController: UITableViewDataSource
@@ -333,6 +333,7 @@ extension ExamplePopupViewController: UITableViewDataSource
             
             let defaults = UserDefaults.standard
             defaults.set((item!["slot"] as! String), forKey: "keySelectedTimeIs")
+            defaults.set((item!["converted_slot"] as! String), forKey: "keySelectedConvertedTimeIs")
             dismiss(animated: true, completion: nil)
         }
         else if strGetDetails == "countryListFromEdit" {
