@@ -67,11 +67,87 @@ class cashout_listing: UIViewController {
         self.btnBack.addTarget(self, action: #selector(backClickMethod), for: .touchUpInside)
         
         self.btn_cashout.addTarget(self, action: #selector(cashout_click_method), for: .touchUpInside)
+        
+        /*  let originalDate = Date()
+        let offsetInSeconds = 3600  // 1 hour
+        if let modifiedDate = changeDateByOffset(originalDate: originalDate, offsetInSeconds: offsetInSeconds) {
+            print("Original Date: \(originalDate)")
+            print("Modified Date: \(modifiedDate)")
+        } else {
+            print("Error changing date.")
+        }*/
+        
+        
+        
+        
+        // import Foundation
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "ZZZZZ"
+
+        // Assuming originalTime is in UTC
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
+        let originalTime = formatter.date(from: "+05:30")!
+
+        // Specify the original time zone
+        let originalTimeZone = TimeZone(identifier: "IST")!
+
+        // Specify the target time zone (local time zone)
+        let targetTimeZone = TimeZone.current
+
+        // Convert originalTime to target time zone
+        let convertedTime = originalTime.addingTimeInterval(TimeInterval(originalTimeZone.secondsFromGMT(for: originalTime) - targetTimeZone.secondsFromGMT()))
+
+        // Format the converted time
+        formatter.timeZone = targetTimeZone
+        let formattedConvertedTime = formatter.string(from: convertedTime)
+
+        print("Formatted converted time: \(formattedConvertedTime)")
+
+        
+        // import Foundation
+
+       
+
+        // Example: Get the current time for UTC+5 offset
+        let currentTime = getCurrentTimeFromUTCOffset(offset: -5)
+        print("Current time with UTC+5 offset: \(currentTime)")
+
+        
     }
     
+    func get_Date_time_from_UTC_time(string : String) -> String {
+        let dateformattor = DateFormatter()
+        dateformattor.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZZ"
+        dateformattor.timeZone = NSTimeZone.local
+        let dt = string
+        let dt1 = dateformattor.date(from: dt as String)
+        dateformattor.dateFormat = "yyyy-MM-dd HH:mm"
+        dateformattor.timeZone = NSTimeZone.init(abbreviation: "UTC") as TimeZone?
+        return dateformattor.string(from: dt1!)
+      }
+    
+    func getCurrentTimeFromUTCOffset(offset: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        // Get the current date
+        var currentDate = Date()
+        
+        // Get the time interval for the offset
+        let offsetTimeInterval = TimeInterval(offset * 60 * 60)
+        
+        // Adjust the current date based on the offset
+        currentDate = currentDate.addingTimeInterval(offsetTimeInterval)
+        
+        // Convert the adjusted date to a string
+        let dateString = dateFormatter.string(from: currentDate)
+        
+        return dateString
+    }
+      
     @objc func cashout_click_method() {
         self.pet_parent_WB()
-        
         
     }
     
@@ -565,7 +641,15 @@ extension cashout_listing: UITableViewDataSource , UITableViewDelegate {
         
         let item = self.arr_cashout_listing[indexPath.row] as? [String:Any]
         
-        cell.lbl_date.text = (item!["created"] as! String)
+        let separate_date = (item!["created"] as! String)
+        // let off_set_value = (item!["timeZone"])
+        
+        var dict: Dictionary<AnyHashable, Any>
+        dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
+        
+        let gmt_date = (item!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
+        
+        cell.lbl_date.text = self.get_Date_time_from_UTC_time(string: gmt_date)
         cell.lbl_amount.text = "Amount : $\(item!["Request_Amount"]!)"
         
         if "\(item!["Approve_Amount"]!)" == "0" {

@@ -508,9 +508,9 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                  "keyword_3" = "2024-03-01"; // booking date
                  */
                 print(self.dictBookingDetails as Any)
-                print(self.dictBookingDetails["keyword_1"] as! String)
+                /*print(self.dictBookingDetails["keyword_1"] as! String)
                 print(self.dictBookingDetails["keyword_2"] as! String)
-                print(self.dictBookingDetails["keyword_3"] as! String)
+                print(self.dictBookingDetails["keyword_3"] as! String)*/
                 
                 let current_time_patient = Date.getTimeForTimeZone()
                 print(current_time_patient as Any)
@@ -1117,11 +1117,13 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     let patient_current_time = Date.get24TimeForTimeZone()
                     print(patient_current_time as Any)
                     
-                    // show time on patient side
-                    cell.lbl_appointment_time.text = String(merge_calculate_time_with_patient_TZ_slot1)+"-"+String(merge_calculate_time_with_patient_TZ_slot2)
+                    
                     
                     print(doctor_slot_time_one as Any)
                     print(doctor_slot_time_two as Any)
+                    
+                    // show time on patient side
+                    cell.lbl_appointment_time.text = String(doctor_slot_time_one)+"-"+String(doctor_slot_time_two)
                     
                     let s1 = String(doctor_slot_time_one)//String(merge_calculate_time_with_patient_TZ_slot1)
                     let s2 = String(patient_current_time)

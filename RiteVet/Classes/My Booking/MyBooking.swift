@@ -273,7 +273,7 @@ extension MyBooking: UITableViewDataSource
         
         // vendor id : 87,185
         let item = arrListOfAppointment[indexPath.row] as? [String:Any]
-         print(item as Any)
+        print(item as Any)
         
          // image
         cell.imgProfile.sd_setImage(with: URL(string: (item!["userImage"] as! String)), placeholderImage: UIImage(named: "logo-500"))
@@ -315,8 +315,30 @@ extension MyBooking: UITableViewDataSource
         
         // cell.btnVideo.isHidden = true
         if (item!["added_time"] as! String) != "" {
+            
+            print(item!["keyword_1"] as! String)
+            print(item!["keyword_2"] as! String)
+            print(item!["keyword_3"] as! String)
+            
+            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+                
+                let x : Int = (person["userId"] as! Int)
+                let myString = String(x)
+                
+                if (String(myString) == "\(item!["userID"]!)") {
+                    print("BOOKER")
+                } else {
+                    print("DOCTOR")
+                }
+                
+            }
+            
+            // date
+            cell.lblDateAndTime.text = "Booking date : "+(item!["keyword_3"] as! String)
+            
+            
             // divide time
-            let fullName    = (item!["added_time"] as! String)
+            /*let fullName    = (item!["added_time"] as! String)
             let fullNameArr = fullName.components(separatedBy: " ")
 
             let normal_date    = fullNameArr[0]
@@ -375,7 +397,7 @@ extension MyBooking: UITableViewDataSource
             
              
             // date
-            cell.lblDateAndTime.text = String(self.str_get)
+            cell.lblDateAndTime.text = String(self.str_get)*/
         } else {
             // date
             cell.lblDateAndTime.text = ""

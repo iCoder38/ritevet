@@ -149,7 +149,7 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
         //let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MyPostDetails.longPress(longPressGestureRecognizer:)))
         //self.tbleView.addGestureRecognizer(longPressRecognizer)
         
-        
+        /**/
     }
     
     @objc func settingClickMethod() {
@@ -277,12 +277,28 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
     @objc func cellTappedMethod(_ sender:AnyObject){
         self.addComment()
     }
-    
+    func get_Date_time_from_UTC_time(string : String) -> String {
+        let dateformattor = DateFormatter()
+        dateformattor.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZZ"
+        dateformattor.timeZone = NSTimeZone.local
+        let dt = string
+        let dt1 = dateformattor.date(from: dt as String)
+        dateformattor.dateFormat = "yyyy-MM-dd HH:mm"
+        dateformattor.timeZone = NSTimeZone.init(abbreviation: "UTC") as TimeZone?
+        return dateformattor.string(from: dt1!)
+      }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
-        //print(getFreeStuffDict as Any)
+        print(getFreeStuffDict as Any)
+        
+        var dict: Dictionary<AnyHashable, Any>
+        dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
+        let gmt_date = (getFreeStuffDict!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
+        self.lblDaysAgo.text = self.get_Date_time_from_UTC_time(string: gmt_date)
+        
+        
         
         var strImageOne:String!
         var strImageTwo:String!
@@ -1195,6 +1211,13 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
             
             
             print(TimeZone.current.abbreviation()!)
+            
+            /*var dict: Dictionary<AnyHashable, Any>
+            dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
+            
+            let gmt_date = (item!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
+            
+            cell.lbl_date.text = self.get_Date_time_from_UTC_time(string: gmt_date)*/
             
             if (item!["added_time"] as! String) != "" {
                 // divide time
