@@ -262,7 +262,7 @@ extension ExamplePopupViewController: UITableViewDataSource
         }
         else if strGetDetails == "timeSlot" {
             let item = arrGetTime[indexPath.row] as? [String:Any]
-            cell.lblTitle.text = (item!["slot"] as! String)
+            cell.lblTitle.text = (item!["converted_slot"] as! String)
         }
         else if strGetDetails == "requestService" {
             let item = arrGetTime[indexPath.row] as? [String:Any]

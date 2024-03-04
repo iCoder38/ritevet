@@ -441,6 +441,7 @@ class Calendar: UIViewController {
                 push!.str_doctor_time_zone_with_real = String(self.str_doctor_time_zone_real_is)
                 push!.str_booking_time_for_added = String(self.str_date_for_Added)
                 
+                print(self.btnTime.titleLabel?.text)
 //                push!.strGetPrice =
                 push!.dictShowFullDetails = self.dictGetVendorDetails
                 push!.strServiceList = String(productIDString)
@@ -606,7 +607,8 @@ class Calendar: UIViewController {
                 if (item["status"] as! String) == "Available" {
                     
                     let custom = [
-                        "slot":(item["converted_slot"] as! String),
+                        "converted_slot":(item["converted_slot"] as! String),
+                        "slot":(item["slot"] as! String),
                         "status":"Available"
                     ]
                     
@@ -707,6 +709,7 @@ extension Calendar: JKCalendarDataSource{
             "date"      : String(resultString),
             "added_time"     : Date.get24TimeWithDateForTimeZone(),
             // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+            // booker current time offset
             "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",
 
         ]
