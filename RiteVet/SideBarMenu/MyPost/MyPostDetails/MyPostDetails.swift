@@ -277,6 +277,7 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
     @objc func cellTappedMethod(_ sender:AnyObject){
         self.addComment()
     }
+    
     func get_Date_time_from_UTC_time(string : String) -> String {
         let dateformattor = DateFormatter()
         dateformattor.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZZ"
@@ -286,19 +287,25 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
         dateformattor.dateFormat = "yyyy-MM-dd HH:mm"
         dateformattor.timeZone = NSTimeZone.init(abbreviation: "UTC") as TimeZone?
         return dateformattor.string(from: dt1!)
-      }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         print(getFreeStuffDict as Any)
         
-        var dict: Dictionary<AnyHashable, Any>
+        
+        
+        /*var dict: Dictionary<AnyHashable, Any>
         dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
         let gmt_date = (getFreeStuffDict!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
         self.lblDaysAgo.text = self.get_Date_time_from_UTC_time(string: gmt_date)
-        
-        
+        print(self.get_Date_time_from_UTC_time(string: gmt_date))*/
+        var dict: Dictionary<AnyHashable, Any>
+        dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
+        self.lblDaysAgo.text = Utils.convert_server_date_time_from_UTC(string: (getFreeStuffDict!["created"] as! String),
+                                                                    tz: "\(dict["UTC_GMT"]!)")
         
         var strImageOne:String!
         var strImageTwo:String!

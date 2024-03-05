@@ -2410,13 +2410,13 @@
             filePath = "RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1007"
-            endingLineNumber = "1007"
+            startingLineNumber = "1014"
+            endingLineNumber = "1014"
             landmarkName = "delete_this_comment(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C4EAC12D-F2DE-4FB6-AD53-5B1FF730A221 - f31ef025ea99cbb"
+                  uuid = "C4EAC12D-F2DE-4FB6-AD53-5B1FF730A221 - f31ef025ea99c5a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2426,12 +2426,27 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1012"
+                  endingLineNumber = "1012"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "C4EAC12D-F2DE-4FB6-AD53-5B1FF730A221 - 451ab5fa3feca8a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.MyPostDetails.delete_this_comment(__C.UIButton) -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1011"
                   endingLineNumber = "1011"
-                  offsetFromSymbolStart = "820">
+                  offsetFromSymbolStart = "3752">
                </Location>
                <Location
-                  uuid = "C4EAC12D-F2DE-4FB6-AD53-5B1FF730A221 - 451ab5fa3feca922"
+                  uuid = "C4EAC12D-F2DE-4FB6-AD53-5B1FF730A221 - 451ab5fa3feca805"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2441,23 +2456,8 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1007"
-                  endingLineNumber = "1007"
-                  offsetFromSymbolStart = "3660">
-               </Location>
-               <Location
-                  uuid = "C4EAC12D-F2DE-4FB6-AD53-5B1FF730A221 - 451ab5fa3feca922"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RiteVet.MyPostDetails.delete_this_comment(__C.UIButton) -&gt; ()"
-                  moduleName = "RiteVet"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1007"
-                  endingLineNumber = "1007"
+                  startingLineNumber = "1014"
+                  endingLineNumber = "1014"
                   offsetFromSymbolStart = "3752">
                </Location>
             </Locations>
@@ -2473,13 +2473,13 @@
             filePath = "RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "688"
-            endingLineNumber = "688"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
             landmarkName = "addComment()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "28201E01-5CE2-4427-A6FA-5BD34C378315 - 864a1ed2a1b9d824"
+                  uuid = "28201E01-5CE2-4427-A6FA-5BD34C378315 - 864a1ed2a1b9d8a0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2489,12 +2489,12 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "690"
-                  endingLineNumber = "690"
-                  offsetFromSymbolStart = "732">
+                  startingLineNumber = "694"
+                  endingLineNumber = "694"
+                  offsetFromSymbolStart = "460">
                </Location>
                <Location
-                  uuid = "28201E01-5CE2-4427-A6FA-5BD34C378315 - a937c56c0f2b1703"
+                  uuid = "28201E01-5CE2-4427-A6FA-5BD34C378315 - a937c56c0f2b1745"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2504,12 +2504,12 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "690"
-                  endingLineNumber = "690"
+                  startingLineNumber = "692"
+                  endingLineNumber = "692"
                   offsetFromSymbolStart = "4340">
                </Location>
                <Location
-                  uuid = "28201E01-5CE2-4427-A6FA-5BD34C378315 - a937c56c0f2b10c1"
+                  uuid = "28201E01-5CE2-4427-A6FA-5BD34C378315 - a937c56c0f2b17b8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2519,8 +2519,8 @@
                   urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/SideBarMenu/MyPost/MyPostDetails/MyPostDetails.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "688"
-                  endingLineNumber = "688"
+                  startingLineNumber = "695"
+                  endingLineNumber = "695"
                   offsetFromSymbolStart = "4340">
                </Location>
             </Locations>
@@ -3509,8 +3509,8 @@
             filePath = "RiteVet/Classes/FreeStuff/FreeStuffDetails/FreeStuffDetails.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "616"
-            endingLineNumber = "616"
+            startingLineNumber = "620"
+            endingLineNumber = "620"
             landmarkName = "addComment()"
             landmarkType = "7">
             <Locations>
@@ -3543,6 +3543,21 @@
                   startingLineNumber = "616"
                   endingLineNumber = "616"
                   offsetFromSymbolStart = "4540">
+               </Location>
+               <Location
+                  uuid = "AE669BF0-2808-4968-A28D-D7BB150D2C79 - be6facd5cdac864e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in RiteVet.FreeStuffDetails.addComment() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/Classes/FreeStuff/FreeStuffDetails/FreeStuffDetails.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "622"
+                  endingLineNumber = "622"
+                  offsetFromSymbolStart = "460">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -4752,6 +4767,118 @@
                   offsetFromSymbolStart = "3608">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C890969-2A58-43FB-AEF9-6AE1E39AF407"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0C890969-2A58-43FB-AEF9-6AE1E39AF407 - 1ac311d56dca88f4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.Dashboard.viewDidLoad() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/Classes/Dashboard/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "7196">
+               </Location>
+               <Location
+                  uuid = "0C890969-2A58-43FB-AEF9-6AE1E39AF407 - 1ac311d56dca88f4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.Dashboard.viewDidLoad() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/Classes/Dashboard/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "7188">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7FEC0CFD-5119-486D-8E56-86C9DD93C1D9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/Dashboard/Dashboard.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7FEC0CFD-5119-486D-8E56-86C9DD93C1D9 - 1ac311d56dca88b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.Dashboard.viewDidLoad() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/Classes/Dashboard/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "7588">
+               </Location>
+               <Location
+                  uuid = "7FEC0CFD-5119-486D-8E56-86C9DD93C1D9 - 1ac311d56dca88b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RiteVet.Dashboard.viewDidLoad() -&gt; ()"
+                  moduleName = "RiteVet"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dishantrajput/Documents/evs/ritevet/RiteVet/Classes/Dashboard/Dashboard.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "7580">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "635C1972-239C-4554-ABA1-56DB66C9F162"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RiteVet/Classes/FreeStuff/FreeStuffDetails/FreeStuffDetails.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

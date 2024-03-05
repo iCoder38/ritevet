@@ -128,17 +128,18 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
          print(dateFormatter.string(from: Date()))*/
         
         let timeFormatterGet = DateFormatter()
-        timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
+        timeFormatterGet.dateFormat = "yyyy-MM-dd HH:mm ZZZZZ"
         // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
-        timeFormatterGet.timeZone = TimeZone(abbreviation: "IST")
+         timeFormatterGet.timeZone = TimeZone(abbreviation: "UTC")
         
         let timeFormatterPrint = DateFormatter()
-        timeFormatterPrint.dateFormat = "yyyy-MM-dd h:mm a"
-        timeFormatterPrint.timeZone = TimeZone(abbreviation: "NZST")
+        timeFormatterPrint.dateFormat = "yyyy-MM-dd HH:mm"
+        print(TimeZone.current.abbreviation()!)
+        timeFormatterPrint.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
         
         // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
         
-        if let date = timeFormatterGet.date(from: "2024-01-31 5:00 PM") {
+        if let date = timeFormatterGet.date(from: "2024-03-04 20:00 +05:30") {
             print(timeFormatterPrint.string(from: date)) // "6:30 PM" if device in EST
         } else {
             print("There was an error decoding the string")
@@ -184,7 +185,7 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
         
         
         
-        print(getDateAndTime(timeZoneIdentifier: "IST"))
+        // print(getDateAndTime(timeZoneIdentifier: "IST"))
         
         print(60*02.00)
         let date = Date()
@@ -220,6 +221,26 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
          both signs are same then minus => jo sign aeega wo customer k sign se minus ya plus krna hai
          
          */
+        
+        
+        
+        
+        print(self.get_Date_time_from_UTC_time(string: "2024-03-04 20:40:00 +05:30"))
+    }
+    
+    
+    
+    
+    
+    func get_Date_time_from_UTC_time(string : String) -> String {
+        let dateformattor = DateFormatter()
+        dateformattor.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZZZ"
+        dateformattor.timeZone = NSTimeZone.local
+        let dt = string
+        let dt1 = dateformattor.date(from: dt as String)
+        dateformattor.dateFormat = "yyyy-MM-dd HH:mm"
+        dateformattor.timeZone = NSTimeZone.init(abbreviation: "UTC") as TimeZone?
+        return dateformattor.string(from: dt1!)
     }
     
     func getDateAndTime(timeZoneIdentifier: String) -> String? {

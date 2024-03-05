@@ -617,6 +617,10 @@ class cashout_listing: UIViewController {
             }
         }
     }
+    
+    
+    
+    
 }
 
 
@@ -640,16 +644,16 @@ extension cashout_listing: UITableViewDataSource , UITableViewDelegate {
         cell.selectedBackgroundView = backgroundView
         
         let item = self.arr_cashout_listing[indexPath.row] as? [String:Any]
-        
-        let separate_date = (item!["created"] as! String)
-        // let off_set_value = (item!["timeZone"])
+        print(item as Any)
+        // "created": 2024-03-04 20:22:00,
         
         var dict: Dictionary<AnyHashable, Any>
         dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
+        cell.lbl_date.text = Utils.convert_server_date_time_from_UTC(string: (item!["created"] as! String),
+                                                                    tz: "\(dict["UTC_GMT"]!)")
         
-        let gmt_date = (item!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
         
-        cell.lbl_date.text = self.get_Date_time_from_UTC_time(string: gmt_date)
+        
         cell.lbl_amount.text = "Amount : $\(item!["Request_Amount"]!)"
         
         if "\(item!["Approve_Amount"]!)" == "0" {

@@ -180,10 +180,14 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
         
         //print(getFreeStuffDict as Any)
         
-        var dict: Dictionary<AnyHashable, Any>
+        /*var dict: Dictionary<AnyHashable, Any>
         dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
         let gmt_date = (getFreeStuffDict!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
-        self.lblDaysAgo.text = self.get_Date_time_from_UTC_time(string: gmt_date)
+        self.lblDaysAgo.text = self.get_Date_time_from_UTC_time(string: gmt_date)*/
+        var dict: Dictionary<AnyHashable, Any>
+        dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
+        self.lblDaysAgo.text = Utils.convert_server_date_time_from_UTC(string: (getFreeStuffDict!["created"] as! String),
+                                                                    tz: "\(dict["UTC_GMT"]!)")
         
         var strImageOne:String!
         var strImageTwo:String!
@@ -985,157 +989,157 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
 
 extension FreeStuffDetails: UITableViewDataSource {
     
-        func numberOfSections(in tableView: UITableView) -> Int
-        {
-            var numOfSection: NSInteger = 0
-            
-            if arrListOfFreeStuffComments.count > 0 {
-                
-                self.tbleView.backgroundView = nil
-                numOfSection = 1
-                
-                
-            } else {
-                
-                //let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, self.tbleView.bounds.size.width, self.tbleView.bounds.size.height))
-                
-                let noDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tbleView.bounds.size.width, height: self.tbleView.bounds.size.height))
-                
-                
-                
-                noDataLabel.text = "No Comments Available"
-                noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
-                noDataLabel.textAlignment = NSTextAlignment.center
-                self.tbleView.backgroundView = noDataLabel
-                
-            }
-            return numOfSection
-        }
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        var numOfSection: NSInteger = 0
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-        {
-            return arrListOfFreeStuffComments.count
+        if arrListOfFreeStuffComments.count > 0 {
+            
+            self.tbleView.backgroundView = nil
+            numOfSection = 1
+            
+            
+        } else {
+            
+            //let noDataLabel: UILabel = UILabel(frame: CGRectMake(0, 0, self.tbleView.bounds.size.width, self.tbleView.bounds.size.height))
+            
+            let noDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tbleView.bounds.size.width, height: self.tbleView.bounds.size.height))
+            
+            
+            
+            noDataLabel.text = "No Comments Available"
+            noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+            noDataLabel.textAlignment = NSTextAlignment.center
+            self.tbleView.backgroundView = noDataLabel
+            
         }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-        {
-            let cell:FreeStuffDetailsTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! FreeStuffDetailsTableCell
-            
-            cell.backgroundColor = .clear
-            
-            let item = arrListOfFreeStuffComments[indexPath.row] as? [String:Any]
-            
-            print(item as Any)
-            /*
-             Optional(["UserfullName": Dishant Rajput, "created": 2019-12-23 17:46:00, "userId": 105, "Userprofile_picture": , "Useremail": abcd@gmail.com, "freestaffcommentId": 57, "comment": I am comment oki ])
-             */
-            
-            if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
-                print(person as Any)
-                
-                let x : Int = (person["userId"] as! Int)
-                let myString = String(x)
-                
-                if "\(item!["userId"]!)" == "\(myString)" {
-                    cell.btn_delete.isHidden = false
-                    cell.btn_edit.isHidden =  false
-                } else {
-                    cell.btn_delete.isHidden = true
-                    cell.btn_edit.isHidden =  true
-                }
-            }
-            
-            print(TimeZone.current.abbreviation()!)
-            
-            if (item!["added_time"] as! String) != "" {
-                // divide time
-                let fullName    = (item!["added_time"] as! String)
-                let fullNameArr = fullName.components(separatedBy: " ")
-
-                let normal_date    = fullNameArr[0]
-                let surname = fullNameArr[1]
-                
-                // print(normal_date as Any)
-                // print(surname as Any)
-                
-                // divide sub time
-                let divide_time = surname.components(separatedBy: ":")
-                let time_hour    = divide_time[0]
-                let time_minute = divide_time[1]
-                
-                // print(time_hour as Any)
-                // print(time_minute as Any)
-                
-                let joiin_and_create_new_time = time_hour+":"+time_minute
-                // print(joiin_and_create_new_time as Any)
-                
-                let dateAsString = String(joiin_and_create_new_time)
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:mm"
-
-                let date = dateFormatter.date(from: dateAsString)
-                dateFormatter.dateFormat = "h:mm a"
-                let Date12 = dateFormatter.string(from: date!)
-                // print(Date12)
-                
-                // print(date24 as Any)
-                let commenter_time_zone = (item!["current_time_zone"] as! String)
-                let commenter_watcher_time_zone = "\(TimeZone.current.abbreviation()!)"
-                // print(commenter_time_zone)
-                // print(commenter_watcher_time_zone)
-                
-                let timeFormatterGet = DateFormatter()
-                timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
-                // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
-                timeFormatterGet.timeZone = TimeZone(abbreviation: "\(commenter_time_zone)")
-                
-                let timeFormatterPrint = DateFormatter()
-                timeFormatterPrint.dateFormat = "yyyy-MM-dd h:mm a"
-                timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(commenter_watcher_time_zone)")
-                
-                // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
-
-                let join_date_and_time_together = String(normal_date)+" "+String(Date12)
-                // print(join_date_and_time_together)
-                
-                
-                if let date = timeFormatterGet.date(from: "\(join_date_and_time_together)") {
-                    print(timeFormatterPrint.string(from: date))
-                    self.str_get = timeFormatterPrint.string(from: date)
-                } else {
-                   print("There was an error decoding the string")
-                }
-                
-                cell.lblTitle.text = (item!["UserfullName"] as! String)+" - "+String(self.str_get)
-            } else {
-                cell.lblTitle.text = (item!["UserfullName"] as! String)
-            }
-            
-            
-            cell.lblMessage.text = (item!["comment"] as! String)
-            // cell.imgProfile.image = UIImage(named:"dog")
-            cell.imgProfile.sd_setImage(with: URL(string: (item!["Userprofile_picture"] as! String)), placeholderImage: UIImage(named: "logo-500"))
-            
-            cell.btn_delete.tag = indexPath.row
-            cell.btn_delete.addTarget(self, action: #selector(delete_this_comment), for: .touchUpInside)
-            
-            cell.btn_edit.tag = indexPath.row
-            cell.btn_edit.addTarget(self, action: #selector(editMyComment), for: .touchUpInside)
-            
-            return cell
-        }
-        
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView .deselectRow(at: indexPath, animated: true)
-            
-            // let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubmitPostId") as? SubmitPost
-            // self.navigationController?.pushViewController(push!, animated: true)
-        }
-        
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 90
-        }
+        return numOfSection
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return arrListOfFreeStuffComments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell:FreeStuffDetailsTableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! FreeStuffDetailsTableCell
+        
+        cell.backgroundColor = .clear
+        
+        let item = arrListOfFreeStuffComments[indexPath.row] as? [String:Any]
+        
+        print(item as Any)
+        /*
+         Optional(["UserfullName": Dishant Rajput, "created": 2019-12-23 17:46:00, "userId": 105, "Userprofile_picture": , "Useremail": abcd@gmail.com, "freestaffcommentId": 57, "comment": I am comment oki ])
+         */
+        
+        if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
+            print(person as Any)
+            
+            let x : Int = (person["userId"] as! Int)
+            let myString = String(x)
+            
+            if "\(item!["userId"]!)" == "\(myString)" {
+                cell.btn_delete.isHidden = false
+                cell.btn_edit.isHidden =  false
+            } else {
+                cell.btn_delete.isHidden = true
+                cell.btn_edit.isHidden =  true
+            }
+        }
+        
+        print(TimeZone.current.abbreviation()!)
+        
+        if (item!["added_time"] as! String) != "" {
+            // divide time
+            let fullName    = (item!["added_time"] as! String)
+            let fullNameArr = fullName.components(separatedBy: " ")
+            
+            let normal_date    = fullNameArr[0]
+            let surname = fullNameArr[1]
+            
+            // print(normal_date as Any)
+            // print(surname as Any)
+            
+            // divide sub time
+            let divide_time = surname.components(separatedBy: ":")
+            let time_hour    = divide_time[0]
+            let time_minute = divide_time[1]
+            
+            // print(time_hour as Any)
+            // print(time_minute as Any)
+            
+            let joiin_and_create_new_time = time_hour+":"+time_minute
+            // print(joiin_and_create_new_time as Any)
+            
+            let dateAsString = String(joiin_and_create_new_time)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+            
+            let date = dateFormatter.date(from: dateAsString)
+            dateFormatter.dateFormat = "h:mm a"
+            let Date12 = dateFormatter.string(from: date!)
+            // print(Date12)
+            
+            // print(date24 as Any)
+            let commenter_time_zone = (item!["current_time_zone"] as! String)
+            let commenter_watcher_time_zone = "\(TimeZone.current.abbreviation()!)"
+            // print(commenter_time_zone)
+            // print(commenter_watcher_time_zone)
+            
+            let timeFormatterGet = DateFormatter()
+            timeFormatterGet.dateFormat = "yyyy-MM-dd h:mm a"
+            // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+            timeFormatterGet.timeZone = TimeZone(abbreviation: "\(commenter_time_zone)")
+            
+            let timeFormatterPrint = DateFormatter()
+            timeFormatterPrint.dateFormat = "yyyy-MM-dd h:mm a"
+            timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(commenter_watcher_time_zone)")
+            
+            // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
+            
+            let join_date_and_time_together = String(normal_date)+" "+String(Date12)
+            // print(join_date_and_time_together)
+            
+            
+            if let date = timeFormatterGet.date(from: "\(join_date_and_time_together)") {
+                print(timeFormatterPrint.string(from: date))
+                self.str_get = timeFormatterPrint.string(from: date)
+            } else {
+                print("There was an error decoding the string")
+            }
+            
+            cell.lblTitle.text = (item!["UserfullName"] as! String)+" - "+String(self.str_get)
+        } else {
+            cell.lblTitle.text = (item!["UserfullName"] as! String)
+        }
+        
+        
+        cell.lblMessage.text = (item!["comment"] as! String)
+        // cell.imgProfile.image = UIImage(named:"dog")
+        cell.imgProfile.sd_setImage(with: URL(string: (item!["Userprofile_picture"] as! String)), placeholderImage: UIImage(named: "logo-500"))
+        
+        cell.btn_delete.tag = indexPath.row
+        cell.btn_delete.addTarget(self, action: #selector(delete_this_comment), for: .touchUpInside)
+        
+        cell.btn_edit.tag = indexPath.row
+        cell.btn_edit.addTarget(self, action: #selector(editMyComment), for: .touchUpInside)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView .deselectRow(at: indexPath, animated: true)
+        
+        // let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubmitPostId") as? SubmitPost
+        // self.navigationController?.pushViewController(push!, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+}
 
 extension FreeStuffDetails: UITableViewDelegate {
         

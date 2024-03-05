@@ -88,6 +88,47 @@ class Utils: NSObject {
         loadingView.hide()
     }
     
+    class func convert_server_date_time_from_UTC(string : String,tz:String) -> String {
+        let separate_date = string
+        // let off_set_value = (item!["timeZone"])
+        
+        
+        print(string as Any)
+        print(tz as Any)
+        
+        let gmt_date = string+" "+String(tz)
+        print(gmt_date as Any)
+        
+        let separate_time = String(gmt_date).components(separatedBy: " ")
+        print(separate_time as Any)
+        
+        let join_1 = String(separate_time[0])
+        let join_2 = String(separate_time[1])
+        let join_3 = String(separate_time[2])
+        
+        let join_2_sub = String(join_2.prefix(5))
+        
+        let join_all_string = String(join_1)+" "+String(join_2_sub)+" "+String(join_3)
+        let timeFormatterGet = DateFormatter()
+        timeFormatterGet.dateFormat = "yyyy-MM-dd HH:mm ZZZZZ"
+        timeFormatterGet.timeZone = TimeZone(abbreviation: "UTC")
+        
+        let timeFormatterPrint = DateFormatter()
+        timeFormatterPrint.dateFormat = "yyyy-MM-dd HH:mm"
+        print(TimeZone.current.abbreviation()!)
+        timeFormatterPrint.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+        
+        var return_value:String!
+        
+        if let date = timeFormatterGet.date(from: String(join_all_string)) {
+            print(timeFormatterPrint.string(from: date))
+            return_value = "\(timeFormatterPrint.string(from: date))"
+        } else {
+            print("There was an error decoding the string")
+            return_value = ""
+        }
+        return return_value
+    }
 }
 
 
