@@ -374,7 +374,7 @@ class FreeStuffDetails: UIViewController,UITextFieldDelegate {
                         
                         // print(array[1] as Any)
                         
-                        self.lblDaysAgo.text = (dictServerValue!["created"] as! String)
+                        // self.lblDaysAgo.text = (dictServerValue!["created"] as! String)
                         
                         self.lblTitleName.text = (dictServerValue!["postTitle"] as! String)
                         self.txtViewDescription.text = (dictServerValue!["description"] as! String)

@@ -442,8 +442,6 @@ class Calendar: UIViewController {
                 push!.str_doctor_time_zone_with_real = String(self.str_doctor_time_zone_real_is)
                 push!.str_booking_time_for_added = String(self.str_date_for_Added)
                 
-                print(self.btnTime.titleLabel?.text)
-//                push!.strGetPrice =
                 push!.dictShowFullDetails = self.dictGetVendorDetails
                 push!.strServiceList = String(productIDString)
                 push!.strVendorId = String(strGetVendorIdForCalendar)

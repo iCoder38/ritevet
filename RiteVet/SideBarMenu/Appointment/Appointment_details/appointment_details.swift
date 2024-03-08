@@ -31,7 +31,6 @@ class appointment_details: UIViewController {
     @IBOutlet weak var lbl_address:UILabel!
     @IBOutlet weak var lbl_email:UILabel!
     
-    
     @IBOutlet weak var viewNavigation:UIView! {
         didSet {
             viewNavigation.backgroundColor = NAVIGATION_BACKGROUND_COLOR
@@ -45,6 +44,7 @@ class appointment_details: UIViewController {
             lblNavigationTitle.textColor = .white
         }
     }
+    
     // 255 200 68
     @IBOutlet weak var tbleView: UITableView! {
         didSet {
@@ -80,14 +80,11 @@ class appointment_details: UIViewController {
         self.btnBack.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         self.btnBack.tintColor = .white
         
-        
-        
         print("============================")
         print(self.dictBookingDetails as Any)
         print("============================")
         
-        print(utcToLocal(dateStr: self.dictBookingDetails["current_time_zone"] as! String))
-        
+        // print(utcToLocal(dateStr: self.dictBookingDetails["current_time_zone"] as! String))
         
         /*
          UTYPE = 2;
@@ -547,73 +544,17 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 let patient_current_date = Date.getCurrentDateReal()
                 print(patient_current_date as Any)
                 
-                
+                 print(String(server_booking_date))
                 // *******
                 
-                if (doctor_date == patient_current_date) {
+                if (String(server_booking_date) == String(patient_current_date)) {
                     print("DOCTOR'S DATE AND BOOKER DATES ARE SAME")
-                    
-                    // activate cancel button
-                    cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
-                    
-                    if "\(self.dictBookingDetails["status"]!)" == "1" {
-                        
-                        cell.btn_next.setTitle("Pending", for: .normal)
-                        cell.btn_next.backgroundColor = .systemOrange
-                        
-                        if (self.str_from_booking != "yes") {
-                            cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
-                        }
-                        
-                        
-                    } else if "\(self.dictBookingDetails["status"]!)" == "2" {
-                        
-                        cell.btn_next.setTitle("Completed", for: .normal)
-                        cell.btn_next.backgroundColor = .systemGreen
-                        cell.btn_cancel.isHidden = true
-                        cell.btn_next.isUserInteractionEnabled = false
-                        
-                        if (self.str_from_booking == "yes") {
-
-                            if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
-                                
-                                cell.btn_next.isUserInteractionEnabled = true
-                                cell.btn_next.backgroundColor = .systemYellow
-                                cell.btn_next.setTitle("Send Review", for: .normal)
-                                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
-                                
-                            } else {
-                                
-                                cell.btn_next.setTitle("Completed", for: .normal)
-                                cell.btn_next.isUserInteractionEnabled = false
-                                
-                            }
-                            
-                        }
-                        
-                    }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
-                        
-                        cell.btn_next.setTitle("Cancelled", for: .normal)
-                        cell.btn_next.backgroundColor = .systemRed
-                        cell.btn_cancel.isHidden = true
-                    }
-                    
-                    if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
-                     
-                        cell.btn_video.isHidden = true
-                        
-                    } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
-                        
-                        cell.btn_video.isHidden = false
-                        
-                    }
-                    
-                    
                     
                     // you have to check time now from doctor's time to patient's time
                     //
                     
-                    var str_separate_appointment_slot_time = (self.dictBookingDetails["slotTime"] as! String)
+                    // this is only doctor's side slot
+                    let str_separate_appointment_slot_time = (self.dictBookingDetails["slotTime"] as! String)
                     print(str_separate_appointment_slot_time as Any)
                     
                     let str_separate_appointment_slot_time_space = str_separate_appointment_slot_time.components(separatedBy: "-")
@@ -622,21 +563,174 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     let doctor_slot_time_one = str_separate_appointment_slot_time_space[0]
                     let doctor_slot_time_two = str_separate_appointment_slot_time_space[1]
                     
-                    print(doctor_slot_time_one as Any)
-                    print(doctor_slot_time_two as Any)
+                    print(doctor_slot_time_one as Any) // doctor's side slot 1
+                    print(doctor_slot_time_two as Any) // doctor's side slot 2
                     
+                    print(self.dictBookingDetails["keyword_2"] as! String)
                     
                     print(Date.get24TimeForTimeZone())
+                    print(TimeZone.current.abbreviation()!)
+                    
+                    // booking date
+                    //
+                    // ##########################################################################################
+                    // ########################### WORKING WITH SLOT 1 ##########################################
+                    // ##########################################################################################
+                    
+                    var new_slot_1 = String(doctor_slot_time_one)
+                    
+                    var merge_new_slot_1_and_booking_date = String(server_booking_date)+" "+String(doctor_slot_time_one)+" "+(self.dictBookingDetails["keyword_2"] as! String)
+                    print(merge_new_slot_1_and_booking_date)
+                    
+                    
+                    let timeFormatterGet = DateFormatter()
+                    timeFormatterGet.dateFormat = "yyyy-MM-dd HH:mm ZZZZZ"
+                    timeFormatterGet.timeZone = TimeZone(abbreviation: "UTC")
+                    
+                    let timeFormatterPrint = DateFormatter()
+                    timeFormatterPrint.dateFormat = "yyyy-MM-dd HH:mm"
+                    print(TimeZone.current.abbreviation()!)
+                    timeFormatterPrint.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+                    
+                    // ##########################################################################################
+                    // ###### SLOT 1 WITH DATE AND TIME CONVERTED ACCORDING TO BOOKER'S LOCATION ################
+                    // ##########################################################################################
+                    
+                    var new_slot_1_with_date:String!
+                    
+                    if let date = timeFormatterGet.date(from: merge_new_slot_1_and_booking_date) {
+                        print(timeFormatterPrint.string(from: date))
+                        new_slot_1_with_date = timeFormatterPrint.string(from: date)
+                        
+                    } else {
+                        print("There was an error decoding the string")
+                    }
+                    
+                    print(new_slot_1_with_date as Any)
+                    
+                    
+                    // ##########################################################################################
+                    // ########################### WORKING WITH SLOT 2 ##########################################
+                    // ##########################################################################################
+                    var new_slot_2 = String(doctor_slot_time_one)
+                    
+                    var merge_new_slot_2_and_booking_date = String(server_booking_date)+" "+String(doctor_slot_time_two)+" "+(self.dictBookingDetails["keyword_2"] as! String)
+                    // print(merge_new_slot_2_and_booking_date)
+                    
+                    
+                    let timeFormatterGet2 = DateFormatter()
+                    timeFormatterGet2.dateFormat = "yyyy-MM-dd HH:mm ZZZZZ"
+                    timeFormatterGet2.timeZone = TimeZone(abbreviation: "UTC")
+                    
+                    let timeFormatterPrint2 = DateFormatter()
+                    timeFormatterPrint2.dateFormat = "yyyy-MM-dd HH:mm"
+                    // print(TimeZone.current.abbreviation()!)
+                    timeFormatterPrint2.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
+                    
+                    
+                    // ##########################################################################################
+                    // ###### SLOT 2 WITH DATE AND TIME CONVERTED ACCORDING TO BOOKER'S LOCATION ################
+                    // ##########################################################################################
+                    
+                    var new_slot_2_with_date:String!
+                    
+                    if let date2 = timeFormatterGet2.date(from: merge_new_slot_2_and_booking_date) {
+                        // print(timeFormatterPrint2.string(from: date2))
+                        new_slot_2_with_date = timeFormatterPrint.string(from: date2)
+                        
+                    } else {
+                        print("There was an error decoding the string")
+                    }
+                    
+                    print(new_slot_2_with_date as Any)
+                    
+                    // ##########################################################################################
+                    // ##########################################################################################
+                    
+                    var booker_current_time_is = Date.get24TimeForTimeZone()
+                    print(booker_current_time_is as Any)
+                    
+                    
+                    
+                    // separate time from converted date
+                    // let str_separate_appointment_slot_time_space = str_separate_appointment_slot_time.components(separatedBy: "-")
+                    var separate_time_from_converted_date_1 = new_slot_1_with_date.components(separatedBy: " ")
+                    var separate_time_from_converted_date_2 = new_slot_2_with_date.components(separatedBy: " ")
+                    
+                    print(separate_time_from_converted_date_1[1] as Any)
+                    print(separate_time_from_converted_date_2[1] as Any)
+                    
+                    cell.lbl_appointment_time.text = String(separate_time_from_converted_date_1[1])+" ~ "+String(separate_time_from_converted_date_2[1])
+                    
+                    // ##########################################################################################
+                    // ################################# MATCH TIME NOW #########################################
+                    // ##########################################################################################
+                    
+                    // get patient time with 24 hour format
+                    let patient_current_time = Date.get24TimeForTimeZone()
+                    print(patient_current_time as Any)
+                    
+                    let s1 = String(separate_time_from_converted_date_1[1]) // converted time slot 1
+                    let s2 = String(patient_current_time)
+                    let s3 = String(separate_time_from_converted_date_2[1]) // converted time slot 2
+                    
+                     /*let s1 = String("16:04")
+                     let s2 = String("16:05")
+                     let s3 = String("16:10")*/
+                    
+                    print(s1 as Any)
+                    print(s2 as Any)
+                    print(s3 as Any)
+                    
+                    let f = DateFormatter()
+                    f.dateFormat = "HH:mm"
+                    
+                    if (f.date(from: s2)! > f.date(from: s1)!) {
+                        
+                        print("patient CD is larger then doctor's slot 1")
+                        if (f.date(from: s2)! < f.date(from: s3)!) {
+                         
+                            print("ENABLE")
+                            if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
+                             
+                                cell.btn_video.isHidden = true
+                                
+                            } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
+                                
+                                cell.btn_video.isHidden = false
+                                
+                            }
+                            
+                            cell.lbl_appointment_time.textColor = .systemGreen
+                            // cell.lbl_appointment_time.text = String(s1)+"-"+String(s3)
+                            self.str_enable_calling = "1" // all social interaction has been enabled now
+                            // self.str_time_save =
+                            // self.tbleView.reloadData()
+                            
+                        }
+                        
+                    }
+                    
+                    
+                    print("stop")
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     
                     // compare doctor's time with patient's time slot
-                    let timeFormatterGet2 = DateFormatter()
+                    /*let timeFormatterGet2 = DateFormatter()
                     timeFormatterGet2.dateFormat = "yyyy-MM-dd hh:mm a"
-                    // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
-                    timeFormatterGet2.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_1"] as! String)
+                    timeFormatterGet2.timeZone = TimeZone(abbreviation: "UTC")
                     
                     let timeFormatterPrint2 = DateFormatter()
                     timeFormatterPrint2.dateFormat = "yyyy-MM-dd hh:mm a"
-                    timeFormatterPrint2.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_2"] as! String)
+                    timeFormatterPrint2.timeZone = TimeZone(abbreviation: "UTC")
                     
                     var str_what_we_get_date:String! = self.dictBookingDetails["keyword_3"] as! String+" "+String(current_time_patient)
                     print(str_what_we_get_date as Any)
@@ -832,7 +926,60 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                         cell.btn_cancel.isHidden = true
                     }
                     
+                    // activate cancel button
+                    cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
                     
+                    if "\(self.dictBookingDetails["status"]!)" == "1" {
+                        
+                        cell.btn_next.setTitle("Pending", for: .normal)
+                        cell.btn_next.backgroundColor = .systemOrange
+                        
+                        if (self.str_from_booking != "yes") {
+                            cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
+                        }
+                        
+                        
+                    } else if "\(self.dictBookingDetails["status"]!)" == "2" {
+                        
+                        cell.btn_next.setTitle("Completed", for: .normal)
+                        cell.btn_next.backgroundColor = .systemGreen
+                        cell.btn_cancel.isHidden = true
+                        cell.btn_next.isUserInteractionEnabled = false
+                        
+                        if (self.str_from_booking == "yes") {
+
+                            if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                                
+                                cell.btn_next.isUserInteractionEnabled = true
+                                cell.btn_next.backgroundColor = .systemYellow
+                                cell.btn_next.setTitle("Send Review", for: .normal)
+                                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                                
+                            } else {
+                                
+                                cell.btn_next.setTitle("Completed", for: .normal)
+                                cell.btn_next.isUserInteractionEnabled = false
+                                
+                            }
+                            
+                        }
+                        
+                    }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
+                        
+                        cell.btn_next.setTitle("Cancelled", for: .normal)
+                        cell.btn_next.backgroundColor = .systemRed
+                        cell.btn_cancel.isHidden = true
+                    }
+                    
+                    if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
+                     
+                        cell.btn_video.isHidden = true
+                        
+                    } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
+                        
+                        cell.btn_video.isHidden = false
+                        
+                    }*/
                      
                 } else {
                     print("DOCTOR'S DATE AND BOOKER DATES ARE DIFFERENT")

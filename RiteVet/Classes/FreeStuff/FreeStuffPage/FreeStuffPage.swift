@@ -12,7 +12,7 @@ import SwiftyJSON
 import SDWebImage
 
 class FreeStuffPage: UIViewController {
-
+    
     let cellReuseIdentifier = "freeStuffPageTableCell"
     
     var arrListOfFreeItem:Array<Any>!
@@ -33,37 +33,37 @@ class FreeStuffPage: UIViewController {
     
     @IBOutlet weak var btnShare:UIButton!
     
-      @IBOutlet weak var lblNavigationTitle:UILabel! {
-          didSet {
-              lblNavigationTitle.text = "FREE STUFF"
-              lblNavigationTitle.textColor = .white
-          }
-      }
+    @IBOutlet weak var lblNavigationTitle:UILabel! {
+        didSet {
+            lblNavigationTitle.text = "FREE STUFF"
+            lblNavigationTitle.textColor = .white
+        }
+    }
     
     
     
-      @IBOutlet weak var tbleView: UITableView! {
-          didSet {
-              //tbleView.delegate = self
-              //tbleView.dataSource = self
+    @IBOutlet weak var tbleView: UITableView! {
+        didSet {
+            //tbleView.delegate = self
+            //tbleView.dataSource = self
             
-              tbleView.tableFooterView = UIView.init(frame: CGRect(origin: .zero, size: .zero))
-              tbleView.backgroundColor = .white
-          }
-      }
+            tbleView.tableFooterView = UIView.init(frame: CGRect(origin: .zero, size: .zero))
+            tbleView.backgroundColor = .white
+        }
+    }
     
     @IBOutlet weak var imgVieww: UIImageView!
     @IBOutlet weak var lblFirst: UILabel!
     @IBOutlet weak var lblSecond: UILabel!
-      
     
     
-     override func viewDidLoad() {
-           super.viewDidLoad()
-           
-           /****** VIEW BG IMAGE *********/
-           //self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
-           
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        /****** VIEW BG IMAGE *********/
+        //self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
+        
         self.view.backgroundColor = .white
         
         tbleView.isHidden = true
@@ -82,25 +82,25 @@ class FreeStuffPage: UIViewController {
         imgVieww.layer.addSublayer(gradient)
         
         
-       }
+    }
     
-       override func viewWillAppear(_ animated: Bool) {
-           super.viewWillAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         self.listOfFreeStuff()
-       }
-       override var preferredStatusBarStyle: UIStatusBarStyle {
-           return .lightContent
-       }
-       @objc func backClickMethod() {
-           self.navigationController?.popViewController(animated: true)
-       }
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    @objc func backClickMethod() {
+        self.navigationController?.popViewController(animated: true)
+    }
     @objc func addClickMethod() {
         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubmitPostId") as? SubmitPost
         self.navigationController?.pushViewController(push!, animated: true)
     }
-
+    
     @objc func shareClickMethod(_ sender: UIButton) {
         guard let url = URL(string: shareURLString) else {
             return
@@ -115,123 +115,123 @@ class FreeStuffPage: UIViewController {
     }
     
     func listOfFreeStuff() {
-               //self.pushFromLoginPage()
-               
-               //indicator.startAnimating()
-    //           self.disableService()
-               
-        Utils.RiteVetIndicatorShow()
-               
-                   let urlString = BASE_URL_KREASE
-                   
-                   var parameters:Dictionary<AnyHashable, Any>!
-               
-                       parameters = [
-                           "action"        :   "stufflist",
-                           "pageNo"        :   "0",
-                           "userId"        :   ""
-                       ]
-                  
-                    
-                       print("parameters-------\(String(describing: parameters))")
-                       
-        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                           {
-                               response in
-                   
-                               switch(response.result) {
-                               case .success(_):
-                                  if let data = response.value {
-
-                                   let JSON = data as! NSDictionary
-                                   //print(JSON)
-                                   
-                                   var strSuccess : String!
-                                   strSuccess = JSON["status"]as Any as? String
-                                   
-                                   //var strSuccessAlert : String!
-                                   //strSuccessAlert = JSON["msg"]as Any as? String
-                                   
-                                   if strSuccess == "success" //true
-                                   {
-                                    Utils.RiteVetIndicatorHide()
-    //                                   self.pushFromLoginPage()
-                                    self.tbleView.isHidden = false
-                                    self.tbleView.delegate = self
-                                    self.tbleView.dataSource = self
-                                    
-                                    var ar : NSArray!
-                                    ar = (JSON["data"] as! Array<Any>) as NSArray
-                                    //print(ar as Any)
-                                    
-                                    
-                                    // index 0
-                                    var ar0 : NSArray!
-                                    ar0 = (JSON["data"] as! Array<Any>) as NSArray
-                                    
-                                    var arrListOfFreeItem0:Array<Any>!
-                                    arrListOfFreeItem0 = (ar0 as! Array<Any>)
-                                    
-                                    //print(arrListOfFreeItem0[0] as Any)
-                                    
-                                    
-                                    let item = arrListOfFreeItem0[0] as? [String:Any]
-                                    
-                                    //cell.lblTitle.text = (item!["postTitle"] as! String)
-                                    /*
-                                     @IBOutlet weak var imgVieww: UIImageView!
-                                     @IBOutlet weak var lblFirst: UILabel!
-                                     @IBOutlet weak var lblSecond: UILabel!
-                                     */
-                                    
-                                    
-                                    self.imgVieww.sd_setImage(with: URL(string: (item!["image_1"] as! String)), placeholderImage: UIImage(named: "dog"))
-                                    
-                                    self.lblFirst.text = (item!["description"] as! String)
-                                    self.lblSecond.text = (item!["postTitle"] as! String)
-                                  
-        // share data
-            self.shareText = (item!["description"] as! String)
-            self.shareURLString = (item!["image_1"] as! String)
-                                    
-                                    
-                                    
-                                    self.arrListOfFreeItem = (ar as! Array<Any>)
-                                    
-                                    self.tbleView.reloadData()
-                                   }
-                                   else
-                                   {
-                                    Utils.RiteVetIndicatorHide()
-    //                                   self.indicator.stopAnimating()
-    //                                   self.enableService()
-                                   }
-                                   
-                               }
-
-                               case .failure(_):
-                                   print("Error message:\(String(describing: response.error))")
-    //                               self.indicator.stopAnimating()
-    //                               self.enableService()
-                                   Utils.RiteVetIndicatorHide()
-                                   
-                                   let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                                   
-                                   let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                           UIAlertAction in
-                                           NSLog("OK Pressed")
-                                       }
-                                   
-                                   alertController.addAction(okAction)
-                                   
-                                   self.present(alertController, animated: true, completion: nil)
-                                   
-                                   break
-                                }
-                           }
+        //self.pushFromLoginPage()
         
-           }
-
+        //indicator.startAnimating()
+        //           self.disableService()
+        
+        Utils.RiteVetIndicatorShow()
+        
+        let urlString = BASE_URL_KREASE
+        
+        var parameters:Dictionary<AnyHashable, Any>!
+        
+        parameters = [
+            "action"        :   "stufflist",
+            "pageNo"        :   "0",
+            "userId"        :   ""
+        ]
+        
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    //var strSuccessAlert : String!
+                    //strSuccessAlert = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "success" //true
+                    {
+                        Utils.RiteVetIndicatorHide()
+                        //                                   self.pushFromLoginPage()
+                        self.tbleView.isHidden = false
+                        self.tbleView.delegate = self
+                        self.tbleView.dataSource = self
+                        
+                        var ar : NSArray!
+                        ar = (JSON["data"] as! Array<Any>) as NSArray
+                        //print(ar as Any)
+                        
+                        
+                        // index 0
+                        var ar0 : NSArray!
+                        ar0 = (JSON["data"] as! Array<Any>) as NSArray
+                        
+                        var arrListOfFreeItem0:Array<Any>!
+                        arrListOfFreeItem0 = (ar0 as! Array<Any>)
+                        
+                        //print(arrListOfFreeItem0[0] as Any)
+                        
+                        
+                        let item = arrListOfFreeItem0[0] as? [String:Any]
+                        
+                        //cell.lblTitle.text = (item!["postTitle"] as! String)
+                        /*
+                         @IBOutlet weak var imgVieww: UIImageView!
+                         @IBOutlet weak var lblFirst: UILabel!
+                         @IBOutlet weak var lblSecond: UILabel!
+                         */
+                        
+                        
+                        self.imgVieww.sd_setImage(with: URL(string: (item!["image_1"] as! String)), placeholderImage: UIImage(named: "dog"))
+                        
+                        self.lblFirst.text = (item!["description"] as! String)
+                        self.lblSecond.text = (item!["postTitle"] as! String)
+                        
+                        // share data
+                        self.shareText = (item!["description"] as! String)
+                        self.shareURLString = (item!["image_1"] as! String)
+                        
+                        
+                        
+                        self.arrListOfFreeItem = (ar as! Array<Any>)
+                        
+                        self.tbleView.reloadData()
+                    }
+                    else
+                    {
+                        Utils.RiteVetIndicatorHide()
+                        //                                   self.indicator.stopAnimating()
+                        //                                   self.enableService()
+                    }
+                    
+                }
+                
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                //                               self.indicator.stopAnimating()
+                //                               self.enableService()
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+        
+    }
+    
 }
 
 extension FreeStuffPage: UITableViewDataSource
@@ -251,7 +251,7 @@ extension FreeStuffPage: UITableViewDataSource
         cell.backgroundColor = .clear
     
         let item = arrListOfFreeItem[indexPath.row] as? [String:Any]
-        
+        print(item as Any)
         /*
          categoryId = 18;
          categoryName = Bird;
@@ -273,6 +273,14 @@ extension FreeStuffPage: UITableViewDataSource
         cell.lblTitle.text = (item!["postTitle"] as! String)
         
         cell.lblDate.text = (item!["created"] as! String)
+        
+        var dict: Dictionary<AnyHashable, Any>
+        dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
+        cell.lblDate.text = Utils.convert_server_date_time_from_UTC(string: (item!["created"] as! String),
+                                                                    tz: "\(dict["UTC_GMT"]!)")
+        
+        
+        
         cell.lblMessage.text = (item!["description"] as! String)
         
         //cell.imgProfile.image = UIImage(named: item!["userImage"] as! String)

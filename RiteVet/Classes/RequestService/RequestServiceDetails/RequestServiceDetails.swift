@@ -449,9 +449,9 @@ class RequestServiceDetails: UIViewController {
             "userInformationId"     : (self.getDictRequestServiceHome!["userInformationId"] as! Int),
             "date"                  : "\(current_date)",
             "time"                  : "\(current_time)",
-            "added_time"     : Date.get24TimeWithDateForTimeZone(),
+            "added_time"            : Date.get24TimeWithDateForTimeZone(),
             // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
-            "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",
+            "current_time_zone"     : "\(TimeZone.current.currentTimezoneOffset())",
 
         ]
         

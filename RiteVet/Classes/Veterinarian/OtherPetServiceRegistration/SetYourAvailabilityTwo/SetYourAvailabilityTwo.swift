@@ -259,100 +259,98 @@ class SetYourAvailabilityTwo: UIViewController, UITextFieldDelegate {
     @objc func setAvailability() {
         
         Utils.RiteVetIndicatorShow()
-           
+        
         let urlString = BASE_URL_KREASE
-               
+        
         var parameters:Dictionary<AnyHashable, Any>!
-           
+        
         if let person = UserDefaults.standard.value(forKey: "keyLoginFullData") as? [String:Any] {
             let x : Int = (person["userId"] as! Int)
             let myString = String(x)
             
             /*
-                 Setting Availabity
-                 "action:setting
-                 vendorId:9
-                 startTime:10:30
-                 endTime:16:30
-                 brakeStartTime:13:00
-                 breakEndTime:13:30
-                 dayendarray:SAT,TUE"
+             Setting Availabity
+             "action:setting
+             vendorId:9
+             startTime:10:30
+             endTime:16:30
+             brakeStartTime:13:00
+             breakEndTime:13:30
+             dayendarray:SAT,TUE"
              */
             
-            
-                   parameters = [
-                       "action"          :   "setting",
-                       "vendorId"          :   String(myString),
-                       "startTime"         : String(txtWorkingTimeFrom.text!),
-                       "endTime"           : String(txtWorkingTimeTo.text!),
-                       "brakeStartTime"     : String(txtLunchBreakFrom.text!),
-                       "breakEndTime"       : String(txtLunchBreakTo.text!),
-                       "dayendarray"        : String(txtWeekOff.text!),
-                    "userType"    : String("3"),
-                       "added_time"    : Date.get24TimeWithDateForTimeZone(),
-                       // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
-                       // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
-                       "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",
-                       "zone":"\(TimeZone.current.abbreviation()!)",
-                   ]
+            parameters = [
+                "action"             :   "setting",
+                "vendorId"           :   String(myString),
+                "startTime"          : String(txtWorkingTimeFrom.text!),
+                "endTime"            : String(txtWorkingTimeTo.text!),
+                "brakeStartTime"     :  String(txtLunchBreakTo.text!),
+                "breakEndTime"       : String(txtLunchBreakFrom.text!),
+                "dayendarray"        : String(txtWeekOff.text!),
+                "userType"           : String("3"),
+                "added_time"         : Date.get24TimeWithDateForTimeZone(),
+                // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+                // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
+                "current_time_zone"  : "\(TimeZone.current.currentTimezoneOffset())",
+                "zone"               : "\(TimeZone.current.abbreviation()!)",
+            ]
         }
+        
+        print("parameters-------\(String(describing: parameters))")
+        
+        AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
+        {
+            response in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.value {
+                    
+                    let JSON = data as! NSDictionary
+                    //print(JSON)
+                    
+                    var strSuccess : String!
+                    strSuccess = JSON["status"]as Any as? String
+                    
+                    var strSuccessAlert : String!
+                    strSuccessAlert = JSON["msg"]as Any as? String
+                    
+                    if strSuccess == "Success"{
+                        Utils.RiteVetIndicatorHide()
+                        
+                        CRNotifications.showNotification(type: CRNotifications.success, title: "Hurray!", message:strSuccessAlert!, dismissDelay: 1.5, completion:{})
+                        
+                        let hideUnhide = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddVeterinarianBankInfoTwoId")
+                        self.navigationController?.pushViewController(hideUnhide, animated: true)
+                        
+                    }
+                    else {
+                        Utils.RiteVetIndicatorHide()
+                        CRNotifications.showNotification(type: CRNotifications.error, title: "OOPS!", message:strSuccessAlert!, dismissDelay: 1.5, completion:{})
+                    }
+                    
+                }
                 
-                   print("parameters-------\(String(describing: parameters))")
-                   
-                   AF.request(urlString, method: .post, parameters: parameters as? Parameters).responseJSON
-                       {
-                           response in
-               
-                           switch(response.result) {
-                           case .success(_):
-                              if let data = response.value {
-
-                               let JSON = data as! NSDictionary
-                               //print(JSON)
-                               
-                               var strSuccess : String!
-                               strSuccess = JSON["status"]as Any as? String
-                               
-                                var strSuccessAlert : String!
-                                strSuccessAlert = JSON["msg"]as Any as? String
-                                
-                                if strSuccess == "Success"{
-                                Utils.RiteVetIndicatorHide()
-                                
-                                CRNotifications.showNotification(type: CRNotifications.success, title: "Hurray!", message:strSuccessAlert!, dismissDelay: 1.5, completion:{})
-                                
-                                let hideUnhide = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddVeterinarianBankInfoTwoId")
-                                self.navigationController?.pushViewController(hideUnhide, animated: true)
-                                
-                               }
-                               else {
-                                Utils.RiteVetIndicatorHide()
-                                CRNotifications.showNotification(type: CRNotifications.error, title: "OOPS!", message:strSuccessAlert!, dismissDelay: 1.5, completion:{})
-                               }
-                               
-                           }
-
-                           case .failure(_):
-                               print("Error message:\(String(describing: response.error))")
-                              
-                               Utils.RiteVetIndicatorHide()
-                               
-                               let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
-                               
-                               let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                                       UIAlertAction in
-                                       NSLog("OK Pressed")
-                                   }
-                               
-                               alertController.addAction(okAction)
-                               
-                               self.present(alertController, animated: true, completion: nil)
-                               
-                               break
-                            }
-                       }
-    
-       }
+            case .failure(_):
+                print("Error message:\(String(describing: response.error))")
+                
+                Utils.RiteVetIndicatorHide()
+                
+                let alertController = UIAlertController(title: nil, message: SERVER_ISSUE_MESSAGE_ONE+"\n"+SERVER_ISSUE_MESSAGE_TWO, preferredStyle: .actionSheet)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+                }
+                
+                alertController.addAction(okAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+                break
+            }
+        }
+    }
     
     @objc func welcome5() {
         // indicator.startAnimating()
@@ -410,8 +408,8 @@ class SetYourAvailabilityTwo: UIViewController, UITextFieldDelegate {
                            
                            self.txtWeekOff.text = (dict["dayendarray"] as! String)
                            
-                           self.txtLunchBreakTo.text = (dict["breakEndTime"] as! String)
-                           self.txtLunchBreakFrom.text = (dict["brakeStartTime"] as! String)
+                            self.txtLunchBreakFrom.text = (dict["breakEndTime"] as! String)
+                            self.txtLunchBreakTo.text = (dict["brakeStartTime"] as! String)
                         }
                          
                         

@@ -411,9 +411,9 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                 "current_time_zone" : String(self.str_doctor_time_zone ),//"\(TimeZone.current.abbreviation()!)",
                 
                 //
-                "keyword_1":"\(TimeZone.current.abbreviation()!)", // booker time zone
-                "keyword_2":String(self.str_doctor_time_zone_with_real), // doctor time zone
-                "keyword_3":String(self.str_booking_time_for_added), // booking date yyyy-MM-dd
+                "keyword_1"     : "\(TimeZone.current.abbreviation()!)", // booker time zone
+                "keyword_2"     : String(self.str_doctor_time_zone ),//String(self.str_doctor_time_zone_with_real), // doctor time zone
+                "keyword_3"     : String(self.str_booking_time_for_added), // booking date yyyy-MM-dd
                 //
             ]
             

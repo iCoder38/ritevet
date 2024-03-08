@@ -295,13 +295,12 @@ class MyPostDetails: UIViewController,UITextFieldDelegate {
         
         print(getFreeStuffDict as Any)
         
-        
-        
         /*var dict: Dictionary<AnyHashable, Any>
         dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
         let gmt_date = (getFreeStuffDict!["created"] as! String)+" "+"\(dict["UTC_GMT"]!)"
         self.lblDaysAgo.text = self.get_Date_time_from_UTC_time(string: gmt_date)
         print(self.get_Date_time_from_UTC_time(string: gmt_date))*/
+        
         var dict: Dictionary<AnyHashable, Any>
         dict = getFreeStuffDict!["timezone"] as! Dictionary<AnyHashable, Any>
         self.lblDaysAgo.text = Utils.convert_server_date_time_from_UTC(string: (getFreeStuffDict!["created"] as! String),

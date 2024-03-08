@@ -127,17 +127,21 @@ class Dashboard: UIViewController, SKPaymentTransactionObserver {
          dateFormatter.timeZone = timezone
          print(dateFormatter.string(from: Date()))*/
         
+        // booking date + slot1
+        // booking date + slot2
+        
+        // match : 
+        
+        
+        
         let timeFormatterGet = DateFormatter()
         timeFormatterGet.dateFormat = "yyyy-MM-dd HH:mm ZZZZZ"
-        // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
-         timeFormatterGet.timeZone = TimeZone(abbreviation: "UTC")
+        timeFormatterGet.timeZone = TimeZone(abbreviation: "UTC")
         
         let timeFormatterPrint = DateFormatter()
         timeFormatterPrint.dateFormat = "yyyy-MM-dd HH:mm"
         print(TimeZone.current.abbreviation()!)
         timeFormatterPrint.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
-        
-        // timeFormatterPrint.timeZone = TimeZone(abbreviation: "\(TimeZone.current.abbreviation()!)\(TimeZone.current.currentTimezoneOffset())") // if you want to specify timezone for output, otherwise leave this line blank and it will default to devices timezone
         
         if let date = timeFormatterGet.date(from: "2024-03-04 20:00 +05:30") {
             print(timeFormatterPrint.string(from: date)) // "6:30 PM" if device in EST
