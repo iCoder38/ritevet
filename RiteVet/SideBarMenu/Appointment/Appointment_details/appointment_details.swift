@@ -513,7 +513,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 print(current_time_patient as Any)
                 
                 // compare patient date with doctor
-                let timeFormatterGet = DateFormatter()
+                /*let timeFormatterGet = DateFormatter()
                 timeFormatterGet.dateFormat = "yyyy-MM-dd hh:mm a"
                 // timeFormatterGet.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
                 timeFormatterGet.timeZone = TimeZone(abbreviation: self.dictBookingDetails["keyword_1"] as! String)
@@ -538,7 +538,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                 let separate_doctors_date = str_what_we_get_date.components(separatedBy: " ")
 
                 let doctor_date = separate_doctors_date[0]
-                print(doctor_date as Any)
+                print(doctor_date as Any)*/
                 
                 // patient current booking date
                 let patient_current_date = Date.getCurrentDateReal()
@@ -566,7 +566,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     print(doctor_slot_time_one as Any) // doctor's side slot 1
                     print(doctor_slot_time_two as Any) // doctor's side slot 2
                     
-                    print(self.dictBookingDetails["keyword_2"] as! String)
+                    // print(self.dictBookingDetails["keyword_2"] as! String)
                     
                     print(Date.get24TimeForTimeZone())
                     print(TimeZone.current.abbreviation()!)
@@ -577,9 +577,9 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     // ########################### WORKING WITH SLOT 1 ##########################################
                     // ##########################################################################################
                     
-                    var new_slot_1 = String(doctor_slot_time_one)
+                    // var new_slot_1 = String(doctor_slot_time_one)
                     
-                    var merge_new_slot_1_and_booking_date = String(server_booking_date)+" "+String(doctor_slot_time_one)+" "+(self.dictBookingDetails["keyword_2"] as! String)
+                    let merge_new_slot_1_and_booking_date = String(server_booking_date)+" "+String(doctor_slot_time_one)+" "+(self.dictBookingDetails["current_time_zone"] as! String)
                     print(merge_new_slot_1_and_booking_date)
                     
                     
@@ -589,7 +589,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     
                     let timeFormatterPrint = DateFormatter()
                     timeFormatterPrint.dateFormat = "yyyy-MM-dd HH:mm"
-                    print(TimeZone.current.abbreviation()!)
+                    // print(TimeZone.current.abbreviation()!)
                     timeFormatterPrint.timeZone = TimeZone(abbreviation: TimeZone.current.abbreviation()!)
                     
                     // ##########################################################################################
@@ -612,10 +612,10 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     // ##########################################################################################
                     // ########################### WORKING WITH SLOT 2 ##########################################
                     // ##########################################################################################
-                    var new_slot_2 = String(doctor_slot_time_one)
+                    // var new_slot_2 = String(doctor_slot_time_one)
                     
-                    var merge_new_slot_2_and_booking_date = String(server_booking_date)+" "+String(doctor_slot_time_two)+" "+(self.dictBookingDetails["keyword_2"] as! String)
-                    // print(merge_new_slot_2_and_booking_date)
+                    let merge_new_slot_2_and_booking_date = String(server_booking_date)+" "+String(doctor_slot_time_two)+" "+(self.dictBookingDetails["current_time_zone"] as! String)
+                     print(merge_new_slot_2_and_booking_date)
                     
                     
                     let timeFormatterGet2 = DateFormatter()
@@ -647,20 +647,44 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     // ##########################################################################################
                     // ##########################################################################################
                     
-                    var booker_current_time_is = Date.get24TimeForTimeZone()
+                    let booker_current_time_is = Date.get24TimeForTimeZone()
                     print(booker_current_time_is as Any)
                     
                     
                     
                     // separate time from converted date
                     // let str_separate_appointment_slot_time_space = str_separate_appointment_slot_time.components(separatedBy: "-")
-                    var separate_time_from_converted_date_1 = new_slot_1_with_date.components(separatedBy: " ")
-                    var separate_time_from_converted_date_2 = new_slot_2_with_date.components(separatedBy: " ")
+                    let separate_time_from_converted_date_1 = new_slot_1_with_date.components(separatedBy: " ")
+                    let separate_time_from_converted_date_2 = new_slot_2_with_date.components(separatedBy: " ")
                     
                     print(separate_time_from_converted_date_1[1] as Any)
                     print(separate_time_from_converted_date_2[1] as Any)
                     
                     cell.lbl_appointment_time.text = String(separate_time_from_converted_date_1[1])+" ~ "+String(separate_time_from_converted_date_2[1])
+                    
+                    // ##########################################################################################
+                    // ################################# 24hr ~ 12hr format #####################################
+                    // ##########################################################################################
+                    let one = String(separate_time_from_converted_date_1[1])
+                    let dateFormatter_one = DateFormatter()
+                    dateFormatter_one.dateFormat = "HH:mm"
+
+                    let date_one = dateFormatter_one.date(from: one)
+                    dateFormatter_one.dateFormat = "h:mm a"
+                    let Date12_one = dateFormatter_one.string(from: date_one!)
+                    print("12 hour formatted Date:",Date12_one)
+                    
+                    // #2
+                    let two = String(separate_time_from_converted_date_2[1])
+                    let dateFormatter_two = DateFormatter()
+                    dateFormatter_two.dateFormat = "HH:mm"
+
+                    let date_two = dateFormatter_two.date(from: two)
+                    dateFormatter_two.dateFormat = "h:mm a"
+                    let Date12_two = dateFormatter_two.string(from: date_two!)
+                    print("12 hour formatted Date:",Date12_two)
+                    
+                    cell.lbl_appointment_time.text = String(Date12_one)+" ~ "+String(Date12_two)
                     
                     // ##########################################################################################
                     // ################################# MATCH TIME NOW #########################################
@@ -694,11 +718,9 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                             if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
                              
                                 cell.btn_video.isHidden = true
-                                
                             } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
                                 
                                 cell.btn_video.isHidden = false
-                                
                             }
                             
                             cell.lbl_appointment_time.textColor = .systemGreen
@@ -711,9 +733,61 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                         
                     }
                     
-                    
                     print("stop")
+                    // activate cancel button
+                    cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
                     
+                    if "\(self.dictBookingDetails["status"]!)" == "1" {
+                        
+                        cell.btn_next.setTitle("Pending", for: .normal)
+                        cell.btn_next.backgroundColor = .systemOrange
+                        
+                        if (self.str_from_booking != "yes") {
+                            cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
+                        }
+                        
+                        
+                    } else if "\(self.dictBookingDetails["status"]!)" == "2" {
+                        
+                        cell.btn_next.setTitle("Completed", for: .normal)
+                        cell.btn_next.backgroundColor = .systemGreen
+                        cell.btn_cancel.isHidden = true
+                        cell.btn_next.isUserInteractionEnabled = false
+                        
+                        if (self.str_from_booking == "yes") {
+
+                            if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
+                                
+                                cell.btn_next.isUserInteractionEnabled = true
+                                cell.btn_next.backgroundColor = .systemYellow
+                                cell.btn_next.setTitle("Send Review", for: .normal)
+                                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
+                                
+                            } else {
+                                
+                                cell.btn_next.setTitle("Completed", for: .normal)
+                                cell.btn_next.isUserInteractionEnabled = false
+                                
+                            }
+                            
+                        }
+                        
+                    }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
+                        
+                        cell.btn_next.setTitle("Cancelled", for: .normal)
+                        cell.btn_next.backgroundColor = .systemRed
+                        cell.btn_cancel.isHidden = true
+                    }
+                    
+                    if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
+                     
+                        cell.btn_video.isHidden = true
+                        
+                    } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
+                        
+                        cell.btn_video.isHidden = false
+                        
+                    }
                     
                     
                     
@@ -926,60 +1000,7 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                         cell.btn_cancel.isHidden = true
                     }
                     
-                    // activate cancel button
-                    cell.btn_cancel.addTarget(self, action: #selector(cancel_click_method), for: .touchUpInside)
-                    
-                    if "\(self.dictBookingDetails["status"]!)" == "1" {
-                        
-                        cell.btn_next.setTitle("Pending", for: .normal)
-                        cell.btn_next.backgroundColor = .systemOrange
-                        
-                        if (self.str_from_booking != "yes") {
-                            cell.btn_next.addTarget(self, action: #selector(pending_click_method), for: .touchUpInside)
-                        }
-                        
-                        
-                    } else if "\(self.dictBookingDetails["status"]!)" == "2" {
-                        
-                        cell.btn_next.setTitle("Completed", for: .normal)
-                        cell.btn_next.backgroundColor = .systemGreen
-                        cell.btn_cancel.isHidden = true
-                        cell.btn_next.isUserInteractionEnabled = false
-                        
-                        if (self.str_from_booking == "yes") {
-
-                            if "\(self.dictBookingDetails["reviewByYou"]!)" == "0" {
-                                
-                                cell.btn_next.isUserInteractionEnabled = true
-                                cell.btn_next.backgroundColor = .systemYellow
-                                cell.btn_next.setTitle("Send Review", for: .normal)
-                                cell.btn_next.addTarget(self, action: #selector(delivered_click_method), for: .touchUpInside)
-                                
-                            } else {
-                                
-                                cell.btn_next.setTitle("Completed", for: .normal)
-                                cell.btn_next.isUserInteractionEnabled = false
-                                
-                            }
-                            
-                        }
-                        
-                    }  else if "\(self.dictBookingDetails["status"]!)" == "3" {
-                        
-                        cell.btn_next.setTitle("Cancelled", for: .normal)
-                        cell.btn_next.backgroundColor = .systemRed
-                        cell.btn_cancel.isHidden = true
-                    }
-                    
-                    if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "2" {
-                     
-                        cell.btn_video.isHidden = true
-                        
-                    } else if "\(self.dictBookingDetails["typeofbusinessId"]!)" == "3" {
-                        
-                        cell.btn_video.isHidden = false
-                        
-                    }*/
+                    */
                      
                 } else {
                     print("DOCTOR'S DATE AND BOOKER DATES ARE DIFFERENT")
@@ -1280,6 +1301,31 @@ extension appointment_details: UITableViewDataSource , UITableViewDelegate {
                     print(s2 as Any)
                     print(s3 as Any)
                     
+                    // ##########################################################################################
+                    // ################################# 24hr ~ 12hr format #####################################
+                    // ##########################################################################################
+                    let one = String(s1)
+                    let dateFormatter_one = DateFormatter()
+                    dateFormatter_one.dateFormat = "HH:mm"
+
+                    let date_one = dateFormatter_one.date(from: one)
+                    dateFormatter_one.dateFormat = "h:mm a"
+                    let Date12_one = dateFormatter_one.string(from: date_one!)
+                    print("12 hour formatted Date:",Date12_one)
+                    
+                    // #2
+                    let two = String(s3)
+                    let dateFormatter_two = DateFormatter()
+                    dateFormatter_two.dateFormat = "HH:mm"
+
+                    let date_two = dateFormatter_two.date(from: two)
+                    dateFormatter_two.dateFormat = "h:mm a"
+                    let Date12_two = dateFormatter_two.string(from: date_two!)
+                    print("12 hour formatted Date:",Date12_two)
+                    
+                    cell.lbl_appointment_time.text = String(Date12_one)+" ~ "+String(Date12_two)
+                    // ##########################################################################################
+                    // ##########################################################################################
                     // let s1 = String("16:04") // comment this line in production # doctor slot 1
                     // let s2 = String("16:03") // comment this line in production
                     // let s3 = String("16:10") // comment this line in production # doctor slot 2

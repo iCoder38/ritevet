@@ -19,6 +19,8 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
     
     var str_instant_payment:String!
     
+    var str_get_converted_slot:String!
+    
 //    "action"    : "addbooking",
 //    "userId"    : String(myString),
 //    "vendorId"   : String(strGetVendorIdForCalendar),
@@ -466,7 +468,7 @@ class payment_before_booking: UIViewController ,UITextFieldDelegate {
                             
                             let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
                             push!.strGetBookingDate = String(self.strBookingDate)
-                            push!.strGetBookingTime = String(self.strSlotTime)
+                            push!.strGetBookingTime = String(self.str_get_converted_slot)
                             self.navigationController?.pushViewController(push!, animated: true)
                             
                         }

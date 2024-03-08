@@ -139,7 +139,7 @@ class Calendar: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // print(self.str_set_payment)
+         print(self.getUtypeForCalendar as Any)
         
         /****** VIEW BG IMAGE *********/
 //        self.view.backgroundColor = UIColor.init(patternImage: UIImage(named: "plainBack")!)
@@ -348,7 +348,8 @@ class Calendar: UIViewController {
                     "amount"        : "0",
                     
                     "added_time"       : Date.get24TimeWithDateForTimeZone(),
-                    "current_time_zone" : "\(TimeZone.current.abbreviation()!)",
+                    "current_time_zone" : String(self.str_doctor_time_zone_is),
+                    
                 ]
                 //            }
             }
@@ -377,7 +378,7 @@ class Calendar: UIViewController {
                         
                         let push = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfirmAppointmentId") as? ConfirmAppointment
                         push!.strGetBookingDate = String(self.dateLabel.text!)
-                        push!.strGetBookingTime = String(self.str_slot_parse_to_Server)//String((self.btnTime.titleLabel?.text)!)
+                        push!.strGetBookingTime = String((self.btnTime.titleLabel?.text)!)
                         self.navigationController?.pushViewController(push!, animated: true)
                         
                     }
@@ -438,8 +439,9 @@ class Calendar: UIViewController {
                 let productIDString = array.joined(separator: ",")
                 print(productIDString)
                 
+                push!.str_get_converted_slot = self.btnTime.titleLabel?.text
                 push!.str_doctor_time_zone = String(self.str_doctor_time_zone_is)
-                push!.str_doctor_time_zone_with_real = String(self.str_doctor_time_zone_real_is)
+                push!.str_doctor_time_zone_with_real = String(self.str_doctor_time_zone_is)
                 push!.str_booking_time_for_added = String(self.str_date_for_Added)
                 
                 push!.dictShowFullDetails = self.dictGetVendorDetails
@@ -702,11 +704,13 @@ extension Calendar: JKCalendarDataSource{
         
         self.str_date_for_Added = String(resultString)
         
+        // [userType] => 3
         parameters = [
             "action"    : "vendorslot",
             "vendorId"  : String(strGetVendorIdForCalendar),
             "date"      : String(resultString),
-            "added_time"     : Date.get24TimeWithDateForTimeZone(),
+            "userType"  : String(self.getUtypeForCalendar),
+            // "added_time"     : Date.get24TimeWithDateForTimeZone(),
             // "current_time_zone":"\(TimeZone.current.abbreviation()!)",
             // booker current time offset
             "current_time_zone":"\(TimeZone.current.currentTimezoneOffset())",

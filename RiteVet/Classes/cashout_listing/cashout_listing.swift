@@ -647,10 +647,19 @@ extension cashout_listing: UITableViewDataSource , UITableViewDelegate {
         print(item as Any)
         // "created": 2024-03-04 20:22:00,
         
-        var dict: Dictionary<AnyHashable, Any>
-        dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
-        cell.lbl_date.text = Utils.convert_server_date_time_from_UTC(string: (item!["created"] as! String),
-                                                                    tz: "\(dict["UTC_GMT"]!)")
+        
+        if (item!["sendDate"] as! String) != "" {
+            var dict: Dictionary<AnyHashable, Any>
+            dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
+            cell.lbl_date.text = Utils.convert_server_date_time_from_UTC(string: (item!["sendDate"] as! String),
+                                                                        tz: "\(dict["UTC_GMT"]!)")
+        } else {
+            var dict: Dictionary<AnyHashable, Any>
+            dict = item!["timezone"] as! Dictionary<AnyHashable, Any>
+            cell.lbl_date.text = Utils.convert_server_date_time_from_UTC(string: (item!["created"] as! String),
+                                                                        tz: "\(dict["UTC_GMT"]!)")
+        }
+        
         
         
         

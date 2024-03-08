@@ -370,8 +370,8 @@ class SetYourAvailability: UIViewController,UITextFieldDelegate {
                             
                             self.txtWeekOff.text = (dict["dayendarray"] as! String)
                             
-                            self.txtLunchBreakTo.text = (dict["brakeStartTime"] as! String)
-                            self.txtLunchBreakFrom.text = (dict["breakEndTime"] as! String)
+                            self.txtLunchBreakFrom.text = (dict["brakeStartTime"] as! String)
+                            self.txtLunchBreakTo.text = (dict["breakEndTime"] as! String)
                         }
                         
                         
